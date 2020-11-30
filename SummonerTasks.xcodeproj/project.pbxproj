@@ -17,6 +17,16 @@
 		384A490A2575A074002E04CB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384A48DD2575A071002E04CB /* ContentView.swift */; };
 		384A490B2575A074002E04CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 384A48DE2575A074002E04CB /* Assets.xcassets */; };
 		384A490C2575A074002E04CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 384A48DE2575A074002E04CB /* Assets.xcassets */; };
+		384A496E2575A1ED002E04CB /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384A496D2575A1ED002E04CB /* Persistence.swift */; };
+		384A496F2575A1ED002E04CB /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384A496D2575A1ED002E04CB /* Persistence.swift */; };
+		384A49822575A3E1002E04CB /* SummonerTasksDB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 384A49782575A359002E04CB /* SummonerTasksDB.xcdatamodeld */; };
+		384A49872575A3E2002E04CB /* SummonerTasksDB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 384A49782575A359002E04CB /* SummonerTasksDB.xcdatamodeld */; };
+		384A499A2575A9DB002E04CB /* ModelEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384A49992575A9DB002E04CB /* ModelEnums.swift */; };
+		384A499B2575A9DB002E04CB /* ModelEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384A49992575A9DB002E04CB /* ModelEnums.swift */; };
+		384ACCF52575B64C002E04CB /* JSONFileDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384ACCF42575B64A002E04CB /* JSONFileDocument.swift */; };
+		384ACCF62575B64C002E04CB /* JSONFileDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384ACCF42575B64A002E04CB /* JSONFileDocument.swift */; };
+		384ACD042575BD48002E04CB /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 384ACD032575BD48002E04CB /* Images */; };
+		384ACD052575BD48002E04CB /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 384ACD032575BD48002E04CB /* Images */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +62,11 @@
 		384A48FE2575A074002E04CB /* Tests macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		384A49022575A074002E04CB /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
 		384A49042575A074002E04CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		384A496D2575A1ED002E04CB /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		384A49792575A359002E04CB /* Shared.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shared.xcdatamodel; sourceTree = "<group>"; };
+		384A49992575A9DB002E04CB /* ModelEnums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelEnums.swift; sourceTree = "<group>"; };
+		384ACCF42575B64A002E04CB /* JSONFileDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONFileDocument.swift; sourceTree = "<group>"; };
+		384ACD032575BD48002E04CB /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,8 +118,13 @@
 			children = (
 				384A48DB2575A071002E04CB /* SummonerTasksApp.swift */,
 				384A48DC2575A071002E04CB /* SummonerTasksDocument.swift */,
+				384A496D2575A1ED002E04CB /* Persistence.swift */,
 				384A48DD2575A071002E04CB /* ContentView.swift */,
 				384A48DE2575A074002E04CB /* Assets.xcassets */,
+				384A49782575A359002E04CB /* SummonerTasksDB.xcdatamodeld */,
+				384ACCF42575B64A002E04CB /* JSONFileDocument.swift */,
+				384A49992575A9DB002E04CB /* ModelEnums.swift */,
+				384ACD032575BD48002E04CB /* Images */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -279,6 +299,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				384ACD042575BD48002E04CB /* Images in Resources */,
 				384A490B2575A074002E04CB /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -287,6 +308,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				384ACD052575BD48002E04CB /* Images in Resources */,
 				384A490C2575A074002E04CB /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -313,7 +335,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				384A49052575A074002E04CB /* SummonerTasksApp.swift in Sources */,
+				384ACCF52575B64C002E04CB /* JSONFileDocument.swift in Sources */,
+				384A496E2575A1ED002E04CB /* Persistence.swift in Sources */,
+				384A49822575A3E1002E04CB /* SummonerTasksDB.xcdatamodeld in Sources */,
 				384A49072575A074002E04CB /* SummonerTasksDocument.swift in Sources */,
+				384A499A2575A9DB002E04CB /* ModelEnums.swift in Sources */,
 				384A49092575A074002E04CB /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -323,7 +349,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				384A49062575A074002E04CB /* SummonerTasksApp.swift in Sources */,
+				384ACCF62575B64C002E04CB /* JSONFileDocument.swift in Sources */,
+				384A496F2575A1ED002E04CB /* Persistence.swift in Sources */,
+				384A49872575A3E2002E04CB /* SummonerTasksDB.xcdatamodeld in Sources */,
 				384A49082575A074002E04CB /* SummonerTasksDocument.swift in Sources */,
+				384A499B2575A9DB002E04CB /* ModelEnums.swift in Sources */,
 				384A490A2575A074002E04CB /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -702,6 +732,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		384A49782575A359002E04CB /* SummonerTasksDB.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				384A49792575A359002E04CB /* Shared.xcdatamodel */,
+			);
+			currentVersion = 384A49792575A359002E04CB /* Shared.xcdatamodel */;
+			path = SummonerTasksDB.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 384A48D62575A070002E04CB /* Project object */;
 }
