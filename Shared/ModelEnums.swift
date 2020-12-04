@@ -20,18 +20,6 @@ enum Element: Int {
     }
 }
 
-enum Archetype: Int {
-    case none = 0, attack, defense, hp, support, material
-}
-
-enum LeaderSkillStat: Int {
-    case hp = 1, attack, defense, speed, critRate, critDamage, resist, accuracy
-}
-
-enum LeaderSkillArea: Int {
-    case general = 1, arena, dungeon, guild
-}
-
 // Items
 
 enum Building: Int {

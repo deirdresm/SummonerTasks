@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17511" systemVersion="20B29" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+    <entity name="ArtifactInstance" representedClassName="ArtifactInstance" syncable="YES" codeGenerationType="class"/>
+    <entity name="Fusion" representedClassName="Fusion" syncable="YES" codeGenerationType="class"/>
+    <entity name="FusionIngredient" representedClassName="FusionIngredient" syncable="YES" codeGenerationType="class"/>
+    <entity name="LeaderSkill" representedClassName="LeaderSkill" syncable="YES" codeGenerationType="class"/>
     <entity name="Monster" representedClassName="Monster" syncable="YES" codeGenerationType="class">
         <attribute name="accuracy" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="archetype" optional="YES" attributeType="String"/>
@@ -63,7 +67,15 @@
         <relationship name="teamLeaders" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Team" inverseName="leader" inverseEntity="Team"/>
         <relationship name="teams" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Team" inverseName="members" inverseEntity="Team"/>
     </entity>
-    <entity name="RuneInstance" representedClassName="RuneInstance" syncable="YES" codeGenerationType="class"/>
+    <entity name="MonsterSkill" representedClassName="MonsterSkill" syncable="YES" codeGenerationType="class"/>
+    <entity name="RuneInstance" representedClassName="RuneInstance" syncable="YES" codeGenerationType="class">
+        <attribute name="com2usId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="level" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <attribute name="runeType" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="stars" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
     <entity name="Summoner" representedClassName="Summoner" syncable="YES" codeGenerationType="class">
         <attribute name="com2usID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -78,6 +90,7 @@
         <relationship name="teamGroups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TeamGroup" inverseName="toSummoner" inverseEntity="TeamGroup"/>
         <relationship name="teams" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Team" inverseName="summoner" inverseEntity="Team"/>
     </entity>
+    <entity name="Task" representedClassName="Task" syncable="YES" codeGenerationType="class"/>
     <entity name="Team" representedClassName="Team" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="isFavorite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
@@ -101,6 +114,12 @@
         <element name="TeamGroup" positionX="-298.14306640625" positionY="68.78431701660156" width="128" height="28"/>
         <element name="Team" positionX="-72" positionY="171" width="128" height="14"/>
         <element name="MonsterInstance" positionX="-63" positionY="180" width="128" height="74"/>
-        <element name="RuneInstance" positionX="-54" positionY="189" width="128" height="29"/>
+        <element name="RuneInstance" positionX="-54" positionY="189" width="128" height="14"/>
+        <element name="LeaderSkill" positionX="-45" positionY="198" width="128" height="14"/>
+        <element name="MonsterSkill" positionX="-36" positionY="207" width="128" height="14"/>
+        <element name="ArtifactInstance" positionX="-90" positionY="153" width="128" height="14"/>
+        <element name="Fusion" positionX="-81" positionY="162" width="128" height="14"/>
+        <element name="FusionIngredient" positionX="-72" positionY="171" width="128" height="14"/>
+        <element name="Task" positionX="-63" positionY="180" width="128" height="14"/>
     </elements>
 </model>

@@ -19,14 +19,48 @@
 		384A490C2575A074002E04CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 384A48DE2575A074002E04CB /* Assets.xcassets */; };
 		384A496E2575A1ED002E04CB /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384A496D2575A1ED002E04CB /* Persistence.swift */; };
 		384A496F2575A1ED002E04CB /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384A496D2575A1ED002E04CB /* Persistence.swift */; };
-		384A49822575A3E1002E04CB /* SummonerTasksDB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 384A49782575A359002E04CB /* SummonerTasksDB.xcdatamodeld */; };
-		384A49872575A3E2002E04CB /* SummonerTasksDB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 384A49782575A359002E04CB /* SummonerTasksDB.xcdatamodeld */; };
+		384A49822575A3E1002E04CB /* SummonerTasks.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 384A49782575A359002E04CB /* SummonerTasks.xcdatamodeld */; };
+		384A49872575A3E2002E04CB /* SummonerTasks.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 384A49782575A359002E04CB /* SummonerTasks.xcdatamodeld */; };
 		384A499A2575A9DB002E04CB /* ModelEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384A49992575A9DB002E04CB /* ModelEnums.swift */; };
 		384A499B2575A9DB002E04CB /* ModelEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384A49992575A9DB002E04CB /* ModelEnums.swift */; };
-		384ACCF52575B64C002E04CB /* JSONFileDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384ACCF42575B64A002E04CB /* JSONFileDocument.swift */; };
-		384ACCF62575B64C002E04CB /* JSONFileDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384ACCF42575B64A002E04CB /* JSONFileDocument.swift */; };
 		384ACD042575BD48002E04CB /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 384ACD032575BD48002E04CB /* Images */; };
 		384ACD052575BD48002E04CB /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 384ACD032575BD48002E04CB /* Images */; };
+		38CFB6B92576EFC600F0C398 /* Monster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB6B82576EFC600F0C398 /* Monster.swift */; };
+		38CFB6C72577291800F0C398 /* TeamGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB6C62577291800F0C398 /* TeamGroup.swift */; };
+		38CFB6C82577291800F0C398 /* TeamGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB6C62577291800F0C398 /* TeamGroup.swift */; };
+		38CFB6CD2577292000F0C398 /* Monster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB6B82576EFC600F0C398 /* Monster.swift */; };
+		38CFB6D325772A3100F0C398 /* Summoner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB6D225772A3100F0C398 /* Summoner.swift */; };
+		38CFB6D425772A3100F0C398 /* Summoner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB6D225772A3100F0C398 /* Summoner.swift */; };
+		38CFB6F92577701800F0C398 /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB6F82577701800F0C398 /* Team.swift */; };
+		38CFB6FA2577701800F0C398 /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB6F82577701800F0C398 /* Team.swift */; };
+		38CFB70025782F9B00F0C398 /* LeaderSkill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB6FF25782F9B00F0C398 /* LeaderSkill.swift */; };
+		38CFB70125782F9C00F0C398 /* LeaderSkill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB6FF25782F9B00F0C398 /* LeaderSkill.swift */; };
+		38CFB7072578303E00F0C398 /* FusionIngredients.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB7062578303E00F0C398 /* FusionIngredients.swift */; };
+		38CFB7082578303E00F0C398 /* FusionIngredients.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB7062578303E00F0C398 /* FusionIngredients.swift */; };
+		38CFB70E2578306C00F0C398 /* Fusion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB70D2578306C00F0C398 /* Fusion.swift */; };
+		38CFB70F2578306C00F0C398 /* Fusion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB70D2578306C00F0C398 /* Fusion.swift */; };
+		38CFB7162578388E00F0C398 /* MonsterInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB7152578388E00F0C398 /* MonsterInstance.swift */; };
+		38CFB7172578388E00F0C398 /* MonsterInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB7152578388E00F0C398 /* MonsterInstance.swift */; };
+		38CFB7212578462700F0C398 /* RuneInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB7202578462700F0C398 /* RuneInstance.swift */; };
+		38CFB7222578462700F0C398 /* RuneInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB7202578462700F0C398 /* RuneInstance.swift */; };
+		38CFB728257848C900F0C398 /* ArtifactInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB727257848C900F0C398 /* ArtifactInstance.swift */; };
+		38CFB729257848C900F0C398 /* ArtifactInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB727257848C900F0C398 /* ArtifactInstance.swift */; };
+		38CFB72F2578494400F0C398 /* MonsterSkill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB72E2578494400F0C398 /* MonsterSkill.swift */; };
+		38CFB7302578494400F0C398 /* MonsterSkill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB72E2578494400F0C398 /* MonsterSkill.swift */; };
+		38CFB75F2579B84300F0C398 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB75E2579B84300F0C398 /* Task.swift */; };
+		38CFB7602579B84300F0C398 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB75E2579B84300F0C398 /* Task.swift */; };
+		38CFB7662579DE4D00F0C398 /* Skill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB7652579DE4D00F0C398 /* Skill.swift */; };
+		38CFB7672579DE4D00F0C398 /* Skill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB7652579DE4D00F0C398 /* Skill.swift */; };
+		38CFB76D2579DE8700F0C398 /* SkillScalingStat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB76C2579DE8700F0C398 /* SkillScalingStat.swift */; };
+		38CFB76E2579DE8700F0C398 /* SkillScalingStat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB76C2579DE8700F0C398 /* SkillScalingStat.swift */; };
+		38CFB7742579DEC000F0C398 /* SkillEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB7732579DEC000F0C398 /* SkillEffect.swift */; };
+		38CFB7752579DEC000F0C398 /* SkillEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB7732579DEC000F0C398 /* SkillEffect.swift */; };
+		38CFB77B2579DEE800F0C398 /* SkillEffectDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB77A2579DEE800F0C398 /* SkillEffectDetail.swift */; };
+		38CFB77C2579DEE800F0C398 /* SkillEffectDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB77A2579DEE800F0C398 /* SkillEffectDetail.swift */; };
+		38CFB7822579E24000F0C398 /* SkillUpgrade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB7812579E24000F0C398 /* SkillUpgrade.swift */; };
+		38CFB7832579E24000F0C398 /* SkillUpgrade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB7812579E24000F0C398 /* SkillUpgrade.swift */; };
+		38CFB7892579E28400F0C398 /* MonsterSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB7882579E28400F0C398 /* MonsterSource.swift */; };
+		38CFB78A2579E28400F0C398 /* MonsterSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB7882579E28400F0C398 /* MonsterSource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,8 +99,26 @@
 		384A496D2575A1ED002E04CB /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		384A49792575A359002E04CB /* Shared.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shared.xcdatamodel; sourceTree = "<group>"; };
 		384A49992575A9DB002E04CB /* ModelEnums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelEnums.swift; sourceTree = "<group>"; };
-		384ACCF42575B64A002E04CB /* JSONFileDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONFileDocument.swift; sourceTree = "<group>"; };
 		384ACD032575BD48002E04CB /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
+		38CFB6B82576EFC600F0C398 /* Monster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Monster.swift; sourceTree = "<group>"; };
+		38CFB6C62577291800F0C398 /* TeamGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamGroup.swift; sourceTree = "<group>"; };
+		38CFB6D225772A3100F0C398 /* Summoner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Summoner.swift; sourceTree = "<group>"; };
+		38CFB6F82577701800F0C398 /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
+		38CFB6FF25782F9B00F0C398 /* LeaderSkill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderSkill.swift; sourceTree = "<group>"; };
+		38CFB7062578303E00F0C398 /* FusionIngredients.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FusionIngredients.swift; sourceTree = "<group>"; };
+		38CFB70D2578306C00F0C398 /* Fusion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fusion.swift; sourceTree = "<group>"; };
+		38CFB714257831F600F0C398 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		38CFB7152578388E00F0C398 /* MonsterInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterInstance.swift; sourceTree = "<group>"; };
+		38CFB7202578462700F0C398 /* RuneInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuneInstance.swift; sourceTree = "<group>"; };
+		38CFB727257848C900F0C398 /* ArtifactInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtifactInstance.swift; sourceTree = "<group>"; };
+		38CFB72E2578494400F0C398 /* MonsterSkill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterSkill.swift; sourceTree = "<group>"; };
+		38CFB75E2579B84300F0C398 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		38CFB7652579DE4D00F0C398 /* Skill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skill.swift; sourceTree = "<group>"; };
+		38CFB76C2579DE8700F0C398 /* SkillScalingStat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillScalingStat.swift; sourceTree = "<group>"; };
+		38CFB7732579DEC000F0C398 /* SkillEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillEffect.swift; sourceTree = "<group>"; };
+		38CFB77A2579DEE800F0C398 /* SkillEffectDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillEffectDetail.swift; sourceTree = "<group>"; };
+		38CFB7812579E24000F0C398 /* SkillUpgrade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillUpgrade.swift; sourceTree = "<group>"; };
+		38CFB7882579E28400F0C398 /* MonsterSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,13 +168,13 @@
 		384A48DA2575A071002E04CB /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				38CFB6B72576EF9E00F0C398 /* Models */,
 				384A48DB2575A071002E04CB /* SummonerTasksApp.swift */,
 				384A48DC2575A071002E04CB /* SummonerTasksDocument.swift */,
 				384A496D2575A1ED002E04CB /* Persistence.swift */,
 				384A48DD2575A071002E04CB /* ContentView.swift */,
 				384A48DE2575A074002E04CB /* Assets.xcassets */,
-				384A49782575A359002E04CB /* SummonerTasksDB.xcdatamodeld */,
-				384ACCF42575B64A002E04CB /* JSONFileDocument.swift */,
+				384A49782575A359002E04CB /* SummonerTasks.xcdatamodeld */,
 				384A49992575A9DB002E04CB /* ModelEnums.swift */,
 				384ACD032575BD48002E04CB /* Images */,
 			);
@@ -173,6 +225,32 @@
 				384A49042575A074002E04CB /* Info.plist */,
 			);
 			path = "Tests macOS";
+			sourceTree = "<group>";
+		};
+		38CFB6B72576EF9E00F0C398 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				38CFB714257831F600F0C398 /* README.md */,
+				38CFB75E2579B84300F0C398 /* Task.swift */,
+				38CFB6D225772A3100F0C398 /* Summoner.swift */,
+				38CFB6B82576EFC600F0C398 /* Monster.swift */,
+				38CFB72E2578494400F0C398 /* MonsterSkill.swift */,
+				38CFB7812579E24000F0C398 /* SkillUpgrade.swift */,
+				38CFB7882579E28400F0C398 /* MonsterSource.swift */,
+				38CFB6FF25782F9B00F0C398 /* LeaderSkill.swift */,
+				38CFB7152578388E00F0C398 /* MonsterInstance.swift */,
+				38CFB7202578462700F0C398 /* RuneInstance.swift */,
+				38CFB727257848C900F0C398 /* ArtifactInstance.swift */,
+				38CFB7652579DE4D00F0C398 /* Skill.swift */,
+				38CFB76C2579DE8700F0C398 /* SkillScalingStat.swift */,
+				38CFB7732579DEC000F0C398 /* SkillEffect.swift */,
+				38CFB77A2579DEE800F0C398 /* SkillEffectDetail.swift */,
+				38CFB70D2578306C00F0C398 /* Fusion.swift */,
+				38CFB7062578303E00F0C398 /* FusionIngredients.swift */,
+				38CFB6C62577291800F0C398 /* TeamGroup.swift */,
+				38CFB6F82577701800F0C398 /* Team.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -334,12 +412,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38CFB70025782F9B00F0C398 /* LeaderSkill.swift in Sources */,
+				38CFB7742579DEC000F0C398 /* SkillEffect.swift in Sources */,
 				384A49052575A074002E04CB /* SummonerTasksApp.swift in Sources */,
-				384ACCF52575B64C002E04CB /* JSONFileDocument.swift in Sources */,
+				38CFB7212578462700F0C398 /* RuneInstance.swift in Sources */,
+				38CFB6C72577291800F0C398 /* TeamGroup.swift in Sources */,
+				38CFB7822579E24000F0C398 /* SkillUpgrade.swift in Sources */,
+				38CFB728257848C900F0C398 /* ArtifactInstance.swift in Sources */,
+				38CFB72F2578494400F0C398 /* MonsterSkill.swift in Sources */,
+				38CFB77B2579DEE800F0C398 /* SkillEffectDetail.swift in Sources */,
 				384A496E2575A1ED002E04CB /* Persistence.swift in Sources */,
-				384A49822575A3E1002E04CB /* SummonerTasksDB.xcdatamodeld in Sources */,
+				38CFB6B92576EFC600F0C398 /* Monster.swift in Sources */,
+				384A49822575A3E1002E04CB /* SummonerTasks.xcdatamodeld in Sources */,
+				38CFB7162578388E00F0C398 /* MonsterInstance.swift in Sources */,
+				38CFB7072578303E00F0C398 /* FusionIngredients.swift in Sources */,
 				384A49072575A074002E04CB /* SummonerTasksDocument.swift in Sources */,
+				38CFB6D325772A3100F0C398 /* Summoner.swift in Sources */,
+				38CFB70E2578306C00F0C398 /* Fusion.swift in Sources */,
 				384A499A2575A9DB002E04CB /* ModelEnums.swift in Sources */,
+				38CFB6F92577701800F0C398 /* Team.swift in Sources */,
+				38CFB7892579E28400F0C398 /* MonsterSource.swift in Sources */,
+				38CFB7662579DE4D00F0C398 /* Skill.swift in Sources */,
+				38CFB76D2579DE8700F0C398 /* SkillScalingStat.swift in Sources */,
+				38CFB75F2579B84300F0C398 /* Task.swift in Sources */,
 				384A49092575A074002E04CB /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -348,12 +443,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38CFB70125782F9C00F0C398 /* LeaderSkill.swift in Sources */,
+				38CFB7752579DEC000F0C398 /* SkillEffect.swift in Sources */,
 				384A49062575A074002E04CB /* SummonerTasksApp.swift in Sources */,
-				384ACCF62575B64C002E04CB /* JSONFileDocument.swift in Sources */,
+				38CFB7222578462700F0C398 /* RuneInstance.swift in Sources */,
 				384A496F2575A1ED002E04CB /* Persistence.swift in Sources */,
-				384A49872575A3E2002E04CB /* SummonerTasksDB.xcdatamodeld in Sources */,
+				38CFB7832579E24000F0C398 /* SkillUpgrade.swift in Sources */,
+				38CFB729257848C900F0C398 /* ArtifactInstance.swift in Sources */,
+				38CFB7302578494400F0C398 /* MonsterSkill.swift in Sources */,
+				38CFB77C2579DEE800F0C398 /* SkillEffectDetail.swift in Sources */,
+				384A49872575A3E2002E04CB /* SummonerTasks.xcdatamodeld in Sources */,
+				38CFB6CD2577292000F0C398 /* Monster.swift in Sources */,
 				384A49082575A074002E04CB /* SummonerTasksDocument.swift in Sources */,
+				38CFB7172578388E00F0C398 /* MonsterInstance.swift in Sources */,
+				38CFB7082578303E00F0C398 /* FusionIngredients.swift in Sources */,
 				384A499B2575A9DB002E04CB /* ModelEnums.swift in Sources */,
+				38CFB6D425772A3100F0C398 /* Summoner.swift in Sources */,
+				38CFB70F2578306C00F0C398 /* Fusion.swift in Sources */,
+				38CFB6C82577291800F0C398 /* TeamGroup.swift in Sources */,
+				38CFB6FA2577701800F0C398 /* Team.swift in Sources */,
+				38CFB78A2579E28400F0C398 /* MonsterSource.swift in Sources */,
+				38CFB7672579DE4D00F0C398 /* Skill.swift in Sources */,
+				38CFB76E2579DE8700F0C398 /* SkillScalingStat.swift in Sources */,
+				38CFB7602579B84300F0C398 /* Task.swift in Sources */,
 				384A490A2575A074002E04CB /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -441,6 +553,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -494,6 +608,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -734,13 +850,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		384A49782575A359002E04CB /* SummonerTasksDB.xcdatamodeld */ = {
+		384A49782575A359002E04CB /* SummonerTasks.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				384A49792575A359002E04CB /* Shared.xcdatamodel */,
 			);
 			currentVersion = 384A49792575A359002E04CB /* Shared.xcdatamodel */;
-			path = SummonerTasksDB.xcdatamodeld;
+			path = SummonerTasks.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
