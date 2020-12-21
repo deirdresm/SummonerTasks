@@ -22,8 +22,8 @@ enum Element: Int {
 
 // Items
 
-enum Building: Int {
-    case summonerTower, summohenge, pondOfMana, crystalMine, gateway = 8,
+enum BuildingType: Int {
+    case summonerTower, summonhenge, pondOfMana, crystalMine, gateway = 8,
         templeOfWishes = 10, magicShop, ancientStones, arcaneTower = 14,
         crystalTitan, fusionHexagram, fuseCenter, powerUpCircle = 20,
         tranquilForest = 22, gustyCliffs, deepForestEnt, monsterStorage,

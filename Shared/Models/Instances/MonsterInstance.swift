@@ -8,7 +8,19 @@
 import Foundation
 import CoreData
 
+// EHP = HP*(1140+(DEF*3.5))/1000
+
 // MARK: - Core Data
+
+extension MonsterInstance {
+    
+    func monsterRunesSorted() -> [RuneInstance] {
+        let sortNameDescriptor = NSSortDescriptor.init(key: "slot", ascending: true)
+        
+        return (self.runes)?.sortedArray(using: [sortNameDescriptor]) as! [RuneInstance]
+    }
+
+}
 
 // MARK: - JSON
 

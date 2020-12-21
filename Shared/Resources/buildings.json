@@ -1,0 +1,67 @@
+[
+  {
+    "model": "bestiary.building",
+    "pk": 6,
+    "fields": {
+      "com2us_id": 19,
+      "name": "Dark Sanctuary",
+      "max_level": 10,
+      "area": 0,
+      "affected_stat": 1,
+      "element": "dark",
+      "stat_bonus": "[\"3\", \"5\", \"7\", \"9\", \"11\", \"13\", \"15\", \"17\", \"19\", \"21\"]",
+      "upgrade_cost": "[\"120\", \"240\", \"360\", \"480\", \"600\", \"720\", \"840\", \"960\", \"1080\", \"1200\"]",
+      "description": null,
+      "icon_filename": "dark_sanctuary.png"
+    }
+  },
+  {
+    "model": "bestiary.building",
+    "pk": 7,
+    "fields": {
+      "com2us_id": 31,
+      "name": "Fallen Ancient Guardian",
+      "max_level": 10,
+      "area": 0,
+      "affected_stat": 5,
+      "element": null,
+      "stat_bonus": "[\"2\", \"5\", \"7\", \"10\", \"12\", \"15\", \"17\", \"20\", \"22\", \"25\"]",
+      "upgrade_cost": "[\"120\", \"240\", \"360\", \"480\", \"600\", \"720\", \"840\", \"960\", \"1080\", \"1200\"]",
+      "description": null,
+      "icon_filename": "fallen_ancient_guardian.png"
+    }
+  },
+  {
+    "model": "bestiary.building",
+    "pk": 12,
+    "fields": {
+      "com2us_id": 38,
+      "name": "Flag of Hope",
+      "max_level": 10,
+      "area": 1,
+      "affected_stat": 0,
+      "element": null,
+      "stat_bonus": "[\"2\", \"4\", \"6\", \"8\", \"10\", \"12\", \"14\", \"16\", \"18\", \"20\"]",
+      "upgrade_cost": "[\"330\", \"540\", \"930\", \"1450\", \"2100\", \"2680\", \"3360\", \"4140\", \"5020\", \"5990\"]",
+      "description": "",
+      "icon_filename": "flag_of_hope.png"
+    }
+  },
+  {
+    "model": "bestiary.building",
+    "pk": 14,
+    "fields": {
+      "com2us_id": 9,
+      "name": "Ancient Sword",
+      "max_level": 10,
+      "area": 0,
+      "affected_stat": 1,
+      "element": null,
+      "stat_bonus": "[\"2\", \"4\", \"6\", \"8\", \"10\", \"12\", \"14\", \"16\", \"18\", \"20\"]",
+      "upgrade_cost": "[\"150\", \"375\", \"600\", \"825\", \"1050\", \"1275\", \"1500\", \"1725\", \"1950\", \"2175\"]",
+      "description": "",
+      "icon_filename": "ancient_sword.png"
+    }
+  },
+
+]

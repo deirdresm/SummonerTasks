@@ -9,15 +9,15 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-    @Binding var document: SummonerTasksDocument
+    @Binding var document: SummonerJsonDocument
     @Environment(\.managedObjectContext) private var viewContext
 
 
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \Monster.com2usID, ascending: true)],
         animation: .default)
     
-    private var items: FetchedResults<Item>
+    private var monsters: FetchedResults<Monster>
 
     var body: some View {
 //        var body: some View {
@@ -25,26 +25,25 @@ struct ContentView: View {
 //        }
 
         List {
-            ForEach(items) { item in
-                Text("Item at \(item.timestamp!, formatter: itemFormatter)")
+            ForEach(monsters) { monster in
+                Text("Monster:  \(monster.name!)")
             }
-            .onDelete(perform: deleteItems)
+            .onDelete(perform: deleteMonsters)
         }
         .toolbar {
             #if os(iOS)
             EditButton()
             #endif
 
-            Button(action: addItem) {
-                Label("Add Item", systemImage: "plus")
+            Button(action: addMonster) {
+                Label("Add Monster", systemImage: "plus")
             }
         }
     }
 
-    private func addItem() {
+    private func addMonster() {
         withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
+            let newMonster = Monster(context: viewContext)
 
             do {
                 try viewContext.save()
@@ -57,9 +56,9 @@ struct ContentView: View {
         }
     }
 
-    private func deleteItems(offsets: IndexSet) {
+    private func deleteMonsters(offsets: IndexSet) {
         withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
+            offsets.map { monsters[$0] }.forEach(viewContext.delete)
 
             do {
                 try viewContext.save()
@@ -83,6 +82,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(document: .constant(SummonerTasksDocument()))
+        ContentView(document: .constant(SummonerJsonDocument()))
     }
 }
