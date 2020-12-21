@@ -103,6 +103,15 @@ extension RuneInstance {
     var runeTypeName: String {
         return rType.description
     }
+    
+    var awakening: Awakening {
+        switch level {
+        case 15:
+            return .awakened
+        default:
+            return .unawakened
+        }
+    }
 }
     
 extension RuneInstance {

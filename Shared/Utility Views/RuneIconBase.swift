@@ -20,9 +20,9 @@ public struct RuneIconBase: View {
     public var body: some View {
         let runeName = rune.runeTypeName
         let runeQuality = RuneQuality.runeLevel(level: rune.level)
-        let rotation = 60 * (rune.slot - 1)
-        let x_offset = 3.0 * cos(Double((rotation + 90) % 360))
-        let y_offset = 3.0 * sin(Double((rotation + 90) % 360))
+        let rotation = (60 * (rune.slot - 1))
+        let x_offset = 2.0 * cos(Double((rotation) % 360))
+        let y_offset = 2.0 * sin(Double((rotation) % 360))
 
         // needs to be converted into a LazyZStack except there is none
         
@@ -37,7 +37,7 @@ public struct RuneIconBase: View {
                 scale: 1,
                 label: Text("")
             )
-            .rotationEffect(.degrees(Double(rotation)))
+//            .rotationEffect(.degrees(Double(rotation)))
            Image(
                 ImageStore.loadImage(type: .runes, name: runeName),
                 scale: 2,

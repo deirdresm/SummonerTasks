@@ -34,12 +34,12 @@ extension RuneInstance {
         rune.com2usId = 12345
         rune.runeType = RuneType.swift.rawValue
         rune.stars = 6
-        rune.level = 15
+        rune.level = 14
         rune.slot = 1
         rune.quality = RuneQuality.legend.intValue()
         rune.originalQuality = RuneQuality.rare.intValue()
         rune.mainStat = RuneStatType.atkFlat.intValue()
-        rune.mainStatValue = 160
+        rune.mainStatValue = 128
         rune.hasAtk = true
 
         return rune
@@ -100,7 +100,7 @@ extension RuneInstance {
         rune.com2usId = 12345
         rune.runeType = RuneType.focus.rawValue
         rune.stars = 6
-        rune.level = 15
+        rune.level = 14
         rune.slot = 6
         rune.quality = RuneQuality.legend.intValue()
         rune.originalQuality = RuneQuality.rare.intValue()
