@@ -11,9 +11,13 @@ class PersistenceController {
     static let shared = PersistenceController()
 
     let container: NSPersistentCloudKitContainer
-
-    var persistenceInitialized = false
     
+//    var backgroundContext: NSManagedObjectContext {
+//        get {}
+//        
+//        set {}
+//    }
+//
     /**
      Creates and configures a private queue context.
     */

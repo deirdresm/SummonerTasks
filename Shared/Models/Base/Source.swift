@@ -8,6 +8,66 @@
 import Foundation
 import CoreData
 
+extension Source: Comparable {
+    func update(_ sourceData: SourceData) {
+        
+        // don't dirty the record if you don't have to
+        
+        if self.id != sourceData.id {
+            self.id = Int64(sourceData.id)
+        }
+        if self.name != sourceData.name {
+            self.name = sourceData.name
+        }
+        if self.c2uDescription != sourceData.description {
+            self.c2uDescription = sourceData.description
+        }
+        if self.imageFilename != sourceData.imageFilename {
+            self.imageFilename = sourceData.imageFilename
+        }
+        if self.isFarmable != sourceData.farmableSource {
+            self.isFarmable = sourceData.farmableSource
+        }
+        if self.metaOrder != sourceData.metaOrder {
+            self.metaOrder = sourceData.metaOrder
+        }
+    }
+    
+    static func insertOrUpdate(sourceData: SourceData,
+                               context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+        var source: Source!
+        
+        context.performAndWait {
+            let request : NSFetchRequest<Source> = Source.fetchRequest()
+
+            request.predicate = NSPredicate(format: "id == %i", sourceData.id)
+            
+            let results = try? context.fetch(request)
+
+            if results?.count == 0 {
+                // insert new
+                source = Source(context: context)
+                source.update(sourceData)
+             } else {
+                // update existing
+                source = results?.first
+                source.update(sourceData)
+             }
+        }
+    }
+    
+    static func batchUpdate(from sources: [SourceData],
+                            context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+        for source in sources {
+            Source.insertOrUpdate(sourceData: source, context: context)
+        }
+    }
+
+    public static func < (lhs: Source, rhs: Source) -> Bool {
+        lhs.metaOrder < rhs.metaOrder
+    }
+}
+
 /*
      CREATE TABLE public.bestiary_source
      (

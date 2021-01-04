@@ -14,36 +14,40 @@ struct ContentView: View {
 
 
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Monster.com2usID, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \Building.com2usId, ascending: true)],
         animation: .default)
     
-    private var monsters: FetchedResults<Monster>
+    private var buildings: FetchedResults<Building>
 
     var body: some View {
-//        var body: some View {
-//            TextEditor(text: $document.text)
-//        }
+        VStack {
+            HStack {
+                Text("Hello.")
+                    .font(.headline)
+                Spacer()
+            }
 
         List {
-            ForEach(monsters) { monster in
-                Text("Monster:  \(monster.name!)")
+            ForEach(buildings) { building in
+                BuildingIconView(building: building)
             }
-            .onDelete(perform: deleteMonsters)
+//            .onDelete(perform: deleteMonsters)
         }
-        .toolbar {
-            #if os(iOS)
-            EditButton()
-            #endif
-
-            Button(action: addMonster) {
-                Label("Add Monster", systemImage: "plus")
-            }
+//        .toolbar {
+//            #if os(iOS)
+//            EditButton()
+//            #endif
+//
+//            Button(action: addMonster) {
+//                Label("Add Monster", systemImage: "plus")
+//            }
+//        }
         }
     }
 
     private func addMonster() {
         withAnimation {
-            let newMonster = Monster(context: viewContext)
+            let newBuilding = Building(context: viewContext)
 
             do {
                 try viewContext.save()
@@ -58,7 +62,7 @@ struct ContentView: View {
 
     private func deleteMonsters(offsets: IndexSet) {
         withAnimation {
-            offsets.map { monsters[$0] }.forEach(viewContext.delete)
+            offsets.map { buildings[$0] }.forEach(viewContext.delete)
 
             do {
                 try viewContext.save()
@@ -81,7 +85,12 @@ struct ContentView: View {
 }
 
 struct ContentView_Previews: PreviewProvider {
+    static let text = Bundle.main.openBundleFile(from: "building-mini.json")
+    static var document: SummonerJsonDocument = {
+        return try! SummonerJsonDocument(text: text)
+    }()
+    
     static var previews: some View {
-        ContentView(document: .constant(SummonerJsonDocument()))
+        ContentView(document: .constant(document))
     }
 }

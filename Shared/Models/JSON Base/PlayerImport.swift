@@ -14,7 +14,7 @@ public class PlayerJsonWrapper {
     public var buildingInstanceData = [BuildingInstanceData]()
     public var monsterInstanceData = [MonsterInstanceData]()
     public var runeInstanceData = [RuneInstanceData]()
-    public var bestiarySkillData = [BestiarySkillData]()
+    public var bestiarySkillData = [SkillData]()
     public var buildingInstanceCount = 0
 
     public init(json: String) throws {
@@ -46,6 +46,10 @@ public class PlayerJsonWrapper {
             }
 
             switch model {
+            case "wizard_info":
+                let newSummoner = SummonerData(summoner: item)
+                summonerData.append(newSummoner)
+                print("imported \(summonerData.count) summoners so far") // should only be one
             case "deco_list":
                 // buildings that affect stats
                 let newBuilding = BuildingInstanceData(building: item)

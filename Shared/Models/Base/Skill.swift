@@ -10,6 +10,113 @@ import CoreData
 
 // MARK: - Core Data
 
+extension Skill: Comparable {
+    
+    convenience init(skillData: SkillData) {
+        self.init()
+        update(skillData)
+    }
+    
+    func update(_ skillData: SkillData) {
+        
+        // don't dirty the record if you don't have to
+        
+        if self.id != skillData.id {
+            self.id = Int64(skillData.id)
+        }
+        if self.name != skillData.name {
+            self.name = skillData.name
+        }
+        if self.com2usId != skillData.com2usId {
+            self.com2usId = skillData.com2usId
+        }
+        if self.c2uDescription != skillData.c2uDescription {
+            self.c2uDescription = skillData.c2uDescription
+        }
+        if self.slot != skillData.slot {
+            self.slot = skillData.slot
+        }
+        if self.cooltime != skillData.cooltime {
+            self.cooltime = skillData.cooltime ?? 0
+        }
+        if self.hits != skillData.hits {
+            self.hits = skillData.hits
+        }
+        if self.aoe != skillData.aoe {
+            self.aoe = skillData.aoe
+        }
+        if self.passive != skillData.passive {
+            self.passive = skillData.passive
+        }
+        if self.maxLevel != skillData.maxLevel {
+            self.maxLevel = skillData.maxLevel
+        }
+        if self.levelProgressDescription != skillData.levelProgressDescription {
+            self.levelProgressDescription = skillData.levelProgressDescription
+        }
+        if self.imageFilename != skillData.imageFilename {
+            self.imageFilename = skillData.imageFilename
+        }
+        if self.multiplierFormula != skillData.multiplierFormula {
+            self.multiplierFormula = skillData.multiplierFormula
+        }
+        if self.multiplierFormulaRaw != skillData.multiplierFormulaRaw {
+            self.multiplierFormulaRaw = skillData.multiplierFormulaRaw
+        }
+        if self.scalingStatsIds != skillData.scalingStats {
+            self.scalingStatsIds = skillData.scalingStats
+        }
+        if self.skillEffect != skillData.skillEffect {
+            self.skillEffect = skillData.skillEffect
+        }
+    }
+    
+    static func insertOrUpdate(skillData: SkillData,
+                               context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+        var skill: Skill!
+        
+        context.performAndWait {
+            let request : NSFetchRequest<Skill> = Skill.fetchRequest()
+
+            let predicate = NSPredicate(format: "com2usId == %i", skillData.com2usId)
+
+            request.predicate = predicate
+            
+            let results = try? context.fetch(request)
+
+            if results?.count == 0 {
+                // insert new
+                skill = Skill(context: context)
+                skill.update(skillData)
+             } else {
+                // update existing
+                skill = results?.first
+                skill.update(skillData)
+             }
+        }
+    }
+    
+    static func batchUpdate(from skills: [SkillData],
+                            context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+        for skill in skills {
+            Skill.insertOrUpdate(skillData: skill, context: context)
+        }
+    }
+
+    public var skillUpgradesSorted: [SkillUpgrade] {
+        let set = upgrades as? Set<SkillUpgrade> ?? []
+        return set.sorted {
+            $0.level < $1.level
+        }
+    }
+
+    // MARK: - Comparable conformance
+    
+    public static func < (lhs: Skill, rhs: Skill) -> Bool {
+        lhs.slot < rhs.slot
+    }
+}
+
 // MARK: - JSON
 
 // MARK: - Original SQL Table Definition

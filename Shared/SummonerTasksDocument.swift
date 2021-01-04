@@ -21,41 +21,59 @@ struct SummonerJsonDocument: FileDocument {
     
     public var summonerObjectId: NSManagedObjectID?
 
-    var text: String
+    var text: String = ""
 
-    init(text: String = "Hello, world!") {
+    static var readableContentTypes: [UTType] { [.json] }
+    
+    init(text: String = "Hello, world!") throws {
         self.text = text
+        
+        print("trying bestiary json wrapper)")
+        let jsonWrapper = try BestiaryJsonWrapper(json: text)
+        
+        let buildingData = BuildingData.items
+        print("buildingData count = \(buildingData.count)")
+    }
+    
+    func loadBestiaryData() throws {
+        let jsonWrapper = try BestiaryJsonWrapper(json: text)
+        
+        let buildingData = BuildingData.items
+
     }
 
-    static var readableContentTypes: [UTType] { [.swExporterJsonFile] }
+    func loadPlayerData() throws {
+        let jsonWrapper = try BestiaryJsonWrapper(json: text)
+    }
 
     init(configuration: ReadConfiguration) throws {
-        guard let data = configuration.file.regularFileContents else {
-            // TODO: cover more cases
-            throw CocoaError(.fileReadCorruptFile)
-        }
+        
+ //       self.config = configuration
         
         do {
             // what we do depends on the filename
             
+            guard let data = configuration.file.regularFileContents else {
+                // TODO: cover more cases
+                throw CocoaError(.fileReadCorruptFile)
+            }
+            
+            text = String(decoding: data, as: UTF8.self)
+            
             guard let filename = configuration.file.filename else {
                 throw CocoaError(.fileReadInvalidFileName)
             }
-            
             if filename.contains("bestiary_data") {
                 // bestiary_data.json - base bestiary data (changes rarely)
                 
-                // FIXME: move this to a background thread once we've got it sorted
-                let url = URL(fileURLWithPath: filename)
-                text = try String(contentsOf: url)
+                print("Sucked in bestiary data.")
                 let jsonWrapper = try BestiaryJsonWrapper(json: text)
                 
-                let buildingData = jsonWrapper.buildingData
+                let buildingData = BuildingData.items
             } else {
                 // deirdresm-11223344.json - player save file (playername-com2usId.json)
-    //            self = try JSONDecoder().decode(Self.self, from: data)
-                let url = URL(fileURLWithPath: filename)
-                text = try String(contentsOf: url)
+ 
+                print("Trying to read player file.")
                 let jsonWrapper = try BestiaryJsonWrapper(json: text)
 
             }
@@ -69,7 +87,11 @@ struct SummonerJsonDocument: FileDocument {
     
     // we're only viewing files, but write configuration support is required
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
-        let data = text.data(using: .utf8)!
-        return .init(regularFileWithContents: data)
+        throw JSONFileError.notImplemented
     }
+}
+
+enum JSONFileError: Error
+{
+    case notImplemented
 }

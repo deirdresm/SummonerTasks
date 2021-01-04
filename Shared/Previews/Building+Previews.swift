@@ -20,10 +20,26 @@ extension Building {
         building.maxLevel = 10
         building.area = 0
         building.affectedStat = 1
-        building.imageFilename = "ancient_sword"
+        building.imageFilename = "ancient_sword.png"
         building.element = nil
         building.statBonus = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
         building.upgradeCost = [150, 375, 600, 825, 1050, 1275, 1500, 1725, 1950, 2175]
+
+        return building
+    }
+
+    public static var skyTribeTotem: Building {
+        let building = Building(context: PersistenceController.shared.container.viewContext)
+        building.id = 8
+        building.com2usId = 6
+        building.name = "Sky Tribe Totem"
+        building.maxLevel = 10
+        building.area = 0
+        building.affectedStat = 3
+        building.imageFilename = "sky_tribe_totem.png"
+        building.element = nil
+        building.statBonus = [2, 3, 5, 6, 8, 9, 11, 12, 14, 15]
+        building.upgradeCost = [240, 440, 650, 840, 1040, 1240, 1440, 1640, 1840, 2040]
 
         return building
     }
@@ -36,7 +52,7 @@ extension Building {
         building.maxLevel = 10
         building.area = 0
         building.affectedStat = 1
-        building.imageFilename = "dark_sanctuary"
+        building.imageFilename = "dark_sanctuary.png"
         building.element = "dark"
         building.statBonus = [3, 5, 7, 9, 11, 13, 15, 17, 19, 21]
         building.upgradeCost = [120, 240, 360, 480, 600, 720, 840, 960, 1080, 1200]

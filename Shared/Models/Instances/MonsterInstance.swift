@@ -12,7 +12,7 @@ import CoreData
 
 // MARK: - Core Data
 
-extension MonsterInstance {
+extension MonsterInstance: Comparable {
     
     func monsterRunesSorted() -> [RuneInstance] {
         let sortNameDescriptor = NSSortDescriptor.init(key: "slot", ascending: true)
@@ -20,6 +20,130 @@ extension MonsterInstance {
         return (self.runes)?.sortedArray(using: [sortNameDescriptor]) as! [RuneInstance]
     }
 
+    
+    public var ehp: Int64 {
+        // EHP = HP*(1140+(DEF*3.5))/1000
+        guard let m = self.monster
+        else {
+            return 0
+        }
+        
+        return Int64((Float(m.maxLvlHp) * (1140 + (Float(m.maxLvlDefense) * 3.5))/1000))
+    }
+    
+    public var skillUpsNeeded: Int64 {
+        var result: Int64 = 0
+
+        guard let m = self.monster
+        else {
+            return result
+        }
+        
+        let skillUpsToMax = m.skillUpsToMax
+       
+        result = skillUpsToMax - self.skill1Level - self.skill2Level - self.skill3Level - self.skill4Level
+        
+        return result
+    }
+
+    // MARK: - JSON Import Functions
+
+    func update(_ monsterData: MonsterInstanceData,
+                context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+        
+        // don't dirty the record if you don't have to
+        
+        if self.id != monsterData.id {
+            self.id = Int64(monsterData.id)
+        }
+        if self.level != monsterData.unitLevel {
+            self.level = monsterData.unitLevel
+        }
+        if self.stars != monsterData.stars {
+            self.stars = monsterData.stars
+        }
+        
+        if monsterData.skills.count > 0 {
+            if self.skill1Level != monsterData.skills[0].level {
+                self.skill1Level = monsterData.skills[0].level
+            }
+        }
+        if monsterData.skills.count > 1 {
+            if self.skill2Level != monsterData.skills[1].level {
+                self.skill2Level = monsterData.skills[1].level
+            }
+        }
+        if monsterData.skills.count > 2 {
+            if self.skill3Level != monsterData.skills[2].level {
+                self.skill3Level = monsterData.skills[2].level
+            }
+        }
+        if monsterData.skills.count > 3 {
+            if self.skill4Level != monsterData.skills[3].level {
+                self.skill4Level = monsterData.skills[3].level
+            }
+        }
+
+        self.fodder = false
+        
+        // TODO building shit here
+        
+        if self.monsterId != monsterData.monsterId {
+            self.monsterId = monsterData.monsterId
+            
+            let monster = Monster.findById(monster: monsterId, context: context)
+            self.monster = monster
+        }
+        if self.metaOrder != monsterData.metaOrder {
+            self.metaOrder = monsterData.metaOrder
+        }
+        if self.isFarmable != monsterData.farmableMonsterInstance {
+            self.isFarmable = monsterData.farmableMonsterInstance
+        }
+        if self.metaOrder != monsterData.metaOrder {
+            self.metaOrder = monsterData.metaOrder
+        }
+        if self.isFarmable != monsterData.farmableMonsterInstance {
+            self.isFarmable = monsterData.farmableMonsterInstance
+        }
+        if self.metaOrder != monsterData.metaOrder {
+            self.metaOrder = monsterData.metaOrder
+        }
+    }
+    
+    static func insertOrUpdate(monsterData: MonsterInstanceData,
+                               context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+        var monsterInstance: MonsterInstance!
+        
+        context.performAndWait {
+            let request : NSFetchRequest<MonsterInstance> = MonsterInstance.fetchRequest()
+
+            request.predicate = NSPredicate(format: "id == %i", monsterData.id)
+            
+            let results = try? context.fetch(request)
+
+            if results?.count == 0 {
+                // insert new
+                monsterInstance = MonsterInstance(context: context)
+                monsterInstance.update(monsterData, context: context)
+             } else {
+                // update existing
+                monsterInstance = results?.first
+                monsterInstance.update(monsterData, context: context)
+             }
+        }
+    }
+    
+    static func batchUpdate(from monsterInstances: [MonsterInstanceData],
+                            context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+        for monsterInstance in monsterInstances {
+            MonsterInstance.insertOrUpdate(monsterData: monsterInstance, context: context)
+        }
+    }
+
+    public static func < (lhs: MonsterInstance, rhs: MonsterInstance) -> Bool {
+        lhs.id < rhs.id
+    }
 }
 
 // MARK: - JSON
@@ -91,3 +215,24 @@ extension MonsterInstance {
     )
 
 */
+
+/*
+ let unitId:             Int64
+ let com2usId:           Int64
+ let summonerId:         Int64   // points to Summoner object
+ let monsterId:          Int64   // points to Monster object
+ let unitLevel:          Int64
+ let monsterClass:       Int64
+ let con:                Int64
+ let atk:                Int64
+ let def:                Int64
+ let spd:                Int64
+ let resist:             Int64
+ let accuracy:           Int64
+ let critRate:           Int64
+ let critDamage:         Int64
+ var skills:             [MonsterInstanceSkillData]
+ var runes:              [RuneInstanceData]
+ var artifacts:          [ArtifactInstanceData]
+
+ */

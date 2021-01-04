@@ -6,10 +6,13 @@
 //
 
 import Foundation
+import CoreData
 
+// MARK: - JSON - SkillData
 
-
-public struct BestiarySkillData {
+public struct SkillData: JsonArray {
+    
+    static var items = [SkillData]()
 
     private enum CodingKeys: String, CodingKey {
         case id = "pk"
@@ -63,17 +66,462 @@ public struct BestiarySkillData {
         levelProgressDescription = skill.fields.level_progress_description.string
         
         // FIXME: this isn't importing correctly.
-        var jsonArr = skill.fields.multiplier_formula_raw.value
-        var converted = try! JSON(string: jsonArr as! String).array
-        multiplierFormulaRaw =  converted.map {try! JSON(string: $0.value as! String).string}
+        var jsonArr = skill.fields.multiplier_formula_raw.array
+        multiplierFormulaRaw =  jsonArr.map { $0.string}
 
-        jsonArr = skill.fields.skill_effect.value
-        converted = try! JSON(string: jsonArr as! String).array
-        skillEffect = converted.map {try! JSON(string: $0.value as! String).int}
+        jsonArr = skill.fields.skill_effect.array
+        skillEffect = jsonArr.map { $0.int}
+        
+        jsonArr = skill.fields.scaling_stats.array
+        scalingStats = jsonArr.map { $0.int}
 
-        jsonArr = skill.fields.scaling_stats.value
-        converted = try! JSON(string: jsonArr as! String).array
-        scalingStats = converted.map {try! JSON(string: $0.value as! String).int}
+    }
+    
+    static func saveToCoreData(_ taskContext: NSManagedObjectContext) {
+        
+        taskContext.perform {
+            Skill.batchUpdate(from: SkillData.items,
+                                 context: taskContext)
+            do {
+                try taskContext.save()
+            } catch {
+                print("could not save context")
+            }
+        }
+    }
+}
+
+// MARK: - JSON - LeaderSkillData
+
+//{
+//"model": "bestiary.leaderskill",
+//"pk": 1,
+//"fields": {
+//  "attribute": 7,
+//  "amount": 15,
+//  "area": 1,
+//  "element": null
+//}
+//},
+
+
+public struct LeaderSkillData: JsonArray {
+    
+    static var items = [LeaderSkillData]()
+
+    private enum CodingKeys: String, CodingKey {
+        case id = "pk"
+        case attribute
+        case amount
+        case area
+        case element
+    }
+
+    let id:             Int64
+    let attribute:      Int64?
+    let amount:         Int64
+    let area:           Int64
+    let element:        String?
+
+    public init(skill: JSON, pk: Int64) {
+        id = skill.pk.int
+        attribute = skill.fields.attribute.int
+        amount = skill.fields.amount.int
+        area = skill.fields.area.int
+        element = skill.fields.element.string
+    }
+    
+    static func saveToCoreData(_ taskContext: NSManagedObjectContext) {
+        
+        taskContext.perform {
+            LeaderSkill.batchUpdate(from: LeaderSkillData.items,
+                                 context: taskContext)
+            do {
+                try taskContext.save()
+            } catch {
+                print("could not save context")
+            }
+        }
+    }
+}
+
+// MARK: - JSON - SkillUpgradeData
+
+//{
+//   "model": "bestiary.skillupgrade",
+//   "pk": 8846,
+//   "fields": {
+//     "skill": 2983,
+//     "level": 6,
+//     "effect": 3,
+//     "amount": 1
+//   }
+// },
+
+
+public struct SkillUpgradeData: JsonArray {
+    
+    static var items = [SkillUpgradeData]()
+
+    private enum CodingKeys: String, CodingKey {
+        case id = "pk"
+        case skill
+        case level
+        case effect
+        case amount
+    }
+
+    let id:             Int64
+    let skill:          Int64
+    let level:          Int64
+    let effect:         Int64
+    let amount:         Int64
+
+    public init(skillUpgrade: JSON, pk: Int64) {
+        id = skillUpgrade.pk.int
+        skill = skillUpgrade.fields.skill.int
+        level = skillUpgrade.fields.level.int
+        effect = skillUpgrade.fields.effect.int
+        amount = skillUpgrade.fields.amount.int
+    }
+    
+    static func saveToCoreData(_ taskContext: NSManagedObjectContext) {
+        
+        taskContext.perform {
+            SkillUpgrade.batchUpdate(from: SkillUpgradeData.items,
+                                 context: taskContext)
+            do {
+                try taskContext.save()
+            } catch {
+                print("could not save context")
+            }
+        }
+    }
+}
+
+// MARK: - JSON - SkillEffectData
+
+//{
+//  "model": "bestiary.skilleffect",
+//  "pk": 1,
+//  "fields": {
+//    "is_buff": true,
+//    "name": "Increase ATK",
+//    "description": "Attack Power is increased by 50%",
+//    "icon_filename": "buff_attack_up.png"
+//  }
+//},
+
+public struct SkillEffectData: JsonArray {
+    
+    static var items = [SkillEffectData]()
+
+    private enum CodingKeys: String, CodingKey {
+        case id = "pk"
+        case isBuff = "is_buff"
+        case name
+        case c2uDescription = "description"
+        case imageFilename = "icon_filename"
+    }
+
+    let id:             Int64
+    let isBuff:         Bool
+    let name:           String
+    let c2uDescription: String
+    let imageFilename:  String
+
+    public init(skillEffect: JSON, pk: Int64) {
+        id = skillEffect.pk.int
+        isBuff = skillEffect.fields.is_buff.bool
+        name = skillEffect.fields.name.string
+        c2uDescription = skillEffect.fields.description.string
+        imageFilename = skillEffect.fields.icon_filename.string
+    }
+    
+    static func saveToCoreData(_ taskContext: NSManagedObjectContext) {
+        
+        taskContext.perform {
+            SkillEffect.batchUpdate(from: SkillEffectData.items,
+                                 context: taskContext)
+            do {
+                try taskContext.save()
+            } catch {
+                print("could not save context")
+            }
+        }
+    }
+}
+
+// MARK: - JSON - SkillEffectDetailData
+
+//{
+//  "model": "bestiary.skilleffectdetail",
+//  "pk": 1,
+//  "fields": {
+//    "skill": 639,
+//    "effect": 19,
+//    "aoe": false,
+//    "single_target": true,
+//    "self_effect": false,
+//    "chance": 100,
+//    "on_crit": false,
+//    "on_death": false,
+//    "random": false,
+//    "quantity": 1,
+//    "all": false,
+//    "self_hp": false,
+//    "target_hp": false,
+//    "damage": false,
+//    "note": null
+//  }
+//},
+
+public struct SkillEffectDetailData: JsonArray {
+    
+    static var items = [SkillEffectDetailData]()
+
+    private enum CodingKeys: String, CodingKey {
+        case id = "pk"
+        case skill
+        case effect
+        case aoe
+        case singleTarget = "single_target"
+        case selfEffect = "self_effect"
+        case chance
+        case onCrit = "on_crit"
+        case onDeath = "on_death"
+        case random
+        case quantity
+        case all
+        case selfHp = "self_hp"
+        case targetHp = "target_hp"
+        case damage
+        case note
+    }
+
+    let id:             Int64
+    let skill:          Int64
+    let effect:         Int64
+    let aoe:            Bool
+    let singleTarget:   Bool
+    let selfEffect:     Bool
+    let chance:         Int64
+    let onCrit:         Bool
+    let onDeath:        Bool
+    let random:         Bool
+    let quantity:       Int64
+    let all:            Bool
+    let selfHp:         Bool
+    let targetHp:       Bool
+    let damage:         Bool
+    let note:           String
+
+    public init(skillEffectDetail: JSON, pk: Int64) {
+        id = skillEffectDetail.pk.int
+        skill = skillEffectDetail.fields.skill.int
+        effect = skillEffectDetail.fields.effect.int
+        aoe = skillEffectDetail.fields.aoe.bool
+        singleTarget = skillEffectDetail.fields.single_target.bool
+        selfEffect = skillEffectDetail.fields.self_effect.bool
+        chance = skillEffectDetail.fields.chance.int
+        onCrit = skillEffectDetail.fields.on_crit.bool
+        onDeath = skillEffectDetail.fields.on_death.bool
+        random = skillEffectDetail.fields.random.bool
+        quantity = skillEffectDetail.fields.quantity.int
+        all = skillEffectDetail.fields.all.bool
+        selfHp = skillEffectDetail.fields.self_hp.bool
+        targetHp = skillEffectDetail.fields.target_hp.bool
+        damage = skillEffectDetail.fields.damage.bool
+        note = skillEffectDetail.fields.note.string
+    }
+
+    static func saveToCoreData(_ taskContext: NSManagedObjectContext) {
+        
+        taskContext.perform {
+            SkillEffectDetail.batchUpdate(from: SkillEffectDetailData.items,
+                                 context: taskContext)
+            do {
+                try taskContext.save()
+            } catch {
+                print("could not save context")
+            }
+        }
+    }
+}
+
+// MARK: - JSON - SkillEffectDetailData
+
+//{
+//  "model": "bestiary.scalingstat",
+//  "pk": 10,
+//  "fields": {
+//    "stat": "ATK",
+//    "com2us_desc": "ATK",
+//    "description": ""
+//  }
+//},
+
+public struct ScalingStatData: JsonArray {
+    
+    static var items = [ScalingStatData]()
+
+    private enum CodingKeys: String, CodingKey {
+        case id = "pk"
+        case stat
+        case c2uDesc = "com2us_desc"
+        case scalingDesc = "description"
+    }
+
+    let id:             Int64
+    let stat:           String
+    let c2uDesc:        String
+    let scalingDesc:    String
+
+    public init(scalingStat: JSON, pk: Int64) {
+        id = scalingStat.pk.int
+        stat = scalingStat.fields.stat.string
+        c2uDesc = scalingStat.fields.com2us_desc.string
+        scalingDesc = scalingStat.fields.description.string
+    }
+    
+    static func saveToCoreData(_ taskContext: NSManagedObjectContext) {
+        
+        taskContext.perform {
+            ScalingStat.batchUpdate(from: ScalingStatData.items,
+                                 context: taskContext)
+            do {
+                try taskContext.save()
+            } catch {
+                print("could not save context")
+            }
+        }
+    }
+}
+
+// MARK: - JSON - HomunculusSkillData
+
+//{
+//   "model": "bestiary.homunculusskill",
+//   "pk": 66,
+//   "fields": {
+//     "skill": 1735,
+//     "monsters": [
+//       1049,
+//       1051
+//     ],
+//     "prerequisites": [
+//       1730,
+//       1731
+//     ]
+//   }
+// },
+
+public struct HomunculusSkillData: JsonArray {
+    
+    static var items = [HomunculusSkillData]()
+
+    private enum CodingKeys: String, CodingKey {
+        case id = "pk"
+        case skill
+        case monsters
+        case prerequisites
+    }
+
+    let id:             Int64
+    let skill:          Int64
+    let monsters:       [Int64]
+    let prerequisites:  [Int64]
+
+    public init(homunculusSkill: JSON, pk: Int64) {
+        id = homunculusSkill.pk.int
+        skill = homunculusSkill.fields.skill.int
+
+        var jsonArr = homunculusSkill.fields.monsters.array
+        monsters =  jsonArr.map { $0.int}
+
+        jsonArr = homunculusSkill.fields.prerequisites.array
+        prerequisites = jsonArr.map { $0.int}
+    }
+    
+    static func saveToCoreData(_ taskContext: NSManagedObjectContext) {
+        
+        taskContext.perform {
+            HomunculusSkill.batchUpdate(from: HomunculusSkillData.items,
+                                 context: taskContext)
+            do {
+                try taskContext.save()
+            } catch {
+                print("could not save context")
+            }
+        }
+    }
+
+}
+
+// MARK: - JSON - HomunculusSkillcraftData
+
+//{
+//   "model": "bestiary.homunculusskill",
+//   "pk": 66,
+//   "fields": {
+//     "skill": 1735,
+//     "monsters": [
+//       1049,
+//       1051
+//     ],
+//     "prerequisites": [
+//       1730,
+//       1731
+//     ]
+//   }
+// },
+
+/*   {
+ "model": "bestiary.homunculusskillcraftcost",
+ "pk": 5897,
+ "fields": {
+   "item": 6,
+   "quantity": 50000,
+   "skill": 1
+ }
+},
+
+ */
+
+public struct HomunculusSkillcraftData: JsonArray {
+    
+    static var items = [HomunculusSkillcraftData]()
+
+    private enum CodingKeys: String, CodingKey {
+        case id = "pk"
+        case item
+        case quantity
+        case skill
+    }
+
+    let id:             Int64
+    let item:           Int64
+    let quantity:       Int64
+    let skill:          Int64
+
+    public init(homunculusSkill: JSON, pk: Int64) {
+        id = homunculusSkill.pk.int
+        item = homunculusSkill.item.int
+        quantity = homunculusSkill.quantity.int
+        skill = homunculusSkill.fields.skill.int
+    }
+    
+    static func saveToCoreData(_ taskContext: NSManagedObjectContext) {
+        
+        taskContext.perform {
+            HomunculusSkillcraftCost.batchUpdate(from: HomunculusSkillcraftData.items,
+                                 context: taskContext)
+            do {
+                try taskContext.save()
+            } catch {
+                print("could not save context")
+            }
+        }
     }
 }
 
@@ -342,11 +790,46 @@ public struct BestiarySkillData {
          ON DELETE NO ACTION
          DEFERRABLE INITIALLY DEFERRED
  )
+ 
+ CREATE TABLE public.bestiary_homunculusskill_prerequisites
+ (
+     id integer NOT NULL DEFAULT nextval('bestiary_homunculusskill_prerequisites_id_seq'::regclass),
+     homunculusskill_id integer NOT NULL,
+     skill_id integer NOT NULL,
+     CONSTRAINT bestiary_homunculusskill_prerequisites_pkey PRIMARY KEY (id),
+     CONSTRAINT bestiary_homunculusskill_homunculusskill_id_skill_d8c42a7d_uniq UNIQUE (homunculusskill_id, skill_id),
+     CONSTRAINT bestiary_homunculuss_homunculusskill_id_1e829ede_fk_bestiary_ FOREIGN KEY (homunculusskill_id)
+         REFERENCES public.bestiary_homunculusskill (id) MATCH SIMPLE
+         ON UPDATE NO ACTION
+         ON DELETE NO ACTION
+         DEFERRABLE INITIALLY DEFERRED,
+     CONSTRAINT bestiary_homunculuss_skill_id_830944ad_fk_bestiary_ FOREIGN KEY (skill_id)
+         REFERENCES public.bestiary_skill (id) MATCH SIMPLE
+         ON UPDATE NO ACTION
+         ON DELETE NO ACTION
+         DEFERRABLE INITIALLY DEFERRED
+ )
+
+ CREATE TABLE public.bestiary_homunculusskillcraftcost
+ (
+     id integer NOT NULL DEFAULT nextval('bestiary_homunculusskillcraftcost_id_seq'::regclass),
+     quantity integer NOT NULL,
+     skill_id integer NOT NULL,
+     item_id integer NOT NULL,
+     CONSTRAINT bestiary_homunculusskillcraftcost_pkey PRIMARY KEY (id),
+     CONSTRAINT bestiary_homunculuss_item_id_5944c17f_fk_bestiary_ FOREIGN KEY (item_id)
+         REFERENCES public.bestiary_gameitem (id) MATCH SIMPLE
+         ON UPDATE NO ACTION
+         ON DELETE NO ACTION
+         DEFERRABLE INITIALLY DEFERRED,
+     CONSTRAINT bestiary_homunculuss_skill_id_e4892f69_fk_bestiary_ FOREIGN KEY (skill_id)
+         REFERENCES public.bestiary_homunculusskill (id) MATCH SIMPLE
+         ON UPDATE NO ACTION
+         ON DELETE NO ACTION
+         DEFERRABLE INITIALLY DEFERRED
+ )
 
 
- 
- 
- 
  
  
  

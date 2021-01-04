@@ -8,7 +8,66 @@
 import Foundation
 import CoreData
 
-// MARK: - Core Data
+
+// MARK: - Core Data ScalingStat
+
+extension ScalingStat {
+    
+    convenience init(scalingStatData: ScalingStatData) {
+        self.init()
+        update(scalingStatData)
+    }
+    
+    func update(_ scalingStatData: ScalingStatData) {
+        
+        // don't dirty the record if you don't have to
+        
+        if self.id != scalingStatData.id {
+            self.id = Int64(scalingStatData.id)
+        }
+        if self.c2uDesc != scalingStatData.c2uDesc {
+            self.c2uDesc = scalingStatData.c2uDesc
+        }
+        if self.scalingDesc != scalingStatData.scalingDesc {
+            self.scalingDesc = scalingStatData.scalingDesc
+        }
+        if self.stat != scalingStatData.stat {
+            self.stat = scalingStatData.stat
+        }
+    }
+    
+    static func insertOrUpdate(scalingStatData: ScalingStatData,
+                               context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+        var scalingStat: ScalingStat!
+        
+        context.performAndWait {
+            let request : NSFetchRequest<ScalingStat> = ScalingStat.fetchRequest()
+
+            let predicate = NSPredicate(format: "id == %i", scalingStatData.id)
+
+            request.predicate = predicate
+            
+            let results = try? context.fetch(request)
+
+            if results?.count == 0 {
+                // insert new
+                scalingStat = ScalingStat(context: context)
+                scalingStat.update(scalingStatData)
+             } else {
+                // update existing
+                scalingStat = results?.first
+                scalingStat.update(scalingStatData)
+             }
+        }
+    }
+    
+    static func batchUpdate(from scalingStats: [ScalingStatData],
+                            context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+        for scalingStat in scalingStats {
+            ScalingStat.insertOrUpdate(scalingStatData: scalingStat, context: context)
+        }
+    }
+}
 
 // MARK: - JSON
 

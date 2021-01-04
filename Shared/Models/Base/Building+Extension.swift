@@ -11,13 +11,12 @@ import CoreData
 // MARK: - Core Data
 
 extension Building {
-    
     convenience init(buildingData: BuildingData) {
         self.init()
-        update(buildingData)
+        update(from: buildingData)
     }
     
-    func update(_ buildingData: BuildingData) {
+    func update(from buildingData: BuildingData) {
         
         // don't dirty the record if you don't have to
         
@@ -56,31 +55,35 @@ extension Building {
         }
     }
     
-    static func insertOrUpdate(buildingData: BuildingData,
-                               context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
-        let building: Building!
+    static func insertOrUpdate(from buildingData: BuildingData,
+                               context: NSManagedObjectContext) {
+        var building: Building!
         
-        let request : NSFetchRequest<Building> = Building.fetchRequest()
+        context.performAndWait {
+            let request : NSFetchRequest<Building> = Building.fetchRequest()
 
-        request.predicate = NSPredicate(format: "com2usId = %@", buildingData.com2usId)
-        
-        let results = try? context.fetch(request)
+            let predicate = NSPredicate(format: "com2usId == %i", buildingData.com2usId)
 
-        if results?.count == 0 {
-            // insert new
-            building = Building(context: context)
-            building.update(buildingData)
-         } else {
-            // update existing
-            building = results?.first
-            building.update(buildingData)
-         }
+            request.predicate = predicate
+            
+            let results = try? context.fetch(request)
+
+            if results?.count == 0 {
+                // insert new
+                building = Building(context: context)
+                building.update(from: buildingData)
+             } else {
+                // update existing
+                building = results?.first
+                building.update(from: buildingData)
+             }
+        }
     }
     
-    static func batchUpdate(buildings: [BuildingData],
-                            context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+    static func batchUpdate(from buildings: [BuildingData],
+                            context: NSManagedObjectContext) {
         for building in buildings {
-            Building.insertOrUpdate(buildingData: building, context: context)
+            Building.insertOrUpdate(from: building, context: context)
         }
     }
 }

@@ -76,6 +76,7 @@ extension BuildingInstance {
     static func batchUpdate(buildings: [BuildingInstanceData],
                             context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
         for building in buildings {
+            print(building)
             BuildingInstance.insertOrUpdate(buildingInstanceData: building, context: context)
         }
     }

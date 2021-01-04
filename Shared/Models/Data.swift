@@ -11,6 +11,21 @@ import CoreData
 import SwiftUI
 import ImageIO
 
+protocol JsonArray {
+    associatedtype ItemsArray
+    
+    static var items: [ItemsArray] {get set}
+
+    static func saveToCoreData(_ taskContext: NSManagedObjectContext)
+}
+
+protocol CoreDataUtility
+{
+    func update(from: AnyObject)
+    static func insertOrUpdate(from: AnyObject, context: NSManagedObjectContext)
+    static func batchUpdate(from: [AnyObject], context: NSManagedObjectContext)
+}
+
 extension Array where Element == String {
     func compactMap<T: LosslessStringConvertible>() -> [T] {
         return self.compactMap({ T($0) })
@@ -106,6 +121,19 @@ enum ImageType: String {
     case skills
     case leaders
     case stars
+    
+    var path: String {
+        switch self {
+        case .leaders:
+            return ("skills/leader")
+        case .artifacts, .buffs, .buildings, .dungeons, .elements, .future, .icons, .items,
+             .monsters, .runes, .skills, .stars:
+            return ("\(self)")
+        default:
+            return ""
+        }
+    }
+
 }
 
 //let landmarkData: [Landmark] = load("landmarkData.json")
@@ -143,11 +171,11 @@ final class ImageStore {
     
     static func loadImage(type: ImageType, name: String) -> CGImage {
         guard
-            let url = Bundle.main.url(forResource: name, withExtension: "png", subdirectory: "Images/\(type.rawValue)"),
+            let url = Bundle.main.url(forResource: name, withExtension: "", subdirectory: "Images/\(type.path)"),
             let imageSource = CGImageSourceCreateWithURL(url as NSURL, nil),
             let image = CGImageSourceCreateImageAtIndex(imageSource, 0, nil)
         else {
-            fatalError("Couldn't load image Images/\(type.rawValue)/\(name).png from main bundle.")
+            fatalError("Couldn't load image Images/\(type.rawValue)/\(name) from main bundle.")
         }
         return image
     }

@@ -28,18 +28,18 @@ public struct RuneIconBase: View {
         
         ZStack{
             Image(
-                ImageStore.loadImage(type: .runes, name: "bg_\(runeQuality)"),
+                ImageStore.loadImage(type: .runes, name: "bg_\(runeQuality).png"),
                 scale: 1,
                 label: Text("")
             )
             Image(
-                ImageStore.loadImage(type: .runes, name: "rune\(rune.slot)"),
+                ImageStore.loadImage(type: .runes, name: "rune\(rune.slot)).png"),
                 scale: 1,
                 label: Text("")
             )
 //            .rotationEffect(.degrees(Double(rotation)))
            Image(
-                ImageStore.loadImage(type: .runes, name: runeName),
+                ImageStore.loadImage(type: .runes, name: "\(runeName).png"),
                 scale: 2,
                 label: Text("")
             )

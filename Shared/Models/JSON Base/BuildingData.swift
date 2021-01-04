@@ -1,7 +1,9 @@
 import Foundation
+import CoreData
 
-
-public struct BuildingData {
+public struct BuildingData: JsonArray {
+    
+    static var items = [BuildingData]()
 
     private enum CodingKeys: String, CodingKey {
         case id = "pk"
@@ -44,12 +46,25 @@ public struct BuildingData {
         var jsonArr = building.fields.stat_bonus.value
         var converted = try! JSON(string: jsonArr as! String).array
         statBonus = converted.map {try! JSON(string: $0.value as! String).int}
-        print("statBonus: \(statBonus)")
+//        print("statBonus: \(statBonus)")
 
         jsonArr = building.fields.upgrade_cost.value
         converted = try! JSON(string: jsonArr as! String).array
         upgradeCost =  converted.map {try! JSON(string: $0.value as! String).int}
-        print("upgradeCost: \(upgradeCost)")
+//        print("upgradeCost: \(upgradeCost)")
+    }
+    
+    static func saveToCoreData(_ taskContext: NSManagedObjectContext) {
+        
+        taskContext.perform {
+            Building.batchUpdate(from: BuildingData.items,
+                                 context: taskContext)
+            do {
+                try taskContext.save()
+            } catch {
+                print("could not save context")
+            }
+        }
     }
 }
 

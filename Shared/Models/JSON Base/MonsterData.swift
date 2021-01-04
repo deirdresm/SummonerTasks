@@ -6,8 +6,11 @@
 //
 
 import Foundation
+import CoreData
 
-public struct MonsterData {
+public struct MonsterData: JsonArray {
+    
+    static var items = [MonsterData]()
 
     private enum CodingKeys: String, CodingKey {
         case id = "pk"
@@ -213,5 +216,18 @@ public struct MonsterData {
         
         jsonArr = monster.fields.source.array
         source =  jsonArr.map { $0.int}
+    }
+    
+    static func saveToCoreData(_ taskContext: NSManagedObjectContext) {
+        
+        taskContext.perform {
+            Monster.batchUpdate(from: MonsterData.items,
+                                 context: taskContext)
+            do {
+                try taskContext.save()
+            } catch {
+                print("could not save context")
+            }
+        }
     }
 }

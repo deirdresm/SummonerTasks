@@ -21,7 +21,7 @@ extension RuneInstance {
         guard let model =
                 PersistenceController.shared.container.viewContext.persistentStoreCoordinator?.managedObjectModel,
           let request = model
-            .fetchRequestFromTemplate(withName: "summonerRuneById", substitutionVariables: ["com2usId" : runeId, "summonerId": summoner.com2usId])
+            .fetchRequestFromTemplate(withName: "summonerRuneById", substitutionVariables: ["com2usId" : runeId, "summonerId": summoner.id])
             as? NSFetchRequest<RuneInstance> else {
               return nil
         }
@@ -37,7 +37,7 @@ extension RuneInstance {
                 let rune = NSEntityDescription.insertNewObject(
                     forEntityName: "RuneInstance",
                     into: context) as! RuneInstance
-                rune.summonerId = summoner.com2usId
+                rune.summonerId = summoner.id
                 rune.com2usId = runeId
 
                 if context.hasChanges {
@@ -61,7 +61,7 @@ extension RuneInstance {
         
         if let summoner = Summoner.findSummonerById(summonerId) {
             let request : NSFetchRequest<RuneInstance> = RuneInstance.fetchRequest()
-            let predicate = NSPredicate(format: "summonerId = @i", summoner.com2usId)
+            let predicate = NSPredicate(format: "summonerId = @i", summoner.id)
                 
             request.predicate = predicate
             
@@ -142,7 +142,7 @@ public struct RuneStarsView: View {
         ) {
             Spacer()
             ForEach(range) { _ in
-                Image(decorative: ImageStore.loadImage(type: ImageType.stars, name: "star-\(awakening.rawValue)"),
+                Image(decorative: ImageStore.loadImage(type: ImageType.stars, name: "star-\(awakening.rawValue).png"),
                     scale: 3,
                     orientation: .up
                 )

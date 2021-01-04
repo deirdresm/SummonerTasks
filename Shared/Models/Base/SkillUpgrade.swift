@@ -11,6 +11,74 @@ import CoreData
 
 // MARK: - Core Data
 
+extension SkillUpgrade: Comparable {
+    
+    convenience init(skillUpgrade: SkillUpgradeData) {
+        self.init()
+        update(skillUpgrade)
+    }
+    
+    func update(_ skillUpgrade: SkillUpgradeData) {
+        
+        // don't dirty the record if you don't have to
+        
+        if self.id != skillUpgrade.id {
+            self.id = Int64(skillUpgrade.id)
+        }
+        if self.level != skillUpgrade.level {
+            self.level = skillUpgrade.level
+        }
+        if self.effectId != skillUpgrade.effect {
+            self.effectId = skillUpgrade.effect
+        }
+        if self.amount != skillUpgrade.amount {
+            self.amount = skillUpgrade.amount
+        }
+        if self.skillId != skillUpgrade.skill {
+            self.skillId = skillUpgrade.skill
+        }
+    }
+    
+    static func insertOrUpdate(skillUpgrade: SkillUpgradeData,
+                               context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+        var skill: SkillUpgrade!
+        
+        context.performAndWait {
+            let request : NSFetchRequest<SkillUpgrade> = SkillUpgrade.fetchRequest()
+
+            let predicate = NSPredicate(format: "id == %i", skillUpgrade.id)
+
+            request.predicate = predicate
+            
+            let results = try? context.fetch(request)
+
+            if results?.count == 0 {
+                // insert new
+                skill = SkillUpgrade(context: context)
+                skill.update(skillUpgrade)
+             } else {
+                // update existing
+                skill = results?.first
+                skill.update(skillUpgrade)
+             }
+        }
+    }
+    
+    static func batchUpdate(from skillUpgradeData: [SkillUpgradeData],
+                            context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+        for skillUpgrade in skillUpgradeData {
+            SkillUpgrade.insertOrUpdate(skillUpgrade: skillUpgrade, context: context)
+        }
+    }
+
+    // MARK: - Comparable conformance
+    
+    public static func < (lhs: SkillUpgrade, rhs: SkillUpgrade) -> Bool {
+        lhs.level < rhs.level
+    }
+}
+
+
 // MARK: - JSON
 
 // MARK: - Original SQL Table Definition

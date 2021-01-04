@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import CoreData
 
-public struct AwakencostData {
+public struct AwakenCostData: JsonArray {
 
     private enum CodingKeys: String, CodingKey {
         case id = "pk"
@@ -15,6 +16,8 @@ public struct AwakencostData {
         case quantity
         case monster
     }
+    
+    static var items = [AwakenCostData]()
     
     let id:             Int64
     let item:           Int64
@@ -27,6 +30,20 @@ public struct AwakencostData {
         quantity = awaken.fields.quantity.int
         monster = awaken.fields.monster.int
     }
+    
+    static func saveToCoreData(_ taskContext: NSManagedObjectContext) {
+        
+        taskContext.perform {
+            AwakenCost.batchUpdate(from: AwakenCostData.items,
+                                 context: taskContext)
+            do {
+                try taskContext.save()
+            } catch {
+                print("could not save context")
+            }
+        }
+    }
+
 }
 
 /*

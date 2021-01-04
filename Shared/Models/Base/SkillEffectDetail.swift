@@ -10,6 +10,69 @@ import CoreData
 
 // MARK: - Core Data
 
+extension SkillEffectDetail {
+    
+    convenience init(skillEffect: SkillEffectDetailData) {
+        self.init()
+        update(skillEffect)
+    }
+    
+    func update(_ skillEffectDetail: SkillEffectDetailData) {
+        
+        // don't dirty the record if you don't have to
+        
+        if self.id != skillEffectDetail.id {
+            self.id = Int64(skillEffectDetail.id)
+        }
+        if self.aoe != skillEffectDetail.aoe {
+            self.aoe = skillEffectDetail.aoe
+        }
+        if self.singleTarget != skillEffectDetail.singleTarget {
+            self.singleTarget = skillEffectDetail.singleTarget
+        }
+        if self.selfEffect != skillEffectDetail.selfEffect {
+            self.selfEffect = skillEffectDetail.selfEffect
+        }
+        if self.aoe != skillEffectDetail.aoe {
+            self.aoe = skillEffectDetail.aoe
+        }
+
+    }
+    
+    static func insertOrUpdate(skillEffectDetail: SkillEffectDetailData,
+                               context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+        var skill: SkillEffectDetail!
+        
+        context.performAndWait {
+            let request : NSFetchRequest<SkillEffectDetail> = SkillEffectDetail.fetchRequest()
+
+            let predicate = NSPredicate(format: "id == %i", skillEffectDetail.id)
+
+            request.predicate = predicate
+            
+            let results = try? context.fetch(request)
+
+            if results?.count == 0 {
+                // insert new
+                skill = SkillEffectDetail(context: context)
+                skill.update(skillEffectDetail)
+             } else {
+                // update existing
+                skill = results?.first
+                skill.update(skillEffectDetail)
+             }
+        }
+    }
+    
+    static func batchUpdate(from skillEffectDetailData: [SkillEffectDetailData],
+                            context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+        for skillEffectDetail in skillEffectDetailData {
+            SkillEffectDetail.insertOrUpdate(skillEffectDetail: skillEffectDetail, context: context)
+        }
+    }
+
+}
+
 // MARK: - JSON
 
 // MARK: - Original SQL Table Definition

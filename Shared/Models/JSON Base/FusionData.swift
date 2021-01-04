@@ -6,6 +6,74 @@
 //
 
 import Foundation
+import CoreData
+
+public struct FusionData: JsonArray {
+    
+    static var items = [FusionData]()
+
+    private enum CodingKeys: String, CodingKey {
+        case id = "pk"
+        case product
+        case cost
+        case metaOrder = "meta_order"
+        case ingredients
+    }
+
+    let id:             Int64
+    let product:        Int64
+    let cost:           Int64
+    let metaOrder:      Int64
+    var ingredients:    [Int64]
+
+    public init(fusion: JSON, pk: Int64) {
+        id = fusion.pk.int
+        product = fusion.product.int
+        cost = fusion.cost.int
+        metaOrder = fusion.fields.meta_order.int
+        
+        var jsonArr = fusion.fields.ingredients.value
+        
+        // TODO: figure out why here, of all places, it's
+        // converting to [Int64] without having to kick it
+//        var converted = try! JSON(string: jsonArr as! String).array
+//        ingredients = converted.map {try! JSON(string: $0.value as! String).int}
+        ingredients = jsonArr as! [Int64]
+    }
+    
+    static func saveToCoreData(_ taskContext: NSManagedObjectContext) {
+        
+        taskContext.perform {
+            Fusion.batchUpdate(from: FusionData.items,
+                                 context: taskContext)
+            do {
+                try taskContext.save()
+            } catch {
+                print("could not save context")
+            }
+        }
+    }
+}
+
+
+/*
+ {
+   "model": "bestiary.fusion",
+   "pk": 1,
+   "fields": {
+     "product": 646,
+     "cost": 500000,
+     "meta_order": 1,
+     "ingredients": [
+       534,
+       236,
+       336,
+       603
+     ]
+   }
+ },
+
+ */
 /* CREATE TABLE public.bestiary_fusion
 (
     id integer NOT NULL DEFAULT nextval('bestiary_fusion_id_seq'::regclass),

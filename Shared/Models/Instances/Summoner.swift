@@ -45,8 +45,8 @@ extension Summoner {
         if self.name != summonerData.name {
             self.name = summonerData.name
         }
-        if self.com2usId != summonerData.com2usId {
-            self.com2usId = summonerData.com2usId
+        if self.id != summonerData.id {
+            self.id = summonerData.id
         }
         if self.lastUpdate != summonerData.lastUpdate {
             self.lastUpdate = summonerData.lastUpdate
@@ -59,7 +59,7 @@ extension Summoner {
         
         let request : NSFetchRequest<Summoner> = Summoner.fetchRequest()
 
-        request.predicate = NSPredicate(format: "com2usId = %@", summonerData.com2usId)
+        request.predicate = NSPredicate(format: "id = %@", summonerData.id)
         
         let results = try? context.fetch(request)
 
@@ -100,25 +100,6 @@ public final class JSONValueTransformer: ValueTransformer {
     }
 }
 
-// MARK: - JSON
-
-
-public struct SummonerData: Decodable {
-    private enum CodingKeys: String, CodingKey {
-        case com2usId = "wizard_id"
-        case name = "wizard_name"
-        case lastUpdate = "wizard_last_login"
-    }
-    
-    // crib cue for later:
-    // decoder.dateDecodingStrategy = .formatted(DateFormatter.com2us)
-
-    
-    let com2usId: Int64
-    let name: String
-    let lastUpdate: Date
-
-}
 
 /*
  "wizard_info": {

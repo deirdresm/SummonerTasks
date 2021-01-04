@@ -7,8 +7,6 @@
 
 import Foundation
 
-
-
 extension Bundle {
     
     // convenience method to get the image file path
@@ -17,10 +15,19 @@ extension Bundle {
         let partialPath = type.rawValue
         let path = partialPath.appending("/\(name)")
         return(path)
-//        if let path = Bundle.main.path(forResource: name, ofType: "png", inDirectory: partialPath) {
-//            return path
-//        }
-//        print("if let failed")
-//        return ""
     }
+    
+    func openBundleFile(from file: String) -> String {
+        guard let url = self.url(forResource: file, withExtension: nil) else {
+            fatalError("Failed to locate \(file) in bundle.")
+        }
+
+        guard let data = try? Data(contentsOf: url) else {
+            fatalError("Failed to load \(file) from bundle.")
+        }
+        
+        return String(decoding: data, as: UTF8.self)
+
+    }
+
 }
