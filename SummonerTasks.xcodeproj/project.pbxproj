@@ -269,6 +269,7 @@
 		38CFB7812579E24000F0C398 /* SkillUpgrade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillUpgrade.swift; sourceTree = "<group>"; };
 		38CFB7882579E28400F0C398 /* Source.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Source.swift; sourceTree = "<group>"; };
 		38CFB794257AFB3700F0C398 /* DateFormatter+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+extensions.swift"; sourceTree = "<group>"; };
+		38D8DC3525A2BD6600194E7E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		38DB9D54257EF7F90038BDC0 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		38DB9D5B257EF83A0038BDC0 /* Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		38E1101B25903C6100D4BBB0 /* RuneIconBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuneIconBase.swift; sourceTree = "<group>"; };
@@ -321,6 +322,7 @@
 		384A48D52575A070002E04CB = {
 			isa = PBXGroup;
 			children = (
+				38D8DC3525A2BD6600194E7E /* README.md */,
 				384A48DA2575A071002E04CB /* Shared */,
 				384A48E52575A074002E04CB /* iOS */,
 				384A48EC2575A074002E04CB /* macOS */,

@@ -19,6 +19,13 @@ extension MonsterInstance: Comparable {
         
         return (self.runes)?.sortedArray(using: [sortNameDescriptor]) as! [RuneInstance]
     }
+    
+    func setMonsterId(_ monster: Monster?) {
+        if let m = monster {
+            self.monsterId = m.com2usId
+            self.monster = m
+        }
+    }
 
     
     public var ehp: Int64 {
@@ -91,23 +98,8 @@ extension MonsterInstance: Comparable {
         if self.monsterId != monsterData.monsterId {
             self.monsterId = monsterData.monsterId
             
-            let monster = Monster.findById(monster: monsterId, context: context)
-            self.monster = monster
-        }
-        if self.metaOrder != monsterData.metaOrder {
-            self.metaOrder = monsterData.metaOrder
-        }
-        if self.isFarmable != monsterData.farmableMonsterInstance {
-            self.isFarmable = monsterData.farmableMonsterInstance
-        }
-        if self.metaOrder != monsterData.metaOrder {
-            self.metaOrder = monsterData.metaOrder
-        }
-        if self.isFarmable != monsterData.farmableMonsterInstance {
-            self.isFarmable = monsterData.farmableMonsterInstance
-        }
-        if self.metaOrder != monsterData.metaOrder {
-            self.metaOrder = monsterData.metaOrder
+            let monster = Monster.findById(id: monsterId,
+                                           context: context)
         }
     }
     

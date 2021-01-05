@@ -231,22 +231,20 @@ extension Monster {
             label: Text(monster.name!))
     }
     
-    static func findByID(id: Int64, context: NSManagedObjectContext) -> Monster? {
+    static func findById(id: Int64,
+                    context: NSManagedObjectContext) -> Monster? {
         
-        context.perform {
-            let request : NSFetchRequest<Monster> = Monster.fetchRequest()
+        let request : NSFetchRequest<Monster> = Monster.fetchRequest()
 
-            request.predicate = NSPredicate(format: "id == %i", id)
-            
-            let results = try? context.fetch(request)
-            
-            if let count = results?.count {
-                return results?.first
-            } else {
-                return nil
-            }
+        request.predicate = NSPredicate(format: "id == %i", id)
+        
+        let results = try? context.fetch(request)
+        
+        if let _ = results?.count {
+            return(results?.first)
+        } else {
+            return(nil)
         }
-        return nil
     }
 
 

@@ -17,9 +17,14 @@ public struct MonsterInstanceSkillData {
     let skillId:             Int64
     let level:               Int64
 
-    public init(skillId: Int64, level: Int64) {
+    public init(_ skillId: Int64, _ level: Int64) {
         self.skillId = skillId
         self.level = level
+    }
+    
+    public init(ints: [Int64]) {
+        self.skillId = ints[0]
+        self.level = ints[1]
     }
 }
 
@@ -63,6 +68,36 @@ public struct MonsterInstanceData {
     public init(monster: JSON) {
         id = monster.fields.rune_id.int
         summonerId = monster.fields.wizard_id.int
+        monsterId = monster.fields.unit_master_id.int
+        unitLevel = monster.fields.unit_level.int
+        stars = monster.fields.class.int
+        con = monster.fields.con.int
+        atk = monster.fields.atk.int
+        def = monster.fields.def.int
+        spd = monster.fields.speed.int
+        resist = monster.fields.resist.int
+        accuracy = monster.fields.accuracy.int
+        critRate = monster.fields.critical_rate.int
+        critDamage = monster.fields.critical_damage.int
+        
+        var jsonArr = monster.fields.skills.value
+//        var intIntArray = jsonArr.map { $0.array } // should have [1, 2] style array here
+        var intIntArray = jsonArr as! [[Int64]]
+
+        // TODO: figure out why here, of all places, it's
+        // converting to [Int64] without having to kick it
+//        ingredients = jsonArr as! [Int64]
+
+        skills = []
+        for array in intIntArray {
+            let misd = MonsterInstanceSkillData(ints: array)
+            skills.append(misd)
+        }
+        
+        // FIXME: finish this once we have the previous sorted
+        
+        runes = []
+        artifacts = []
     }
 }
 

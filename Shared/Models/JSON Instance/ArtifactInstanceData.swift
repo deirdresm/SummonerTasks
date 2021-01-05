@@ -15,7 +15,7 @@ public struct ArtifactInstanceData {
         case summonerId = "wizard_id"
         case monsterInstanceId = "occupied_id"
         case slot
-        case artifactType
+        case artifactType = "artifact_type"
         case attribute
         case unitStyle
         case naturalRank
@@ -38,11 +38,12 @@ public struct ArtifactInstanceData {
 
     public init(artifact: JSON) {
         com2usId = artifact.fields.rid.int
-        summonerId = artifact.fields.summonerId.int
+        summonerId = artifact.fields.wizard_id.int
         monsterInstanceId = artifact.fields.occupied_id.int
         slot = artifact.fields.slot.int
+        artifactType = artifact.fields.artifact_type.int
         attribute = artifact.fields.attribute.int
-        unitStyle = artifact.fields.unitStyle.int
+        unitStyle = artifact.fields.unit_style.int
         naturalRank = artifact.fields.natural_rank.int
         rank = artifact.fields.rank.int
         level = artifact.fields.level.int

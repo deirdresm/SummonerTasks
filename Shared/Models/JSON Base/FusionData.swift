@@ -36,8 +36,6 @@ public struct FusionData: JsonArray {
         
         // TODO: figure out why here, of all places, it's
         // converting to [Int64] without having to kick it
-//        var converted = try! JSON(string: jsonArr as! String).array
-//        ingredients = converted.map {try! JSON(string: $0.value as! String).int}
         ingredients = jsonArr as! [Int64]
     }
     
