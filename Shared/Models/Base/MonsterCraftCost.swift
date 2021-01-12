@@ -8,7 +8,25 @@
 import CoreData
 
 extension MonsterCraftCost: CoreDataUtility {
-    func update(_ monsterCraftCostData: MonsterCraftCostData) {
+    static func findById(_ monsterCraftCostId: Int64,
+                                 context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
+    -> MonsterCraftCost? {
+        
+        let request : NSFetchRequest<MonsterCraftCost> = MonsterCraftCost.fetchRequest()
+
+        request.predicate = NSPredicate(format: "id = %i", monsterCraftCostId)
+        
+        if let results = try? context.fetch(request) {
+        
+            if let monsterCraftCost = results.first {
+                return monsterCraftCost
+            }
+        }
+        return nil
+    }
+    
+    func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
+        let monsterCraftCostData = from as! MonsterCraftCostData
         
         // don't dirty the record if you don't have to
         
@@ -26,33 +44,21 @@ extension MonsterCraftCost: CoreDataUtility {
         }
     }
     
-    static func insertOrUpdate(monsterCraftCostData: MonsterCraftCostData,
+    static func insertOrUpdate<T: JsonArray>(from: T,
                                docInfo: SummonerDocumentInfo) {
-        var monsterCraftCost: MonsterCraftCost!
-        
         docInfo.taskContext.performAndWait {
-            let request : NSFetchRequest<MonsterCraftCost> = MonsterCraftCost.fetchRequest()
-
-            request.predicate = NSPredicate(format: "id == %i", monsterCraftCostData.id)
-            
-            let results = try? docInfo.taskContext.fetch(request)
-
-            if results?.count == 0 {
-                // insert new
-                monsterCraftCost = MonsterCraftCost(context: docInfo.taskContext)
-                monsterCraftCost.update(monsterCraftCostData)
-             } else {
-                // update existing
-                monsterCraftCost = results?.first
-                monsterCraftCost.update(monsterCraftCostData)
-             }
+            let monsterCraftCostData = from as! MonsterCraftCostData
+            let monsterCraftCost = MonsterCraftCost.findById(monsterCraftCostData.id, context: docInfo.taskContext) ?? MonsterCraftCost(context: docInfo.taskContext)
+            monsterCraftCost.update(from: monsterCraftCostData, docInfo: docInfo)
         }
+        
     }
     
-    static func batchUpdate(from monsterCraftCosts: [MonsterCraftCostData],
+    static func batchUpdate<T: JsonArray>(from: [T],
                             docInfo: SummonerDocumentInfo) {
+        let monsterCraftCosts = from as! [MonsterCraftCostData]
         for monsterCraftCost in monsterCraftCosts {
-            MonsterCraftCost.insertOrUpdate(monsterCraftCostData: monsterCraftCost, docInfo: docInfo)
+            MonsterCraftCost.insertOrUpdate(from: monsterCraftCost, docInfo: docInfo)
         }
     }
 

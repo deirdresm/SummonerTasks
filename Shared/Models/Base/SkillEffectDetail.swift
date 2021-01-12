@@ -12,13 +12,26 @@ import CoreData
 
 extension SkillEffectDetail: CoreDataUtility {
     
-    convenience init(skillEffect: SkillEffectDetailData) {
-        self.init()
-        update(skillEffect)
-    }
-    
-    func update(_ skillEffectDetail: SkillEffectDetailData) {
+    static func findById(_ skillEffectDetailId: Int64,
+                         context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
+    -> SkillEffectDetail? {
         
+        let request : NSFetchRequest<SkillEffectDetail> = SkillEffectDetail.fetchRequest()
+
+        request.predicate = NSPredicate(format: "id = %i", skillEffectDetailId)
+        
+        if let results = try? context.fetch(request) {
+        
+            if let skillEffectDetail = results.first {
+                return skillEffectDetail
+            }
+        }
+        return nil
+    }
+
+    func update<T: JsonArray>(from: T,
+                              docInfo: SummonerDocumentInfo) {
+        let skillEffectDetail = from as! SkillEffectDetailData
         // don't dirty the record if you don't have to
         
         if self.id != skillEffectDetail.id {
@@ -39,35 +52,20 @@ extension SkillEffectDetail: CoreDataUtility {
 
     }
     
-    static func insertOrUpdate(skillEffectDetail: SkillEffectDetailData,
+    static func insertOrUpdate<T: JsonArray>(from: T,
                                docInfo: SummonerDocumentInfo) {
-        var skill: SkillEffectDetail!
+        let skillEffectDetailData = from as! SkillEffectDetailData
+        let skillEffectDetail = SkillEffectDetail.findById(skillEffectDetailData.id, context: docInfo.taskContext) ??
+            SkillEffectDetail(context: docInfo.taskContext)
         
-        docInfo.taskContext.performAndWait {
-            let request : NSFetchRequest<SkillEffectDetail> = SkillEffectDetail.fetchRequest()
-
-            let predicate = NSPredicate(format: "id == %i", skillEffectDetail.id)
-
-            request.predicate = predicate
-            
-            let results = try? docInfo.taskContext.fetch(request)
-
-            if results?.count == 0 {
-                // insert new
-                skill = SkillEffectDetail(context: docInfo.taskContext)
-                skill.update(skillEffectDetail)
-             } else {
-                // update existing
-                skill = results?.first
-                skill.update(skillEffectDetail)
-             }
-        }
+        skillEffectDetail.update(from: skillEffectDetailData, docInfo: docInfo)
     }
     
-    static func batchUpdate(from skillEffectDetailData: [SkillEffectDetailData],
+    static func batchUpdate<T: JsonArray>(from: [T],
                             docInfo: SummonerDocumentInfo) {
+        let skillEffectDetailData = from as! [SkillEffectDetailData]
         for skillEffectDetail in skillEffectDetailData {
-            SkillEffectDetail.insertOrUpdate(skillEffectDetail: skillEffectDetail, docInfo: docInfo)
+            SkillEffectDetail.insertOrUpdate(from: skillEffectDetail, docInfo: docInfo)
         }
     }
 

@@ -15,8 +15,8 @@ Some of those longer tasks include things like:
 
 ## Where We Are
 
-0. I decided to refactor. It's better, but it's not done, and there are still 8 compile errors as I write this. I hadn't made everything conform to protocols, and…then I changed the protocol midstream. So, down from 88 errors to 8, but I need sleep.
+0. I decided to refactor. It's better, but it's not done, and there are still ~~8~~ 2 compile errors as I write this. I hadn't made everything conform to protocols, and…then I changed the protocol midstream. Now down to the last couple of fixes for that.
 
 1. Welp, importing the bestiary data, aka the half-million (!) line JSON file that describes the world. It's not done, but the most-important-to-me parts are, at least for now.
 
-2. Currently working on: importing the player data file, which are the instances of the things described in the bestiary file, which is only ~190k lines.
+2. Currently working on: importing the player data file, which are the instances of the things described in the bestiary file, which is only ~190k lines. Yes, my player file grew 30k (!) lines seemingly overnight.

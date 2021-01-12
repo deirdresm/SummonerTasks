@@ -119,11 +119,6 @@ extension RuneInstance: CoreDataUtility {
         }
     }
 
-    convenience init(runeInstanceData: RuneInstanceData, docInfo: SummonerDocumentInfo) {
-        self.init()
-        update(runeInstanceData, docInfo: docInfo)
-    }
-    
     static func findById(_ runeInstanceId: Int64,
                                  context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
     -> RuneInstance? {
@@ -167,9 +162,11 @@ extension RuneInstance: CoreDataUtility {
     func unsetValue(forKey: Int) {
         
     }
-    func update(_ runeInstanceData: RuneInstanceData,
+    func update<T: JsonArray>(from: T,
                 docInfo: SummonerDocumentInfo) {
         
+        let runeInstanceData = from as! RuneInstanceData
+
         // don't dirty the record if you don't have to
         
         if self.id != runeInstanceData.id {
@@ -248,6 +245,7 @@ extension RuneInstance: CoreDataUtility {
         if statCount > 0 {
             let substat = runeInstanceData.secEff[0]
             
+            // FIXME see warning message
             if (self.substat1 != substat[0]) && (self.substat1 != nil) {
                 // need to unset the old substat flag as the rune has had a changed stat
                 // via reapp and/or gem
@@ -280,19 +278,21 @@ extension RuneInstance: CoreDataUtility {
         }
     }
     
-    static func insertOrUpdate(runeInstanceData: RuneInstanceData,
+    static func insertOrUpdate<T: JsonArray>(from: T,
                                docInfo: SummonerDocumentInfo) {
         docInfo.taskContext.performAndWait {
-            var runeInstance = RuneInstance.findById(runeInstanceData.id, context: docInfo.taskContext) ?? RuneInstance(context: docInfo.taskContext)
-            runeInstance.update(runeInstanceData, docInfo: docInfo)
+            let runeInstanceData = from as! RuneInstanceData
+            let runeInstance = RuneInstance.findById(runeInstanceData.id, context: docInfo.taskContext) ?? RuneInstance(context: docInfo.taskContext)
+            runeInstance.update(from: runeInstanceData, docInfo: docInfo)
         }
     }
     
-    static func batchUpdate(from runes: [RuneInstanceData],
+    static func batchUpdate<T: JsonArray>(from: [T],
                             docInfo: SummonerDocumentInfo) {
+        let runes = from as! [RuneInstanceData]
         for rune in runes {
             print(rune)
-            RuneInstance.insertOrUpdate(runeInstanceData: rune, docInfo: docInfo)
+            RuneInstance.insertOrUpdate(from: rune, docInfo: docInfo)
         }
     }
 
