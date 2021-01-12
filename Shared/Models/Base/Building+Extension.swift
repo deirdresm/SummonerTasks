@@ -56,21 +56,21 @@ extension Building {
     }
     
     static func insertOrUpdate(from buildingData: BuildingData,
-                               context: NSManagedObjectContext) {
+                               docInfo: SummonerDocumentInfo) {
         var building: Building!
         
-        context.performAndWait {
+        docInfo.taskContext.performAndWait {
             let request : NSFetchRequest<Building> = Building.fetchRequest()
 
             let predicate = NSPredicate(format: "com2usId == %i", buildingData.com2usId)
 
             request.predicate = predicate
             
-            let results = try? context.fetch(request)
+            let results = try? docInfo.taskContext.fetch(request)
 
             if results?.count == 0 {
                 // insert new
-                building = Building(context: context)
+                building = Building(context: docInfo.taskContext)
                 building.update(from: buildingData)
              } else {
                 // update existing
@@ -81,9 +81,25 @@ extension Building {
     }
     
     static func batchUpdate(from buildings: [BuildingData],
-                            context: NSManagedObjectContext) {
+                            docInfo: SummonerDocumentInfo) {
         for building in buildings {
-            Building.insertOrUpdate(from: building, context: context)
+            Building.insertOrUpdate(from: building, docInfo: docInfo)
+        }
+    }
+    
+    static func findById(_ id: Int64,
+                    context: NSManagedObjectContext) -> Building? {
+        
+        let request : NSFetchRequest<Building> = Building.fetchRequest()
+
+        request.predicate = NSPredicate(format: "com2usId == %i", id)
+        
+        let results = try? context.fetch(request)
+        
+        if let _ = results?.count {
+            return(results?.first)
+        } else {
+            return(nil)
         }
     }
 }

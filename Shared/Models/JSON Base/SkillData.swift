@@ -77,13 +77,16 @@ public struct SkillData: JsonArray {
 
     }
     
-    static func saveToCoreData(_ taskContext: NSManagedObjectContext) {
+    static func saveToCoreData(_ docInfo: SummonerDocumentInfo) {
         
-        taskContext.perform {
+        docInfo.taskContext.perform {
             Skill.batchUpdate(from: SkillData.items,
-                                 context: taskContext)
+                              docInfo: docInfo)
             do {
-                try taskContext.save()
+                if docInfo.taskContext.hasChanges {
+                    try docInfo.taskContext.save()
+                }
+
             } catch {
                 print("could not save context")
             }
@@ -131,13 +134,15 @@ public struct LeaderSkillData: JsonArray {
         element = skill.fields.element.string
     }
     
-    static func saveToCoreData(_ taskContext: NSManagedObjectContext) {
+    static func saveToCoreData(_ docInfo: SummonerDocumentInfo) {
         
-        taskContext.perform {
+        docInfo.taskContext.perform {
             LeaderSkill.batchUpdate(from: LeaderSkillData.items,
-                                 context: taskContext)
+                                    docInfo: docInfo)
             do {
-                try taskContext.save()
+                if docInfo.taskContext.hasChanges {
+                    try docInfo.taskContext.save()
+                }
             } catch {
                 print("could not save context")
             }
@@ -185,13 +190,15 @@ public struct SkillUpgradeData: JsonArray {
         amount = skillUpgrade.fields.amount.int
     }
     
-    static func saveToCoreData(_ taskContext: NSManagedObjectContext) {
+    static func saveToCoreData(_ docInfo: SummonerDocumentInfo) {
         
-        taskContext.perform {
+        docInfo.taskContext.perform {
             SkillUpgrade.batchUpdate(from: SkillUpgradeData.items,
-                                 context: taskContext)
+                                     docInfo: docInfo)
             do {
-                try taskContext.save()
+                if docInfo.taskContext.hasChanges {
+                    try docInfo.taskContext.save()
+                }
             } catch {
                 print("could not save context")
             }
@@ -238,13 +245,15 @@ public struct SkillEffectData: JsonArray {
         imageFilename = skillEffect.fields.icon_filename.string
     }
     
-    static func saveToCoreData(_ taskContext: NSManagedObjectContext) {
+    static func saveToCoreData(_ docInfo: SummonerDocumentInfo) {
         
-        taskContext.perform {
+        docInfo.taskContext.perform {
             SkillEffect.batchUpdate(from: SkillEffectData.items,
-                                 context: taskContext)
+                                    docInfo: docInfo)
             do {
-                try taskContext.save()
+                if docInfo.taskContext.hasChanges {
+                    try docInfo.taskContext.save()
+                }
             } catch {
                 print("could not save context")
             }
@@ -335,13 +344,15 @@ public struct SkillEffectDetailData: JsonArray {
         note = skillEffectDetail.fields.note.string
     }
 
-    static func saveToCoreData(_ taskContext: NSManagedObjectContext) {
+    static func saveToCoreData(_ docInfo: SummonerDocumentInfo) {
         
-        taskContext.perform {
+        docInfo.taskContext.perform {
             SkillEffectDetail.batchUpdate(from: SkillEffectDetailData.items,
-                                 context: taskContext)
+                                          docInfo: docInfo)
             do {
-                try taskContext.save()
+                if docInfo.taskContext.hasChanges {
+                    try docInfo.taskContext.save()
+                }
             } catch {
                 print("could not save context")
             }
@@ -384,13 +395,15 @@ public struct ScalingStatData: JsonArray {
         scalingDesc = scalingStat.fields.description.string
     }
     
-    static func saveToCoreData(_ taskContext: NSManagedObjectContext) {
+    static func saveToCoreData(_ docInfo: SummonerDocumentInfo) {
         
-        taskContext.perform {
+        docInfo.taskContext.perform {
             ScalingStat.batchUpdate(from: ScalingStatData.items,
-                                 context: taskContext)
+                                    docInfo: docInfo)
             do {
-                try taskContext.save()
+                if docInfo.taskContext.hasChanges {
+                    try docInfo.taskContext.save()
+                }
             } catch {
                 print("could not save context")
             }
@@ -443,13 +456,15 @@ public struct HomunculusSkillData: JsonArray {
         prerequisites = jsonArr.map { $0.int}
     }
     
-    static func saveToCoreData(_ taskContext: NSManagedObjectContext) {
+    static func saveToCoreData(_ docInfo: SummonerDocumentInfo) {
         
-        taskContext.perform {
+        docInfo.taskContext.perform {
             HomunculusSkill.batchUpdate(from: HomunculusSkillData.items,
-                                 context: taskContext)
+                                        docInfo: docInfo)
             do {
-                try taskContext.save()
+                if docInfo.taskContext.hasChanges {
+                    try docInfo.taskContext.save()
+                }
             } catch {
                 print("could not save context")
             }
@@ -511,13 +526,15 @@ public struct HomunculusSkillcraftData: JsonArray {
         skill = homunculusSkill.fields.skill.int
     }
     
-    static func saveToCoreData(_ taskContext: NSManagedObjectContext) {
+    static func saveToCoreData(_ docInfo: SummonerDocumentInfo) {
         
-        taskContext.perform {
+        docInfo.taskContext.perform {
             HomunculusSkillcraftCost.batchUpdate(from: HomunculusSkillcraftData.items,
-                                 context: taskContext)
+                                                 docInfo: docInfo)
             do {
-                try taskContext.save()
+                if docInfo.taskContext.hasChanges {
+                    try docInfo.taskContext.save()
+                }
             } catch {
                 print("could not save context")
             }

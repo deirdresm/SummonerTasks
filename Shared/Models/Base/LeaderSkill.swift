@@ -166,19 +166,19 @@ extension LeaderSkill {
     }
     
     static func insertOrUpdate(leaderSkillData: LeaderSkillData,
-                               context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+                               docInfo: SummonerDocumentInfo) {
         var leaderSkill: LeaderSkill!
         
-        context.performAndWait {
+        docInfo.taskContext.performAndWait {
             let request : NSFetchRequest<LeaderSkill> = LeaderSkill.fetchRequest()
 
             request.predicate = NSPredicate(format: "id == %i", leaderSkillData.id)
             
-            let results = try? context.fetch(request)
+            let results = try? docInfo.taskContext.fetch(request)
 
             if results?.count == 0 {
                 // insert new
-                leaderSkill = LeaderSkill(context: context)
+                leaderSkill = LeaderSkill(context: docInfo.taskContext)
                 leaderSkill.update(leaderSkillData)
              } else {
                 // update existing
@@ -189,9 +189,9 @@ extension LeaderSkill {
     }
     
     static func batchUpdate(from leaderSkills: [LeaderSkillData],
-                            context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+                            docInfo: SummonerDocumentInfo) {
         for leaderSkillData in leaderSkills {
-            LeaderSkill.insertOrUpdate(leaderSkillData: leaderSkillData, context: context)
+            LeaderSkill.insertOrUpdate(leaderSkillData: leaderSkillData, docInfo: docInfo)
         }
     }
 

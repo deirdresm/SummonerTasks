@@ -349,7 +349,6 @@
 				38A1C646257DE5280032878E /* FusionSceneDelegate.swift */,
 				38535E2A25832E71009411A1 /* Views */,
 				38A1C649257DE52A0032878E /* Utility Views */,
-				384A496D2575A1ED002E04CB /* Persistence.swift */,
 				384A48DD2575A071002E04CB /* ContentView.swift */,
 				384A48DE2575A074002E04CB /* Assets.xcassets */,
 				384A49992575A9DB002E04CB /* ModelEnums.swift */,
@@ -531,6 +530,7 @@
 		38CFB6B72576EF9E00F0C398 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				384A496D2575A1ED002E04CB /* Persistence.swift */,
 				384A49782575A359002E04CB /* SummonerTasks.xcdatamodeld */,
 				38600028259275FE0071569A /* Enums */,
 				38BC3ABD2589CC7800A85FBE /* JSON Base */,

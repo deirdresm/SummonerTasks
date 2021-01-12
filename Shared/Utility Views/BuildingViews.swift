@@ -9,6 +9,7 @@ import SwiftUI
 
 struct BuildingIconView: View {
     var building: Building
+    var buildingInstance: BuildingInstance?
     
     var body: some View {
         VStack {
@@ -30,8 +31,8 @@ struct BuildingIconView: View {
 struct BuildingIconView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            BuildingIconView(building: Building.ancientSword)
-            BuildingIconView(building: Building.darkSanctuary)
+            BuildingIconView(building: Building.ancientSword, buildingInstance: nil)
+            BuildingIconView(building: Building.darkSanctuary, buildingInstance: nil)
         }
         .previewLayout(.fixed(width: 64, height: 100))
     }

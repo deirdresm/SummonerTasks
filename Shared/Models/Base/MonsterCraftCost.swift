@@ -27,19 +27,19 @@ extension MonsterCraftCost {
     }
     
     static func insertOrUpdate(monsterCraftCostData: MonsterCraftCostData,
-                               context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+                               docInfo: SummonerDocumentInfo) {
         var monsterCraftCost: MonsterCraftCost!
         
-        context.performAndWait {
+        docInfo.taskContext.performAndWait {
             let request : NSFetchRequest<MonsterCraftCost> = MonsterCraftCost.fetchRequest()
 
             request.predicate = NSPredicate(format: "id == %i", monsterCraftCostData.id)
             
-            let results = try? context.fetch(request)
+            let results = try? docInfo.taskContext.fetch(request)
 
             if results?.count == 0 {
                 // insert new
-                monsterCraftCost = MonsterCraftCost(context: context)
+                monsterCraftCost = MonsterCraftCost(context: docInfo.taskContext)
                 monsterCraftCost.update(monsterCraftCostData)
              } else {
                 // update existing
@@ -50,9 +50,9 @@ extension MonsterCraftCost {
     }
     
     static func batchUpdate(from monsterCraftCosts: [MonsterCraftCostData],
-                            context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+                            docInfo: SummonerDocumentInfo) {
         for monsterCraftCost in monsterCraftCosts {
-            MonsterCraftCost.insertOrUpdate(monsterCraftCostData: monsterCraftCost, context: context)
+            MonsterCraftCost.insertOrUpdate(monsterCraftCostData: monsterCraftCost, docInfo: docInfo)
         }
     }
 

@@ -37,21 +37,21 @@ extension ScalingStat {
     }
     
     static func insertOrUpdate(scalingStatData: ScalingStatData,
-                               context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+                               docInfo: SummonerDocumentInfo) {
         var scalingStat: ScalingStat!
         
-        context.performAndWait {
+        docInfo.taskContext.performAndWait {
             let request : NSFetchRequest<ScalingStat> = ScalingStat.fetchRequest()
 
             let predicate = NSPredicate(format: "id == %i", scalingStatData.id)
 
             request.predicate = predicate
             
-            let results = try? context.fetch(request)
+            let results = try? docInfo.taskContext.fetch(request)
 
             if results?.count == 0 {
                 // insert new
-                scalingStat = ScalingStat(context: context)
+                scalingStat = ScalingStat(context: docInfo.taskContext)
                 scalingStat.update(scalingStatData)
              } else {
                 // update existing
@@ -62,9 +62,9 @@ extension ScalingStat {
     }
     
     static func batchUpdate(from scalingStats: [ScalingStatData],
-                            context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+                            docInfo: SummonerDocumentInfo) {
         for scalingStat in scalingStats {
-            ScalingStat.insertOrUpdate(scalingStatData: scalingStat, context: context)
+            ScalingStat.insertOrUpdate(scalingStatData: scalingStat, docInfo: docInfo)
         }
     }
 }

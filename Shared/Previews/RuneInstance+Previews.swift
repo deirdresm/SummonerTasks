@@ -14,8 +14,7 @@ import CoreData
 extension RuneInstance {
     public static var swiftSpeed: RuneInstance {
         let rune = RuneInstance(context: PersistenceController.shared.container.viewContext)
-        rune.id = UUID()
-        rune.com2usId = 12345
+        rune.id = 123456782
         rune.runeType = RuneType.swift.rawValue
         rune.stars = 6
         rune.level = 15
@@ -30,8 +29,7 @@ extension RuneInstance {
     }
     public static var swiftSlot1: RuneInstance {
         let rune = RuneInstance(context: PersistenceController.shared.container.viewContext)
-        rune.id = UUID()
-        rune.com2usId = 12345
+        rune.id = 123456781
         rune.runeType = RuneType.swift.rawValue
         rune.stars = 6
         rune.level = 14
@@ -47,8 +45,7 @@ extension RuneInstance {
     
     public static var swiftSlot3: RuneInstance {
         let rune = RuneInstance(context: PersistenceController.shared.container.viewContext)
-        rune.id = UUID()
-        rune.com2usId = 12345
+        rune.id = 123456783
         rune.runeType = RuneType.swift.rawValue
         rune.stars = 6
         rune.level = 15
@@ -63,8 +60,7 @@ extension RuneInstance {
     }
     public static var focusSlot5: RuneInstance {
         let rune = RuneInstance(context: PersistenceController.shared.container.viewContext)
-        rune.id = UUID()
-        rune.com2usId = 12345
+        rune.id = 123456785
         rune.runeType = RuneType.focus.rawValue
         rune.stars = 6
         rune.level = 15
@@ -80,8 +76,7 @@ extension RuneInstance {
     
     public static var swiftSlot4: RuneInstance {
         let rune = RuneInstance(context: PersistenceController.shared.container.viewContext)
-        rune.id = UUID()
-        rune.com2usId = 12345
+        rune.id = 123456784
         rune.runeType = RuneType.swift.rawValue
         rune.stars = 6
         rune.level = 15
@@ -96,8 +91,7 @@ extension RuneInstance {
     }
     public static var focusSlot6: RuneInstance {
         let rune = RuneInstance(context: PersistenceController.shared.container.viewContext)
-        rune.id = UUID()
-        rune.com2usId = 12345
+        rune.id = 123456786
         rune.runeType = RuneType.focus.rawValue
         rune.stars = 6
         rune.level = 14

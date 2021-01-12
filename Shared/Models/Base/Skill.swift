@@ -72,21 +72,21 @@ extension Skill: Comparable {
     }
     
     static func insertOrUpdate(skillData: SkillData,
-                               context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+                               docInfo: SummonerDocumentInfo) {
         var skill: Skill!
         
-        context.performAndWait {
+        docInfo.taskContext.performAndWait {
             let request : NSFetchRequest<Skill> = Skill.fetchRequest()
 
             let predicate = NSPredicate(format: "com2usId == %i", skillData.com2usId)
 
             request.predicate = predicate
             
-            let results = try? context.fetch(request)
+            let results = try? docInfo.taskContext.fetch(request)
 
             if results?.count == 0 {
                 // insert new
-                skill = Skill(context: context)
+                skill = Skill(context: docInfo.taskContext)
                 skill.update(skillData)
              } else {
                 // update existing
@@ -97,9 +97,9 @@ extension Skill: Comparable {
     }
     
     static func batchUpdate(from skills: [SkillData],
-                            context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+                            docInfo: SummonerDocumentInfo) {
         for skill in skills {
-            Skill.insertOrUpdate(skillData: skill, context: context)
+            Skill.insertOrUpdate(skillData: skill, docInfo: docInfo)
         }
     }
 

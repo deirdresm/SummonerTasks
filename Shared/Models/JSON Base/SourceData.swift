@@ -37,13 +37,15 @@ public struct SourceData: JsonArray {
         metaOrder = source.fields.meta_order.int
     }
     
-    static func saveToCoreData(_ taskContext: NSManagedObjectContext) {
+    static func saveToCoreData(_ docInfo: SummonerDocumentInfo) {
         
-        taskContext.perform {
+        docInfo.taskContext.perform {
             Source.batchUpdate(from: SourceData.items,
-                                 context: taskContext)
+                               docInfo: docInfo)
             do {
-                try taskContext.save()
+                if docInfo.taskContext.hasChanges {
+                    try docInfo.taskContext.save()
+                }
             } catch {
                 print("could not save context")
             }

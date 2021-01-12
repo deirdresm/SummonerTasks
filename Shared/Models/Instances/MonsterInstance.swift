@@ -55,6 +55,25 @@ extension MonsterInstance: Comparable {
 
     // MARK: - JSON Import Functions
 
+    static func findById(_ monsterInstanceId: Int64,
+                                 context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
+    -> MonsterInstance? {
+        
+        let monsterInstance: MonsterInstance!
+        
+        let request : NSFetchRequest<MonsterInstance> = MonsterInstance.fetchRequest()
+
+        request.predicate = NSPredicate(format: "id = %i", monsterInstanceId)
+        
+        if let results = try? context.fetch(request) {
+        
+            if let monster = results.first {
+                return monster
+            }
+        }
+        return nil
+    }
+
     func update(_ monsterData: MonsterInstanceData,
                 context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
         
@@ -98,38 +117,30 @@ extension MonsterInstance: Comparable {
         if self.monsterId != monsterData.monsterId {
             self.monsterId = monsterData.monsterId
             
-            let monster = Monster.findById(id: monsterId,
+            self.monster = Monster.findById(id: monsterId,
+                                           context: context)
+        }
+        
+        if (self.monster == nil) {
+            self.monster = Monster.findById(id: monsterId,
                                            context: context)
         }
     }
     
     static func insertOrUpdate(monsterData: MonsterInstanceData,
-                               context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
-        var monsterInstance: MonsterInstance!
+                               docInfo: SummonerDocumentInfo) {
+        let monsterInstance: MonsterInstance!
         
-        context.performAndWait {
-            let request : NSFetchRequest<MonsterInstance> = MonsterInstance.fetchRequest()
-
-            request.predicate = NSPredicate(format: "id == %i", monsterData.id)
-            
-            let results = try? context.fetch(request)
-
-            if results?.count == 0 {
-                // insert new
-                monsterInstance = MonsterInstance(context: context)
-                monsterInstance.update(monsterData, context: context)
-             } else {
-                // update existing
-                monsterInstance = results?.first
-                monsterInstance.update(monsterData, context: context)
-             }
+        docInfo.taskContext.performAndWait {
+            var monsterInstance = MonsterInstance.findById(monsterData.id, context: docInfo.taskContext) ?? MonsterInstance(context: docInfo.taskContext)
+            monsterInstance.update(monsterData, context: docInfo.taskContext)
         }
     }
     
     static func batchUpdate(from monsterInstances: [MonsterInstanceData],
-                            context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+                            docInfo: SummonerDocumentInfo) {
         for monsterInstance in monsterInstances {
-            MonsterInstance.insertOrUpdate(monsterData: monsterInstance, context: context)
+            MonsterInstance.insertOrUpdate(monsterData: monsterInstance, docInfo: docInfo)
         }
     }
 

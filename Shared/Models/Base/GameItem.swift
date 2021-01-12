@@ -40,19 +40,19 @@ extension GameItem {
     }
     
     static func insertOrUpdate(gameItemData: GameItemData,
-                               context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+                               docInfo: SummonerDocumentInfo) {
         var gameItem: GameItem!
         
-        context.performAndWait {
+        docInfo.taskContext.performAndWait {
             let request : NSFetchRequest<GameItem> = GameItem.fetchRequest()
 
             request.predicate = NSPredicate(format: "id == %i", gameItemData.id)
             
-            let results = try? context.fetch(request)
+            let results = try? docInfo.taskContext.fetch(request)
 
             if results?.count == 0 {
                 // insert new
-                gameItem = GameItem(context: context)
+                gameItem = GameItem(context: docInfo.taskContext)
                 gameItem.update(gameItemData)
              } else {
                 // update existing
@@ -63,9 +63,9 @@ extension GameItem {
     }
     
     static func batchUpdate(from gameItems: [GameItemData],
-                            context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+                            docInfo: SummonerDocumentInfo) {
         for gameItem in gameItems {
-            GameItem.insertOrUpdate(gameItemData: gameItem, context: context)
+            GameItem.insertOrUpdate(gameItemData: gameItem, docInfo: docInfo)
         }
     }
 

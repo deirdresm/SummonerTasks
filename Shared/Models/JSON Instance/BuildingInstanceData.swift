@@ -6,9 +6,12 @@
 //
 
 import Foundation
+import CoreData
 
-public struct BuildingInstanceData {
+public struct BuildingInstanceData: JsonArray {
     
+    static var items = [BuildingInstanceData]()
+
     // for deco_list
     // note: don't keep the island info
 
@@ -25,10 +28,30 @@ public struct BuildingInstanceData {
     let level:       Int64
 
     public init(building: JSON) {
-        com2usId = building.fields.com2us_id.int
-        summonerId = building.fields.summonerId.int
-        buildingId = building.fields.buildingId.int
-        level = building.fields.level.int
+        com2usId = building.master_id.int
+        summonerId = building.wizard_id.int
+        buildingId = building.deco_id.int
+        level = building.level.int
+    }
+    
+    static func saveToCoreData(_ docInfo: SummonerDocumentInfo) {
+        
+        docInfo.taskContext.perform {
+            BuildingInstance.batchUpdate(from: BuildingInstanceData.items,
+                                         docInfo: docInfo)
+            do {
+                if docInfo.taskContext.hasChanges {
+                    try docInfo.taskContext.save()
+                }
+                else
+                {
+                    print("No context changes for building instance data.")
+                }
+
+            } catch {
+                print("could not save context")
+            }
+        }
     }
 }
 

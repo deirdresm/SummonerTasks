@@ -19,7 +19,7 @@ extension Summoner {
         update(summonerData)
     }
     
-    static func findSummonerById(_ summonerId: Int64,
+    static func findById(_ summonerId: Int64,
                                  context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
     -> Summoner? {
         
@@ -27,7 +27,7 @@ extension Summoner {
         
         let request : NSFetchRequest<Summoner> = Summoner.fetchRequest()
 
-        request.predicate = NSPredicate(format: "com2usId = %@", summonerId)
+        request.predicate = NSPredicate(format: "id = %i", summonerId)
         
         if let results = try? context.fetch(request) {
         
@@ -54,18 +54,19 @@ extension Summoner {
     }
     
     static func insertOrUpdate(summonerData: SummonerData,
-                               context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+                               docInfo: SummonerDocumentInfo) {
         let summoner: Summoner!
         
         let request : NSFetchRequest<Summoner> = Summoner.fetchRequest()
 
-        request.predicate = NSPredicate(format: "id = %@", summonerData.id)
+        print(summonerData)
+        request.predicate = NSPredicate(format: "id = %i", summonerData.id)
         
-        let results = try? context.fetch(request)
+        let results = try? docInfo.taskContext.fetch(request)
 
         if results?.count == 0 {
             // insert new
-            summoner = Summoner(context: context)
+            summoner = Summoner(context: docInfo.taskContext)
             summoner.update(summonerData)
          } else {
             // update existing
@@ -74,15 +75,12 @@ extension Summoner {
          }
     }
     
-    static func batchUpdate(summoners: [SummonerData],
-                            context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+    static func batchUpdate(from summoners: [SummonerData],
+                            docInfo: SummonerDocumentInfo) {
         for summoner in summoners {
-            Summoner.insertOrUpdate(summonerData: summoner, context: context)
+            Summoner.insertOrUpdate(summonerData: summoner, docInfo: docInfo)
         }
     }
-
-
-    
 }
 
 @objc(JSONValueTransformer)

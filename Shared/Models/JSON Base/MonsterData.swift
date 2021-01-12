@@ -218,13 +218,15 @@ public struct MonsterData: JsonArray {
         source =  jsonArr.map { $0.int}
     }
     
-    static func saveToCoreData(_ taskContext: NSManagedObjectContext) {
+    static func saveToCoreData(_ docInfo: SummonerDocumentInfo) {
         
-        taskContext.perform {
+        docInfo.taskContext.perform {
             Monster.batchUpdate(from: MonsterData.items,
-                                 context: taskContext)
+                                docInfo: docInfo)
             do {
-                try taskContext.save()
+                if docInfo.taskContext.hasChanges {
+                    try docInfo.taskContext.save()
+                }
             } catch {
                 print("could not save context")
             }

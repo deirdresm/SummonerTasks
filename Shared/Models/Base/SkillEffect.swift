@@ -39,21 +39,21 @@ extension SkillEffect {
     }
     
     static func insertOrUpdate(skillEffect: SkillEffectData,
-                               context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+                               docInfo: SummonerDocumentInfo) {
         var skill: SkillEffect!
         
-        context.performAndWait {
+        docInfo.taskContext.performAndWait {
             let request : NSFetchRequest<SkillEffect> = SkillEffect.fetchRequest()
 
             let predicate = NSPredicate(format: "id == %i", skillEffect.id)
 
             request.predicate = predicate
             
-            let results = try? context.fetch(request)
+            let results = try? docInfo.taskContext.fetch(request)
 
             if results?.count == 0 {
                 // insert new
-                skill = SkillEffect(context: context)
+                skill = SkillEffect(context: docInfo.taskContext)
                 skill.update(skillEffect)
              } else {
                 // update existing
@@ -64,9 +64,9 @@ extension SkillEffect {
     }
     
     static func batchUpdate(from skillEffectData: [SkillEffectData],
-                            context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+                            docInfo: SummonerDocumentInfo) {
         for skillEffect in skillEffectData {
-            SkillEffect.insertOrUpdate(skillEffect: skillEffect, context: context)
+            SkillEffect.insertOrUpdate(skillEffect: skillEffect, docInfo: docInfo)
         }
     }
 }

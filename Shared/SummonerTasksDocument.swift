@@ -14,12 +14,23 @@ extension UTType {
     }
 }
 
+public struct SummonerDocumentInfo {
+    public var summoner: Summoner?
+    public var summonerSet = false
+    public var taskContext: NSManagedObjectContext
+    
+    public init() {
+        taskContext = PersistenceController.shared.newTaskContext()
+    }
+}
+
 struct SummonerJsonDocument: FileDocument {
     
     // Since there can be different documents open for different summoners
     // keep the summoner in the Document class
     
-    public var summonerObjectId: NSManagedObjectID?
+    public var summonerObjectId: NSManagedObjectID? // for passing between threads
+    var docInfo = SummonerDocumentInfo()
 
     var text: String = ""
 
@@ -29,24 +40,24 @@ struct SummonerJsonDocument: FileDocument {
         self.text = text
         
         print("trying bestiary json wrapper)")
-        let jsonWrapper = try BestiaryJsonWrapper(json: text)
+        let jsonWrapper = try BestiaryJsonWrapper(json: text, docInfo: self.docInfo)
         
         let buildingData = BuildingData.items
         print("buildingData count = \(buildingData.count)")
     }
     
     func loadBestiaryData() throws {
-        let jsonWrapper = try BestiaryJsonWrapper(json: text)
+        let jsonWrapper = try BestiaryJsonWrapper(json: text, docInfo: self.docInfo)
         
         let buildingData = BuildingData.items
 
     }
 
     func loadPlayerData() throws {
-        let jsonWrapper = try BestiaryJsonWrapper(json: text)
+        let jsonWrapper = try BestiaryJsonWrapper(json: text, docInfo: self.docInfo)
     }
 
-    init(configuration: ReadConfiguration) throws {
+    public init(configuration: ReadConfiguration) throws {
         
  //       self.config = configuration
         
@@ -67,14 +78,14 @@ struct SummonerJsonDocument: FileDocument {
                 // bestiary_data.json - base bestiary data (changes rarely)
                 
                 print("Sucked in bestiary data.")
-                let jsonWrapper = try BestiaryJsonWrapper(json: text)
+                let jsonWrapper = try BestiaryJsonWrapper(json: text, docInfo: self.docInfo)
                 
                 let buildingData = BuildingData.items
             } else {
                 // deirdresm-11223344.json - player save file (playername-com2usId.json)
  
                 print("Trying to read player file.")
-                let jsonWrapper = try BestiaryJsonWrapper(json: text)
+                let jsonWrapper = try PlayerJsonWrapper(json: text, docInfo: self.docInfo)
 
             }
          } catch {
@@ -86,7 +97,7 @@ struct SummonerJsonDocument: FileDocument {
     }
     
     // we're only viewing files, but write configuration support is required
-    func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
+    public func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
         throw JSONFileError.notImplemented
     }
 }

@@ -31,13 +31,15 @@ public struct MonsterCraftCostData: JsonArray {
         monster = monsterCraft.fields.monster.int
     }
     
-    static func saveToCoreData(_ taskContext: NSManagedObjectContext) {
+    static func saveToCoreData(_ docInfo: SummonerDocumentInfo) {
         
-        taskContext.perform {
+        docInfo.taskContext.perform {
             MonsterCraftCost.batchUpdate(from: MonsterCraftCostData.items,
-                                 context: taskContext)
+                                         docInfo: docInfo)
             do {
-                try taskContext.save()
+                if docInfo.taskContext.hasChanges {
+                    try docInfo.taskContext.save()
+                }
             } catch {
                 print("could not save context")
             }

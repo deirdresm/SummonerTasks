@@ -19,14 +19,13 @@ extension Monster {
     // import from JSON
     // FIXME: need to make sure we're *creating* the record in the right context
     convenience init(monsterData: MonsterData,
-                     context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+                     docInfo: SummonerDocumentInfo) {
         self.init()
-        self.update(monsterData, context: context)
+        self.update(monsterData, docInfo: docInfo)
     }
     
     func update(_ monsterData: MonsterData,
-                context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
-        
+                docInfo: SummonerDocumentInfo) {
         
         // don't dirty the record if you don't have to
         
@@ -249,35 +248,17 @@ extension Monster {
 
 
     static func insertOrUpdate(monsterData: MonsterData,
-                               context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
-        var monster: Monster!
-        
-        
-        context.performAndWait {
-            let request : NSFetchRequest<Monster> = Monster.fetchRequest()
-
-            request.predicate = NSPredicate(format: "com2usId == %i", monsterData.com2usId)
-            
-            let results = try? context.fetch(request)
-
-            if results?.count == 0 {
-                // insert new
-//                print("inserting new, com2usId: \(monsterData.com2usId)")
-                monster = Monster(context: context)
-                monster.update(monsterData)
-             } else {
-                // update existing
-//                print("update existing monster, com2usId: \(monsterData.com2usId)")
-                monster = results?.first
-                monster.update(monsterData)
-             }
+                               docInfo: SummonerDocumentInfo) {
+        docInfo.taskContext.performAndWait {
+            let monster = Monster.findById(id: monsterData.com2usId, context: docInfo.taskContext) ?? Monster(context: docInfo.taskContext)
+            monster.update(monsterData, docInfo: docInfo)
         }
     }
     
     static func batchUpdate(from monsters: [MonsterData],
-                            context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+                            docInfo: SummonerDocumentInfo) {
         for monster in monsters {
-            Monster.insertOrUpdate(monsterData: monster, context: context)
+            Monster.insertOrUpdate(monsterData: monster, docInfo: docInfo)
         }
     }
     

@@ -13,16 +13,17 @@ struct BJr5: View {
     let monsters: [Monster]
 
     var body: some View {
-
-        let baleygr = Monster.baleygr
         
+        let summoner = Summoner.tisHerself
+        let baleygr = Monster.baleygr
         let ancientSword = Building.ancientSword
+        
         VStack {
             
             // summary of towers up top
             HStack {
-                BuildingIconView(building: Building.ancientSword)
-                BuildingIconView(building: Building.darkSanctuary)
+                BuildingIconView(building: Building.ancientSword, buildingInstance: nil)
+                BuildingIconView(building: Building.darkSanctuary, buildingInstance: nil)
             }
         }
     }

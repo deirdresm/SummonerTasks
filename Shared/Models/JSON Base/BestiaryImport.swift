@@ -16,16 +16,13 @@ public class BestiaryJsonWrapper {
     public var leaderSkillCount = 0
     public var skillCount = 0
     
-    public init(json: String) throws {
+    public init(json: String, docInfo: SummonerDocumentInfo) throws {
         var model:      String = ""
         var pk:         Int64 = 0
         var gameItems = 0
         var otherItems = 0
         var lastModel = ""
         
-        let taskContext = PersistenceController.shared.newTaskContext()
-        
-        print("created task context")
         DispatchQueue.global(qos: .background).async {
             var object: JSON
             
@@ -42,36 +39,36 @@ public class BestiaryJsonWrapper {
                         
                         switch lastModel {
                         case "bestiary.building":
-                            BuildingData.saveToCoreData(taskContext)
+                            BuildingData.saveToCoreData(docInfo)
                         case "bestiary.gameitem":
-                            GameItemData.saveToCoreData(taskContext)
+                            GameItemData.saveToCoreData(docInfo)
                         case "bestiary.source":
-                            SourceData.saveToCoreData(taskContext)
+                            SourceData.saveToCoreData(docInfo)
                         case "bestiary.awakencost":
-                            AwakenCostData.saveToCoreData(taskContext)
+                            AwakenCostData.saveToCoreData(docInfo)
                         case "bestiary.monstercraftcost":
-                            MonsterCraftCostData.saveToCoreData(taskContext)
+                            MonsterCraftCostData.saveToCoreData(docInfo)
                         // bestiary.monstercraftcost goes here
                         case "bestiary.fusion":
-                            FusionData.saveToCoreData(taskContext)
+                            FusionData.saveToCoreData(docInfo)
                         case "bestiary.skill":
-                            SkillData.saveToCoreData(taskContext)
+                            SkillData.saveToCoreData(docInfo)
                         case "bestiary.skillupgrade":
-                            SkillUpgradeData.saveToCoreData(taskContext)
+                            SkillUpgradeData.saveToCoreData(docInfo)
                         case "bestiary.leaderskill":
-                            LeaderSkillData.saveToCoreData(taskContext)
+                            LeaderSkillData.saveToCoreData(docInfo)
                         case "bestiary.skilleffect":
-                            SkillEffectData.saveToCoreData(taskContext)
+                            SkillEffectData.saveToCoreData(docInfo)
                         case "bestiary.skilleffectdetail":
-                            SkillEffectDetailData.saveToCoreData(taskContext)
+                            SkillEffectDetailData.saveToCoreData(docInfo)
                         case "bestiary.scalingstat":
-                            ScalingStatData.saveToCoreData(taskContext)
+                            ScalingStatData.saveToCoreData(docInfo)
                         case "bestiary.homunculusskill":
-                            HomunculusSkillData.saveToCoreData(taskContext)
+                            HomunculusSkillData.saveToCoreData(docInfo)
                         case "bestiary.homunculusskillcraftcost":
-                            HomunculusSkillcraftData.saveToCoreData(taskContext)
+                            HomunculusSkillcraftData.saveToCoreData(docInfo)
                         case "bestiary.monster":
-                            MonsterData.saveToCoreData(taskContext)
+                            MonsterData.saveToCoreData(docInfo)
                         default:
                             lastModel = model
                         }

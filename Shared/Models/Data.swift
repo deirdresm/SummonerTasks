@@ -16,14 +16,14 @@ protocol JsonArray {
     
     static var items: [ItemsArray] {get set}
 
-    static func saveToCoreData(_ taskContext: NSManagedObjectContext)
+    static func saveToCoreData(_ docInfo: SummonerDocumentInfo)
 }
 
 protocol CoreDataUtility
 {
     func update(from: AnyObject)
-    static func insertOrUpdate(from: AnyObject, context: NSManagedObjectContext)
-    static func batchUpdate(from: [AnyObject], context: NSManagedObjectContext)
+    static func insertOrUpdate(from: AnyObject, docInfo: SummonerDocumentInfo)
+    static func batchUpdate(from: [AnyObject], docInfo: SummonerDocumentInfo)
 }
 
 extension Array where Element == String {

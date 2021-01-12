@@ -37,21 +37,21 @@ extension HomunculusSkill {
     }
     
     static func insertOrUpdate(skillData: HomunculusSkillData,
-                               context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+                               docInfo: SummonerDocumentInfo) {
         var skill: HomunculusSkill!
         
-        context.performAndWait {
+        docInfo.taskContext.performAndWait {
             let request : NSFetchRequest<HomunculusSkill> = HomunculusSkill.fetchRequest()
 
             let predicate = NSPredicate(format: "id == %i", skillData.id)
 
             request.predicate = predicate
             
-            let results = try? context.fetch(request)
+            let results = try? docInfo.taskContext.fetch(request)
 
             if results?.count == 0 {
                 // insert new
-                skill = HomunculusSkill(context: context)
+                skill = HomunculusSkill(context: docInfo.taskContext)
                 skill.update(skillData)
              } else {
                 // update existing
@@ -62,9 +62,9 @@ extension HomunculusSkill {
     }
     
     static func batchUpdate(from skills: [HomunculusSkillData],
-                            context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+                            docInfo: SummonerDocumentInfo) {
         for skill in skills {
-            HomunculusSkill.insertOrUpdate(skillData: skill, context: context)
+            HomunculusSkill.insertOrUpdate(skillData: skill, docInfo: docInfo)
         }
     }
 }
@@ -97,21 +97,21 @@ extension HomunculusSkillcraftCost {
     }
     
     static func insertOrUpdate(skillData: HomunculusSkillcraftData,
-                               context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+                               docInfo: SummonerDocumentInfo) {
         var skill: HomunculusSkillcraftCost!
         
-        context.performAndWait {
+        docInfo.taskContext.performAndWait {
             let request : NSFetchRequest<HomunculusSkillcraftCost> = HomunculusSkillcraftCost.fetchRequest()
 
             let predicate = NSPredicate(format: "id == %i", skillData.id)
 
             request.predicate = predicate
             
-            let results = try? context.fetch(request)
+            let results = try? docInfo.taskContext.fetch(request)
 
             if results?.count == 0 {
                 // insert new
-                skill = HomunculusSkillcraftCost(context: context)
+                skill = HomunculusSkillcraftCost(context: docInfo.taskContext)
                 skill.update(skillData)
              } else {
                 // update existing
@@ -122,9 +122,9 @@ extension HomunculusSkillcraftCost {
     }
     
     static func batchUpdate(from skills: [HomunculusSkillcraftData],
-                            context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+                            docInfo: SummonerDocumentInfo) {
         for skill in skills {
-            HomunculusSkillcraftCost.insertOrUpdate(skillData: skill, context: context)
+            HomunculusSkillcraftCost.insertOrUpdate(skillData: skill, docInfo: docInfo)
         }
     }
 }

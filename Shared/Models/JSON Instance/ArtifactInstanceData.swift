@@ -8,8 +8,10 @@
 import Foundation
 import CoreData
 
-public struct ArtifactInstanceData {
+public struct ArtifactInstanceData: JsonArray {
     
+    static var items = [ArtifactInstanceData]()
+
     private enum CodingKeys: String, CodingKey {
         case com2usId = "rid"
         case summonerId = "wizard_id"
@@ -47,6 +49,22 @@ public struct ArtifactInstanceData {
         naturalRank = artifact.fields.natural_rank.int
         rank = artifact.fields.rank.int
         level = artifact.fields.level.int
+    }
+    
+    static func saveToCoreData(_ docInfo: SummonerDocumentInfo) {
+        
+        docInfo.taskContext.perform {
+            ArtifactInstance.batchUpdate(from: ArtifactInstanceData.items,
+                                         docInfo: docInfo)
+            do {
+                if docInfo.taskContext.hasChanges {
+                    try docInfo.taskContext.save()
+                }
+
+            } catch {
+                print("could not save context")
+            }
+        }
     }
 }
 

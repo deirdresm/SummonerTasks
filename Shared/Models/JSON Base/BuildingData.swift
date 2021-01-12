@@ -54,13 +54,20 @@ public struct BuildingData: JsonArray {
 //        print("upgradeCost: \(upgradeCost)")
     }
     
-    static func saveToCoreData(_ taskContext: NSManagedObjectContext) {
+    static func saveToCoreData(_ docInfo: SummonerDocumentInfo) {
         
-        taskContext.perform {
+        docInfo.taskContext.perform {
             Building.batchUpdate(from: BuildingData.items,
-                                 context: taskContext)
+                                 docInfo: docInfo)
             do {
-                try taskContext.save()
+                if docInfo.taskContext.hasChanges {
+                    try docInfo.taskContext.save()
+                }
+                else
+                {
+                    print("No context changes for awaken cost data.")
+                }
+
             } catch {
                 print("could not save context")
             }

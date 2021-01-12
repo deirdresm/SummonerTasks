@@ -28,7 +28,10 @@ public struct MonsterInstanceSkillData {
     }
 }
 
-public struct MonsterInstanceData {
+public struct MonsterInstanceData: JsonArray {
+    
+    static var items = [MonsterInstanceData]()
+
     private enum CodingKeys: String, CodingKey {
         case id = "unit_id"
         case summonerId = "wizard_id"
@@ -66,21 +69,21 @@ public struct MonsterInstanceData {
     var artifacts:          [ArtifactInstanceData]
 
     public init(monster: JSON) {
-        id = monster.fields.rune_id.int
-        summonerId = monster.fields.wizard_id.int
-        monsterId = monster.fields.unit_master_id.int
-        unitLevel = monster.fields.unit_level.int
-        stars = monster.fields.class.int
-        con = monster.fields.con.int
-        atk = monster.fields.atk.int
-        def = monster.fields.def.int
-        spd = monster.fields.speed.int
-        resist = monster.fields.resist.int
-        accuracy = monster.fields.accuracy.int
-        critRate = monster.fields.critical_rate.int
-        critDamage = monster.fields.critical_damage.int
+        id = monster.rune_id.int
+        summonerId = monster.wizard_id.int
+        monsterId = monster.unit_master_id.int
+        unitLevel = monster.unit_level.int
+        stars = monster.class.int
+        con = monster.con.int
+        atk = monster.atk.int
+        def = monster.def.int
+        spd = monster.speed.int
+        resist = monster.resist.int
+        accuracy = monster.accuracy.int
+        critRate = monster.critical_rate.int
+        critDamage = monster.critical_damage.int
         
-        var jsonArr = monster.fields.skills.value
+        var jsonArr = monster.skills.value
 //        var intIntArray = jsonArr.map { $0.array } // should have [1, 2] style array here
         var intIntArray = jsonArr as! [[Int64]]
 
@@ -94,10 +97,36 @@ public struct MonsterInstanceData {
             skills.append(misd)
         }
         
-        // FIXME: finish this once we have the previous sorted
-        
         runes = []
+        let runeList = monster.runes.array
+        for rawRune in runeList {
+            let parsedRune = RuneInstanceData(rune: rawRune)
+            runes.append(parsedRune)
+        }
+        
+
         artifacts = []
+        let artifactList = monster.artifacts.array
+        for rawArtifact in artifactList {
+            let parsedArtifact = ArtifactInstanceData(artifact: rawArtifact)
+            artifacts.append(parsedArtifact)
+        }
+    }
+    
+    static func saveToCoreData(_ docInfo: SummonerDocumentInfo) {
+        
+        docInfo.taskContext.perform {
+            MonsterInstance.batchUpdate(from: MonsterInstanceData.items,
+                                 docInfo: docInfo)
+            do {
+                if docInfo.taskContext.hasChanges {
+                    try docInfo.taskContext.save()
+                }
+
+            } catch {
+                print("could not save context")
+            }
+        }
     }
 }
 

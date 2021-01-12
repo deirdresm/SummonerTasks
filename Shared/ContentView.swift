@@ -18,6 +18,8 @@ struct ContentView: View {
         animation: .default)
     
     private var buildings: FetchedResults<Building>
+    
+    var gridItems: [GridItem] = [GridItem(.fixed(150)), GridItem(.fixed(150)), GridItem(.fixed(150)), GridItem(.fixed(150)), GridItem(.fixed(150))]
 
     var body: some View {
         VStack {
@@ -26,13 +28,13 @@ struct ContentView: View {
                     .font(.headline)
                 Spacer()
             }
-
-        List {
-            ForEach(buildings) { building in
-                BuildingIconView(building: building)
+            
+            LazyVGrid(columns: gridItems, alignment: .center, spacing: 20) {
+                
+                ForEach(buildings) { building in
+                    BuildingIconView(building: building, buildingInstance: nil)
+                }
             }
-//            .onDelete(perform: deleteMonsters)
-        }
 //        .toolbar {
 //            #if os(iOS)
 //            EditButton()

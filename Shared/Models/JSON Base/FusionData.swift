@@ -39,13 +39,15 @@ public struct FusionData: JsonArray {
         ingredients = jsonArr as! [Int64]
     }
     
-    static func saveToCoreData(_ taskContext: NSManagedObjectContext) {
+    static func saveToCoreData(_ docInfo: SummonerDocumentInfo) {
         
-        taskContext.perform {
+        docInfo.taskContext.perform {
             Fusion.batchUpdate(from: FusionData.items,
-                                 context: taskContext)
+                               docInfo: docInfo)
             do {
-                try taskContext.save()
+                if docInfo.taskContext.hasChanges {
+                    try docInfo.taskContext.save()
+                }
             } catch {
                 print("could not save context")
             }

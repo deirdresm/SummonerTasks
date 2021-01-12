@@ -43,13 +43,13 @@ public struct GameItemData: JsonArray {
         sellValue = gameItem.fields.sellValue.int
     }
     
-    static func saveToCoreData(_ taskContext: NSManagedObjectContext) {
+    static func saveToCoreData(_ docInfo: SummonerDocumentInfo) {
         
-        taskContext.perform {
+        docInfo.taskContext.perform {
             GameItem.batchUpdate(from: GameItemData.items,
-                                 context: taskContext)
+                                 docInfo: docInfo)
             do {
-                try! taskContext.save()
+                try! docInfo.taskContext.save()
             } catch {
                 print("could not save context")
             }

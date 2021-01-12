@@ -34,19 +34,19 @@ extension Source: Comparable {
     }
     
     static func insertOrUpdate(sourceData: SourceData,
-                               context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+                               docInfo: SummonerDocumentInfo) {
         var source: Source!
         
-        context.performAndWait {
+        docInfo.taskContext.performAndWait {
             let request : NSFetchRequest<Source> = Source.fetchRequest()
 
             request.predicate = NSPredicate(format: "id == %i", sourceData.id)
             
-            let results = try? context.fetch(request)
+            let results = try? docInfo.taskContext.fetch(request)
 
             if results?.count == 0 {
                 // insert new
-                source = Source(context: context)
+                source = Source(context: docInfo.taskContext)
                 source.update(sourceData)
              } else {
                 // update existing
@@ -57,9 +57,9 @@ extension Source: Comparable {
     }
     
     static func batchUpdate(from sources: [SourceData],
-                            context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+                            docInfo: SummonerDocumentInfo) {
         for source in sources {
-            Source.insertOrUpdate(sourceData: source, context: context)
+            Source.insertOrUpdate(sourceData: source, docInfo: docInfo)
         }
     }
 

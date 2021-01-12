@@ -13,6 +13,65 @@ import CoreData
 // MARK: - Original SQL Table Definition
 
 
+extension ArtifactInstance {
+    
+    convenience init(artifactInstanceData: ArtifactInstanceData, docInfo: SummonerDocumentInfo) {
+        self.init()
+        update(artifactInstanceData, docInfo: docInfo)
+    }
+    
+    static func findById(_ artifactInstanceId: Int64,
+                                 context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
+    -> ArtifactInstance? {
+        
+        let request : NSFetchRequest<ArtifactInstance> = ArtifactInstance.fetchRequest()
+
+        request.predicate = NSPredicate(format: "com2usId = %i", artifactInstanceId)
+        
+        if let results = try? context.fetch(request) {
+        
+            if let artifactInstance = results.first {
+                return artifactInstance
+            }
+        }
+        return nil
+    }
+    
+    func update(_ artifactInstanceData: ArtifactInstanceData, docInfo: SummonerDocumentInfo) {
+        
+        // don't dirty the record if you don't have to
+        
+        if self.id != artifactInstanceData.com2usId {
+            self.id = artifactInstanceData.com2usId
+        }
+        if self.summonerId != artifactInstanceData.summonerId {
+            self.summonerId = artifactInstanceData.summonerId
+            // TODO: add object
+        }
+        if self.level != artifactInstanceData.level {
+            self.level = artifactInstanceData.level
+        }
+    }
+    
+    static func insertOrUpdate(artifactInstanceData: ArtifactInstanceData,
+                               docInfo: SummonerDocumentInfo) {
+        docInfo.taskContext.performAndWait {
+            var artifactInstance = ArtifactInstance.findById(artifactInstanceData.com2usId, context: docInfo.taskContext) ?? ArtifactInstance(context: docInfo.taskContext)
+            artifactInstance.update(artifactInstanceData, docInfo: docInfo)
+        }
+    }
+    
+    static func batchUpdate(from artifacts: [ArtifactInstanceData],
+                            docInfo: SummonerDocumentInfo) {
+        for artifact in artifacts {
+            print(artifact)
+            ArtifactInstance.insertOrUpdate(artifactInstanceData: artifact, docInfo: docInfo)
+        }
+    }
+}
+
+
+
 /*
     CREATE TABLE public.herders_artifactinstance
     (

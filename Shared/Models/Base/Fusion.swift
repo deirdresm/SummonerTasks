@@ -39,21 +39,21 @@ extension Fusion {
     }
     
     static func insertOrUpdate(fusionData: FusionData,
-                               context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+                               docInfo: SummonerDocumentInfo) {
         var fusion: Fusion!
         
-        context.performAndWait {
+        docInfo.taskContext.performAndWait {
             let request : NSFetchRequest<Fusion> = Fusion.fetchRequest()
 
             let predicate = NSPredicate(format: "id == %i", fusionData.id)
 
             request.predicate = predicate
             
-            let results = try? context.fetch(request)
+            let results = try? docInfo.taskContext.fetch(request)
 
             if results?.count == 0 {
                 // insert new
-                fusion = Fusion(context: context)
+                fusion = Fusion(context: docInfo.taskContext)
                 fusion.update(fusionData)
              } else {
                 // update existing
@@ -64,9 +64,9 @@ extension Fusion {
     }
     
     static func batchUpdate(from fusions: [FusionData],
-                            context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+                            docInfo: SummonerDocumentInfo) {
         for fusion in fusions {
-            Fusion.insertOrUpdate(fusionData: fusion, context: context)
+            Fusion.insertOrUpdate(fusionData: fusion, docInfo: docInfo)
         }
     }
 }

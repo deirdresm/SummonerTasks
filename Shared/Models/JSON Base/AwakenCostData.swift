@@ -31,13 +31,19 @@ public struct AwakenCostData: JsonArray {
         monster = awaken.fields.monster.int
     }
     
-    static func saveToCoreData(_ taskContext: NSManagedObjectContext) {
+    static func saveToCoreData(_ docInfo: SummonerDocumentInfo) {
         
-        taskContext.perform {
+        docInfo.taskContext.perform {
             AwakenCost.batchUpdate(from: AwakenCostData.items,
-                                 context: taskContext)
+                                   docInfo: docInfo)
             do {
-                try taskContext.save()
+                if docInfo.taskContext.hasChanges {
+                    try docInfo.taskContext.save()
+                }
+                else
+                {
+                    print("No context changes for awaken cost data.")
+                }
             } catch {
                 print("could not save context")
             }

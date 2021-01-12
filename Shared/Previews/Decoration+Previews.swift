@@ -31,8 +31,8 @@ extension BuildingInstance {
         let building = Building.skyTribeTotem
         let summoner = Summoner.tisHerself
         
-        buildingInstance.buildingId = 332755950
-        buildingInstance.com2usId = building.id
+        buildingInstance.id = 332755950
+        buildingInstance.buildingId = building.id
         buildingInstance.level = 5
         buildingInstance.summonerId = summoner.id
         
@@ -47,8 +47,8 @@ extension BuildingInstance {
         let building = Building.ancientSword
         let summoner = Summoner.tisHerself
         
-        buildingInstance.buildingId = 14
-        buildingInstance.com2usId = building.id
+        buildingInstance.id = 14
+        buildingInstance.buildingId = building.id
         buildingInstance.level = 3
         buildingInstance.summonerId = summoner.id
 
@@ -63,8 +63,8 @@ extension BuildingInstance {
         let building = Building.darkSanctuary
         let summoner = Summoner.tisHerself
         
-        buildingInstance.buildingId = 6
-        buildingInstance.com2usId = 19
+        buildingInstance.id = 6
+        buildingInstance.buildingId = building.id
         buildingInstance.level = 3
         buildingInstance.summonerId = summoner.id
 

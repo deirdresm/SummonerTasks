@@ -28,19 +28,19 @@ extension AwakenCost {
     }
     
     static func insertOrUpdate(awakenCostData: AwakenCostData,
-                               context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+                               docInfo: SummonerDocumentInfo) {
         var awakenCost: AwakenCost!
         
-        context.performAndWait {
+        docInfo.taskContext.performAndWait {
             let request : NSFetchRequest<AwakenCost> = AwakenCost.fetchRequest()
 
             request.predicate = NSPredicate(format: "id == %i", awakenCostData.id)
             
-            let results = try? context.fetch(request)
+            let results = try? docInfo.taskContext.fetch(request)
 
             if results?.count == 0 {
                 // insert new
-                awakenCost = AwakenCost(context: context)
+                awakenCost = AwakenCost(context: docInfo.taskContext)
                 awakenCost.update(awakenCostData)
              } else {
                 // update existing
@@ -51,9 +51,9 @@ extension AwakenCost {
     }
     
     static func batchUpdate(from awakenCosts: [AwakenCostData],
-                            context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+                            docInfo: SummonerDocumentInfo) {
         for awakenCost in awakenCosts {
-            AwakenCost.insertOrUpdate(awakenCostData: awakenCost, context: context)
+            AwakenCost.insertOrUpdate(awakenCostData: awakenCost, docInfo: docInfo)
         }
     }
 
