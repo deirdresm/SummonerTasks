@@ -8,12 +8,7 @@
 import Foundation
 import CoreData
 
-extension BuildingInstance {
-    
-    convenience init(buildingInstanceData: BuildingInstanceData, docInfo: SummonerDocumentInfo) {
-        self.init()
-        update(buildingInstanceData, docInfo: docInfo)
-    }
+extension BuildingInstance: CoreDataUtility {
     
     static func findById(_ buildingInstanceId: Int64,
                          context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
@@ -32,7 +27,8 @@ extension BuildingInstance {
         return nil
     }
     
-    func update(_ buildingInstanceData: BuildingInstanceData, docInfo: SummonerDocumentInfo) {
+    func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
+        let buildingInstanceData = from as! BuildingInstanceData
         
         // don't dirty the record if you don't have to
         
@@ -62,21 +58,20 @@ extension BuildingInstance {
         }
     }
     
-    static func insertOrUpdate(_ buildingInstanceData: BuildingInstanceData,
+    static func insertOrUpdate<T: JsonArray>(from: T,
                                docInfo: SummonerDocumentInfo) {
-        let buildingInstance: BuildingInstance!
-        
         docInfo.taskContext.performAndWait {
+            let buildingInstanceData = from as! BuildingInstanceData
             var buildingInstance = BuildingInstance.findById(buildingInstanceData.com2usId, context: docInfo.taskContext) ?? BuildingInstance(context: docInfo.taskContext)
-            buildingInstance.update(buildingInstanceData, docInfo: docInfo)
+            buildingInstance.update(from: buildingInstanceData, docInfo: docInfo)
         }
     }
     
-    static func batchUpdate(from buildings: [BuildingInstanceData],
+    static func batchUpdate<T: JsonArray>(from: [T],
                             docInfo: SummonerDocumentInfo) {
+        let buildings = from as! [BuildingInstanceData]
         for building in buildings {
-            print(building)
-            BuildingInstance.insertOrUpdate(building, docInfo: docInfo)
+            BuildingInstance.insertOrUpdate(from: building, docInfo: docInfo)
         }
     }
 }

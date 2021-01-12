@@ -19,7 +19,7 @@ enum TimezoneServerMap: String, CaseIterable {
 
 // MARK: - JSON
 
-public struct SummonerData: JsonArray {
+public struct SummonerData: JsonArrayMutable {
     
     static var items = [SummonerData]()
 
@@ -48,11 +48,11 @@ public struct SummonerData: JsonArray {
         server = serverMap?.toString() ?? ""
     }
     
-    static func saveToCoreData(_ docInfo: SummonerDocumentInfo) {
+    static func saveToCoreData(_ docInfo: inout SummonerDocumentInfo) {
         
         docInfo.taskContext.perform {
             Summoner.batchUpdate(from: SummonerData.items,
-                                 docInfo: docInfo)
+                                 docInfo: &docInfo)
             do {
                 if docInfo.taskContext.hasChanges {
                     try docInfo.taskContext.save()

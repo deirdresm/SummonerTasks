@@ -8,8 +8,26 @@
 import Foundation
 import CoreData
 
-extension Source: Comparable {
-    func update(_ sourceData: SourceData) {
+extension Source: Comparable, CoreDataUtility {
+
+    static func findById(id: Int64,
+                    context: NSManagedObjectContext) -> Source? {
+        
+        let request : NSFetchRequest<Source> = Source.fetchRequest()
+
+        request.predicate = NSPredicate(format: "id == %i", id)
+        
+        let results = try? context.fetch(request)
+        
+        if let _ = results?.count {
+            return(results?.first)
+        } else {
+            return(nil)
+        }
+    }
+
+    func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
+        let sourceData = from as! SourceData
         
         // don't dirty the record if you don't have to
         
@@ -33,33 +51,20 @@ extension Source: Comparable {
         }
     }
     
-    static func insertOrUpdate(sourceData: SourceData,
+    static func insertOrUpdate<T: JsonArray>(from: T,
                                docInfo: SummonerDocumentInfo) {
-        var source: Source!
+        let sourceData = from as! SourceData
+        let source: Source = Source.findById(id: sourceData.id, context: docInfo.taskContext) ??
+            Source(context: docInfo.taskContext)
         
-        docInfo.taskContext.performAndWait {
-            let request : NSFetchRequest<Source> = Source.fetchRequest()
-
-            request.predicate = NSPredicate(format: "id == %i", sourceData.id)
-            
-            let results = try? docInfo.taskContext.fetch(request)
-
-            if results?.count == 0 {
-                // insert new
-                source = Source(context: docInfo.taskContext)
-                source.update(sourceData)
-             } else {
-                // update existing
-                source = results?.first
-                source.update(sourceData)
-             }
-        }
+        source.update(from: sourceData, docInfo: docInfo)
     }
     
-    static func batchUpdate(from sources: [SourceData],
+    static func batchUpdate<T: JsonArray>(from: [T],
                             docInfo: SummonerDocumentInfo) {
+        let sources = from as! [SourceData]
         for source in sources {
-            Source.insertOrUpdate(sourceData: source, docInfo: docInfo)
+            Source.insertOrUpdate(from: source, docInfo: docInfo)
         }
     }
 

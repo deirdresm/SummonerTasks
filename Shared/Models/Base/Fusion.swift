@@ -10,14 +10,27 @@ import CoreData
 
 // MARK: - Core Data Fusion
 
-extension Fusion {
+extension Fusion: CoreDataUtility {
     
-    convenience init(fusionData: FusionData) {
-        self.init()
-        update(fusionData)
+    static func findById(_ fusionId: Int64,
+                                 context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
+    -> Fusion? {
+        
+        let request : NSFetchRequest<Fusion> = Fusion.fetchRequest()
+        request.predicate = NSPredicate(format: "id = %i", fusionId)
+        
+        if let results = try? context.fetch(request) {
+        
+            if let fusion = results.first {
+                return fusion
+            }
+        }
+        return nil
     }
     
-    func update(_ fusionData: FusionData) {
+    func update<T: JsonArray>(from: T,
+                docInfo: SummonerDocumentInfo) {
+        let fusionData = from as! FusionData
         
         // don't dirty the record if you don't have to
         
@@ -38,35 +51,20 @@ extension Fusion {
         }
     }
     
-    static func insertOrUpdate(fusionData: FusionData,
+    static func insertOrUpdate<T: JsonArray>(from: T,
                                docInfo: SummonerDocumentInfo) {
-        var fusion: Fusion!
+        let fusionData = from as! FusionData
+        let fusion: Fusion = Fusion.findById(fusionData.id, context: docInfo.taskContext) ??
+            Fusion(context: docInfo.taskContext)
         
-        docInfo.taskContext.performAndWait {
-            let request : NSFetchRequest<Fusion> = Fusion.fetchRequest()
-
-            let predicate = NSPredicate(format: "id == %i", fusionData.id)
-
-            request.predicate = predicate
-            
-            let results = try? docInfo.taskContext.fetch(request)
-
-            if results?.count == 0 {
-                // insert new
-                fusion = Fusion(context: docInfo.taskContext)
-                fusion.update(fusionData)
-             } else {
-                // update existing
-                fusion = results?.first
-                fusion.update(fusionData)
-             }
-        }
+        fusion.update(from: fusionData, docInfo: docInfo)
     }
     
-    static func batchUpdate(from fusions: [FusionData],
+    static func batchUpdate<T: JsonArray>(from: [T],
                             docInfo: SummonerDocumentInfo) {
+        let fusions = from as! [FusionData]
         for fusion in fusions {
-            Fusion.insertOrUpdate(fusionData: fusion, docInfo: docInfo)
+            Fusion.insertOrUpdate(from: fusion, docInfo: docInfo)
         }
     }
 }

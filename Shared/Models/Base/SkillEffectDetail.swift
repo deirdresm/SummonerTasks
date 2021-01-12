@@ -10,7 +10,7 @@ import CoreData
 
 // MARK: - Core Data
 
-extension SkillEffectDetail {
+extension SkillEffectDetail: CoreDataUtility {
     
     convenience init(skillEffect: SkillEffectDetailData) {
         self.init()

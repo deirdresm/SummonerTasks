@@ -11,14 +11,27 @@ import CoreData
 
 // MARK: - Core Data ScalingStat
 
-extension ScalingStat {
+extension ScalingStat: CoreDataUtility {
     
-    convenience init(scalingStatData: ScalingStatData) {
-        self.init()
-        update(scalingStatData)
+    static func findById(_ scalingStatId: Int64,
+                         context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
+    -> ScalingStat? {
+        
+        let request : NSFetchRequest<ScalingStat> = ScalingStat.fetchRequest()
+
+        request.predicate = NSPredicate(format: "id = %i", scalingStatId)
+        
+        if let results = try? context.fetch(request) {
+        
+            if let scalingStat = results.first {
+                return scalingStat
+            }
+        }
+        return nil
     }
     
-    func update(_ scalingStatData: ScalingStatData) {
+    func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
+        let scalingStatData = from as! ScalingStatData
         
         // don't dirty the record if you don't have to
         
@@ -36,35 +49,20 @@ extension ScalingStat {
         }
     }
     
-    static func insertOrUpdate(scalingStatData: ScalingStatData,
+    static func insertOrUpdate<T: JsonArray>(from: T,
                                docInfo: SummonerDocumentInfo) {
-        var scalingStat: ScalingStat!
-        
         docInfo.taskContext.performAndWait {
-            let request : NSFetchRequest<ScalingStat> = ScalingStat.fetchRequest()
-
-            let predicate = NSPredicate(format: "id == %i", scalingStatData.id)
-
-            request.predicate = predicate
-            
-            let results = try? docInfo.taskContext.fetch(request)
-
-            if results?.count == 0 {
-                // insert new
-                scalingStat = ScalingStat(context: docInfo.taskContext)
-                scalingStat.update(scalingStatData)
-             } else {
-                // update existing
-                scalingStat = results?.first
-                scalingStat.update(scalingStatData)
-             }
+            let scalingStatData = from as! SkillData
+            let scalingStat = ScalingStat.findById(scalingStatData.com2usId, context: docInfo.taskContext) ?? ScalingStat(context: docInfo.taskContext)
+            scalingStat.update(from: scalingStatData, docInfo: docInfo)
         }
     }
     
-    static func batchUpdate(from scalingStats: [ScalingStatData],
+    static func batchUpdate<T: JsonArray>(from: [T],
                             docInfo: SummonerDocumentInfo) {
+        let scalingStats = from as! [ScalingStatData]
         for scalingStat in scalingStats {
-            ScalingStat.insertOrUpdate(scalingStatData: scalingStat, docInfo: docInfo)
+            ScalingStat.insertOrUpdate(from: scalingStat, docInfo: docInfo)
         }
     }
 }

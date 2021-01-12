@@ -8,8 +8,10 @@
 import Foundation
 import CoreData
 
-extension GameItem {
-    func update(_ gameItemData: GameItemData) {
+extension GameItem: CoreDataUtility {
+    func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
+        
+        let gameItemData = from as! GameItemData
         
         // don't dirty the record if you don't have to
         
@@ -39,33 +41,38 @@ extension GameItem {
         }
     }
     
-    static func insertOrUpdate(gameItemData: GameItemData,
+    static func insertOrUpdate<T: JsonArray>(from: T,
                                docInfo: SummonerDocumentInfo) {
-        var gameItem: GameItem!
-        
         docInfo.taskContext.performAndWait {
-            let request : NSFetchRequest<GameItem> = GameItem.fetchRequest()
-
-            request.predicate = NSPredicate(format: "id == %i", gameItemData.id)
-            
-            let results = try? docInfo.taskContext.fetch(request)
-
-            if results?.count == 0 {
-                // insert new
-                gameItem = GameItem(context: docInfo.taskContext)
-                gameItem.update(gameItemData)
-             } else {
-                // update existing
-                gameItem = results?.first
-                gameItem.update(gameItemData)
-             }
+            let gameItemData = from as! BuildingInstanceData
+            var gameItem = GameItem.findById(gameItemData.com2usId, context: docInfo.taskContext) ?? GameItem(context: docInfo.taskContext)
+            gameItem.update(from: gameItemData, docInfo: docInfo)
         }
     }
     
-    static func batchUpdate(from gameItems: [GameItemData],
+    static func findById(_ gameItemId: Int64,
+                         context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
+    -> GameItem? {
+        
+        let request : NSFetchRequest<GameItem> = GameItem.fetchRequest()
+
+        request.predicate = NSPredicate(format: "id = %i", gameItemId)
+        
+        if let results = try? context.fetch(request) {
+        
+            if let gameItem = results.first {
+                return gameItem
+            }
+        }
+        return nil
+    }
+    
+
+    static func batchUpdate<T: JsonArray>(from: [T],
                             docInfo: SummonerDocumentInfo) {
+        let gameItems = from as! [GameItemData]
         for gameItem in gameItems {
-            GameItem.insertOrUpdate(gameItemData: gameItem, docInfo: docInfo)
+            GameItem.insertOrUpdate(from: gameItem, docInfo: docInfo)
         }
     }
 

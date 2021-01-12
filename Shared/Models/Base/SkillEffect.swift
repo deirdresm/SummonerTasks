@@ -10,13 +10,25 @@ import CoreData
 
 // MARK: - Core Data SkillEffect
 
-extension SkillEffect {
+extension SkillEffect: CoreDataUtility {
     
-    convenience init(skillEffect: SkillEffectData) {
-        self.init()
-        update(skillEffect)
+    static func findById(_ skillDataId: Int64,
+                         context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
+    -> Skill? {
+        
+        let request : NSFetchRequest<Skill> = Skill.fetchRequest()
+
+        request.predicate = NSPredicate(format: "id = %i", skillDataId)
+        
+        if let results = try? context.fetch(request) {
+        
+            if let skill = results.first {
+                return skill
+            }
+        }
+        return nil
     }
-    
+
     func update(_ skillEffect: SkillEffectData) {
         
         // don't dirty the record if you don't have to

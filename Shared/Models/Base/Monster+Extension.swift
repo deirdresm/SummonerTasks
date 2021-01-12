@@ -14,18 +14,12 @@ import SwiftUI
 /**
  Managed object subclass extension for the Quake entity.
  */
-extension Monster {
+extension Monster: CoreDataUtility {
     
     // import from JSON
-    // FIXME: need to make sure we're *creating* the record in the right context
-    convenience init(monsterData: MonsterData,
-                     docInfo: SummonerDocumentInfo) {
-        self.init()
-        self.update(monsterData, docInfo: docInfo)
-    }
-    
-    func update(_ monsterData: MonsterData,
+    func update<T: JsonArray>(from: T,
                 docInfo: SummonerDocumentInfo) {
+        let monsterData = from as! MonsterData
         
         // don't dirty the record if you don't have to
         
@@ -247,18 +241,20 @@ extension Monster {
     }
 
 
-    static func insertOrUpdate(monsterData: MonsterData,
+    static func insertOrUpdate<T: JsonArray>(from: T,
                                docInfo: SummonerDocumentInfo) {
         docInfo.taskContext.performAndWait {
+            let monsterData = from as! MonsterData
             let monster = Monster.findById(id: monsterData.com2usId, context: docInfo.taskContext) ?? Monster(context: docInfo.taskContext)
-            monster.update(monsterData, docInfo: docInfo)
+            monster.update(from: monsterData, docInfo: docInfo)
         }
     }
     
-    static func batchUpdate(from monsters: [MonsterData],
+    static func batchUpdate<T: JsonArray>(from: [T],
                             docInfo: SummonerDocumentInfo) {
+        let monsters = from as! [MonsterData]
         for monster in monsters {
-            Monster.insertOrUpdate(monsterData: monster, docInfo: docInfo)
+            Monster.insertOrUpdate(from: monster, docInfo: docInfo)
         }
     }
     

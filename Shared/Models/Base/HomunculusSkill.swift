@@ -11,14 +11,26 @@ import CoreData
 
 // MARK: - Core Data HomunculusSkill
 
-extension HomunculusSkill {
+extension HomunculusSkill: CoreDataUtility {
     
-    convenience init(skillData: HomunculusSkillData) {
-        self.init()
-        update(skillData)
+    static func findById(id: Int64,
+                    context: NSManagedObjectContext) -> HomunculusSkill? {
+        
+        let request : NSFetchRequest<HomunculusSkill> = HomunculusSkill.fetchRequest()
+
+        request.predicate = NSPredicate(format: "id == %i", id)
+        
+        let results = try? context.fetch(request)
+        
+        if let _ = results?.count {
+            return(results?.first)
+        } else {
+            return(nil)
+        }
     }
-    
-    func update(_ skillData: HomunculusSkillData) {
+
+    func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
+        let skillData = from as! HomunculusSkillData
         
         // don't dirty the record if you don't have to
         
@@ -36,35 +48,20 @@ extension HomunculusSkill {
         }
     }
     
-    static func insertOrUpdate(skillData: HomunculusSkillData,
+    static func insertOrUpdate<T: JsonArray>(from: T,
                                docInfo: SummonerDocumentInfo) {
-        var skill: HomunculusSkill!
+        let skillData = from as! HomunculusSkillData
+        let skill: HomunculusSkill = HomunculusSkill.findById(id: skillData.id, context: docInfo.taskContext) ??
+            HomunculusSkill(context: docInfo.taskContext)
         
-        docInfo.taskContext.performAndWait {
-            let request : NSFetchRequest<HomunculusSkill> = HomunculusSkill.fetchRequest()
-
-            let predicate = NSPredicate(format: "id == %i", skillData.id)
-
-            request.predicate = predicate
-            
-            let results = try? docInfo.taskContext.fetch(request)
-
-            if results?.count == 0 {
-                // insert new
-                skill = HomunculusSkill(context: docInfo.taskContext)
-                skill.update(skillData)
-             } else {
-                // update existing
-                skill = results?.first
-                skill.update(skillData)
-             }
-        }
+        skill.update(from: skillData, docInfo: docInfo)
     }
     
-    static func batchUpdate(from skills: [HomunculusSkillData],
+    static func batchUpdate<T: JsonArray>(from: [T],
                             docInfo: SummonerDocumentInfo) {
+        let skills = from as! [HomunculusSkillData]
         for skill in skills {
-            HomunculusSkill.insertOrUpdate(skillData: skill, docInfo: docInfo)
+            HomunculusSkill.insertOrUpdate(from: skill, docInfo: docInfo)
         }
     }
 }

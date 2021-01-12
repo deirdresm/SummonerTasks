@@ -70,7 +70,7 @@ enum LeaderSkillArea: Int64 {
 
 
 
-extension LeaderSkill {
+extension LeaderSkill: CoreDataUtility {
     
     /*     def skill_string(self):
      if self.area == self.AREA_DUNGEON:
@@ -144,7 +144,25 @@ extension LeaderSkill {
         return fileName
     }
     
-    func update(_ leaderSkillData: LeaderSkillData) {
+    static func findById(_ skillDataId: Int64,
+                         context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
+    -> LeaderSkill? {
+        
+        let request : NSFetchRequest<LeaderSkill> = LeaderSkill.fetchRequest()
+
+        request.predicate = NSPredicate(format: "id = %i", skillDataId)
+        
+        if let results = try? context.fetch(request) {
+        
+            if let skill = results.first {
+                return skill
+            }
+        }
+        return nil
+    }
+
+    func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
+        let leaderSkillData = from as! LeaderSkillData
         
         // don't dirty the record if you don't have to
         
@@ -165,33 +183,20 @@ extension LeaderSkill {
         }
     }
     
-    static func insertOrUpdate(leaderSkillData: LeaderSkillData,
+    static func insertOrUpdate<T: JsonArray>(from: T,
                                docInfo: SummonerDocumentInfo) {
-        var leaderSkill: LeaderSkill!
+        let leaderSkillData = from as! LeaderSkillData
+        let leaderSkill = LeaderSkill.findById(leaderSkillData.id, context: docInfo.taskContext) ??
+            LeaderSkill(context: docInfo.taskContext)
         
-        docInfo.taskContext.performAndWait {
-            let request : NSFetchRequest<LeaderSkill> = LeaderSkill.fetchRequest()
-
-            request.predicate = NSPredicate(format: "id == %i", leaderSkillData.id)
-            
-            let results = try? docInfo.taskContext.fetch(request)
-
-            if results?.count == 0 {
-                // insert new
-                leaderSkill = LeaderSkill(context: docInfo.taskContext)
-                leaderSkill.update(leaderSkillData)
-             } else {
-                // update existing
-                leaderSkill = results?.first
-                leaderSkill.update(leaderSkillData)
-             }
-        }
+        leaderSkill.update(from: leaderSkillData, docInfo: docInfo)
     }
     
-    static func batchUpdate(from leaderSkills: [LeaderSkillData],
+    static func batchUpdate<T: JsonArray>(from: [T],
                             docInfo: SummonerDocumentInfo) {
+        let leaderSkills = from as! [LeaderSkillData]
         for leaderSkillData in leaderSkills {
-            LeaderSkill.insertOrUpdate(leaderSkillData: leaderSkillData, docInfo: docInfo)
+            LeaderSkill.insertOrUpdate(from: leaderSkillData, docInfo: docInfo)
         }
     }
 

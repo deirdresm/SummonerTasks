@@ -10,14 +10,28 @@ import CoreData
 
 // MARK: - Core Data
 
-extension Skill: Comparable {
+extension Skill: Comparable, CoreDataUtility {
     
-    convenience init(skillData: SkillData) {
-        self.init()
-        update(skillData)
+    static func findById(_ skillDataId: Int64,
+                         context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
+    -> Skill? {
+        
+        let request : NSFetchRequest<Skill> = Skill.fetchRequest()
+
+        request.predicate = NSPredicate(format: "id = %i", skillDataId)
+        
+        if let results = try? context.fetch(request) {
+        
+            if let skill = results.first {
+                return skill
+            }
+        }
+        return nil
     }
     
-    func update(_ skillData: SkillData) {
+
+    func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
+        let skillData = from as! SkillData
         
         // don't dirty the record if you don't have to
         
@@ -71,35 +85,20 @@ extension Skill: Comparable {
         }
     }
     
-    static func insertOrUpdate(skillData: SkillData,
+    static func insertOrUpdate<T: JsonArray>(from: T,
                                docInfo: SummonerDocumentInfo) {
-        var skill: Skill!
-        
         docInfo.taskContext.performAndWait {
-            let request : NSFetchRequest<Skill> = Skill.fetchRequest()
-
-            let predicate = NSPredicate(format: "com2usId == %i", skillData.com2usId)
-
-            request.predicate = predicate
-            
-            let results = try? docInfo.taskContext.fetch(request)
-
-            if results?.count == 0 {
-                // insert new
-                skill = Skill(context: docInfo.taskContext)
-                skill.update(skillData)
-             } else {
-                // update existing
-                skill = results?.first
-                skill.update(skillData)
-             }
+            let skillData = from as! SkillData
+            let skill = Skill.findById(skillData.com2usId, context: docInfo.taskContext) ?? Skill(context: docInfo.taskContext)
+            skill.update(from: skillData, docInfo: docInfo)
         }
     }
     
-    static func batchUpdate(from skills: [SkillData],
+    static func batchUpdate<T: JsonArray>(from: [T],
                             docInfo: SummonerDocumentInfo) {
+        let skills = from as! [SkillData]
         for skill in skills {
-            Skill.insertOrUpdate(skillData: skill, docInfo: docInfo)
+            Skill.insertOrUpdate(from: skill, docInfo: docInfo)
         }
     }
 

@@ -12,7 +12,7 @@ import CoreData
 
 // MARK: - Core Data
 
-extension MonsterInstance: Comparable {
+extension MonsterInstance: Comparable, CoreDataUtility {
     
     func monsterRunesSorted() -> [RuneInstance] {
         let sortNameDescriptor = NSSortDescriptor.init(key: "slot", ascending: true)
@@ -74,8 +74,9 @@ extension MonsterInstance: Comparable {
         return nil
     }
 
-    func update(_ monsterData: MonsterInstanceData,
-                context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+    func update<T: JsonArray>(from: T,
+                              docInfo: SummonerDocumentInfo) {
+        let monsterData = from as! MonsterInstanceData
         
         // don't dirty the record if you don't have to
         
@@ -118,29 +119,30 @@ extension MonsterInstance: Comparable {
             self.monsterId = monsterData.monsterId
             
             self.monster = Monster.findById(id: monsterId,
-                                           context: context)
+                                            context: docInfo.taskContext)
         }
         
         if (self.monster == nil) {
             self.monster = Monster.findById(id: monsterId,
-                                           context: context)
+                                           context: docInfo.taskContext)
         }
     }
     
-    static func insertOrUpdate(monsterData: MonsterInstanceData,
+    static func insertOrUpdate<T: JsonArray>(from: T,
                                docInfo: SummonerDocumentInfo) {
-        let monsterInstance: MonsterInstance!
+        let monsterData = from as! MonsterInstanceData
         
         docInfo.taskContext.performAndWait {
             var monsterInstance = MonsterInstance.findById(monsterData.id, context: docInfo.taskContext) ?? MonsterInstance(context: docInfo.taskContext)
-            monsterInstance.update(monsterData, context: docInfo.taskContext)
+            monsterInstance.update(from: monsterData, docInfo: docInfo)
         }
     }
     
-    static func batchUpdate(from monsterInstances: [MonsterInstanceData],
+    static func batchUpdate<T: JsonArray>(from: [T],
                             docInfo: SummonerDocumentInfo) {
+        let monsterInstances = from as! [MonsterInstanceData]
         for monsterInstance in monsterInstances {
-            MonsterInstance.insertOrUpdate(monsterData: monsterInstance, docInfo: docInfo)
+            MonsterInstance.insertOrUpdate(from: monsterInstance, docInfo: docInfo)
         }
     }
 

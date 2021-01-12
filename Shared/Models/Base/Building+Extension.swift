@@ -10,13 +10,15 @@ import CoreData
 
 // MARK: - Core Data
 
-extension Building {
-    convenience init(buildingData: BuildingData) {
+extension Building: CoreDataUtility {
+
+    convenience init(buildingData: BuildingData, docInfo: SummonerDocumentInfo) {
         self.init()
-        update(from: buildingData)
+        update(from: buildingData, docInfo: docInfo)
     }
     
-    func update(from buildingData: BuildingData) {
+    func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
+        let buildingData = from as! BuildingData
         
         // don't dirty the record if you don't have to
         
@@ -55,9 +57,10 @@ extension Building {
         }
     }
     
-    static func insertOrUpdate(from buildingData: BuildingData,
+    static func insertOrUpdate<T: JsonArray>(from: T,
                                docInfo: SummonerDocumentInfo) {
         var building: Building!
+        let buildingData = from as! BuildingData
         
         docInfo.taskContext.performAndWait {
             let request : NSFetchRequest<Building> = Building.fetchRequest()
@@ -71,17 +74,19 @@ extension Building {
             if results?.count == 0 {
                 // insert new
                 building = Building(context: docInfo.taskContext)
-                building.update(from: buildingData)
+                building.update(from: buildingData, docInfo: docInfo)
              } else {
                 // update existing
                 building = results?.first
-                building.update(from: buildingData)
+                building.update(from: buildingData, docInfo: docInfo)
              }
         }
     }
     
-    static func batchUpdate(from buildings: [BuildingData],
+    static func batchUpdate<T: JsonArray>(from: [T],
                             docInfo: SummonerDocumentInfo) {
+        let buildings = from as! [BuildingData]
+        
         for building in buildings {
             Building.insertOrUpdate(from: building, docInfo: docInfo)
         }

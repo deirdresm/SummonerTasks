@@ -13,12 +13,7 @@ import CoreData
 // MARK: - Original SQL Table Definition
 
 
-extension ArtifactInstance {
-    
-    convenience init(artifactInstanceData: ArtifactInstanceData, docInfo: SummonerDocumentInfo) {
-        self.init()
-        update(artifactInstanceData, docInfo: docInfo)
-    }
+extension ArtifactInstance: CoreDataUtility {
     
     static func findById(_ artifactInstanceId: Int64,
                                  context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
@@ -37,7 +32,9 @@ extension ArtifactInstance {
         return nil
     }
     
-    func update(_ artifactInstanceData: ArtifactInstanceData, docInfo: SummonerDocumentInfo) {
+    func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
+        
+        let artifactInstanceData = from as! ArtifactInstanceData
         
         // don't dirty the record if you don't have to
         
@@ -53,19 +50,21 @@ extension ArtifactInstance {
         }
     }
     
-    static func insertOrUpdate(artifactInstanceData: ArtifactInstanceData,
+    static func insertOrUpdate<T: JsonArray>(from: T,
                                docInfo: SummonerDocumentInfo) {
         docInfo.taskContext.performAndWait {
-            var artifactInstance = ArtifactInstance.findById(artifactInstanceData.com2usId, context: docInfo.taskContext) ?? ArtifactInstance(context: docInfo.taskContext)
-            artifactInstance.update(artifactInstanceData, docInfo: docInfo)
+            let artifactInstanceData = from as! ArtifactInstanceData
+            let artifactInstance = ArtifactInstance.findById(artifactInstanceData.com2usId, context: docInfo.taskContext) ?? ArtifactInstance(context: docInfo.taskContext)
+            artifactInstance.update(from: artifactInstanceData, docInfo: docInfo)
         }
     }
     
-    static func batchUpdate(from artifacts: [ArtifactInstanceData],
+    static func batchUpdate<T: JsonArray>(from: [T],
                             docInfo: SummonerDocumentInfo) {
+        let artifacts = from as! [ArtifactInstanceData]
         for artifact in artifacts {
             print(artifact)
-            ArtifactInstance.insertOrUpdate(artifactInstanceData: artifact, docInfo: docInfo)
+            ArtifactInstance.insertOrUpdate(from: artifact, docInfo: docInfo)
         }
     }
 }

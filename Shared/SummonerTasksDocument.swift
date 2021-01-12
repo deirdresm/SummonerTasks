@@ -40,21 +40,21 @@ struct SummonerJsonDocument: FileDocument {
         self.text = text
         
         print("trying bestiary json wrapper)")
-        let jsonWrapper = try BestiaryJsonWrapper(json: text, docInfo: self.docInfo)
+        let jsonWrapper = try BestiaryJsonWrapper(json: text, docInfo: docInfo)
         
         let buildingData = BuildingData.items
         print("buildingData count = \(buildingData.count)")
     }
     
     func loadBestiaryData() throws {
-        let jsonWrapper = try BestiaryJsonWrapper(json: text, docInfo: self.docInfo)
+        let jsonWrapper = try BestiaryJsonWrapper(json: text, docInfo: docInfo)
         
         let buildingData = BuildingData.items
 
     }
 
     func loadPlayerData() throws {
-        let jsonWrapper = try BestiaryJsonWrapper(json: text, docInfo: self.docInfo)
+        let jsonWrapper = try BestiaryJsonWrapper(json: text, docInfo: docInfo)
     }
 
     public init(configuration: ReadConfiguration) throws {
@@ -85,7 +85,7 @@ struct SummonerJsonDocument: FileDocument {
                 // deirdresm-11223344.json - player save file (playername-com2usId.json)
  
                 print("Trying to read player file.")
-                let jsonWrapper = try PlayerJsonWrapper(json: text, docInfo: self.docInfo)
+                let jsonWrapper = try PlayerJsonWrapper(json: text, docInfo: &docInfo)
 
             }
          } catch {

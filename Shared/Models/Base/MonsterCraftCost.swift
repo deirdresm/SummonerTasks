@@ -7,7 +7,7 @@
 
 import CoreData
 
-extension MonsterCraftCost {
+extension MonsterCraftCost: CoreDataUtility {
     func update(_ monsterCraftCostData: MonsterCraftCostData) {
         
         // don't dirty the record if you don't have to

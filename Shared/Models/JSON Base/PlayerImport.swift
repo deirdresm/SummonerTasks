@@ -12,7 +12,7 @@ public class PlayerJsonWrapper {
     
     public var buildingInstanceCount = 0
     
-    public init(json: String, docInfo: SummonerDocumentInfo) throws {
+    public init(json: String, docInfo: inout SummonerDocumentInfo) throws {
         var model:      String = ""
         var gameItems = 0
         var otherItems = 0
@@ -38,7 +38,7 @@ public class PlayerJsonWrapper {
                 let timezone = object.tzone
                 let newSummoner = SummonerData(summoner: summoner, timezone: timezone)
                 SummonerData.items.append(newSummoner)
-                SummonerData.saveToCoreData(docInfo)
+                SummonerData.saveToCoreData(&docInfo)
                 
                 let buildingList = object.deco_list
                 for item in buildingList {

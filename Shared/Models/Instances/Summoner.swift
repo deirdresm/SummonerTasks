@@ -11,22 +11,14 @@ import Cocoa
 
 // MARK: - Core Data
 
-extension Summoner {
+extension Summoner: CoreDataUtilityMutable {
     static let classNameTransformerName = NSValueTransformerName(rawValue: "JSONValueTransformer")
-    
-    convenience init(summonerData: SummonerData) {
-        self.init()
-        update(summonerData)
-    }
     
     static func findById(_ summonerId: Int64,
                                  context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
     -> Summoner? {
         
-        let summoner: Summoner!
-        
         let request : NSFetchRequest<Summoner> = Summoner.fetchRequest()
-
         request.predicate = NSPredicate(format: "id = %i", summonerId)
         
         if let results = try? context.fetch(request) {
@@ -38,7 +30,8 @@ extension Summoner {
         return nil
     }
     
-    func update(_ summonerData: SummonerData) {
+    func update<T: JsonArrayMutable>(from: T, docInfo: inout SummonerDocumentInfo) {
+        let summonerData = from as! SummonerData
         
         // don't dirty the record if you don't have to
         
@@ -53,32 +46,20 @@ extension Summoner {
         }
     }
     
-    static func insertOrUpdate(summonerData: SummonerData,
-                               docInfo: SummonerDocumentInfo) {
-        let summoner: Summoner!
+    static func insertOrUpdate<T: JsonArrayMutable>(from: T,
+                               docInfo: inout SummonerDocumentInfo) {
+        let summonerData = from as! SummonerData
+        let summoner: Summoner = Summoner.findById(summonerData.id) ??
+            Summoner(context: docInfo.taskContext)
         
-        let request : NSFetchRequest<Summoner> = Summoner.fetchRequest()
-
-        print(summonerData)
-        request.predicate = NSPredicate(format: "id = %i", summonerData.id)
-        
-        let results = try? docInfo.taskContext.fetch(request)
-
-        if results?.count == 0 {
-            // insert new
-            summoner = Summoner(context: docInfo.taskContext)
-            summoner.update(summonerData)
-         } else {
-            // update existing
-            summoner = results?.first
-            summoner.update(summonerData)
-         }
+        summoner.update(from: summonerData, docInfo: &docInfo)
     }
     
-    static func batchUpdate(from summoners: [SummonerData],
-                            docInfo: SummonerDocumentInfo) {
+    static func batchUpdate<T: JsonArrayMutable>(from: [T],
+                            docInfo: inout SummonerDocumentInfo) {
+        let summoners = from as! [SummonerData]
         for summoner in summoners {
-            Summoner.insertOrUpdate(summonerData: summoner, docInfo: docInfo)
+            Summoner.insertOrUpdate(from: summoner, docInfo: &docInfo)
         }
     }
 }

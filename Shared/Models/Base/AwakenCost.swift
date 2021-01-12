@@ -8,8 +8,26 @@
 import Foundation
 import CoreData
 
-extension AwakenCost {
-    func update(_ awakenCostData: AwakenCostData) {
+extension AwakenCost: CoreDataUtility {
+    static func findById(_ awakenCostId: Int64,
+                         context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
+    -> AwakenCost? {
+        
+        let request : NSFetchRequest<AwakenCost> = AwakenCost.fetchRequest()
+
+        request.predicate = NSPredicate(format: "id = %i", awakenCostId)
+        
+        if let results = try? context.fetch(request) {
+        
+            if let awakenCost = results.first {
+                return awakenCost
+            }
+        }
+        return nil
+    }
+
+    func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
+        let awakenCostData = from as! AwakenCostData
         
         // don't dirty the record if you don't have to
         
@@ -27,33 +45,20 @@ extension AwakenCost {
         }
     }
     
-    static func insertOrUpdate(awakenCostData: AwakenCostData,
+    static func insertOrUpdate<T: JsonArray>(from: T,
                                docInfo: SummonerDocumentInfo) {
-        var awakenCost: AwakenCost!
+        let awakenCostData = from as! AwakenCostData
+        let awakenCost = AwakenCost.findById(awakenCostData.id, context: docInfo.taskContext) ??
+            AwakenCost(context: docInfo.taskContext)
         
-        docInfo.taskContext.performAndWait {
-            let request : NSFetchRequest<AwakenCost> = AwakenCost.fetchRequest()
-
-            request.predicate = NSPredicate(format: "id == %i", awakenCostData.id)
-            
-            let results = try? docInfo.taskContext.fetch(request)
-
-            if results?.count == 0 {
-                // insert new
-                awakenCost = AwakenCost(context: docInfo.taskContext)
-                awakenCost.update(awakenCostData)
-             } else {
-                // update existing
-                awakenCost = results?.first
-                awakenCost.update(awakenCostData)
-             }
-        }
+        awakenCost.update(from: awakenCostData, docInfo: docInfo)
     }
     
-    static func batchUpdate(from awakenCosts: [AwakenCostData],
+    static func batchUpdate<T: JsonArray>(from: [T],
                             docInfo: SummonerDocumentInfo) {
+        let awakenCosts = from as! [AwakenCostData]
         for awakenCost in awakenCosts {
-            AwakenCost.insertOrUpdate(awakenCostData: awakenCost, docInfo: docInfo)
+            AwakenCost.insertOrUpdate(from: awakenCost, docInfo: docInfo)
         }
     }
 

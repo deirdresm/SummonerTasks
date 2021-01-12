@@ -13,7 +13,7 @@ import SwiftUI
 
 // MARK: - JSON
 
-extension RuneInstance {
+extension RuneInstance: CoreDataUtility {
     
     func findById(summoner: Summoner, runeId: Int64,
                   context: NSManagedObjectContext) -> RuneInstance? {

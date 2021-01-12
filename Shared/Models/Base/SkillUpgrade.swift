@@ -11,14 +11,28 @@ import CoreData
 
 // MARK: - Core Data
 
-extension SkillUpgrade: Comparable {
+extension SkillUpgrade: Comparable, CoreDataUtility {
     
-    convenience init(skillUpgrade: SkillUpgradeData) {
-        self.init()
-        update(skillUpgrade)
+    static func findById(_ skillDataId: Int64,
+                         context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
+    -> SkillUpgrade? {
+        
+        let request : NSFetchRequest<SkillUpgrade> = SkillUpgrade.fetchRequest()
+
+        request.predicate = NSPredicate(format: "id = %i", skillDataId)
+        
+        if let results = try? context.fetch(request) {
+        
+            if let skill = results.first {
+                return skill
+            }
+        }
+        return nil
     }
-    
-    func update(_ skillUpgrade: SkillUpgradeData) {
+
+    func update<T: JsonArray>(from: T,
+                              docInfo: SummonerDocumentInfo) {
+        let skillUpgrade = from as! SkillUpgradeData
         
         // don't dirty the record if you don't have to
         
@@ -39,35 +53,20 @@ extension SkillUpgrade: Comparable {
         }
     }
     
-    static func insertOrUpdate(skillUpgrade: SkillUpgradeData,
+    static func insertOrUpdate<T: JsonArray>(from: T,
                                docInfo: SummonerDocumentInfo) {
-        var skill: SkillUpgrade!
+        let skillUpgrade = from as! LeaderSkillData
+        let skill = SkillUpgrade.findById(skillUpgrade.id, context: docInfo.taskContext) ??
+            SkillUpgrade(context: docInfo.taskContext)
         
-        docInfo.taskContext.performAndWait {
-            let request : NSFetchRequest<SkillUpgrade> = SkillUpgrade.fetchRequest()
-
-            let predicate = NSPredicate(format: "id == %i", skillUpgrade.id)
-
-            request.predicate = predicate
-            
-            let results = try? docInfo.taskContext.fetch(request)
-
-            if results?.count == 0 {
-                // insert new
-                skill = SkillUpgrade(context: docInfo.taskContext)
-                skill.update(skillUpgrade)
-             } else {
-                // update existing
-                skill = results?.first
-                skill.update(skillUpgrade)
-             }
-        }
+        skill.update(from: skillUpgrade, docInfo: docInfo)
     }
     
-    static func batchUpdate(from skillUpgradeData: [SkillUpgradeData],
+    static func batchUpdate<T: JsonArray>(from: [T],
                             docInfo: SummonerDocumentInfo) {
-        for skillUpgrade in skillUpgradeData {
-            SkillUpgrade.insertOrUpdate(skillUpgrade: skillUpgrade, docInfo: docInfo)
+        let skillUpgrades = from as! [SkillUpgradeData]
+        for skillUpgrade in skillUpgrades {
+            SkillUpgrade.insertOrUpdate(from: skillUpgrade, docInfo: docInfo)
         }
     }
 
