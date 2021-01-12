@@ -15,14 +15,14 @@ import SwiftUI
  Managed object subclass extension for the Quake entity.
  */
 extension Monster: CoreDataUtility {
-    
+
     // import from JSON
     func update<T: JsonArray>(from: T,
                 docInfo: SummonerDocumentInfo) {
         let monsterData = from as! MonsterData
-        
+
         // don't dirty the record if you don't have to
-        
+
         if self.id != monsterData.id {
             self.id = Int64(monsterData.id)
         }
@@ -133,7 +133,7 @@ extension Monster: CoreDataUtility {
         if self.craftCost != monsterData.craftCost && (monsterData.craftCost != nil) {
             self.craftCost = monsterData.craftCost!
         }
-        
+
         if self.awakenMatsFireLow != monsterData.awakenMatsFireLow {
             self.awakenMatsFireLow = monsterData.awakenMatsFireLow
         }
@@ -143,7 +143,7 @@ extension Monster: CoreDataUtility {
         if self.awakenMatsFireHigh != monsterData.awakenMatsFireHigh {
             self.awakenMatsFireHigh = monsterData.awakenMatsFireHigh
         }
-        
+
         if self.awakenMatsWaterLow != monsterData.awakenMatsWaterLow {
             self.awakenMatsWaterLow = monsterData.awakenMatsWaterLow
         }
@@ -153,7 +153,7 @@ extension Monster: CoreDataUtility {
         if self.awakenMatsWaterHigh != monsterData.awakenMatsWaterHigh {
             self.awakenMatsWaterHigh = monsterData.awakenMatsWaterHigh
         }
-        
+
         if self.awakenMatsWindLow != monsterData.awakenMatsWindLow {
             self.awakenMatsWindLow = monsterData.awakenMatsWindLow
         }
@@ -163,7 +163,7 @@ extension Monster: CoreDataUtility {
         if self.awakenMatsWindHigh != monsterData.awakenMatsWindHigh {
             self.awakenMatsWindHigh = monsterData.awakenMatsWindHigh
         }
-        
+
         if self.awakenMatsLightLow != monsterData.awakenMatsLightLow {
             self.awakenMatsLightLow = monsterData.awakenMatsLightLow
         }
@@ -173,7 +173,7 @@ extension Monster: CoreDataUtility {
         if self.awakenMatsLightHigh != monsterData.awakenMatsLightHigh {
             self.awakenMatsLightHigh = monsterData.awakenMatsLightHigh
         }
-        
+
         if self.awakenMatsDarkLow != monsterData.awakenMatsDarkLow {
             self.awakenMatsDarkLow = monsterData.awakenMatsDarkLow
         }
@@ -183,7 +183,7 @@ extension Monster: CoreDataUtility {
         if self.awakenMatsDarkHigh != monsterData.awakenMatsDarkHigh {
             self.awakenMatsDarkHigh = monsterData.awakenMatsDarkHigh
         }
-        
+
         if self.awakenMatsMagicLow != monsterData.awakenMatsMagicLow {
             self.awakenMatsMagicLow = monsterData.awakenMatsMagicLow
         }
@@ -203,16 +203,16 @@ extension Monster: CoreDataUtility {
         if self.bestiarySlug != monsterData.bestiarySlug {
             self.bestiarySlug = monsterData.bestiarySlug
         }
-        
+
         if self.skillArray != monsterData.skills {
             self.skillArray = monsterData.skills
-            
+
             // FIXME: add skills relationship here
         }
-        
+
         if self.sourceRaw != monsterData.source {
             self.sourceRaw = monsterData.source
-            
+
             // FIXME: add source relationship here
         }
     }
@@ -226,13 +226,13 @@ extension Monster: CoreDataUtility {
     
     static func findById(id: Int64,
                     context: NSManagedObjectContext) -> Monster? {
-        
-        let request : NSFetchRequest<Monster> = Monster.fetchRequest()
+
+        let request: NSFetchRequest<Monster> = Monster.fetchRequest()
 
         request.predicate = NSPredicate(format: "id == %i", id)
-        
+
         let results = try? context.fetch(request)
-        
+
         if let _ = results?.count {
             return(results?.first)
         } else {
@@ -240,12 +240,12 @@ extension Monster: CoreDataUtility {
         }
     }
 
-
     static func insertOrUpdate<T: JsonArray>(from: T,
                                docInfo: SummonerDocumentInfo) {
         docInfo.taskContext.performAndWait {
             let monsterData = from as! MonsterData
-            let monster = Monster.findById(id: monsterData.com2usId, context: docInfo.taskContext) ?? Monster(context: docInfo.taskContext)
+            let monster = Monster.findById(id: monsterData.com2usId, context: docInfo.taskContext) ??
+                Monster(context: docInfo.taskContext)
             monster.update(from: monsterData, docInfo: docInfo)
         }
     }
@@ -344,9 +344,7 @@ public struct StarsView: View {
  optional in case they are missing from the data.
  */
 
-
 // TODO: set up relations and indices
-
 
 // MARK: - Original SQL Table Definition
 
