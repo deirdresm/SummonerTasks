@@ -55,22 +55,6 @@ enum Element: Int64, CaseIterable {
 
 // Items
 
-enum BuildingType: Int64 {
-    case summonerTower, summonhenge, pondOfMana, crystalMine, gateway = 8,
-        templeOfWishes = 10, magicShop, ancientStones, arcaneTower = 14,
-        crystalTitan, fusionHexagram, fuseCenter, powerUpCircle = 20,
-        tranquilForest = 22, gustyCliffs, deepForestEnt, monsterStorage,
-        transmogrificationBuilding = 27
-}
-
-enum DecorationEnum: Int64 {
-    case guardstone = 4, manaFountain, skyTribeTotem, arcaneBoosterTower,
-        crystalAltar, ancientSword, sanctumOfEnergy, mysteriousPlant,
-        fireSanctuary = 15, waterSanctuary, windSanctuary, lightSanctuary,
-        darkSanctuary, fallenAncientGuardian = 31, crystalRock = 34, fairyTree,
-        flagOfBattle, flagOfRage, flagOfHope, flagOfWill
-}
-
 enum Inventory: Int64 {
     case monster, currency = 6, rune = 8, scroll, booster, essence, monsterPiece,
         guildMonsterPiece = 19, rainbowmon = 25, runeCraft = 27, craftStuff = 29

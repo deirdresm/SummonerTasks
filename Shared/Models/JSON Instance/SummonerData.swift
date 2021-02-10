@@ -28,14 +28,16 @@ public struct SummonerData: JsonArrayMutable {
         case name = "wizard_name"
         case lastUpdate = "wizard_last_login"
         case server = "tzone"
+        case timezone = "timezone"
     }
 
     let id:             Int64
     let name:           String
     let lastUpdate:     Date?
     let server:         String
+    let timezone:       String
 
-    public init(summoner: JSON, timezone: JSON) {
+    public init(summoner: JSON, tzone: JSON) {
         id = summoner.wizard_id.int
         name = summoner.wizard_name.string
 
@@ -43,24 +45,23 @@ public struct SummonerData: JsonArrayMutable {
         let formatter = DateFormatter.com2us
         lastUpdate = formatter.date(from: rawDate)
         
-        let tz = timezone.string
+        let tz = tzone.string
+        timezone = tz
         let serverMap = TimezoneServerMap.from(string: tz)
         server = serverMap?.toString() ?? ""
     }
     
     static func saveToCoreData(_ docInfo: inout SummonerDocumentInfo) {
         
-        docInfo.taskContext.perform {
-            Summoner.batchUpdate(from: SummonerData.items,
-                                 docInfo: &docInfo)
-            do {
-                if docInfo.taskContext.hasChanges {
-                    try docInfo.taskContext.save()
-                }
-
-            } catch {
-                print("could not save context")
+        Summoner.batchUpdate(from: SummonerData.items,
+                             docInfo: &docInfo)
+        do {
+            if docInfo.taskContext.hasChanges {
+                try docInfo.taskContext.save()
             }
+            
+        } catch {
+            print("could not save context")
         }
     }
 }

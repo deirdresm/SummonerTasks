@@ -21,7 +21,7 @@ extension ArtifactInstance: CoreDataUtility {
         
         let request : NSFetchRequest<ArtifactInstance> = ArtifactInstance.fetchRequest()
 
-        request.predicate = NSPredicate(format: "com2usId = %i", artifactInstanceId)
+        request.predicate = NSPredicate(format: "id = %i", artifactInstanceId)
         
         if let results = try? context.fetch(request) {
         
@@ -43,7 +43,45 @@ extension ArtifactInstance: CoreDataUtility {
         }
         if self.summonerId != artifactInstanceData.summonerId {
             self.summonerId = artifactInstanceData.summonerId
-            // TODO: add object
+        }
+        if let summoner = docInfo.summoner {
+            self.summoner = summoner
+        }
+        if let summoner = docInfo.summoner {
+            if self.summoner != summoner {
+                self.summoner = summoner
+            }
+        }
+        if self.level != artifactInstanceData.level {
+            self.level = artifactInstanceData.level
+        }
+        if self.assignedToId != artifactInstanceData.monsterInstanceId {
+            self.assignedToId = artifactInstanceData.monsterInstanceId
+        }
+        if self.slot != artifactInstanceData.slot {
+            self.slot = artifactInstanceData.slot
+        }
+        if let tempArchetype = ArchetypeMap(rawValue: artifactInstanceData.artifactType) {
+            if self.archetype != tempArchetype.description {
+                self.archetype = tempArchetype.description
+            }
+        }
+        if let tempElement = Element(rawValue: artifactInstanceData.attribute) {
+            if self.element != tempElement.description {
+                self.element = tempElement.description
+            }
+        }
+        if self.mainStat != artifactInstanceData.unitStyle {
+            self.mainStat = artifactInstanceData.unitStyle
+        }
+        if self.originalQuality != artifactInstanceData.naturalRank {
+            self.originalQuality = artifactInstanceData.naturalRank
+        }
+        if self.quality != artifactInstanceData.rank {
+            self.quality = artifactInstanceData.rank
+        }
+        if self.level != artifactInstanceData.level {
+            self.level = artifactInstanceData.level
         }
         if self.level != artifactInstanceData.level {
             self.level = artifactInstanceData.level
@@ -63,7 +101,6 @@ extension ArtifactInstance: CoreDataUtility {
                             docInfo: SummonerDocumentInfo) {
         let artifacts = from as! [ArtifactInstanceData]
         for artifact in artifacts {
-            print(artifact)
             ArtifactInstance.insertOrUpdate(from: artifact, docInfo: docInfo)
         }
     }

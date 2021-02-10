@@ -19,12 +19,12 @@ public struct ArtifactInstanceData: JsonArray {
         case slot
         case artifactType = "artifact_type"
         case attribute
-        case unitStyle
-        case naturalRank
+        case unitStyle = "unit_style"
+        case naturalRank = "natural_rank"
         case rank
         case level
-        case primaryEffect
-        case secondaryEffects
+        case primaryEffect = "primary_effect"
+        case secondaryEffects = "secondary_effects"
     }
 
     let com2usId:           Int64
@@ -39,16 +39,16 @@ public struct ArtifactInstanceData: JsonArray {
     let level:              Int64
 
     public init(artifact: JSON) {
-        com2usId = artifact.fields.rid.int
-        summonerId = artifact.fields.wizard_id.int
-        monsterInstanceId = artifact.fields.occupied_id.int
-        slot = artifact.fields.slot.int
-        artifactType = artifact.fields.artifact_type.int
-        attribute = artifact.fields.attribute.int
-        unitStyle = artifact.fields.unit_style.int
-        naturalRank = artifact.fields.natural_rank.int
-        rank = artifact.fields.rank.int
-        level = artifact.fields.level.int
+        com2usId = artifact.rid.int
+        summonerId = artifact.wizard_id.int
+        monsterInstanceId = artifact.occupied_id.int
+        slot = artifact.slot.int
+        artifactType = artifact.artifact_type.int
+        attribute = artifact.attribute.int
+        unitStyle = artifact.unit_style.int
+        naturalRank = artifact.natural_rank.int
+        rank = artifact.rank.int
+        level = artifact.level.int
     }
     
     static func saveToCoreData(_ docInfo: SummonerDocumentInfo) {

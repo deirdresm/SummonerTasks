@@ -107,6 +107,65 @@ extension Building: CoreDataUtility {
             return(nil)
         }
     }
+    
+    static func filteredBuildings(_ buildingFilter: BuildingFilter) -> [Building] {
+        switch buildingFilter {
+        case .battle:
+            return Building.battleList()
+        case .guild:
+            return Building.guildList()
+        case .elemental:
+            return Building.elementalList()
+        case .arena:
+            return Building.arenaList()
+        case .none:
+            return []   // TODO
+        }
+    }
+    
+    static func battleList(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [Building] {
+        var buildingList: [Building] = []
+        
+        for b in BattleBuilding.battleBuildings() {
+            if let building = Building.findById(b.rawValue, context: context) {
+                buildingList.append(building)
+            }
+        }
+        return buildingList
+    }
+    
+    static func elementalList(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [Building] {
+        var buildingList: [Building] = []
+        
+        for b in BattleBuilding.elementalBuildings() {
+            if let building = Building.findById(b.rawValue, context: context) {
+                buildingList.append(building)
+            }
+        }
+        return buildingList
+    }
+    
+    static func guildList(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [Building] {
+        var buildingList: [Building] = []
+        
+        for b in BattleBuilding.guildBuildings() {
+            if let building = Building.findById(b.rawValue, context: context) {
+                buildingList.append(building)
+            }
+        }
+        return buildingList
+    }
+    
+    static func arenaList(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [Building] {
+        var buildingList: [Building] = []
+        
+        for b in BattleBuilding.arenaBuildings() {
+            if let building = Building.findById(b.rawValue, context: context) {
+                buildingList.append(building)
+            }
+        }
+        return buildingList
+    }
 }
 
 /*

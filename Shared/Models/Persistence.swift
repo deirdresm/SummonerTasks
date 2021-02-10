@@ -41,7 +41,6 @@ class PersistenceController {
 //        return result
 //    }()
 
-
     init(inMemory: Bool = false) {
         container = NSPersistentCloudKitContainer(name: "SummonerTasks")
         if inMemory {
@@ -54,7 +53,7 @@ class PersistenceController {
             }
             description.setOption(true as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
         }
-        
+
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.
@@ -85,7 +84,7 @@ class PersistenceController {
                 name: .NSPersistentStoreRemoteChange, object: nil)
         }
     }
-    
+
     /**
      Creates and configures a private queue context.
     */
@@ -99,7 +98,6 @@ class PersistenceController {
         return taskContext
     }
 
-    
     // MARK: - NSPersistentStoreRemoteChange handler
 
     /**
@@ -110,17 +108,17 @@ class PersistenceController {
     func storeRemoteChange(_ notification: Notification) {
         // print("\(#function): Got a persistent store remote change notification!")
     }
-    
+
     // MARK: - Rune background tasks
 
     //  After we've imported runes from the JSON file, any runes that *weren't*
     //  included should be deleted (as the summoner no longer has those runes).
-    
+
     //  Note: we can't rely on the changed runes as most will be unchanged, and
     //  updating a timestamp seems clumsy (and prone to edge cases). Current
     //  max # of runes is 1800, so keeping an array is not unduly memory
     //  burdensome.
-    
+
     private func deleteUnchangedRunes(_ seenRunes: Set<RuneInstance>, completionHandler: @escaping (Error?) -> Void) {
         let taskContext = newTaskContext()
 

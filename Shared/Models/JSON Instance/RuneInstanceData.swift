@@ -17,7 +17,7 @@ public struct RuneInstanceData: JsonArray {
         case summonerId = "wizard_id"
         case occupiedType = "occupied_type"
         case occupiedId = "occupied_id"
-        case slotNo = "slot_no"
+        case slot = "slot_no"
         case rank
         case runeClass = "class"
         case setId = "set_id"
@@ -35,7 +35,7 @@ public struct RuneInstanceData: JsonArray {
     let summonerId:         Int64
     let occupiedType:       Int64
     let monsterInstanceId:  Int64
-    let slotNo:             Int64
+    let slot:               Int64
     let rank:               Int64
     let runeClass:          Int64
     let setId:              Int64
@@ -53,9 +53,9 @@ public struct RuneInstanceData: JsonArray {
         summonerId = rune.wizard_id.int
         occupiedType = rune.occupied_type.int
         monsterInstanceId = rune.occupied_id.int
-        slotNo = rune.slotNo.int
-        rank = rune.rank.int
-        runeClass = rune.rune_class.int
+        slot = rune.slot_no.int
+        rank = rune.rank.int // stars
+        runeClass = rune.class.int
         setId = rune.set_id.int
         upgradeLimit = rune.upgrade_limit.int
         upgradeCurr = rune.upgrade_curr.int
@@ -73,13 +73,13 @@ public struct RuneInstanceData: JsonArray {
 //        priEff = converted.map {try! JSON(string: $0.value as! String).int}
         priEff = jsonArr as! [Int64]
 
-        print("priEff: \(priEff)")
+//        print("priEff: \(priEff)")
 
         jsonArr = rune.prefix_eff.value
 //        converted = try! JSON(string: jsonArr as! String).array
 //        prefixEff = converted.map {try! JSON(string: $0.value as! String).int}
         prefixEff = jsonArr as! [Int64]
-        print("prefixEff: \(prefixEff)")
+//        print("prefixEff: \(prefixEff)")
 
         var jsonArr2 = rune.sec_eff.value
         secEff = jsonArr2 as! [[Int64]]
@@ -91,7 +91,7 @@ public struct RuneInstanceData: JsonArray {
 //            let se = ci.map {try! JSON(string: $0.value as! String).int}
 //            secEff.append(se)
 //        }
-        print("secEff: \(secEff)")
+//        print("secEff: \(secEff)")
 
 //        jsonArr = rune.prefixEff.value
 //        converted = try! JSON(string: jsonArr as! String).array

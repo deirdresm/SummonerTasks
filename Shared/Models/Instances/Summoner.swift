@@ -15,7 +15,7 @@ extension Summoner: CoreDataUtilityMutable {
     static let classNameTransformerName = NSValueTransformerName(rawValue: "JSONValueTransformer")
     
     static func findById(_ summonerId: Int64,
-                                 context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
+                                 context: NSManagedObjectContext)
     -> Summoner? {
         
         let request : NSFetchRequest<Summoner> = Summoner.fetchRequest()
@@ -44,24 +44,81 @@ extension Summoner: CoreDataUtilityMutable {
         if self.lastUpdate != summonerData.lastUpdate {
             self.lastUpdate = summonerData.lastUpdate
         }
+//        if self.server != summonerData.server {
+//            self.server = summonerData.server
+//        }
+        if self.timezone != summonerData.timezone {
+            self.timezone = summonerData.timezone
+        }
     }
     
     static func insertOrUpdate<T: JsonArrayMutable>(from: T,
                                docInfo: inout SummonerDocumentInfo) {
         let summonerData = from as! SummonerData
-        let summoner: Summoner = Summoner.findById(summonerData.id) ??
+        let summoner: Summoner = Summoner.findById(summonerData.id, context: docInfo.taskContext) ??
             Summoner(context: docInfo.taskContext)
         
         summoner.update(from: summonerData, docInfo: &docInfo)
+        docInfo.summoner = summoner
+        docInfo.summonerSet = true
+        docInfo.summonerId = summoner.id
     }
     
     static func batchUpdate<T: JsonArrayMutable>(from: [T],
                             docInfo: inout SummonerDocumentInfo) {
         let summoners = from as! [SummonerData]
-        for summoner in summoners {
-            Summoner.insertOrUpdate(from: summoner, docInfo: &docInfo)
+        let summoner = summoners.first!
+        Summoner.insertOrUpdate(from: summoner, docInfo: &docInfo)
+    }
+    
+    // TODO: we need a big sort thing, so this is a temp stopgap
+    func runesSorted() -> [RuneInstance] {
+        let slotSort = NSSortDescriptor.init(key: "slot", ascending: true)
+        let typeSort = NSSortDescriptor.init(key: "runeType", ascending: true)
+        let valueSort = NSSortDescriptor.init(key: "runeValue", ascending: false)
+
+        return (self.runes)?.sortedArray(using: [slotSort, typeSort, valueSort]) as! [RuneInstance]
+    }
+    
+    func setBuildingStat(_ building: BuildingInstance) {
+        guard let buildingType = BattleBuilding(rawValue: building.buildingId) else {
+            return
+        }
+        
+        switch buildingType {
+        case .crystalAltar:
+            self.bonusHp = building.getBuildingBonus()
+        case .ancientSword:
+            self.bonusAtk = building.getBuildingBonus()
+        case .guardstone:
+            self.bonusDef = building.getBuildingBonus()
+        case .skyTribeTotem:
+            self.bonusSpd = building.getBuildingBonus()
+        case .fallenAncientKeeper:
+            self.bonusCritDmg = building.getBuildingBonus()
+        case .fireSanctuary:
+            self.bonusFire = building.getBuildingBonus()
+        case .waterSanctuary:
+            self.bonusWater = building.getBuildingBonus()
+        case .windSanctuary:
+            self.bonusWind = building.getBuildingBonus()
+        case .lightSanctuary:
+            self.bonusLight = building.getBuildingBonus()
+        case .darkSanctuary:
+            self.bonusDark = building.getBuildingBonus()
+        case .flagOfHope:
+            self.guildHp = building.getBuildingBonus()
+        case .flagOfBattle:
+            self.guildAtk = building.getBuildingBonus()
+        case .flagOfWill:
+            self.guildDef = building.getBuildingBonus()
+        case .flagOfRage:
+            self.guildCritDmg = building.getBuildingBonus()
+        default:
+            break
         }
     }
+
 }
 
 @objc(JSONValueTransformer)

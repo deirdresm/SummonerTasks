@@ -28,7 +28,17 @@ extension Skill: Comparable, CoreDataUtility {
         }
         return nil
     }
-    
+
+    static func findOrCreate(_ id: Int64,
+                        context: NSManagedObjectContext) -> Skill {
+        if let skill = Skill.findById(id, context: context) {
+            return skill
+        }
+        let skill = Skill(context: context)
+        skill.id = id
+        return skill
+    }
+
 
     func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
         let skillData = from as! SkillData
@@ -89,7 +99,7 @@ extension Skill: Comparable, CoreDataUtility {
                                docInfo: SummonerDocumentInfo) {
         docInfo.taskContext.performAndWait {
             let skillData = from as! SkillData
-            let skill = Skill.findById(skillData.com2usId, context: docInfo.taskContext) ?? Skill(context: docInfo.taskContext)
+            let skill = Skill.findOrCreate(skillData.com2usId, context: docInfo.taskContext)
             skill.update(from: skillData, docInfo: docInfo)
         }
     }

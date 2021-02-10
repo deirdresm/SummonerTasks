@@ -27,6 +27,83 @@ extension BuildingInstance: CoreDataUtility {
         return nil
     }
     
+    static func findBySummonerAndBuildingId(_ summoner: Int64?, _ buildingId: Int64,
+                         context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
+    -> BuildingInstance? {
+        
+        guard let sId = summoner else {
+            return nil
+        }
+        
+        let request : NSFetchRequest<BuildingInstance> = BuildingInstance.fetchRequest()
+        
+        let firstPredicate = NSPredicate(format: "summonerId = %i", sId)
+        let secondPredicate = NSPredicate(format: "buildingId = %i", buildingId)
+        let predicate = firstPredicate.and(secondPredicate)
+
+        request.predicate = predicate
+        
+        if let results = try? context.fetch(request) {
+        
+            if let buildingInstance = results.first {
+                return buildingInstance
+            }
+        }
+        return nil
+    }
+    
+    static func getBuildingLevel(_ summoner: Int64?, _ buildingId: Int64,
+                          context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> Int64 {
+        let bi = BuildingInstance.findBySummonerAndBuildingId(summoner, buildingId, context: context)
+        return bi?.level ?? 0 // zero means "no such building" but is suppressed on output in views
+    }
+    
+    static func filteredBuildingInstances(_ buildingFilter: BuildingFilter, summoner: Summoner?) -> [BuildingInstance] {
+        switch buildingFilter {
+        case .battle:
+            if let s: Int64 = summoner?.id {
+                return BuildingInstance.battleList(s)
+            } else {
+                let bi: [BuildingInstance] = []
+                return bi
+            }
+        case .elemental:
+            if let s: Int64 = summoner?.id {
+                return BuildingInstance.elementalList(s)
+            } else {
+                let bi: [BuildingInstance] = []
+                return bi
+            }
+
+        case .guild:
+            if let s: Int64 = summoner?.id {
+                return BuildingInstance.guildList(s)
+            } else {
+                let bi: [BuildingInstance] = []
+                return bi
+            }
+        case .arena:
+            if let s: Int64 = summoner?.id {
+                return BuildingInstance.arenaList(s)
+            } else {
+                let bi: [BuildingInstance] = []
+                return bi
+            }
+        case .none:
+            return []   // TODO
+        }
+    }
+
+    
+    func getBuildingBonus() -> Int64 {
+        var bonus: Int64 = 0
+        
+        let levels = self.building?.statBonus
+        bonus = levels?[Int(self.level)] ?? 0
+        
+        return bonus
+    }
+    
     func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
         let buildingInstanceData = from as! BuildingInstanceData
         
@@ -73,5 +150,48 @@ extension BuildingInstance: CoreDataUtility {
         for building in buildings {
             BuildingInstance.insertOrUpdate(from: building, docInfo: docInfo)
         }
+    }
+    static func battleList(_ summoner: Int64, context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [BuildingInstance] {
+        var buildingList: [BuildingInstance] = []
+        
+        for b in BattleBuilding.battleBuildings() {
+            if let building = BuildingInstance.findBySummonerAndBuildingId(summoner, b.rawValue, context: context) {
+                buildingList.append(building)
+            }
+        }
+        return buildingList
+    }
+    
+    static func elementalList(_ summoner: Int64, context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [BuildingInstance] {
+        var buildingList: [BuildingInstance] = []
+        
+        for b in BattleBuilding.elementalBuildings() {
+            if let building = BuildingInstance.findBySummonerAndBuildingId(summoner, b.rawValue, context: context) {
+                buildingList.append(building)
+            }
+        }
+        return buildingList
+    }
+    
+    static func guildList(_ summoner: Int64, context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [BuildingInstance] {
+        var buildingList: [BuildingInstance] = []
+        
+        for b in BattleBuilding.guildBuildings() {
+            if let building = BuildingInstance.findBySummonerAndBuildingId(summoner, b.rawValue, context: context) {
+                buildingList.append(building)
+            }
+        }
+        return buildingList
+    }
+    
+    static func arenaList(_ summoner: Int64, context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [BuildingInstance] {
+        var buildingList: [BuildingInstance] = []
+        
+        for b in BattleBuilding.arenaBuildings() {
+            if let building = BuildingInstance.findBySummonerAndBuildingId(summoner, b.rawValue, context: context) {
+                buildingList.append(building)
+            }
+        }
+        return buildingList
     }
 }

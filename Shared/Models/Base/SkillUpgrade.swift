@@ -55,7 +55,7 @@ extension SkillUpgrade: Comparable, CoreDataUtility {
     
     static func insertOrUpdate<T: JsonArray>(from: T,
                                docInfo: SummonerDocumentInfo) {
-        let skillUpgrade = from as! LeaderSkillData
+        let skillUpgrade = from as! SkillUpgradeData
         let skill = SkillUpgrade.findById(skillUpgrade.id, context: docInfo.taskContext) ??
             SkillUpgrade(context: docInfo.taskContext)
         

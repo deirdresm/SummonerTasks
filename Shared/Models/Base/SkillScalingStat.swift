@@ -30,7 +30,8 @@ extension ScalingStat: CoreDataUtility {
         return nil
     }
     
-    func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
+    func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo)
+    {
         let scalingStatData = from as! ScalingStatData
         
         // don't dirty the record if you don't have to
@@ -52,8 +53,8 @@ extension ScalingStat: CoreDataUtility {
     static func insertOrUpdate<T: JsonArray>(from: T,
                                docInfo: SummonerDocumentInfo) {
         docInfo.taskContext.performAndWait {
-            let scalingStatData = from as! SkillData
-            let scalingStat = ScalingStat.findById(scalingStatData.com2usId, context: docInfo.taskContext) ?? ScalingStat(context: docInfo.taskContext)
+            let scalingStatData = from as! ScalingStatData
+            let scalingStat = ScalingStat.findById(scalingStatData.id, context: docInfo.taskContext) ?? ScalingStat(context: docInfo.taskContext)
             scalingStat.update(from: scalingStatData, docInfo: docInfo)
         }
     }

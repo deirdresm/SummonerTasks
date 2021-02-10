@@ -29,7 +29,7 @@ public struct MonsterInstanceSkillData {
 }
 
 public struct MonsterInstanceData: JsonArray {
-    
+
     static var items = [MonsterInstanceData]()
 
     private enum CodingKeys: String, CodingKey {
@@ -50,7 +50,7 @@ public struct MonsterInstanceData: JsonArray {
         case runes
         case artifacts
     }
-    
+
     let id:                 Int64
     let summonerId:         Int64   // points to Summoner object
     let monsterId:          Int64   // points to Monster object
@@ -69,7 +69,7 @@ public struct MonsterInstanceData: JsonArray {
     var artifacts:          [ArtifactInstanceData]
 
     public init(monster: JSON) {
-        id = monster.rune_id.int
+        id = monster.unit_id.int
         summonerId = monster.wizard_id.int
         monsterId = monster.unit_master_id.int
         unitLevel = monster.unit_level.int
@@ -82,28 +82,25 @@ public struct MonsterInstanceData: JsonArray {
         accuracy = monster.accuracy.int
         critRate = monster.critical_rate.int
         critDamage = monster.critical_damage.int
-        
+
         var jsonArr = monster.skills.value
-//        var intIntArray = jsonArr.map { $0.array } // should have [1, 2] style array here
         var intIntArray = jsonArr as! [[Int64]]
 
         // TODO: figure out why here, of all places, it's
         // converting to [Int64] without having to kick it
-//        ingredients = jsonArr as! [Int64]
 
         skills = []
         for array in intIntArray {
             let misd = MonsterInstanceSkillData(ints: array)
             skills.append(misd)
         }
-        
+
         runes = []
         let runeList = monster.runes.array
         for rawRune in runeList {
             let parsedRune = RuneInstanceData(rune: rawRune)
             runes.append(parsedRune)
         }
-        
 
         artifacts = []
         let artifactList = monster.artifacts.array
@@ -112,14 +109,15 @@ public struct MonsterInstanceData: JsonArray {
             artifacts.append(parsedArtifact)
         }
     }
-    
+
     static func saveToCoreData(_ docInfo: SummonerDocumentInfo) {
-        
+
         docInfo.taskContext.perform {
             MonsterInstance.batchUpdate(from: MonsterInstanceData.items,
                                  docInfo: docInfo)
             do {
                 if docInfo.taskContext.hasChanges {
+                    print("Saving context after adding monster instances.")
                     try docInfo.taskContext.save()
                 }
 

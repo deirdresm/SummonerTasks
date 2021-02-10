@@ -32,7 +32,7 @@ public struct FusionData: JsonArray {
         cost = fusion.cost.int
         metaOrder = fusion.fields.meta_order.int
         
-        var jsonArr = fusion.fields.ingredients.value
+        let jsonArr = fusion.fields.ingredients.value
         
         // TODO: figure out why here, of all places, it's
         // converting to [Int64] without having to kick it

@@ -9,6 +9,33 @@ import Foundation
 import CoreData
 
 extension GameItem: CoreDataUtility {
+    static func findById(_ gameItemId: Int64,
+                         context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
+    -> GameItem? {
+        
+        let request : NSFetchRequest<GameItem> = GameItem.fetchRequest()
+
+        request.predicate = NSPredicate(format: "id = %i", gameItemId)
+        
+        if let results = try? context.fetch(request) {
+        
+            if let gameItem = results.first {
+                return gameItem
+            }
+        }
+        return nil
+    }
+
+    static func findOrCreate(_ id: Int64,
+                        context: NSManagedObjectContext) -> GameItem {
+        if let gameItem = GameItem.findById(id, context: context) {
+            return gameItem
+        }
+        let gameItem = GameItem(context: context)
+        gameItem.id = id
+        return gameItem
+    }
+
     func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
         
         let gameItemData = from as! GameItemData
@@ -40,33 +67,15 @@ extension GameItem: CoreDataUtility {
             self.sellValue = gameItemData.sellValue
         }
     }
-    
+
     static func insertOrUpdate<T: JsonArray>(from: T,
                                docInfo: SummonerDocumentInfo) {
         docInfo.taskContext.performAndWait {
-            let gameItemData = from as! BuildingInstanceData
-            var gameItem = GameItem.findById(gameItemData.com2usId, context: docInfo.taskContext) ?? GameItem(context: docInfo.taskContext)
+            let gameItemData = from as! GameItemData
+            let gameItem = GameItem.findOrCreate(gameItemData.com2usId, context: docInfo.taskContext)
             gameItem.update(from: gameItemData, docInfo: docInfo)
         }
     }
-    
-    static func findById(_ gameItemId: Int64,
-                         context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
-    -> GameItem? {
-        
-        let request : NSFetchRequest<GameItem> = GameItem.fetchRequest()
-
-        request.predicate = NSPredicate(format: "id = %i", gameItemId)
-        
-        if let results = try? context.fetch(request) {
-        
-            if let gameItem = results.first {
-                return gameItem
-            }
-        }
-        return nil
-    }
-    
 
     static func batchUpdate<T: JsonArray>(from: [T],
                             docInfo: SummonerDocumentInfo) {

@@ -16,24 +16,35 @@ import SwiftUI
  */
 extension Monster: CoreDataUtility {
 
+    static func findById(id: Int64,
+                    context: NSManagedObjectContext) -> Monster? {
+
+        let request: NSFetchRequest<Monster> = Monster.fetchRequest()
+
+        request.predicate = NSPredicate(format: "id == %i", id)
+
+        let results = try? context.fetch(request)
+
+        if let _ = results?.count {
+            return(results?.first)
+        } else {
+            return(nil)
+        }
+    }
+
     // import from JSON
     func update<T: JsonArray>(from: T,
                 docInfo: SummonerDocumentInfo) {
         let monsterData = from as! MonsterData
 
         // don't dirty the record if you don't have to
+        // tossing swarfarm-generated monster id as not needed
 
-        if self.id != monsterData.id {
-            self.id = Int64(monsterData.id)
+        if self.id != monsterData.com2usId {
+            self.id = monsterData.com2usId
         }
         if self.name != monsterData.name {
             self.name = monsterData.name
-        }
-        if self.com2usId != monsterData.com2usId {
-            self.com2usId = monsterData.com2usId
-        }
-        if self.com2usId != monsterData.com2usId {
-            self.com2usId = monsterData.com2usId
         }
         if (self.familyId != monsterData.familyId ) && (monsterData.familyId != nil) {
             self.familyId = monsterData.familyId!
@@ -224,22 +235,6 @@ extension Monster: CoreDataUtility {
             label: Text(monster.name!))
     }
     
-    static func findById(id: Int64,
-                    context: NSManagedObjectContext) -> Monster? {
-
-        let request: NSFetchRequest<Monster> = Monster.fetchRequest()
-
-        request.predicate = NSPredicate(format: "id == %i", id)
-
-        let results = try? context.fetch(request)
-
-        if let _ = results?.count {
-            return(results?.first)
-        } else {
-            return(nil)
-        }
-    }
-
     static func insertOrUpdate<T: JsonArray>(from: T,
                                docInfo: SummonerDocumentInfo) {
         docInfo.taskContext.performAndWait {
@@ -286,32 +281,6 @@ extension Image {
             .frame(width: geo.size.width, height: geo.size.height)
             .clipped()
         }
-    }
-}
-
-// can work for either runes or monsters/monster instances
-public struct StarsView: View {
-    let numStars: Int64
-    let awakening: Awakening
-
-    public var body: some View {
-        let range = Range(1...Int(numStars))
-        LazyHStack(
-            alignment: .top,
-            spacing: 1
-        ) {
-            Spacer()
-            ForEach(range) { _ in
-                Image(decorative: ImageStore.loadImage(type: ImageType.stars, name: "star-\(awakening.rawValue).png"),
-                    scale: 3,
-                    orientation: .up
-                )
-            }
-            Spacer()
-        }
-        .frame(width: 60)
-        .scaledToFill()
-        .padding(.zero)
     }
 }
 

@@ -6,6 +6,11 @@
 //
 
 import Foundation
+
+enum BuildingFilter {
+        case none, battle, elemental, guild, arena
+}
+
 enum BuildingType: Int64 {
     case summonerTower, summonhenge, pondOfMana, crystalMine, gateway = 8,
         templeOfWishes = 10, magicShop, ancientStones, arcaneTower = 14,
