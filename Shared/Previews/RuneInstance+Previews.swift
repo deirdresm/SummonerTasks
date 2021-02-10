@@ -24,7 +24,15 @@ extension RuneInstance {
         rune.mainStat = RuneStatType.speed.intValue()
         rune.mainStatValue = 42
         rune.hasSpeed = true
-
+        rune.summoner = Summoner.tisHerself
+        rune.summonerId = Summoner.tisHerself.id
+        rune.efficiency = 0.910
+        rune.maxEfficiency = 0.910
+        rune.hpPct = 5
+        rune.defPct = 8
+        rune.atkPct = 20
+        rune.speed = 42
+        rune.resistance = 7
         return rune
     }
     public static var swiftSlot1: RuneInstance {
@@ -39,7 +47,15 @@ extension RuneInstance {
         rune.mainStat = RuneStatType.atkFlat.intValue()
         rune.mainStatValue = 128
         rune.hasAtk = true
-
+        rune.summoner = Summoner.tisHerself
+        rune.summonerId = Summoner.tisHerself.id
+        rune.efficiency = 0.875
+        rune.maxEfficiency = 0.875
+        rune.atkPct = 17
+        rune.atkFlat = 126
+        rune.speed = 5
+        rune.critRate = 16
+        rune.accuracy = 13
         return rune
     }
     
@@ -48,29 +64,22 @@ extension RuneInstance {
         rune.id = 123456783
         rune.runeType = RuneType.swift.rawValue
         rune.stars = 6
-        rune.level = 15
+        rune.level = 14
         rune.slot = 3
         rune.quality = RuneQuality.legend.intValue()
         rune.originalQuality = RuneQuality.rare.intValue()
         rune.mainStat = RuneStatType.defFlat.intValue()
-        rune.mainStatValue = 160
+        rune.mainStatValue = 134
         rune.hasDef = true
-
-        return rune
-    }
-    public static var focusSlot5: RuneInstance {
-        let rune = RuneInstance(context: PersistenceController.shared.container.viewContext)
-        rune.id = 123456785
-        rune.runeType = RuneType.focus.rawValue
-        rune.stars = 6
-        rune.level = 15
-        rune.slot = 5
-        rune.quality = RuneQuality.legend.intValue()
-        rune.originalQuality = RuneQuality.rare.intValue()
-        rune.mainStat = RuneStatType.hpFlat.intValue()
-        rune.mainStatValue = 2448
-        rune.hasHP = true
-
+        rune.summoner = Summoner.tisHerself
+        rune.summonerId = Summoner.tisHerself.id
+        rune.efficiency = 1.032
+        rune.maxEfficiency = 1.032
+        rune.hpPct = 21
+        rune.hpFlat = 1056
+        rune.defPct = 20
+        rune.defFlat = 134
+        rune.speed = 9
         return rune
     }
     
@@ -79,35 +88,78 @@ extension RuneInstance {
         rune.id = 123456784
         rune.runeType = RuneType.swift.rawValue
         rune.stars = 6
-        rune.level = 15
+        rune.level = 10
         rune.slot = 4
         rune.quality = RuneQuality.legend.intValue()
         rune.originalQuality = RuneQuality.rare.intValue()
         rune.mainStat = RuneStatType.hpPct.intValue()
-        rune.mainStatValue = 63
+        rune.mainStatValue = 41
         rune.hasHP = true
-
+        rune.summoner = Summoner.tisHerself
+        rune.summonerId = Summoner.tisHerself.id
+        rune.efficiency = 0.758
+        rune.maxEfficiency = 0.830
+        rune.hpPct = 41
+        rune.defFlat = 14
+        rune.defPct = 6
+        rune.speed = 19
+        rune.accuracy = 8
         return rune
     }
+    
+    public static var focusSlot5: RuneInstance {
+        let rune = RuneInstance(context: PersistenceController.shared.container.viewContext)
+        rune.id = 123456785
+        rune.runeType = RuneType.focus.rawValue
+        rune.stars = 6
+        rune.level = 13
+        rune.slot = 5
+        rune.quality = RuneQuality.legend.intValue()
+        rune.originalQuality = RuneQuality.rare.intValue()
+        rune.mainStat = RuneStatType.hpFlat.intValue()
+        rune.mainStatValue = 1920
+        rune.hasHP = true
+        rune.summoner = Summoner.tisHerself
+        rune.summonerId = Summoner.tisHerself.id
+        rune.efficiency = 0.911
+        rune.maxEfficiency = 0.911
+        rune.hpPct = 14
+        rune.hpFlat = 1920
+        rune.defPct = 14
+        rune.atkFlat = 16
+        rune.speed = 11
+        rune.resistance = 13
+        return rune
+    }
+    
     public static var focusSlot6: RuneInstance {
         let rune = RuneInstance(context: PersistenceController.shared.container.viewContext)
         rune.id = 123456786
         rune.runeType = RuneType.focus.rawValue
         rune.stars = 6
-        rune.level = 14
+        rune.level = 15
         rune.slot = 6
         rune.quality = RuneQuality.legend.intValue()
         rune.originalQuality = RuneQuality.rare.intValue()
         rune.mainStat = RuneStatType.hpPct.intValue()
         rune.mainStatValue = 63
         rune.hasHP = true
-
+        rune.summoner = Summoner.tisHerself
+        rune.summonerId = Summoner.tisHerself.id
+        rune.efficiency = 0.820
+        rune.maxEfficiency = 0.820
+        rune.hpPct = 63
+        rune.hpFlat = 350
+        rune.defPct = 7
+        rune.speed = 13
+        rune.critDmg = 7
+        rune.resistance = 12
         return rune
     }
     
     public static var sampleRunes: [RuneInstance] = {
-        return [RuneInstance.swiftSpeed, RuneInstance.swiftSlot1, RuneInstance.swiftSlot3, RuneInstance.focusSlot5,
-            RuneInstance.swiftSlot4, RuneInstance.focusSlot6]
+        return [RuneInstance.swiftSpeed, RuneInstance.swiftSlot1, RuneInstance.swiftSlot3,
+            RuneInstance.swiftSlot4, RuneInstance.focusSlot5, RuneInstance.focusSlot6]
     }()
 }
     

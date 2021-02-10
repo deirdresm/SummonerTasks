@@ -6,3 +6,11 @@
 //
 
 import Foundation
+import SwiftUI
+
+extension View {
+    func printing<A>(_ value: A) -> Self {
+        print(value)
+        return(self)
+    }
+}

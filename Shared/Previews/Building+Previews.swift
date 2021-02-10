@@ -44,6 +44,22 @@ extension Building {
         return building
     }
 
+    public static var fallenAncientGuardian: Building {
+        let building = Building(context: PersistenceController.shared.container.viewContext)
+        building.id = 7
+        building.com2usId = 31
+        building.name = "Fallen Ancient Guardian"
+        building.maxLevel = 10
+        building.area = 0
+        building.affectedStat = 5
+        building.imageFilename = "fallen_ancient_guardian.png"
+        building.element = nil
+        building.statBonus = [2, 5, 7, 10, 12, 15, 17, 20, 22, 25]
+        building.upgradeCost = [120, 240, 360, 480, 600, 720, 840, 960, 1080, 1200]
+
+        return building
+    }
+
     public static var darkSanctuary: Building {
         let building = Building(context: PersistenceController.shared.container.viewContext)
         building.id = 6
@@ -59,5 +75,4 @@ extension Building {
 
         return building
     }
-
 }

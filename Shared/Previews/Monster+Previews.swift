@@ -13,13 +13,12 @@ extension Monster {
         let monster = Monster(context: PersistenceController.shared.container.viewContext)
         monster.name = "Craig"
         monster.imageFilename = "unit_icon_0068_1_4.png"
-        monster.com2usId = 24714
+        monster.id = 24714
         monster.familyId = 24700
         monster.element = "light"
         monster.archetype = "hp"
         monster.naturalStars = 5
         monster.baseStars = 6
-        monster.id = 1692
         monster.isAwakened = true
         monster.awakenLevel = 1
         
@@ -30,13 +29,12 @@ extension Monster {
         let monster = Monster(context: PersistenceController.shared.container.viewContext)
         monster.name = "Gurkha"
         monster.imageFilename = "unit_icon_0068_1_5.png"
-        monster.com2usId = 24715
+        monster.id = 24715
         monster.familyId = 24700
         monster.element = "dark"
         monster.archetype = "hp"
         monster.naturalStars = 5
         monster.baseStars = 6
-        monster.id = 1693
         monster.isAwakened = true
         monster.awakenLevel = 1
 
@@ -47,13 +45,12 @@ extension Monster {
         let monster = Monster(context: PersistenceController.shared.container.viewContext)
         monster.name = "Baleygr"
         monster.imageFilename = "unit_icon_0047_1_2.png"
-        monster.com2usId = 22612
+        monster.id = 22612
         monster.familyId = 22600
         monster.element = "fire"
         monster.archetype = "attack"
         monster.naturalStars = 5
         monster.baseStars = 6
-        monster.id = 1249
         monster.isAwakened = true
         monster.awakenLevel = 1
         monster.leaderSkillId = 183

@@ -6,3 +6,8 @@
 //
 
 import Foundation
+import CoreData
+
+extension BuildingInstance {
+    
+}
