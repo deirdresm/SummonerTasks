@@ -18,7 +18,7 @@ struct MonsterInstanceSkillupsView: View {
             var skillups = monster.skillUpsToMax
             
             if monsterI.skill1Level > 0 {
-                skillups = skillups - (monsterI.skill1Level ?? 1) + 1
+                skillups = skillups - monsterI.skill1Level + 1
             }
             if monsterI.skill2Level > 0 {
                 skillups = skillups - monsterI.skill2Level + 1
@@ -33,7 +33,6 @@ struct MonsterInstanceSkillupsView: View {
         }
         return 0
    }
-    
 
     var body: some View {
         ZStack {

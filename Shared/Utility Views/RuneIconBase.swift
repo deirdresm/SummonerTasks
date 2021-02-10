@@ -33,7 +33,7 @@ public struct RuneIconBase: View {
                 label: Text("")
             )
             Image(
-                ImageStore.loadImage(type: .runes, name: "rune\(rune.slot)).png"),
+                ImageStore.loadImage(type: .runes, name: "rune\(rune.slot).png"),
                 scale: 1,
                 label: Text("")
             )

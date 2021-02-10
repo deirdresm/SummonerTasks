@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import CoreData
 
-struct RuneGridView: View {
+struct RuneIconGridView: View {
     var viewContext = PersistenceController.shared.container.viewContext
 
     var runes: [RuneInstance]
@@ -38,7 +38,7 @@ struct RuneGridView: View {
 struct RuneGrid_Previews: PreviewProvider {
 
     static var previews: some View {
-        RuneGridView(runes: RuneInstance.sampleRunes)
+        RuneIconGridView(runes: RuneInstance.sampleRunes)
         .previewLayout(.fixed(width: 696, height: 812))
     }
 }

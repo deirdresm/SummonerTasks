@@ -21,8 +21,8 @@ struct BestiaryView: View {
             
             // summary of towers up top
             HStack {
-                BuildingIconView(building: Building.ancientSword)
-                BuildingIconView(building: Building.darkSanctuary)
+                BuildingIconView(building: Building.ancientSword, level: 0)
+                BuildingIconView(building: Building.darkSanctuary, level: 0)
             }
         }
     }

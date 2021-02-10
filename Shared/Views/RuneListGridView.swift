@@ -8,6 +8,34 @@
 import Foundation
 import SwiftUI
 
+public struct PercentText: View {
+    var pct: Float
+    var digits: Int
+    var trailing: Int
+    
+    public var body: some View {
+        let str = String(format: "%\(digits).\(trailing)f", pct * 100.0)
+        return Text("\(str)%")
+    }
+
+}
+
+public struct RuneList: View {
+    var docInfo: SummonerDocumentInfo
+    
+    public var body: some View {
+        if let summoner = docInfo.summoner {
+            VStack {
+                Text("Rune List")
+                    .font(.headline)
+                RuneListGridView(runes: summoner.runesSorted())
+            }
+        } else {
+            EmptyView()
+        }
+    }
+}
+
 // list one rune
 public struct RuneListGridView: View {
     var viewContext = PersistenceController.shared.container.viewContext
@@ -16,27 +44,27 @@ public struct RuneListGridView: View {
     
     let columns: [GridItem] = [
         GridItem(.fixed(48)), // icon
-        GridItem(.fixed(30)), // slot
-        GridItem(.fixed(30)), // stars
-        GridItem(.fixed(30)), // efficiency
-        GridItem(.fixed(30)), // max efficiency
-        GridItem(.fixed(40)), // hpPct
-        GridItem(.fixed(30)), // hpFlat
-        GridItem(.fixed(40)), // atkPct
-        GridItem(.fixed(30)), // atkFlat
-        GridItem(.fixed(40)), // defPct
-        GridItem(.fixed(30)), // defFlat
-        GridItem(.fixed(30)), // speed
-        GridItem(.fixed(30)), // crit rate
-        GridItem(.fixed(30)), // crit dmg
-        GridItem(.fixed(30)), // resistance
-        GridItem(.fixed(30)), // accuracy
+        GridItem(.fixed(30), spacing: 1, alignment: .trailing), // slot
+        GridItem(.fixed(30), spacing: 1, alignment: .trailing), // stars
+        GridItem(.fixed(50), spacing: 1, alignment: .trailing), // efficiency
+        GridItem(.fixed(50), spacing: 1, alignment: .trailing), // max efficiency
+        GridItem(.fixed(40), spacing: 1, alignment: .trailing), // hpPct
+        GridItem(.fixed(50), spacing: 1, alignment: .trailing), // hpFlat
+        GridItem(.fixed(40), spacing: 1, alignment: .trailing), // atkPct
+        GridItem(.fixed(30), spacing: 1, alignment: .trailing), // atkFlat
+        GridItem(.fixed(40), spacing: 1, alignment: .trailing), // defPct
+        GridItem(.fixed(30), spacing: 1, alignment: .trailing), // defFlat
+        GridItem(.fixed(30), spacing: 1, alignment: .trailing), // speed
+        GridItem(.fixed(45), spacing: 1, alignment: .trailing), // crit rate
+        GridItem(.fixed(45), spacing: 1, alignment: .trailing), // crit dmg
+        GridItem(.fixed(45), spacing: 1, alignment: .trailing), // resistance
+        GridItem(.fixed(45), spacing: 1, alignment: .trailing), // accuracy
     ]
     
     init(runes: [RuneInstance]) {
         self.runes = runes
     }
-
+    
     public var body: some View {
         LazyVGrid(columns: columns) {
             
@@ -46,21 +74,25 @@ public struct RuneListGridView: View {
                         .frame(minWidth: 36, idealWidth: 48, maxWidth: 48, minHeight: 36, idealHeight: 48, maxHeight: 48, alignment: .leading)
                     Text("\(rune.slot)")
                     Text("\(rune.stars)")
-                    Text("\(rune.efficiency)")
-                    Text("\(rune.maxEfficiency)")
+                    PercentText(pct: rune.efficiency, digits: 5, trailing: 1)
+                }
+                Group {
+                    PercentText(pct: rune.maxEfficiency, digits: 5, trailing: 1)
                     Text("\(rune.hpPct)%")
                     Text("\(rune.hpFlat)")
                     Text("\(rune.atkPct)%")
-                    Text("\(rune.atkFlat)")
-                    Text("\(rune.defPct)%")
                 }
                 Group {
+                    Text("\(rune.atkFlat)")
+                    Text("\(rune.defPct)%")
                     Text("\(rune.defFlat)")
                     Text("\(rune.speed)")
-                    Text("\(rune.critRate)")
-                    Text("\(rune.critDmg)")
-                    Text("\(rune.resistance)")
-                    Text("\(rune.accuracy)")
+                }
+                Group {
+                    Text("\(rune.critRate)%")
+                    Text("\(rune.critDmg)%")
+                    Text("\(rune.resistance)%")
+                    Text("\(rune.accuracy)%")
                 }
             }
             

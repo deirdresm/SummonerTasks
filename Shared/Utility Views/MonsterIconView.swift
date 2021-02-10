@@ -8,6 +8,34 @@
 
 import SwiftUI
 
+
+// can work for either runes or monsters/monster instances
+public struct StarsView: View {
+    let numStars: Int64
+    let awakening: Awakening
+
+    public var body: some View {
+        let range = Range(1...Int(numStars))
+        LazyHStack(
+            alignment: .top,
+            spacing: 1
+        ) {
+            Spacer()
+            ForEach(range) { _ in
+                Image(decorative: ImageStore.loadImage(type: ImageType.stars, name: "star-\(awakening.rawValue).png"),
+                    scale: 3,
+                    orientation: .up
+                )
+            }
+            Spacer()
+        }
+        .frame(width: 60)
+        .scaledToFill()
+        .padding(.zero)
+    }
+}
+
+
 struct MonsterIconView: View {
     var monster: Monster
     
