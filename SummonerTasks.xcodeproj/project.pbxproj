@@ -15,6 +15,16 @@
 		380044FC259E61940098A75C /* MonsterInstance+Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380044FA259E61940098A75C /* MonsterInstance+Previews.swift */; };
 		38004502259E93140098A75C /* MonsterInstanceSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38004501259E93140098A75C /* MonsterInstanceSummaryView.swift */; };
 		38004503259E93140098A75C /* MonsterInstanceSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38004501259E93140098A75C /* MonsterInstanceSummaryView.swift */; };
+		38038CA825DDBE260036BAC6 /* RuneColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38038CA725DDBE260036BAC6 /* RuneColor.swift */; };
+		38038CA925DDBE260036BAC6 /* RuneColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38038CA725DDBE260036BAC6 /* RuneColor.swift */; };
+		380DF61525D4B13C00848DE0 /* profile.jsonschema in Resources */ = {isa = PBXBuildFile; fileRef = 380DF61425D4B13C00848DE0 /* profile.jsonschema */; };
+		380DF61625D4B13C00848DE0 /* profile.jsonschema in Resources */ = {isa = PBXBuildFile; fileRef = 380DF61425D4B13C00848DE0 /* profile.jsonschema */; };
+		380DF61C25D4B3A200848DE0 /* building.jsonschema in Resources */ = {isa = PBXBuildFile; fileRef = 380DF61B25D4B3A200848DE0 /* building.jsonschema */; };
+		380DF61D25D4B3A200848DE0 /* building.jsonschema in Resources */ = {isa = PBXBuildFile; fileRef = 380DF61B25D4B3A200848DE0 /* building.jsonschema */; };
+		380DF62325D4B5F200848DE0 /* BuildingInstanceData.jsonschema in Resources */ = {isa = PBXBuildFile; fileRef = 380DF62225D4B5F200848DE0 /* BuildingInstanceData.jsonschema */; };
+		380DF62425D4B5F200848DE0 /* BuildingInstanceData.jsonschema in Resources */ = {isa = PBXBuildFile; fileRef = 380DF62225D4B5F200848DE0 /* BuildingInstanceData.jsonschema */; };
+		380DF62D25D5191200848DE0 /* JSONDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC3ABE2589CC8B00A85FBE /* JSONDecodable.swift */; };
+		380DF63225D5191300848DE0 /* JSONDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC3ABE2589CC8B00A85FBE /* JSONDecodable.swift */; };
 		3818B168259D843F00CCE47E /* Skill+Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3818B167259D843F00CCE47E /* Skill+Previews.swift */; };
 		3818B169259D843F00CCE47E /* Skill+Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3818B167259D843F00CCE47E /* Skill+Previews.swift */; };
 		383CAB4325AEC0CA00A24A4D /* ArtifactEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383CAB4225AEC0CA00A24A4D /* ArtifactEnums.swift */; };
@@ -117,12 +127,10 @@
 		38BC3AE22589CCF200A85FBE /* SkillData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC3AC22589CC9300A85FBE /* SkillData.swift */; };
 		38BC3AE72589CCF900A85FBE /* SourceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC3AC32589CC9500A85FBE /* SourceData.swift */; };
 		38BC3AE82589CCFA00A85FBE /* SourceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC3AC32589CC9500A85FBE /* SourceData.swift */; };
-		38BC3AED2589CCFF00A85FBE /* JSONDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC3ABE2589CC8B00A85FBE /* JSONDecodable.swift */; };
-		38BC3AEE2589CD0000A85FBE /* JSONDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC3ABE2589CC8B00A85FBE /* JSONDecodable.swift */; };
 		38BC3AF9258B0AD700A85FBE /* Building+Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC3AF8258B0AD700A85FBE /* Building+Previews.swift */; };
 		38BC3AFA258B0AD700A85FBE /* Building+Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC3AF8258B0AD700A85FBE /* Building+Previews.swift */; };
-		38BC3B13258C50AC00A85FBE /* AwakenCostData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC3B12258C50AC00A85FBE /* AwakenCostData.swift */; };
-		38BC3B14258C50AC00A85FBE /* AwakenCostData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC3B12258C50AC00A85FBE /* AwakenCostData.swift */; };
+		38BC3B13258C50AC00A85FBE /* AwakenCostDataOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC3B12258C50AC00A85FBE /* AwakenCostDataOld.swift */; };
+		38BC3B14258C50AC00A85FBE /* AwakenCostDataOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC3B12258C50AC00A85FBE /* AwakenCostDataOld.swift */; };
 		38BE67C825BB76F300CA67E9 /* NSPredicate+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BE67C725BB76F300CA67E9 /* NSPredicate+Extension.swift */; };
 		38BE67C925BB76F300CA67E9 /* NSPredicate+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BE67C725BB76F300CA67E9 /* NSPredicate+Extension.swift */; };
 		38BE67D325BB8AC900CA67E9 /* BuildingInstance+Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BE67D225BB8AC900CA67E9 /* BuildingInstance+Previews.swift */; };
@@ -212,6 +220,10 @@
 		38000B3F2587F9DA00BED558 /* building-mini.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "building-mini.json"; sourceTree = "<group>"; };
 		380044FA259E61940098A75C /* MonsterInstance+Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MonsterInstance+Previews.swift"; sourceTree = "<group>"; };
 		38004501259E93140098A75C /* MonsterInstanceSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterInstanceSummaryView.swift; sourceTree = "<group>"; };
+		38038CA725DDBE260036BAC6 /* RuneColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuneColor.swift; sourceTree = "<group>"; };
+		380DF61425D4B13C00848DE0 /* profile.jsonschema */ = {isa = PBXFileReference; lastKnownFileType = text; path = profile.jsonschema; sourceTree = "<group>"; };
+		380DF61B25D4B3A200848DE0 /* building.jsonschema */ = {isa = PBXFileReference; lastKnownFileType = text; path = building.jsonschema; sourceTree = "<group>"; };
+		380DF62225D4B5F200848DE0 /* BuildingInstanceData.jsonschema */ = {isa = PBXFileReference; lastKnownFileType = text; path = BuildingInstanceData.jsonschema; sourceTree = "<group>"; };
 		3818B167259D843F00CCE47E /* Skill+Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Skill+Previews.swift"; sourceTree = "<group>"; };
 		383CAB4225AEC0CA00A24A4D /* ArtifactEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtifactEnums.swift; sourceTree = "<group>"; };
 		3848A413258D700C000809EF /* BestiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestiaryView.swift; sourceTree = "<group>"; };
@@ -280,7 +292,7 @@
 		38BC3AC32589CC9500A85FBE /* SourceData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceData.swift; sourceTree = "<group>"; };
 		38BC3AC42589CCBD00A85FBE /* BestiaryImport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestiaryImport.swift; sourceTree = "<group>"; };
 		38BC3AF8258B0AD700A85FBE /* Building+Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Building+Previews.swift"; sourceTree = "<group>"; };
-		38BC3B12258C50AC00A85FBE /* AwakenCostData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AwakenCostData.swift; sourceTree = "<group>"; };
+		38BC3B12258C50AC00A85FBE /* AwakenCostDataOld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AwakenCostDataOld.swift; sourceTree = "<group>"; };
 		38BE67C725BB76F300CA67E9 /* NSPredicate+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSPredicate+Extension.swift"; sourceTree = "<group>"; };
 		38BE67D225BB8AC900CA67E9 /* BuildingInstance+Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BuildingInstance+Previews.swift"; sourceTree = "<group>"; };
 		38BE67D925BC07F800CA67E9 /* RuneListGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuneListGridView.swift; sourceTree = "<group>"; };
@@ -518,6 +530,8 @@
 			isa = PBXGroup;
 			children = (
 				38A0AD59258DCC05005C01D0 /* BuildingInstanceData.swift */,
+				380DF61B25D4B3A200848DE0 /* building.jsonschema */,
+				380DF62225D4B5F200848DE0 /* BuildingInstanceData.jsonschema */,
 				38F1BD2825A016460070B13E /* ArtifactInstanceData.swift */,
 				389F89BC259805B300006C09 /* SummonerData.swift */,
 				38A0ADC7258F0C77005C01D0 /* MonsterInstanceData.swift */,
@@ -530,6 +544,7 @@
 			isa = PBXGroup;
 			children = (
 				38004501259E93140098A75C /* MonsterInstanceSummaryView.swift */,
+				38038CA725DDBE260036BAC6 /* RuneColor.swift */,
 				38E1101B25903C6100D4BBB0 /* RuneIconBase.swift */,
 				38A1C64A257DE52A0032878E /* RuneIconView.swift */,
 				38A1C64B257DE52A0032878E /* MonsterIconView.swift */,
@@ -542,7 +557,7 @@
 			isa = PBXGroup;
 			children = (
 				38BC3AC42589CCBD00A85FBE /* BestiaryImport.swift */,
-				38BC3B12258C50AC00A85FBE /* AwakenCostData.swift */,
+				38BC3B12258C50AC00A85FBE /* AwakenCostDataOld.swift */,
 				3860102F2599C3EF00118951 /* MonsterCraftCostData.swift */,
 				38BC3AC02589CC8E00A85FBE /* BuildingData.swift */,
 				38BC3ABF2589CC8C00A85FBE /* FusionData.swift */,
@@ -552,6 +567,7 @@
 				38601045259AB19900118951 /* GameItemData.swift */,
 				38BC3ABE2589CC8B00A85FBE /* JSONDecodable.swift */,
 				38705B9D25C0BB0100FA247C /* DungeonData.swift */,
+				380DF61425D4B13C00848DE0 /* profile.jsonschema */,
 			);
 			path = "JSON Base";
 			sourceTree = "<group>";
@@ -736,11 +752,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				380DF61525D4B13C00848DE0 /* profile.jsonschema in Resources */,
 				38DB9D55257EF7F90038BDC0 /* LICENSE.txt in Resources */,
+				380DF61C25D4B3A200848DE0 /* building.jsonschema in Resources */,
 				38DB9D62257F21B80038BDC0 /* Images in Resources */,
 				38000B402587F9DA00BED558 /* building-mini.json in Resources */,
 				384A490B2575A074002E04CB /* Assets.xcassets in Resources */,
 				38535E242582BCA9009411A1 /* bestiary_data.json.zip in Resources */,
+				380DF62325D4B5F200848DE0 /* BuildingInstanceData.jsonschema in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -748,11 +767,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				380DF61625D4B13C00848DE0 /* profile.jsonschema in Resources */,
 				38DB9D56257EF7F90038BDC0 /* LICENSE.txt in Resources */,
+				380DF61D25D4B3A200848DE0 /* building.jsonschema in Resources */,
 				38DB9D63257F21B90038BDC0 /* Images in Resources */,
 				38000B412587F9DA00BED558 /* building-mini.json in Resources */,
 				384A490C2575A074002E04CB /* Assets.xcassets in Resources */,
 				38535E252582BCA9009411A1 /* bestiary_data.json.zip in Resources */,
+				380DF62425D4B5F200848DE0 /* BuildingInstanceData.jsonschema in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -810,10 +832,9 @@
 				38AC993425D2717D00E13839 /* FilePanel+Extension.swift in Sources */,
 				3860002A259276130071569A /* MonsterEnums.swift in Sources */,
 				38A0ADC8258F0C77005C01D0 /* MonsterInstanceData.swift in Sources */,
-				38BC3AED2589CCFF00A85FBE /* JSONDecodable.swift in Sources */,
 				38CFB728257848C900F0C398 /* ArtifactInstance.swift in Sources */,
 				380044FB259E61940098A75C /* MonsterInstance+Previews.swift in Sources */,
-				38BC3B13258C50AC00A85FBE /* AwakenCostData.swift in Sources */,
+				38BC3B13258C50AC00A85FBE /* AwakenCostDataOld.swift in Sources */,
 				38535E2C25832E95009411A1 /* BJr5.swift in Sources */,
 				386010122599B32900118951 /* HomunculusSkill.swift in Sources */,
 				38922C91259999FB00CCF63B /* LeaderSkill+Previews.swift in Sources */,
@@ -829,6 +850,7 @@
 				38600F6225B80BA90071E7A3 /* CoreData+Extension.swift in Sources */,
 				389F89D025982B5F00006C09 /* Summoner+Previews.swift in Sources */,
 				384A49822575A3E1002E04CB /* SummonerTasks.xcdatamodeld in Sources */,
+				38038CA825DDBE260036BAC6 /* RuneColor.swift in Sources */,
 				38BC3AF9258B0AD700A85FBE /* Building+Previews.swift in Sources */,
 				38CFB7162578388E00F0C398 /* MonsterInstance+extras.swift in Sources */,
 				38CFB7072578303E00F0C398 /* FusionIngredients.swift in Sources */,
@@ -839,6 +861,7 @@
 				384A49072575A074002E04CB /* SummonerTasksDocument.swift in Sources */,
 				38CFB6D325772A3100F0C398 /* Summoner.swift in Sources */,
 				38CFB70E2578306C00F0C398 /* Fusion.swift in Sources */,
+				380DF62D25D5191200848DE0 /* JSONDecodable.swift in Sources */,
 				384A499A2575A9DB002E04CB /* ModelEnums.swift in Sources */,
 				38922C7F2599562800CCF63B /* MonsterView.swift in Sources */,
 				38CFB6F92577701800F0C398 /* Team.swift in Sources */,
@@ -872,10 +895,11 @@
 				38A1C657257DE52A0032878E /* RuneIconView.swift in Sources */,
 				38A0ADBA258EE9A5005C01D0 /* RuneInstance+Previews.swift in Sources */,
 				38D4389725BE9EE6004A2271 /* RuneInstance+CoreDataProperties.swift in Sources */,
-				38BC3B14258C50AC00A85FBE /* AwakenCostData.swift in Sources */,
+				38BC3B14258C50AC00A85FBE /* AwakenCostDataOld.swift in Sources */,
 				38A0ADC9258F0C77005C01D0 /* MonsterInstanceData.swift in Sources */,
 				38A1C682257E06820032878E /* Bundle+Extension.swift in Sources */,
 				38DB9D74258059A30038BDC0 /* Monster+Extension.swift in Sources */,
+				38038CA925DDBE260036BAC6 /* RuneColor.swift in Sources */,
 				383CAB4425AEC0CA00A24A4D /* ArtifactEnums.swift in Sources */,
 				38A0AD62258DD08C005C01D0 /* BuildingInstance.swift in Sources */,
 				38B9F77125BA2C6600F4C112 /* BuildingEnums.swift in Sources */,
@@ -898,7 +922,6 @@
 				38600F5C25B6CABD0071E7A3 /* SwiftUI+Extension.swift in Sources */,
 				38CFB7222578462700F0C398 /* RuneInstance+extras.swift in Sources */,
 				386010222599C12E00118951 /* AwakenCost.swift in Sources */,
-				38BC3AEE2589CD0000A85FBE /* JSONDecodable.swift in Sources */,
 				38A1C659257DE52A0032878E /* MonsterIconView.swift in Sources */,
 				38BE67C925BB76F300CA67E9 /* NSPredicate+Extension.swift in Sources */,
 				38535E56258480A6009411A1 /* BuildingViews.swift in Sources */,
@@ -922,6 +945,7 @@
 				38CFB796257AFB3700F0C398 /* DateFormatter+extensions.swift in Sources */,
 				3848A415258D700C000809EF /* BestiaryView.swift in Sources */,
 				38922C802599562800CCF63B /* MonsterView.swift in Sources */,
+				380DF63225D5191300848DE0 /* JSONDecodable.swift in Sources */,
 				389F89D125982B5F00006C09 /* Summoner+Previews.swift in Sources */,
 				38BC3AE82589CCFA00A85FBE /* SourceData.swift in Sources */,
 				384A499B2575A9DB002E04CB /* ModelEnums.swift in Sources */,
