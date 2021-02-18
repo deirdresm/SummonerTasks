@@ -1,0 +1,12 @@
+'deco_list': {
+    'type': 'array',
+    'items': {
+        'type': 'object',
+        'properties': {
+            'deco_id': {'type': 'number'},
+            'level': {'type': 'number'},
+            'master_id': {'type': 'number'},
+        },
+        'required': ['master_id', 'level', 'deco_id']
+    }
+}
