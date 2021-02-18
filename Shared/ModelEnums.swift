@@ -18,41 +18,6 @@ extension CaseIterable {
     func toString() -> String { "\(self)" }
 }
 
-enum Element: Int64, CaseIterable {
-    case water = 1, fire, wind, light, dark, pure
-    
-    static var magic: Element {
-        get {
-            return self.pure
-        }
-    }
-    
-    // return the text value of the label, lowercase
-    var description: String {
-        return "\(self)"
-    }
-    
-    // return the text value of the label, but initial cap
-    static func imageTitleFrag(_ element: Int64) -> String? {
-        switch Element(rawValue: element) {
-        case .water, .fire, .wind, .light, .dark:
-            return ("\(self)").firstCapitalized // "Water"
-        default:
-            return nil
-        }
-    }
-    
-    // instance version of above
-    public func imageTitleFrag() -> String? {
-        switch self {
-        case .water, .fire, .wind, .light, .dark:
-            return ("\(self)").firstCapitalized // "Water"
-        default:
-            return nil
-        }
-    }
-}
-
 // Items
 
 enum Inventory: Int64 {

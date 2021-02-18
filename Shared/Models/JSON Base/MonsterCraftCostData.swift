@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-public struct MonsterCraftCostData: JsonArray {
+public struct MonsterCraftCostData: JsonArray, Decodable {
 
     static var items = [MonsterCraftCostData]()
 
@@ -25,7 +25,7 @@ public struct MonsterCraftCostData: JsonArray {
     let monster:        Int64
 
     public init(monsterCraft: JSON, pk: Int64) {
-        id = monsterCraft.pk.int
+        id = pk
         item = monsterCraft.fields.item.int
         quantity = monsterCraft.fields.quantity.int
         monster = monsterCraft.fields.monster.int

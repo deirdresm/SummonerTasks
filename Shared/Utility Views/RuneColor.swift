@@ -13,6 +13,7 @@ enum RuneColor: String, View, CaseIterable {
 
     case legend, hero, rare, magic, normal
 
+    // TODO: now that I've sorted out one data anomaly that may have caused the issue, re-check and see if I can make this better.
     // It wasn't sorting them, and I got tired of arguing
     // with various approaches. So. Let's do simple.
     static var gradient: Gradient {

@@ -166,10 +166,6 @@ class JSONNull: Codable, Hashable {
         return true
     }
 
-    public var hashValue: Int {
-        return 0
-    }
-
     public init() {}
 
     public required init(from decoder: Decoder) throws {
@@ -177,6 +173,10 @@ class JSONNull: Codable, Hashable {
         if !container.decodeNil() {
             throw DecodingError.typeMismatch(JSONNull.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for JSONNull"))
         }
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(0)
     }
 
     public func encode(to encoder: Encoder) throws {
