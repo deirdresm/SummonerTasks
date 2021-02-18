@@ -1,3 +1,21 @@
+{
+    '$schema': 'http://json-schema.org/draft-04/schema#',
+    'id': 'http://swarfarm.com/schemas/hubuserlogin.json',
+    'deco_list': {
+        'type': 'array',
+        'items': {
+            'type': 'object',
+            'title': 'BuildingInstanceData',
+            'properties': {
+                'deco_id': {'type': 'integer'},
+                'level': {'type': 'integer'},
+                'master_id': {'type': 'integer'},
+            },
+            'required': ['master_id', 'level', 'deco_id']
+        }
+    }
+}
+
 'deco_list': {
     'type': 'array',
     'items': {
@@ -10,3 +28,10 @@
         'required': ['master_id', 'level', 'deco_id']
     }
 }
+
+{
+    "$schema": "http://json-schema.org/draft-05/schema#",
+    "title": "BuildingInstance",
+    "type": "object",
+    "required": ["title", "type"],
+    "properties": {

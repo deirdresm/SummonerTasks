@@ -113,6 +113,8 @@
 		38A1C682257E06820032878E /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A1C680257E06820032878E /* Bundle+Extension.swift */; };
 		38AC993425D2717D00E13839 /* FilePanel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AC993325D2717D00E13839 /* FilePanel+Extension.swift */; };
 		38AC993525D2717D00E13839 /* FilePanel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AC993325D2717D00E13839 /* FilePanel+Extension.swift */; };
+		38B6A44025DDFC64006E5A2D /* ElementColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B6A43F25DDFC64006E5A2D /* ElementColor.swift */; };
+		38B6A44125DDFC64006E5A2D /* ElementColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B6A43F25DDFC64006E5A2D /* ElementColor.swift */; };
 		38B9F77025BA2C6600F4C112 /* BuildingEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B9F76F25BA2C6600F4C112 /* BuildingEnums.swift */; };
 		38B9F77125BA2C6600F4C112 /* BuildingEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B9F76F25BA2C6600F4C112 /* BuildingEnums.swift */; };
 		38BC3AC52589CCBD00A85FBE /* BestiaryImport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC3AC42589CCBD00A85FBE /* BestiaryImport.swift */; };
@@ -283,6 +285,7 @@
 		38A1C64B257DE52A0032878E /* MonsterIconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonsterIconView.swift; sourceTree = "<group>"; };
 		38A1C680257E06820032878E /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Bundle+Extension.swift"; path = "Shared/Extensions/Bundle+Extension.swift"; sourceTree = SOURCE_ROOT; };
 		38AC993325D2717D00E13839 /* FilePanel+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FilePanel+Extension.swift"; sourceTree = "<group>"; };
+		38B6A43F25DDFC64006E5A2D /* ElementColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementColor.swift; sourceTree = "<group>"; };
 		38B9F76F25BA2C6600F4C112 /* BuildingEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingEnums.swift; sourceTree = "<group>"; };
 		38BC3ABE2589CC8B00A85FBE /* JSONDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecodable.swift; sourceTree = "<group>"; };
 		38BC3ABF2589CC8C00A85FBE /* FusionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FusionData.swift; sourceTree = "<group>"; };
@@ -545,6 +548,7 @@
 			children = (
 				38004501259E93140098A75C /* MonsterInstanceSummaryView.swift */,
 				38038CA725DDBE260036BAC6 /* RuneColor.swift */,
+				38B6A43F25DDFC64006E5A2D /* ElementColor.swift */,
 				38E1101B25903C6100D4BBB0 /* RuneIconBase.swift */,
 				38A1C64A257DE52A0032878E /* RuneIconView.swift */,
 				38A1C64B257DE52A0032878E /* MonsterIconView.swift */,
@@ -847,6 +851,7 @@
 				38D4389C25BE9EE6004A2271 /* MonsterInstance+CoreDataProperties.swift in Sources */,
 				384A496E2575A1ED002E04CB /* Persistence.swift in Sources */,
 				38CFB6B92576EFC600F0C398 /* Monster+Extension.swift in Sources */,
+				38B6A44025DDFC64006E5A2D /* ElementColor.swift in Sources */,
 				38600F6225B80BA90071E7A3 /* CoreData+Extension.swift in Sources */,
 				389F89D025982B5F00006C09 /* Summoner+Previews.swift in Sources */,
 				384A49822575A3E1002E04CB /* SummonerTasks.xcdatamodeld in Sources */,
@@ -974,6 +979,7 @@
 				38CFB7602579B84300F0C398 /* Task.swift in Sources */,
 				384A490A2575A074002E04CB /* ContentView.swift in Sources */,
 				386010132599B32900118951 /* HomunculusSkill.swift in Sources */,
+				38B6A44125DDFC64006E5A2D /* ElementColor.swift in Sources */,
 				38BC3AD02589CCE600A85FBE /* BuildingData.swift in Sources */,
 				38600033259276690071569A /* MonsterEnums.swift in Sources */,
 			);

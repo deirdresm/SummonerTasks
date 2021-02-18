@@ -49,7 +49,7 @@ public struct GameItemData: JsonArray {
             GameItem.batchUpdate(from: GameItemData.items,
                                  docInfo: docInfo)
             do {
-                try! docInfo.taskContext.save()
+                try docInfo.taskContext.save()
             } catch {
                 print("could not save context")
             }
