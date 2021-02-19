@@ -8,6 +8,228 @@
 import Foundation
 import CoreData
 
+// This file was generated from JSON Schema using quicktype, do not modify it directly.
+// To parse the JSON, add this file to your project and do:
+//
+//   let MonsterInstanceData = try MonsterInstanceData(json)
+
+// MARK: - MonsterInstanceData
+struct MonsterInstanceData: Codable {
+    let unitID, wizardID, islandID, posX: Int
+    let posY, buildingID, unitMasterID, unitLevel: Int
+    let MonsterInstanceDataClass, con, atk, def: Int
+    let spd, resist, accuracy, criticalRate: Int
+    let criticalDamage, experience, expGained, expGainRate: Int
+    let skills: [[Int]]
+    let runes: [RuneInstanceData]
+    let artifacts: [ArtifactInstanceData]
+    let costumeMasterID: Int
+    let transItems: [JSONAny]
+    let attribute: Int
+    let createTime: String
+    let source, homunculus: Int
+    let homunculusName: String
+    let awakeningInfo: [JSONAny]
+
+    enum CodingKeys: String, CodingKey {
+        case unitID = "unit_id"
+        case wizardID = "wizard_id"
+        case islandID = "island_id"
+        case posX = "pos_x"
+        case posY = "pos_y"
+        case buildingID = "building_id"
+        case unitMasterID = "unit_master_id"
+        case unitLevel = "unit_level"
+        case MonsterInstanceDataClass = "class"
+        case con, atk, def, spd, resist, accuracy
+        case criticalRate = "critical_rate"
+        case criticalDamage = "critical_damage"
+        case experience
+        case expGained = "exp_gained"
+        case expGainRate = "exp_gain_rate"
+        case skills, runes, artifacts
+        case costumeMasterID = "costume_master_id"
+        case transItems = "trans_items"
+        case attribute
+        case createTime = "create_time"
+        case source, homunculus
+        case homunculusName = "homunculus_name"
+        case awakeningInfo = "awakening_info"
+    }
+}
+
+// MARK: MonsterInstanceData convenience initializers and mutators
+
+extension MonsterInstanceData {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(MonsterInstanceData.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        unitID: Int? = nil,
+        wizardID: Int? = nil,
+        islandID: Int? = nil,
+        posX: Int? = nil,
+        posY: Int? = nil,
+        buildingID: Int? = nil,
+        unitMasterID: Int? = nil,
+        unitLevel: Int? = nil,
+        MonsterInstanceDataClass: Int? = nil,
+        con: Int? = nil,
+        atk: Int? = nil,
+        def: Int? = nil,
+        spd: Int? = nil,
+        resist: Int? = nil,
+        accuracy: Int? = nil,
+        criticalRate: Int? = nil,
+        criticalDamage: Int? = nil,
+        experience: Int? = nil,
+        expGained: Int? = nil,
+        expGainRate: Int? = nil,
+        skills: [[Int]]? = nil,
+        runes: [Rune]? = nil,
+        artifacts: [Artifact]? = nil,
+        costumeMasterID: Int? = nil,
+        transItems: [JSONAny]? = nil,
+        attribute: Int? = nil,
+        createTime: String? = nil,
+        source: Int? = nil,
+        homunculus: Int? = nil,
+        homunculusName: String? = nil,
+        awakeningInfo: [JSONAny]? = nil
+    ) -> MonsterInstanceData {
+        return MonsterInstanceData(
+            unitID: unitID ?? self.unitID,
+            wizardID: wizardID ?? self.wizardID,
+            islandID: islandID ?? self.islandID,
+            posX: posX ?? self.posX,
+            posY: posY ?? self.posY,
+            buildingID: buildingID ?? self.buildingID,
+            unitMasterID: unitMasterID ?? self.unitMasterID,
+            unitLevel: unitLevel ?? self.unitLevel,
+            MonsterInstanceDataClass: MonsterInstanceDataClass ?? self.MonsterInstanceDataClass,
+            con: con ?? self.con,
+            atk: atk ?? self.atk,
+            def: def ?? self.def,
+            spd: spd ?? self.spd,
+            resist: resist ?? self.resist,
+            accuracy: accuracy ?? self.accuracy,
+            criticalRate: criticalRate ?? self.criticalRate,
+            criticalDamage: criticalDamage ?? self.criticalDamage,
+            experience: experience ?? self.experience,
+            expGained: expGained ?? self.expGained,
+            expGainRate: expGainRate ?? self.expGainRate,
+            skills: skills ?? self.skills,
+            runes: runes ?? self.runes,
+            artifacts: artifacts ?? self.artifacts,
+            costumeMasterID: costumeMasterID ?? self.costumeMasterID,
+            transItems: transItems ?? self.transItems,
+            attribute: attribute ?? self.attribute,
+            createTime: createTime ?? self.createTime,
+            source: source ?? self.source,
+            homunculus: homunculus ?? self.homunculus,
+            homunculusName: homunculusName ?? self.homunculusName,
+            awakeningInfo: awakeningInfo ?? self.awakeningInfo
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
+}
+
+// MARK: - AwakeningInfoData
+struct AwakeningInfoData: Codable {
+    let rid, wizardID, unitID, unitMasterID: Int
+    let awakenMasterID, exp, isAwakened: Int
+    let dateMod, dateAdd: String
+    let maxExp: Int
+
+    enum CodingKeys: String, CodingKey {
+        case rid
+        case wizardID = "wizard_id"
+        case unitID = "unit_id"
+        case unitMasterID = "unit_master_id"
+        case awakenMasterID = "awaken_master_id"
+        case exp
+        case isAwakened = "is_awakened"
+        case dateMod = "date_mod"
+        case dateAdd = "date_add"
+        case maxExp = "max_exp"
+    }
+}
+
+// MARK: AwakeningInfoData convenience initializers and mutators
+
+extension AwakeningInfoData {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(AwakeningInfoData.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        rid: Int? = nil,
+        wizardID: Int? = nil,
+        unitID: Int? = nil,
+        unitMasterID: Int? = nil,
+        awakenMasterID: Int? = nil,
+        exp: Int? = nil,
+        isAwakened: Int? = nil,
+        dateMod: String? = nil,
+        dateAdd: String? = nil,
+        maxExp: Int? = nil
+    ) -> AwakeningInfoData {
+        return AwakeningInfoData(
+            rid: rid ?? self.rid,
+            wizardID: wizardID ?? self.wizardID,
+            unitID: unitID ?? self.unitID,
+            unitMasterID: unitMasterID ?? self.unitMasterID,
+            awakenMasterID: awakenMasterID ?? self.awakenMasterID,
+            exp: exp ?? self.exp,
+            isAwakened: isAwakened ?? self.isAwakened,
+            dateMod: dateMod ?? self.dateMod,
+            dateAdd: dateAdd ?? self.dateAdd,
+            maxExp: maxExp ?? self.maxExp
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
+}
+
+
+
+
 public struct MonsterInstanceSkillData {
     private enum CodingKeys: String, CodingKey {
         case skillId
@@ -28,105 +250,105 @@ public struct MonsterInstanceSkillData {
     }
 }
 
-public struct MonsterInstanceData: JsonArray {
-
-    static var items = [MonsterInstanceData]()
-
-    private enum CodingKeys: String, CodingKey {
-        case id = "unit_id"
-        case summonerId = "wizard_id"
-        case monsterId = "unit_master_id"
-        case unitLevel = "unit_level"
-        case stars = "class"
-        case con
-        case atk
-        case def
-        case spd
-        case resist
-        case accuracy
-        case critRate = "critical_rate"
-        case critDamage = "critical_damage"
-        case skills
-        case runes
-        case artifacts
-    }
-
-    let id:                 Int64
-    let summonerId:         Int64   // points to Summoner object
-    let monsterId:          Int64   // points to Monster object
-    let unitLevel:          Int64
-    let stars:              Int64
-    let con:                Int64
-    let atk:                Int64
-    let def:                Int64
-    let spd:                Int64
-    let resist:             Int64
-    let accuracy:           Int64
-    let critRate:           Int64
-    let critDamage:         Int64
-    var skills:             [MonsterInstanceSkillData]
-    var runes:              [RuneInstanceData]
-    var artifacts:          [ArtifactInstanceData]
-
-    public init(monster: JSON) {
-        id = monster.unit_id.int
-        summonerId = monster.wizard_id.int
-        monsterId = monster.unit_master_id.int
-        unitLevel = monster.unit_level.int
-        stars = monster.class.int
-        con = monster.con.int
-        atk = monster.atk.int
-        def = monster.def.int
-        spd = monster.speed.int
-        resist = monster.resist.int
-        accuracy = monster.accuracy.int
-        critRate = monster.critical_rate.int
-        critDamage = monster.critical_damage.int
-
-        var jsonArr = monster.skills.value
-        var intIntArray = jsonArr as! [[Int64]]
-
-        // TODO: figure out why here, of all places, it's
-        // converting to [Int64] without having to kick it
-
-        skills = []
-        for array in intIntArray {
-            let misd = MonsterInstanceSkillData(ints: array)
-            skills.append(misd)
-        }
-
-        runes = []
-        let runeList = monster.runes.array
-        for rawRune in runeList {
-            let parsedRune = RuneInstanceData(rune: rawRune)
-            runes.append(parsedRune)
-        }
-
-        artifacts = []
-        let artifactList = monster.artifacts.array
-        for rawArtifact in artifactList {
-            let parsedArtifact = ArtifactInstanceData(artifact: rawArtifact)
-            artifacts.append(parsedArtifact)
-        }
-    }
-
-    static func saveToCoreData(_ docInfo: SummonerDocumentInfo) {
-
-        docInfo.taskContext.perform {
-            MonsterInstance.batchUpdate(from: MonsterInstanceData.items,
-                                 docInfo: docInfo)
-            do {
-                if docInfo.taskContext.hasChanges {
-                    print("Saving context after adding monster instances.")
-                    try docInfo.taskContext.save()
-                }
-
-            } catch {
-                print("could not save context")
-            }
-        }
-    }
-}
+//public struct MonsterInstanceData: JsonArray {
+//
+//    static var items = [MonsterInstanceData]()
+//
+//    private enum CodingKeys: String, CodingKey {
+//        case id = "unit_id"
+//        case summonerId = "wizard_id"
+//        case monsterId = "unit_master_id"
+//        case unitLevel = "unit_level"
+//        case stars = "class"
+//        case con
+//        case atk
+//        case def
+//        case spd
+//        case resist
+//        case accuracy
+//        case critRate = "critical_rate"
+//        case critDamage = "critical_damage"
+//        case skills
+//        case runes
+//        case artifacts
+//    }
+//
+//    let id:                 Int64
+//    let summonerId:         Int64   // points to Summoner object
+//    let monsterId:          Int64   // points to Monster object
+//    let unitLevel:          Int64
+//    let stars:              Int64
+//    let con:                Int64
+//    let atk:                Int64
+//    let def:                Int64
+//    let spd:                Int64
+//    let resist:             Int64
+//    let accuracy:           Int64
+//    let critRate:           Int64
+//    let critDamage:         Int64
+//    var skills:             [MonsterInstanceSkillData]
+//    var runes:              [RuneInstanceData]
+//    var artifacts:          [ArtifactInstanceData]
+//
+//    public init(monster: JSON) {
+//        id = monster.unit_id.int
+//        summonerId = monster.wizard_id.int
+//        monsterId = monster.unit_master_id.int
+//        unitLevel = monster.unit_level.int
+//        stars = monster.class.int
+//        con = monster.con.int
+//        atk = monster.atk.int
+//        def = monster.def.int
+//        spd = monster.speed.int
+//        resist = monster.resist.int
+//        accuracy = monster.accuracy.int
+//        critRate = monster.critical_rate.int
+//        critDamage = monster.critical_damage.int
+//
+//        var jsonArr = monster.skills.value
+//        var intIntArray = jsonArr as! [[Int64]]
+//
+//        // TODO: figure out why here, of all places, it's
+//        // converting to [Int64] without having to kick it
+//
+//        skills = []
+//        for array in intIntArray {
+//            let misd = MonsterInstanceSkillData(ints: array)
+//            skills.append(misd)
+//        }
+//
+//        runes = []
+//        let runeList = monster.runes.array
+//        for rawRune in runeList {
+//            let parsedRune = RuneInstanceData(rune: rawRune)
+//            runes.append(parsedRune)
+//        }
+//
+//        artifacts = []
+//        let artifactList = monster.artifacts.array
+//        for rawArtifact in artifactList {
+//            let parsedArtifact = ArtifactInstanceData(artifact: rawArtifact)
+//            artifacts.append(parsedArtifact)
+//        }
+//    }
+//
+//    static func saveToCoreData(_ docInfo: SummonerDocumentInfo) {
+//
+//        docInfo.taskContext.perform {
+//            MonsterInstance.batchUpdate(from: MonsterInstanceData.items,
+//                                 docInfo: docInfo)
+//            do {
+//                if docInfo.taskContext.hasChanges {
+//                    print("Saving context after adding monster instances.")
+//                    try docInfo.taskContext.save()
+//                }
+//
+//            } catch {
+//                print("could not save context")
+//            }
+//        }
+//    }
+//}
 
 /*     {
  "unit_id": 14591153200,
