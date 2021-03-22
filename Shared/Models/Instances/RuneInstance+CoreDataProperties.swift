@@ -13,13 +13,15 @@ import CoreData
 
 extension RuneInstance {
 
+    static var seenRunes = [RuneInstance]()
+
     @nonobjc public class func fetchRequest() -> NSFetchRequest<RuneInstance> {
         return NSFetchRequest<RuneInstance>(entityName: "RuneInstance")
     }
 
     @NSManaged public var accuracy: Int64
     @NSManaged public var ancient: Bool
-    @NSManaged public var assignedToId: Int64
+    @NSManaged public var assignedToId: NSNumber?
     @NSManaged public var atkFlat: Int64
     @NSManaged public var atkPct: Int64
     @NSManaged public var critDmg: Int64

@@ -249,12 +249,24 @@ extension RuneInstance: CoreDataUtility {
 //        if self.occupiedType != runeInstanceData.occupiedType {
 //            self.occupiedType = runeInstanceData.occupiedType
 //        }
-        
-        if self.assignedToId != runeInstanceData.monsterInstanceId {
-            self.assignedToId = runeInstanceData.monsterInstanceId
-            
-            self.monster = MonsterInstance.findById(self.assignedToId, context: docInfo.taskContext)
+
+        if let assignedMonster = runeInstanceData.monsterInstanceId {
+            if self.assignedToId != NSNumber(value: assignedMonster) {
+                self.assignedToId = NSNumber(value: assignedMonster)
+                self.monster = MonsterInstance.findById(assignedMonster, context: docInfo.taskContext)
+            }
+        } else {
+            // maybe was assigned before, but isn't now?
+            if self.assignedToId != nil {
+                self.assignedToId = nil
+            }
         }
+        
+//        if self.assignedToId != runeInstanceData.monsterInstanceId {
+//            self.assignedToId = runeInstanceData.monsterInstanceId
+//
+//            self.monster = MonsterInstance.findById(self.assignedToId, context: docInfo.taskContext)
+//        }
         if self.slot != runeInstanceData.slot {
             self.slot = runeInstanceData.slot
         }
@@ -401,7 +413,19 @@ extension RuneInstance: CoreDataUtility {
         }
     }
 
-}
+    static func findSummonerRunes(docInfo: SummonerDocumentInfo) -> [RuneInstance] {
+
+        let request : NSFetchRequest<RuneInstance> = RuneInstance.fetchRequest()
+
+        request.predicate = NSPredicate(format: "summonerId = %i", docInfo.summonerId)
+
+        if let results = try? docInfo.taskContext.fetch(request) {
+
+            return results
+        }
+        return []
+    }
+ }
 
 public struct RuneStarsView: View {
     let awakening: Awakening

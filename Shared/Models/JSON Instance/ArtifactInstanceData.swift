@@ -8,6 +8,26 @@
 import Foundation
 import CoreData
 
+public struct ArtifactStat: JsonArray {
+    static var items = [ArtifactStat]()
+
+    var stat: Int64
+    var statValue: CGFloat
+    var upgradeCount: Int64
+    var rerollCount: Int64
+
+    init(_ values: [Int64]) {
+        stat = values[0]
+        statValue = CGFloat(values[1])
+        upgradeCount = values[2]
+        rerollCount = values[3]
+    }
+    
+    static func saveToCoreData(_ docInfo: SummonerDocumentInfo) {
+        return
+    }
+}
+
 public struct ArtifactInstanceData: JsonArray {
     
     static var items = [ArtifactInstanceData]()
@@ -16,15 +36,15 @@ public struct ArtifactInstanceData: JsonArray {
         case com2usId = "rid"
         case summonerId = "wizard_id"
         case monsterInstanceId = "occupied_id"
-        case slot
+        case slot = "type" // there's *also* a slot field, used for artifacts on monsters
         case artifactType = "artifact_type"
         case attribute
         case unitStyle = "unit_style"
         case naturalRank = "natural_rank"
         case rank
         case level
-        case primaryEffect = "primary_effect"
-        case secondaryEffects = "secondary_effects"
+        case primaryEffect = "pri_effect"
+//        case secondaryEffects = "sec_effects"
     }
 
     let com2usId:           Int64
@@ -37,18 +57,29 @@ public struct ArtifactInstanceData: JsonArray {
     let naturalRank:        Int64
     let rank:               Int64
     let level:              Int64
+    var primaryEffect:      [Int64]
+//    var secondaryEffects:   [ArtifactStat]
 
     public init(artifact: JSON) {
         com2usId = artifact.rid.int
         summonerId = artifact.wizard_id.int
         monsterInstanceId = artifact.occupied_id.int
-        slot = artifact.slot.int
+        slot = artifact.type.int
         artifactType = artifact.artifact_type.int
         attribute = artifact.attribute.int
         unitStyle = artifact.unit_style.int
         naturalRank = artifact.natural_rank.int
         rank = artifact.rank.int
         level = artifact.level.int
+
+        var jsonArr = artifact.pri_effect.value
+//        converted = try! JSON(string: jsonArr as! String).array
+//        prefixEff = converted.map {try! JSON(string: $0.value as! String).int}
+        primaryEffect = jsonArr as! [Int64]
+
+//        var jsonArr2 = artifact.sec_effects.value
+//        secondaryEffects = jsonArr2 as! [ArtifactStat]
+
     }
     
     static func saveToCoreData(_ docInfo: SummonerDocumentInfo) {

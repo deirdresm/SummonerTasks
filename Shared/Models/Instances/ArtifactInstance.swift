@@ -14,7 +14,9 @@ import CoreData
 
 
 extension ArtifactInstance: CoreDataUtility {
-    
+
+    static var seenArtifacts = [ArtifactInstance]()
+
     static func findById(_ artifactInstanceId: Int64,
                                  context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
     -> ArtifactInstance? {
@@ -30,6 +32,19 @@ extension ArtifactInstance: CoreDataUtility {
             }
         }
         return nil
+    }
+
+    static func findSummonerArtifacts(docInfo: SummonerDocumentInfo) -> [ArtifactInstance] {
+
+        let request : NSFetchRequest<ArtifactInstance> = ArtifactInstance.fetchRequest()
+
+        request.predicate = NSPredicate(format: "summonerId = %i", docInfo.summonerId)
+
+        if let results = try? docInfo.taskContext.fetch(request) {
+
+            return results
+        }
+        return []
     }
     
     func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
@@ -61,27 +76,30 @@ extension ArtifactInstance: CoreDataUtility {
         if self.slot != artifactInstanceData.slot {
             self.slot = artifactInstanceData.slot
         }
-        if let tempArchetype = ArchetypeMap(rawValue: artifactInstanceData.artifactType) {
-            if self.archetype != tempArchetype.description {
-                self.archetype = tempArchetype.description
+
+        if self.slot == ArtifactSlots.element.rawValue {
+            if let tempElement = Element(rawValue: artifactInstanceData.attribute) {
+                if self.element != tempElement.description {
+                    self.element = tempElement.description
+                }
+                self.archetype = nil
+            }
+        } else {
+            if let tempArchetype = ArchetypeChoices(rawValue: artifactInstanceData.unitStyle) {
+                if self.archetype != tempArchetype.description {
+                    self.archetype = tempArchetype.description
+                }
+                self.element = nil
             }
         }
-        if let tempElement = Element(rawValue: artifactInstanceData.attribute) {
-            if self.element != tempElement.description {
-                self.element = tempElement.description
-            }
-        }
-        if self.mainStat != artifactInstanceData.unitStyle {
-            self.mainStat = artifactInstanceData.unitStyle
+        if self.mainStat != artifactInstanceData.primaryEffect[0] {
+            self.mainStat = artifactInstanceData.primaryEffect[0]
         }
         if self.originalQuality != artifactInstanceData.naturalRank {
             self.originalQuality = artifactInstanceData.naturalRank
         }
         if self.quality != artifactInstanceData.rank {
             self.quality = artifactInstanceData.rank
-        }
-        if self.level != artifactInstanceData.level {
-            self.level = artifactInstanceData.level
         }
         if self.level != artifactInstanceData.level {
             self.level = artifactInstanceData.level
@@ -94,14 +112,49 @@ extension ArtifactInstance: CoreDataUtility {
             let artifactInstanceData = from as! ArtifactInstanceData
             let artifactInstance = ArtifactInstance.findById(artifactInstanceData.com2usId, context: docInfo.taskContext) ?? ArtifactInstance(context: docInfo.taskContext)
             artifactInstance.update(from: artifactInstanceData, docInfo: docInfo)
+            seenArtifacts.append(artifactInstance)
         }
     }
     
     static func batchUpdate<T: JsonArray>(from: [T],
                             docInfo: SummonerDocumentInfo) {
+        seenArtifacts = []
         let artifacts = from as! [ArtifactInstanceData]
         for artifact in artifacts {
             ArtifactInstance.insertOrUpdate(from: artifact, docInfo: docInfo)
+        }
+        docInfo.taskContext.perform {
+
+            // save first to make sure we've got a full house
+
+            do {
+                if docInfo.taskContext.hasChanges {
+                    try docInfo.taskContext.save()
+                }
+
+            } catch {
+                print("could not save context")
+            }
+
+            var summonerArtifacts = findSummonerArtifacts(docInfo: docInfo)
+            print("Have \(summonerArtifacts.count) summoner artifacts")
+
+            let notSeenArtifacts = summonerArtifacts.filter {!seenArtifacts.contains($0) }
+            print("Deleting \(notSeenArtifacts.count) we didn't see this time")
+
+            for i in 0 ..< notSeenArtifacts.count {
+                docInfo.taskContext.delete(notSeenArtifacts[i])
+            }
+            do {
+                if docInfo.taskContext.hasChanges {
+                    try docInfo.taskContext.save()
+                }
+
+            } catch {
+                print("could not save context")
+            }
+
+            seenArtifacts = [] // don't need to hang onto them
         }
     }
 }

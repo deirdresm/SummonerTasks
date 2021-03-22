@@ -34,7 +34,7 @@ public struct RuneInstanceData: JsonArray {
     let id:                 Int64
     let summonerId:         Int64
     let occupiedType:       Int64
-    let monsterInstanceId:  Int64
+    let monsterInstanceId:  Int64?
     let slot:               Int64
     let rank:               Int64
     let runeClass:          Int64

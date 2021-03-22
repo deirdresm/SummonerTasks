@@ -100,6 +100,7 @@ public struct MonsterInstanceData: JsonArray {
         for rawRune in runeList {
             let parsedRune = RuneInstanceData(rune: rawRune)
             runes.append(parsedRune)
+            RuneInstanceData.items.append(parsedRune)
         }
 
         artifacts = []
@@ -107,6 +108,7 @@ public struct MonsterInstanceData: JsonArray {
         for rawArtifact in artifactList {
             let parsedArtifact = ArtifactInstanceData(artifact: rawArtifact)
             artifacts.append(parsedArtifact)
+            ArtifactInstanceData.items.append(parsedArtifact)
         }
     }
 

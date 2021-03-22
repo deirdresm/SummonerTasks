@@ -104,6 +104,7 @@ class SummonerJsonDocument: FileDocument {
                 MonsterInstanceData.saveToCoreData(self.docInfo)
 
                 let runes = object.runes
+                print("rune list count = \(runes.count)")
                 for item in runes {
                     let newRune = RuneInstanceData(rune: item)
                     RuneInstanceData.items.append(newRune)
@@ -111,6 +112,7 @@ class SummonerJsonDocument: FileDocument {
                 RuneInstanceData.saveToCoreData(self.docInfo)
 
                 let artifacts = object.artifacts
+                print("artifact count = \(artifacts.count)")
                 for item in artifacts {
                     let newArtifact = ArtifactInstanceData(artifact: item)
                     ArtifactInstanceData.items.append(newArtifact)
