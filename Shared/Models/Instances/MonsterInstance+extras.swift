@@ -13,8 +13,56 @@ import CoreData
 // MARK: - Core Data
 
 @objc(MonsterInstance)
-public class MonsterInstance: NSManagedObject, Comparable, CoreDataUtility {
+public class MonsterInstance: NSManagedObject, Comparable, Decodable {
     
+    private enum CodingKeys: String, CodingKey {
+        case id = "unit_id"
+        case summonerId = "wizard_id"
+        case monsterId = "unit_master_id"
+        case level = "unit_level"
+        case stars = "class"
+        case con
+        case atk
+        case def
+        case spd
+        case resist
+        case accuracy
+        case critRate = "critical_rate"
+        case critDamage = "critical_damage"
+        case skills
+        case runes
+        case artifacts
+    }
+
+    // MARK: - Decodable
+    required convenience public init(from decoder: Decoder) throws {
+        // get the context and the entity in the context
+        guard let context = decoder.userInfo[CodingUserInfoKey.context!] as? NSManagedObjectContext else { fatalError("Could not get context [for MonsterInstance]") }
+        guard let entity = NSEntityDescription.entity(forEntityName: "MonsterInstance", in: context) else { fatalError("Could not get entity [for MonsterInstance]") }
+
+        // init self
+        self.init(entity: entity, insertInto: context)
+
+        // create container
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        // and start decoding
+        self.id = try container.decode(Int64.self, forKey: .id)
+        self.summonerId = try container.decode(Int64.self, forKey: .summonerId)
+        self.summoner = Summoner.findById(self.summonerId, context: context)
+        self.monsterId = try container.decode(Int64.self, forKey: .monsterId)
+        self.monster = Monster.findById(id: self.monsterId, context: context)
+        self.level = try container.decode(Int16.self, forKey: .level)
+        self.stars = try container.decode(Int16.self, forKey: .stars)
+        self.con = try container.decode(Int32.self, forKey: .con)
+        self.atk = try container.decode(Int16.self, forKey: .atk)
+        self.def = try container.decode(Int16.self, forKey: .def)
+        self.spd = try container.decode(Int16.self, forKey: .spd)
+        self.resist = try container.decode(Int16.self, forKey: .resist)
+        self.accuracy = try container.decode(Int16.self, forKey: .accuracy)
+        self.critRate = try container.decode(Int16.self, forKey: .critRate)
+        self.critDamage = try container.decode(Int16.self, forKey: .critDamage)
+    }
+
     func monsterRunesSorted() -> [RuneInstance] {
         let sortNameDescriptor = NSSortDescriptor.init(key: "slot", ascending: true)
         
@@ -40,8 +88,8 @@ public class MonsterInstance: NSManagedObject, Comparable, CoreDataUtility {
         return Int64((Float(m.maxLvlHp) * (1140 + (Float(m.maxLvlDefense) * 3.5))/1000))
     }
     
-    public var skillUpsNeeded: Int64 {
-        var result: Int64 = 0
+    public var skillUpsNeeded: Int16 {
+        var result: Int16 = 0
 
         guard let m = self.monster
         else {
@@ -50,10 +98,77 @@ public class MonsterInstance: NSManagedObject, Comparable, CoreDataUtility {
         
         let skillUpsToMax = m.skillUpsToMax
        
-        result = skillUpsToMax - self.skill1Level - self.skill2Level - self.skill3Level - self.skill4Level
+        result = Int16(skillUpsToMax) - self.skill1Level - self.skill2Level - self.skill3Level - self.skill4Level
         
         return result
     }
+
+    // MARK: - Wrapped values for views
+
+    var runedHp: Int {
+        var runed: Int32 = runeHp + artifactHP
+        if let monster = self.monster {
+            runed += Int32(monster.maxLvlHp)
+        }
+        return Int(runed)
+    }
+
+    var runedAttack: Int {
+        var runed: Int16 = runeAttack + artifactAttack
+        if let monster = self.monster {
+            runed += Int16(monster.maxLvlAttack)
+        }
+        return Int(runed)
+    }
+
+    var runedDefense: Int {
+        var runed: Int16 = runeDefense + artifactDefense
+        if let monster = self.monster {
+            runed += Int16(monster.maxLvlDefense)
+        }
+        return Int(runed)
+    }
+
+    var runedSpeed: Int {
+        var runed: Int16 = runeSpeed
+        if let monster = self.monster {
+            runed += Int16(monster.speed)
+        }
+        return Int(runed)
+    }
+
+    var runedCritRate: Int {
+        var runed: Int16 = runeCritRate
+        if let monster = self.monster {
+            runed += Int16(monster.critRate)
+        }
+        return Int(runed)
+    }
+
+    var runedCritDamage: Int {
+        var runed: Int16 = runeCritDamage
+        if let monster = self.monster {
+            runed += Int16(monster.critDamage)
+        }
+        return Int(runed)
+    }
+
+    var runedResistance: Int {
+        var runed: Int16 = runeResistance
+        if let monster = self.monster {
+            runed += Int16(monster.resistance)
+        }
+        return Int(runed)
+    }
+
+    var runedAccuracy: Int {
+        var runed: Int16 = runeAccuracy
+        if let monster = self.monster {
+            runed += Int16(monster.accuracy)
+        }
+        return Int(runed)
+    }
+
 
     // MARK: - JSON Import Functions
 
@@ -72,97 +187,6 @@ public class MonsterInstance: NSManagedObject, Comparable, CoreDataUtility {
             }
         }
         return nil
-    }
-
-    func update<T: JsonArray>(from: T,
-                              docInfo: SummonerDocumentInfo) {
-        let monsterData = from as! MonsterInstanceData
-
-        // don't dirty the record if you don't have to
-
-        if self.id != monsterData.id {
-            self.id = monsterData.id
-        }
-        if self.ownerId != monsterData.summonerId {
-            self.ownerId = monsterData.summonerId
-        }
-
-        if let summoner = docInfo.summoner {
-            self.summoner = summoner
-        }
-        if let summoner = docInfo.summoner {
-            if self.summoner != summoner {
-                self.summoner = summoner
-            }
-        }
-
-        if self.level != monsterData.unitLevel {
-            self.level = monsterData.unitLevel
-        }
-        if self.stars != monsterData.stars {
-            self.stars = monsterData.stars
-        }
-
-        if monsterData.skills.count > 0 {
-            if self.skill1Level != monsterData.skills[0].level {
-                self.skill1Level = monsterData.skills[0].level
-            }
-        }
-        if monsterData.skills.count > 1 {
-            if self.skill2Level != monsterData.skills[1].level {
-                self.skill2Level = monsterData.skills[1].level
-            }
-        }
-        if monsterData.skills.count > 2 {
-            if self.skill3Level != monsterData.skills[2].level {
-                self.skill3Level = monsterData.skills[2].level
-            }
-        }
-        if monsterData.skills.count > 3 {
-            if self.skill4Level != monsterData.skills[3].level {
-                self.skill4Level = monsterData.skills[3].level
-            }
-        }
-
-        self.fodder = false
-
-        // get the monster and save the relation
-
-        if self.monsterId != monsterData.monsterId {
-            self.monsterId = monsterData.monsterId
-            
-            self.monster = Monster.findById(id: monsterId,
-                                            context: docInfo.taskContext)
-        }
-
-        // take care of previously unset monsters and any initially created
-        // from a newer not-yet-loaded API
-        if self.monster == nil {
-            print("setting monster for \(self.monsterId)")
-            self.monster = Monster.findById(id: self.monsterId,
-                                           context: docInfo.taskContext)
-            let name = self.monster?.name ?? "no name"
-            print("… \(name)")
-        }
-    }
-    
-    static func insertOrUpdate<T: JsonArray>(from: T,
-                               docInfo: SummonerDocumentInfo) {
-        let monsterData = from as! MonsterInstanceData
-        
-        docInfo.taskContext.performAndWait {
-            var monsterInstance = MonsterInstance.findById(monsterData.id, context: docInfo.taskContext) ?? MonsterInstance(context: docInfo.taskContext)
-            monsterInstance.update(from: monsterData, docInfo: docInfo)
-        }
-    }
-    
-    static func batchUpdate<T: JsonArray>(from: [T],
-                            docInfo: SummonerDocumentInfo) {
-        let monsterInstances = from as! [MonsterInstanceData]
-        for monsterInstance in monsterInstances {
-//            print(monsterInstance)
-            MonsterInstance.insertOrUpdate(from: monsterInstance, docInfo: docInfo)
-        }
     }
 
     public static func < (lhs: MonsterInstance, rhs: MonsterInstance) -> Bool {

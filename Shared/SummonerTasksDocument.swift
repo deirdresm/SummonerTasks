@@ -64,69 +64,44 @@ class SummonerJsonDocument: FileDocument {
     func loadPlayerData(json: String) throws {
         // TODO: unlike the bestiary data, we have a few unfixed problems:
         
-        // 1. not wrapped in model structure
-        // 2. double array for rune skills
-        // 3. entire file is NOT wrapped in array (so technically not well formed)
+        // 1. double array for rune skills
 
         print("created task context")
         DispatchQueue.global(qos: .background).async {
-            var object: JSON
+//            var object: JSON
+            var data: Data = json.data(using: .utf8)! // non-nil
 
             do {
                 print("trying to get JSON object")
-                object = try JSON(string: json)
+//                object = try JSON(string: json)
+                let decoder = JSONDecoder()
                 print("got JSON object, iterating through object")
+                decoder.userInfo[CodingUserInfoKey.context!] = self.docInfo.taskContext
+                decoder.dateDecodingStrategy = .formatted(DateFormatter.com2us)
 
-                let summoner = object.wizard_info
-                let timezone = object.tzone
-                let newSummoner = SummonerData(summoner: summoner, tzone: timezone)
-                SummonerData.items.append(newSummoner)
-                SummonerData.saveToCoreData(&self.docInfo)
-
-                let buildingList = object.deco_list
-                for item in buildingList {
-                    let newBuilding = BuildingInstanceData(building: item)
-                    BuildingInstanceData.items.append(newBuilding)
-                }
-                BuildingInstanceData.saveToCoreData(self.docInfo)
-                print("Total of \(summoner.buildings.count) building instances imported")
-                
-                let unitList = object.unit_list
-                print("unit list count = \(unitList.count)")
-                for item in unitList {
-                    let newMonster = MonsterInstanceData(monster: item)
-                    MonsterInstanceData.items.append(newMonster)
-                    let count = MonsterInstanceData.items.count
-                    if count % 100 == 0 {
-                        print("imported \(count) monsters so far")
-                    }
-                }
-                MonsterInstanceData.saveToCoreData(self.docInfo)
-
-                let runes = object.runes
-                print("rune list count = \(runes.count)")
-                for item in runes {
-                    let newRune = RuneInstanceData(rune: item)
-                    RuneInstanceData.items.append(newRune)
-                }
-                RuneInstanceData.saveToCoreData(self.docInfo)
-
-                let artifacts = object.artifacts
-                print("artifact count = \(artifacts.count)")
-                for item in artifacts {
-                    let newArtifact = ArtifactInstanceData(artifact: item)
-                    ArtifactInstanceData.items.append(newArtifact)
-                }
-                ArtifactInstanceData.saveToCoreData(self.docInfo)
-                
-                print("Total of \(MonsterInstanceData.items.count) monster instances imported")
-                print("Total of \(RuneInstanceData.items.count) runes imported")
-                print("Total of \(ArtifactInstanceData.items.count) artifacts imported")
+                let container = try decoder.decode(PlayerFile.self, from: data)
            }
             catch let parseError {
                 print("an uncaught error occurred: \(parseError)")
             }
+
+            // save context
+
+            self.docInfo.taskContext.perform {
+
+                // save first to make sure we've got a full house
+
+                do {
+                    if self.docInfo.taskContext.hasChanges {
+                        try self.docInfo.taskContext.save()
+                    }
+
+                } catch {
+                    print("could not save context")
+                }
+            }
         }
+        
     }
 
     required public init(configuration: ReadConfiguration) throws {

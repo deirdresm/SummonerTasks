@@ -8,6 +8,40 @@
 import Foundation
 import SwiftUI
 
+extension VerticalAlignment {
+    struct SlotAlign: AlignmentID {
+        static func defaultValue(in d: ViewDimensions) -> CGFloat {
+            d[.leading]
+        }
+    }
+
+    struct StarAlign: AlignmentID {
+        static func defaultValue(in d: ViewDimensions) -> CGFloat {
+            d[.leading]
+        }
+    }
+
+    struct CurrEffAlign: AlignmentID {
+        static func defaultValue(in d: ViewDimensions) -> CGFloat {
+            d[.trailing]
+        }
+    }
+
+    struct MaxEffAlign: AlignmentID {
+        static func defaultValue(in d: ViewDimensions) -> CGFloat {
+            d[.trailing]
+        }
+    }
+
+    static let slotAlign = VerticalAlignment(SlotAlign.self)
+
+    static let starAlign = VerticalAlignment(StarAlign.self)
+
+    static let currEffAlign = VerticalAlignment(CurrEffAlign.self)
+
+    static let maxEffAlign = VerticalAlignment(MaxEffAlign.self)
+}
+
 public struct PercentText: View {
     var pct: Float
     var digits: Int
@@ -73,11 +107,15 @@ public struct RuneListGridView: View {
                     RuneIconView(rune: rune)
                         .frame(minWidth: 36, idealWidth: 48, maxWidth: 48, minHeight: 36, idealHeight: 48, maxHeight: 48, alignment: .leading)
                     Text("\(rune.slot)")
-                    Text("\(rune.stars)")
+                        .alignmentGuide(.slotAlign) { d in d[HorizontalAlignment.center] }
+                    Text("\(rune.stars)*")
+                        .alignmentGuide(.starAlign) { d in d[HorizontalAlignment.center] }
                     PercentText(pct: rune.efficiency, digits: 5, trailing: 1)
-                }
+                        .alignmentGuide(.currEffAlign) { d in d[HorizontalAlignment.trailing] }
+               }
                 Group {
                     PercentText(pct: rune.maxEfficiency, digits: 5, trailing: 1)
+                        .alignmentGuide(.maxEffAlign) { d in d[HorizontalAlignment.trailing] }
                     Text("\(rune.hpPct)%")
                     Text("\(rune.hpFlat)")
                     Text("\(rune.atkPct)%")

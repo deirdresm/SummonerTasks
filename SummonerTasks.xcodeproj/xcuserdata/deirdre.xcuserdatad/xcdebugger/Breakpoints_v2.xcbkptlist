@@ -126,8 +126,8 @@
             filePath = "Shared/Models/Instances/BuildingInstance.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "34"
-            endingLineNumber = "34"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
             landmarkName = "findBySummonerAndBuildingId(_:_:context:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -158,10 +158,10 @@
             filePath = "Shared/Models/Instances/ArtifactInstance.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "89"
-            endingLineNumber = "89"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "129"
+            endingLineNumber = "129"
+            landmarkName = "ArtifactInstance"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -176,8 +176,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "265"
             endingLineNumber = "265"
-            landmarkName = "update(from:docInfo:)"
-            landmarkType = "7">
+            landmarkName = "RuneInstance"
+            landmarkType = "21">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -192,8 +192,40 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "253"
             endingLineNumber = "253"
-            landmarkName = "update(from:docInfo:)"
-            landmarkType = "7">
+            landmarkName = "RuneInstance"
+            landmarkType = "21">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "73B404C9-8F71-48EA-9DA6-42E5690AAA6D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Shared/Models/Instances/ArtifactInstance.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "ArtifactInstance"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "199A0554-285A-4B19-B440-F0A5855B89EB"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Shared/Models/Instances/Summoner.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
+            landmarkName = "Summoner"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

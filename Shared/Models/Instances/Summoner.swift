@@ -9,11 +9,97 @@ import Foundation
 import CoreData
 import Cocoa
 
+enum TimezoneServerMap: String, CaseIterable {
+    case global = "America/Los_Angeles"
+    case europe = "Europe/Berlin"
+    case korea = "Asia/Seoul"
+    case asia = "Asia/Shanghai"
+    case japan
+    case china
+
+    func server() -> Int16 {
+        switch self {
+        case .global:
+            return 0
+        case .europe:
+            return 1
+        case .korea:
+            return 2
+        case .asia:
+            return 3
+        case .japan:
+            return 4
+        case .china:
+            return 5
+        }
+    }
+}
+
 // MARK: - Core Data
 
-extension Summoner: CoreDataUtilityMutable {
-    static let classNameTransformerName = NSValueTransformerName(rawValue: "JSONValueTransformer")
-    
+/*
+ "wizard_info": {
+   "wizard_id": 1234567,
+   "wizard_name": "namegoeshere",
+   "wizard_mana": 417401,
+   "wizard_crystal": 4423,
+   "wizard_crystal_paid": 4322,
+   "wizard_last_login": "2020-09-23 04:43:55",
+   "wizard_last_country": "US",
+   "wizard_last_lang": "en",
+   "wizard_level": 50,
+   "experience": 3800000,
+   "wizard_energy": 162,
+   "energy_max": 200,
+   "energy_per_min": 0.26,
+   "next_energy_gain": 176,
+   "arena_energy": 6,
+   "arena_energy_max": 10,
+   "arena_energy_next_gain": 1265,
+   "unit_slots": {
+     "number": 120
+   },
+*/
+
+
+@objc(Summoner)
+public class Summoner: NSManagedObject, Decodable {
+//    static let classNameTransformerName = NSValueTransformerName(rawValue: "JSONValueTransformer")
+
+    private enum CodingKeys: String, CodingKey {
+        case id = "wizard_id"
+        case name = "wizard_name"
+        case lastUpdate = "wizard_last_login"
+//        case server = "tzone" // not in wizard_id structure, at top level
+//        case timezone = "timezone" // not in wizard_id structure, derived
+    }
+
+    // MARK: - Decodable
+    required convenience public init(from decoder: Decoder) throws {
+        // get the context and the entity in the context
+        guard let context = decoder.userInfo[CodingUserInfoKey.context!] as? NSManagedObjectContext else { fatalError("Could not get context [for Summoner]") }
+        guard let entity = NSEntityDescription.entity(forEntityName: "Summoner", in: context) else { fatalError("Could not get entity [for Summoner]") }
+
+        // init self
+        self.init(entity: entity, insertInto: context)
+
+        // create container
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        // and start decoding
+        self.id = try container.decode(Int64.self, forKey: .id)
+        self.name = try container.decode(String.self, forKey: .name)
+
+        let rawDate = try container.decode(String.self, forKey: .lastUpdate)
+        let formatter = DateFormatter.com2us
+        self.lastUpdate = formatter.date(from: rawDate)
+
+//        let tz = try container.decode(String.self, forKey: .server)
+//        self.timezone = tz
+//        if let serverMap = TimezoneServerMap.from(string: tz)?.server() {
+//            self.server = serverMap
+//        }
+    }
+
     static func findById(_ summonerId: Int64,
                                  context: NSManagedObjectContext)
     -> Summoner? {
@@ -29,48 +115,7 @@ extension Summoner: CoreDataUtilityMutable {
         }
         return nil
     }
-    
-    func update<T: JsonArrayMutable>(from: T, docInfo: inout SummonerDocumentInfo) {
-        let summonerData = from as! SummonerData
-        
-        // don't dirty the record if you don't have to
-        
-        if self.name != summonerData.name {
-            self.name = summonerData.name
-        }
-        if self.id != summonerData.id {
-            self.id = summonerData.id
-        }
-        if self.lastUpdate != summonerData.lastUpdate {
-            self.lastUpdate = summonerData.lastUpdate
-        }
-//        if self.server != summonerData.server {
-//            self.server = summonerData.server
-//        }
-        if self.timezone != summonerData.timezone {
-            self.timezone = summonerData.timezone
-        }
-    }
-    
-    static func insertOrUpdate<T: JsonArrayMutable>(from: T,
-                               docInfo: inout SummonerDocumentInfo) {
-        let summonerData = from as! SummonerData
-        let summoner: Summoner = Summoner.findById(summonerData.id, context: docInfo.taskContext) ??
-            Summoner(context: docInfo.taskContext)
-        
-        summoner.update(from: summonerData, docInfo: &docInfo)
-        docInfo.summoner = summoner
-        docInfo.summonerSet = true
-        docInfo.summonerId = summoner.id
-    }
-    
-    static func batchUpdate<T: JsonArrayMutable>(from: [T],
-                            docInfo: inout SummonerDocumentInfo) {
-        let summoners = from as! [SummonerData]
-        let summoner = summoners.first!
-        Summoner.insertOrUpdate(from: summoner, docInfo: &docInfo)
-    }
-    
+
     // TODO: we need a big sort thing, so this is a temp stopgap
     func runesSorted() -> [RuneInstance] {
         let slotSort = NSSortDescriptor.init(key: "slot", ascending: true)
@@ -119,6 +164,10 @@ extension Summoner: CoreDataUtilityMutable {
         }
     }
 
+    public static func == (lhs: Summoner, rhs: Summoner) -> Bool {
+        return lhs.id == rhs.id
+    }
+
 }
 
 @objc(JSONValueTransformer)
@@ -137,29 +186,6 @@ public final class JSONValueTransformer: ValueTransformer {
 }
 
 
-/*
- "wizard_info": {
-   "wizard_id": 1234567,
-   "wizard_name": "namegoeshere",
-   "wizard_mana": 417401,
-   "wizard_crystal": 4423,
-   "wizard_crystal_paid": 4322,
-   "wizard_last_login": "2020-09-23 04:43:55",
-   "wizard_last_country": "US",
-   "wizard_last_lang": "en",
-   "wizard_level": 50,
-   "experience": 3800000,
-   "wizard_energy": 162,
-   "energy_max": 200,
-   "energy_per_min": 0.26,
-   "next_energy_gain": 176,
-   "arena_energy": 6,
-   "arena_energy_max": 10,
-   "arena_energy_next_gain": 1265,
-   "unit_slots": {
-     "number": 120
-   },
-*/
 
 
 

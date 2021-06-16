@@ -11,7 +11,7 @@ import SwiftUI
 
 // can work for either runes or monsters/monster instances
 public struct StarsView: View {
-    let numStars: Int64
+    let numStars: Int16
     let awakening: Awakening
 
     public var body: some View {

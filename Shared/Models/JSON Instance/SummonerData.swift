@@ -8,15 +8,6 @@
 import Foundation
 import CoreData
 
-enum TimezoneServerMap: String, CaseIterable {
-    case global = "America/Los_Angeles"
-    case europe = "Europe/Berlin"
-    case korea = "Asia/Seoul"
-    case asia = "Asia/Shanghai"
-    case japan
-    case china
-}
-
 // MARK: - JSON
 
 public struct SummonerData: JsonArrayMutable {

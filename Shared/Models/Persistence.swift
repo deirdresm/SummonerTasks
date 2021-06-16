@@ -71,7 +71,6 @@ class PersistenceController {
             }
         })
 
-        // This sample refreshes UI by refetching data, so doesn't need to merge the changes.
         container.viewContext.automaticallyMergesChangesFromParent = true
         container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         container.viewContext.undoManager = nil

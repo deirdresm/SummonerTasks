@@ -46,7 +46,7 @@ class HasRuneStat {
 }
 
 
-extension RuneInstance: CoreDataUtility {
+extension RuneInstance {
     
     func findById(summoner: Summoner, runeId: Int64,
                   context: NSManagedObjectContext) -> RuneInstance? {
@@ -95,32 +95,32 @@ extension RuneInstance: CoreDataUtility {
     func setStat(_ stat: RuneStatType, value: Int64) {
         switch stat {
         case .hpFlat:
-            self.hpFlat = value
+            self.hpFlat = Int32(value)
         case .hpPct:
-            self.hpPct = value
+            self.hpPct = Int16(value)
         case .atkFlat:
-            self.atkFlat = value
+            self.atkFlat = Int16(value)
         case .atkPct:
-            self.atkPct = value
+            self.atkPct = Int16(value)
         case .defFlat:
-            self.defFlat = value
+            self.defFlat = Int16(value)
         case .defPct:
-            self.defPct = value
+            self.defPct = Int16(value)
         case .speed:
-            self.speed = value
+            self.speed = Int16(value)
         case .critRatePct:
-            self.critRate = value
+            self.critRate = Int16(value)
         case .critDmgPct:
-            self.critDmg = value
+            self.critDmg = Int16(value)
         case .resistPct:
-            self.resistance = value
+            self.resistance = Int16(value)
         case .accuracyPct:
-            self.accuracy = value
+            self.accuracy = Int16(value)
         }
     }
 
 
-    func getSummonerRunes(context: NSManagedObjectContext, summonerId: Int64, summonerData: SummonerData? = nil) -> NSSet? {
+    func getSummonerRunes(context: NSManagedObjectContext, summonerId: Int64) -> NSSet? {
         
         if let summoner = Summoner.findById(summonerId, context: context) {
             return summoner.runes
@@ -227,191 +227,191 @@ extension RuneInstance: CoreDataUtility {
     func calcEfficiency() {
         
     }
-    func update<T: JsonArray>(from: T,
-                docInfo: SummonerDocumentInfo) {
-        
-        let runeInstanceData = from as! RuneInstanceData
-        var hasStats = HasRuneStat()
-
-        // don't dirty the record if you don't have to
-        
-        if self.id != runeInstanceData.id {
-            self.id = runeInstanceData.id
-        }
-        if self.summonerId != runeInstanceData.summonerId {
-            self.summonerId = runeInstanceData.summonerId
-            
-            self.summoner = Summoner.findById(self.summonerId, context: docInfo.taskContext)
-        }
-        
-        // it appears occupiedType is 1 if the rune is on a monster and 2 if it's not
-        // if so, not worth storing (it's not in swarfarm)
-//        if self.occupiedType != runeInstanceData.occupiedType {
-//            self.occupiedType = runeInstanceData.occupiedType
-//        }
-
-        if let assignedMonster = runeInstanceData.monsterInstanceId {
-            if self.assignedToId != NSNumber(value: assignedMonster) {
-                self.assignedToId = NSNumber(value: assignedMonster)
-                self.monster = MonsterInstance.findById(assignedMonster, context: docInfo.taskContext)
-            }
-        } else {
-            // maybe was assigned before, but isn't now?
-            if self.assignedToId != nil {
-                self.assignedToId = nil
-            }
-        }
-        
-//        if self.assignedToId != runeInstanceData.monsterInstanceId {
-//            self.assignedToId = runeInstanceData.monsterInstanceId
+//    func update<T: JsonArray>(from: T,
+//                docInfo: SummonerDocumentInfo) {
+//        
+//        let runeInstanceData = from as! RuneInstanceData
+//        var hasStats = HasRuneStat()
 //
-//            self.monster = MonsterInstance.findById(self.assignedToId, context: docInfo.taskContext)
+//        // don't dirty the record if you don't have to
+//        
+//        if self.id != runeInstanceData.id {
+//            self.id = runeInstanceData.id
 //        }
-        if self.slot != runeInstanceData.slot {
-            self.slot = runeInstanceData.slot
-        }
-        if self.runeType != runeInstanceData.runeClass {
-            self.runeType = runeInstanceData.runeClass
-        }
-        if self.quality != runeInstanceData.rank {
-            self.quality = runeInstanceData.rank
-        }
-        
-        let stars = runeInstanceData.runeClass
-        if self.stars != stars % 10 {
-            self.stars = stars % 10
-            self.ancient = stars > 10 ? true : false
-        }
-        
-        if self.slot != runeInstanceData.slot {
-            self.slot = runeInstanceData.slot
-        }
-        if self.runeType != runeInstanceData.setId {
-            self.runeType = runeInstanceData.setId
-        }
-        if self.level != runeInstanceData.upgradeCurr {
-            self.level = runeInstanceData.upgradeCurr
-        }
-        if self.runeValue != runeInstanceData.sellValue {
-            self.runeValue = runeInstanceData.sellValue
-        }
-        if self.originalQuality != runeInstanceData.originalQuality % 10 {
-            self.originalQuality = runeInstanceData.originalQuality % 10
-        }
-        
-        if self.mainStat != runeInstanceData.priEff[0] ||
-                self.mainStatValue != runeInstanceData.priEff[1] {
-            self.mainStat = runeInstanceData.priEff[0]
-            self.mainStatValue = runeInstanceData.priEff[1]
-        }
-        if let tempStat = RuneStatType(rawValue: self.mainStat) {
-            hasStats.setFlag(tempStat)
-            self.setStat(tempStat, value: self.mainStatValue)
-        }
-        // while not all runes have innate stats, the data file does
-        // have zeroes in place, so it's not conditional
-        if self.innateStat != runeInstanceData.prefixEff[0] ||
-                self.innateStatValue != runeInstanceData.prefixEff[1] {
-            self.innateStat = runeInstanceData.prefixEff[0]
-            self.innateStatValue = runeInstanceData.prefixEff[1]
-        }
-        if let stat = RuneStatType(rawValue: self.innateStat) {
-            hasStats.setFlag(stat)
-            self.setStat(stat, value: self.innateStatValue)
-        }
-
-        // for normal (lowest value) runes, no stats have yet been revealed,
-        // but that means the array is empty, not optional
-
-        let statCount = runeInstanceData.secEff.count
-        if statCount > 0 {
-            let substat = runeInstanceData.secEff[0]
-            
-            self.substat1 = substat[0]
-            self.substat1Value = substat[1]
-            self.substat1Enchanted = substat[2] == 1
-            self.substat1Craft = substat[3]
-            if let stat = RuneStatType(rawValue: substat[0]) {
-                hasStats.setFlag(stat)
-                self.setStat(stat, value: self.substat1Value)
-            }
-        }
-        if statCount > 1 {
-            let substat = runeInstanceData.secEff[1]
-            self.substat2 = substat[0]
-            self.substat2Value = substat[1]
-            self.substat2Enchanted = substat[2] == 1
-            self.substat2Craft = substat[3]
-            if let stat = RuneStatType(rawValue: substat[0]) {
-                hasStats.setFlag(stat)
-                self.setStat(stat, value: self.substat2Value)
-            }
-        }
-        if statCount > 2 {
-            let substat = runeInstanceData.secEff[2]
-            self.substat3 = substat[0]
-            self.substat3Value = substat[1]
-            self.substat3Enchanted = substat[2] == 1
-            self.substat3Craft = substat[3]
-            if let stat = RuneStatType(rawValue: substat[0]) {
-                hasStats.setFlag(stat)
-                self.setStat(stat, value: self.substat3Value)
-            }
-        }
-        if statCount > 3 {
-            let substat = runeInstanceData.secEff[3]
-            self.substat4 = substat[0]
-            self.substat4Value = substat[1]
-            self.substat4Enchanted = substat[2] == 1
-            self.substat4Craft = substat[3]
-            if let stat = RuneStatType(rawValue: substat[0]) {
-                hasStats.setFlag(stat)
-                self.setStat(stat, value: self.substat4Value)
-            }
-        }
-        if self.hasHP != hasStats.hasHp {
-            self.hasHP = hasStats.hasHp
-        }
-        if self.hasAtk != hasStats.hasAtk {
-            self.hasAtk = hasStats.hasAtk
-        }
-        if self.hasDef != hasStats.hasDef {
-            self.hasDef = hasStats.hasDef
-        }
-        if self.hasSpeed != hasStats.hasSpeed {
-            self.hasSpeed = hasStats.hasSpeed
-        }
-        if self.hasCritRate != hasStats.hasCritRate {
-            self.hasCritRate = hasStats.hasCritRate
-        }
-        if self.hasCritDmg != hasStats.hasCritDmg {
-            self.hasCritDmg = hasStats.hasCritDmg
-        }
-        if self.hasResist != hasStats.hasResist {
-            self.hasResist = hasStats.hasResist
-        }
-        if self.hasAccuracy != hasStats.hasAcc {
-            self.hasAccuracy = hasStats.hasAcc
-        }
-    }
-    
-    static func insertOrUpdate<T: JsonArray>(from: T,
-                               docInfo: SummonerDocumentInfo) {
-        docInfo.taskContext.performAndWait {
-            let runeInstanceData = from as! RuneInstanceData
-            let runeInstance = RuneInstance.findById(runeInstanceData.id, context: docInfo.taskContext) ?? RuneInstance(context: docInfo.taskContext)
-            runeInstance.update(from: runeInstanceData, docInfo: docInfo)
-        }
-    }
-    
-    static func batchUpdate<T: JsonArray>(from: [T],
-                            docInfo: SummonerDocumentInfo) {
-        let runes = from as! [RuneInstanceData]
-        for rune in runes {
-//            print(rune)
-            RuneInstance.insertOrUpdate(from: rune, docInfo: docInfo)
-        }
-    }
+//        if self.summonerId != runeInstanceData.summonerId {
+//            self.summonerId = runeInstanceData.summonerId
+//            
+//            self.summoner = Summoner.findById(self.summonerId, context: docInfo.taskContext)
+//        }
+//        
+//        // it appears occupiedType is 1 if the rune is on a monster and 2 if it's not
+//        // if so, not worth storing (it's not in swarfarm)
+////        if self.occupiedType != runeInstanceData.occupiedType {
+////            self.occupiedType = runeInstanceData.occupiedType
+////        }
+//
+//        if let assignedMonster = runeInstanceData.monsterInstanceId {
+//            if self.assignedToId != NSNumber(value: assignedMonster) {
+//                self.assignedToId = NSNumber(value: assignedMonster)
+//                self.monster = MonsterInstance.findById(assignedMonster, context: docInfo.taskContext)
+//            }
+//        } else {
+//            // maybe was assigned before, but isn't now?
+//            if self.assignedToId != nil {
+//                self.assignedToId = nil
+//            }
+//        }
+//        
+////        if self.assignedToId != runeInstanceData.monsterInstanceId {
+////            self.assignedToId = runeInstanceData.monsterInstanceId
+////
+////            self.monster = MonsterInstance.findById(self.assignedToId, context: docInfo.taskContext)
+////        }
+//        if self.slot != runeInstanceData.slot {
+//            self.slot = runeInstanceData.slot
+//        }
+//        if self.runeType != runeInstanceData.runeClass {
+//            self.runeType = runeInstanceData.runeClass
+//        }
+//        if self.quality != runeInstanceData.rank {
+//            self.quality = runeInstanceData.rank
+//        }
+//        
+//        let stars = runeInstanceData.runeClass
+//        if self.stars != stars % 10 {
+//            self.stars = stars % 10
+//            self.ancient = stars > 10 ? true : false
+//        }
+//        
+//        if self.slot != runeInstanceData.slot {
+//            self.slot = runeInstanceData.slot
+//        }
+//        if self.runeType != runeInstanceData.setId {
+//            self.runeType = runeInstanceData.setId
+//        }
+//        if self.level != runeInstanceData.upgradeCurr {
+//            self.level = runeInstanceData.upgradeCurr
+//        }
+//        if self.runeValue != runeInstanceData.sellValue {
+//            self.runeValue = runeInstanceData.sellValue
+//        }
+//        if self.originalQuality != runeInstanceData.originalQuality % 10 {
+//            self.originalQuality = runeInstanceData.originalQuality % 10
+//        }
+//        
+//        if self.mainStat != runeInstanceData.priEff[0] ||
+//                self.mainStatValue != runeInstanceData.priEff[1] {
+//            self.mainStat = runeInstanceData.priEff[0]
+//            self.mainStatValue = runeInstanceData.priEff[1]
+//        }
+//        if let tempStat = RuneStatType(rawValue: self.mainStat) {
+//            hasStats.setFlag(tempStat)
+//            self.setStat(tempStat, value: self.mainStatValue)
+//        }
+//        // while not all runes have innate stats, the data file does
+//        // have zeroes in place, so it's not conditional
+//        if self.innateStat != runeInstanceData.prefixEff[0] ||
+//                self.innateStatValue != runeInstanceData.prefixEff[1] {
+//            self.innateStat = runeInstanceData.prefixEff[0]
+//            self.innateStatValue = runeInstanceData.prefixEff[1]
+//        }
+//        if let stat = RuneStatType(rawValue: self.innateStat) {
+//            hasStats.setFlag(stat)
+//            self.setStat(stat, value: self.innateStatValue)
+//        }
+//
+//        // for normal (lowest value) runes, no stats have yet been revealed,
+//        // but that means the array is empty, not optional
+//
+//        let statCount = runeInstanceData.secEff.count
+//        if statCount > 0 {
+//            let substat = runeInstanceData.secEff[0]
+//            
+//            self.substat1 = substat[0]
+//            self.substat1Value = substat[1]
+//            self.substat1Enchanted = substat[2] == 1
+//            self.substat1Craft = substat[3]
+//            if let stat = RuneStatType(rawValue: substat[0]) {
+//                hasStats.setFlag(stat)
+//                self.setStat(stat, value: self.substat1Value)
+//            }
+//        }
+//        if statCount > 1 {
+//            let substat = runeInstanceData.secEff[1]
+//            self.substat2 = substat[0]
+//            self.substat2Value = substat[1]
+//            self.substat2Enchanted = substat[2] == 1
+//            self.substat2Craft = substat[3]
+//            if let stat = RuneStatType(rawValue: substat[0]) {
+//                hasStats.setFlag(stat)
+//                self.setStat(stat, value: self.substat2Value)
+//            }
+//        }
+//        if statCount > 2 {
+//            let substat = runeInstanceData.secEff[2]
+//            self.substat3 = substat[0]
+//            self.substat3Value = substat[1]
+//            self.substat3Enchanted = substat[2] == 1
+//            self.substat3Craft = substat[3]
+//            if let stat = RuneStatType(rawValue: substat[0]) {
+//                hasStats.setFlag(stat)
+//                self.setStat(stat, value: self.substat3Value)
+//            }
+//        }
+//        if statCount > 3 {
+//            let substat = runeInstanceData.secEff[3]
+//            self.substat4 = substat[0]
+//            self.substat4Value = substat[1]
+//            self.substat4Enchanted = substat[2] == 1
+//            self.substat4Craft = substat[3]
+//            if let stat = RuneStatType(rawValue: substat[0]) {
+//                hasStats.setFlag(stat)
+//                self.setStat(stat, value: self.substat4Value)
+//            }
+//        }
+//        if self.hasHP != hasStats.hasHp {
+//            self.hasHP = hasStats.hasHp
+//        }
+//        if self.hasAtk != hasStats.hasAtk {
+//            self.hasAtk = hasStats.hasAtk
+//        }
+//        if self.hasDef != hasStats.hasDef {
+//            self.hasDef = hasStats.hasDef
+//        }
+//        if self.hasSpeed != hasStats.hasSpeed {
+//            self.hasSpeed = hasStats.hasSpeed
+//        }
+//        if self.hasCritRate != hasStats.hasCritRate {
+//            self.hasCritRate = hasStats.hasCritRate
+//        }
+//        if self.hasCritDmg != hasStats.hasCritDmg {
+//            self.hasCritDmg = hasStats.hasCritDmg
+//        }
+//        if self.hasResist != hasStats.hasResist {
+//            self.hasResist = hasStats.hasResist
+//        }
+//        if self.hasAccuracy != hasStats.hasAcc {
+//            self.hasAccuracy = hasStats.hasAcc
+//        }
+//    }
+//    
+//    static func insertOrUpdate<T: JsonArray>(from: T,
+//                               docInfo: SummonerDocumentInfo) {
+//        docInfo.taskContext.performAndWait {
+//            let runeInstanceData = from as! RuneInstanceData
+//            let runeInstance = RuneInstance.findById(runeInstanceData.id, context: docInfo.taskContext) ?? RuneInstance(context: docInfo.taskContext)
+//            runeInstance.update(from: runeInstanceData, docInfo: docInfo)
+//        }
+//    }
+//    
+//    static func batchUpdate<T: JsonArray>(from: [T],
+//                            docInfo: SummonerDocumentInfo) {
+//        let runes = from as! [RuneInstanceData]
+//        for rune in runes {
+////            print(rune)
+//            RuneInstance.insertOrUpdate(from: rune, docInfo: docInfo)
+//        }
+//    }
 
     static func findSummonerRunes(docInfo: SummonerDocumentInfo) -> [RuneInstance] {
 
@@ -473,7 +473,7 @@ enum RuneQuality: String {
     case hero
     case legend
     
-    static func fromCom2us(_ rank: Int64) -> RuneQuality {
+    static func fromCom2us(_ rank: Int16) -> RuneQuality {
         switch rank {
         case 1:
             return .normal
@@ -490,7 +490,7 @@ enum RuneQuality: String {
         }
     }
     
-    static func runeLevel(level: Int64) -> RuneQuality {
+    static func runeLevel(level: Int16) -> RuneQuality {
         switch level {
         case 1...3:
             return .normal
@@ -507,7 +507,7 @@ enum RuneQuality: String {
         }
     }
     
-    func intValue() -> Int64 {
+    func intValue() -> Int16 {
         switch self {
         case .normal:
             return 1
@@ -533,7 +533,7 @@ enum RuneError: Error {
 // MARK: - Land of Many Enums, Parsing
 // com2us mapping of rune values
 
-enum RuneType: Int64 {
+enum RuneType: Int16 {
     case energy = 1, guardRune, swift, blade, rage, focus, endure, fatal
     case despair = 10, vampire, violent = 13, nemesis, will, shield, revenge
     case destroy, fight, determination, enhance, accuracy, tolerance // tolerance = 23
@@ -566,7 +566,7 @@ struct RuneSubstat: Decodable {
 
 // MARK: - Land of Many Enums, Display
 
-enum RuneStatType: Int64 {
+enum RuneStatType: Int16 {
     case hpFlat = 1
     case hpPct
     case atkFlat
@@ -580,7 +580,7 @@ enum RuneStatType: Int64 {
     case accuracyPct
     
     
-    func intValue() -> Int64 {
+    func intValue() -> Int16 {
         switch self {
         case .hpFlat:
             return 1

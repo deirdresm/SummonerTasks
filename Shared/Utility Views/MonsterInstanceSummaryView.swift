@@ -13,9 +13,9 @@ import SwiftUI
 struct MonsterInstanceSkillupsView: View {
     let monsterI: MonsterInstance
     
-    var skillups: Int64 {
+    var skillups: Int16 {
         if let monster = monsterI.monster {
-            var skillups = monster.skillUpsToMax
+            var skillups = Int16(monster.skillUpsToMax)
             
             if monsterI.skill1Level > 0 {
                 skillups = skillups - monsterI.skill1Level + 1
@@ -53,16 +53,7 @@ struct MonsterInstanceSummaryView: View {
     
     var body: some View {
         if let monster = monsterI.monster {
-            let hp = monster.maxLvlHp + monsterI.runeHp + monsterI.artifactHP
-            let atk = monster.maxLvlAttack + monsterI.runeAttack + monsterI.artifactAttack
-            let def = monster.maxLvlDefense + monsterI.runeDefense + monsterI.artifactDefense
-            let speed = monster.speed + monsterI.runeSpeed
-            let critRate = monster.critRate + monsterI.runeCritRate
-            let critDamage = monster.critDamage + monsterI.runeCritDamage
-            let resist = monster.resistance + monsterI.runeResistance
-            let acc = monster.accuracy + monsterI.runeAccuracy
-            
-            let leaderSkill = monster.leaderSkill
+           let leaderSkill = monster.leaderSkill
             VStack {
                 Text(monster.name ?? "Could not fetch monster name")
                         .font(.largeTitle)
@@ -84,34 +75,34 @@ struct MonsterInstanceSummaryView: View {
                         HStack {
                             Text("HP:")
                             Spacer()
-                            Text("\(hp)")
+                            Text("\(monsterI.runedHp)")
                         }
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 2, trailing: 0))
 
                         HStack {
                             Text("Attack:")
                             Spacer()
-                            Text("\(atk)")
+                            Text("\(monsterI.runedAttack)")
                         }
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 2, trailing: 0))
 
                         HStack {
                             Text("Defense:")
                             Spacer()
-                            Text("\(def)")
+                            Text("\(monsterI.runedDefense)")
                         }
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 2, trailing: 0))
 
                         HStack {
                             Text("Speed:")
                             Spacer()
-                            Text("\(speed)")
+                            Text("\(monsterI.runedSpeed)")
                         }
                         Divider()
                         HStack {
                             Text("Crit Rate:")
                             Spacer()
-                            Text("\(critRate)")
+                            Text("\(monsterI.runedCritRate)")
                         }
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 2, trailing: 0))
 
@@ -119,7 +110,7 @@ struct MonsterInstanceSummaryView: View {
                         HStack {
                             Text("Crit Damage:")
                             Spacer()
-                            Text("\(critDamage)")
+                            Text("\(monsterI.runedCritDamage)")
                         }
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 2, trailing: 0))
 
@@ -127,7 +118,7 @@ struct MonsterInstanceSummaryView: View {
                         HStack {
                             Text("Resistance:")
                             Spacer()
-                            Text("\(resist)")
+                            Text("\(monsterI.runedResistance)")
                         }
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 2, trailing: 0))
 
@@ -135,7 +126,7 @@ struct MonsterInstanceSummaryView: View {
                         HStack {
                             Text("Accuracy:")
                             Spacer()
-                            Text("\(acc)")
+                            Text("\(monsterI.runedAccuracy)")
                         }
                     }
                     .padding(.top)

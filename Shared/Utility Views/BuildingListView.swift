@@ -18,8 +18,7 @@ struct BuildingList: View {
     var body: some View {
         LazyHGrid(rows: gridItems, alignment: .center, spacing: 10) {
             let buildings = Building.filteredBuildings(type)
-            ForEach(buildings.indices) { i in
-                let building = buildings[i]
+            ForEach(buildings) { building in
                 let level = BuildingInstance.getBuildingLevel(document.docInfo.summonerId, building.id, context: moc)
                 BuildingIconView(building: building, level: level)
                     .frame(width: 120, height: 120, alignment: .top)

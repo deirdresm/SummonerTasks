@@ -5,55 +5,55 @@
 //  Created by Deirdre Saoirse Moen on 12/18/20.
 //
 
-import Foundation
-import CoreData
-
-public struct BuildingInstanceData: JsonArray {
-    
-    static var items = [BuildingInstanceData]()
-
-    // for deco_list
-    // note: don't keep the island info
-
-    private enum CodingKeys: String, CodingKey {
-        case com2usId = "deco_id"
-        case summonerId = "wizard_id"
-        case buildingId = "master_id"
-        case level
-    }
-
-    let com2usId:    Int64
-    let summonerId:  Int64
-    let buildingId:  Int64
-    let level:       Int64
-
-    public init(building: JSON) {
-        com2usId = building.master_id.int
-        summonerId = building.wizard_id.int
-        buildingId = building.deco_id.int
-        level = building.level.int
-    }
-    
-    static func saveToCoreData(_ docInfo: SummonerDocumentInfo) {
-        
-        docInfo.taskContext.perform {
-            BuildingInstance.batchUpdate(from: BuildingInstanceData.items,
-                                         docInfo: docInfo)
-            do {
-                if docInfo.taskContext.hasChanges {
-                    try docInfo.taskContext.save()
-                }
-                else
-                {
-                    print("No context changes for building instance data.")
-                }
-
-            } catch {
-                print("could not save context")
-            }
-        }
-    }
-}
+//import Foundation
+//import CoreData
+//
+//public struct BuildingInstanceData: JsonArray {
+//    
+//    static var items = [BuildingInstanceData]()
+//
+//    // for deco_list
+//    // note: don't keep the island info
+//
+//    private enum CodingKeys: String, CodingKey {
+//        case com2usId = "deco_id"
+//        case summonerId = "wizard_id"
+//        case buildingId = "master_id"
+//        case level
+//    }
+//
+//    let com2usId:    Int64
+//    let summonerId:  Int64
+//    let buildingId:  Int64
+//    let level:       Int64
+//
+//    public init(building: JSON) {
+//        com2usId = building.master_id.int
+//        summonerId = building.wizard_id.int
+//        buildingId = building.deco_id.int
+//        level = building.level.int
+//    }
+//    
+//    static func saveToCoreData(_ docInfo: SummonerDocumentInfo) {
+//        
+//        docInfo.taskContext.perform {
+//            BuildingInstance.batchUpdate(from: BuildingInstanceData.items,
+//                                         docInfo: docInfo)
+//            do {
+//                if docInfo.taskContext.hasChanges {
+//                    try docInfo.taskContext.save()
+//                }
+//                else
+//                {
+//                    print("No context changes for building instance data.")
+//                }
+//
+//            } catch {
+//                print("could not save context")
+//            }
+//        }
+//    }
+//}
 
 /*     {
  
