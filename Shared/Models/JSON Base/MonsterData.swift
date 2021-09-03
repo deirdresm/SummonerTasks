@@ -218,18 +218,18 @@ public struct MonsterData: JsonArray {
         source =  jsonArr.map { $0.int}
     }
     
-    static func saveToCoreData(_ docInfo: SummonerDocumentInfo) {
-        
-        docInfo.taskContext.perform {
-            Monster.batchUpdate(from: MonsterData.items,
-                                docInfo: docInfo)
-            do {
-                if docInfo.taskContext.hasChanges {
-                    try docInfo.taskContext.save()
-                }
-            } catch {
-                print("could not save context")
-            }
-        }
-    }
+//    static func saveToCoreData(_ docInfo: SummonerDocumentInfo) {
+//        
+//        docInfo.taskContext.perform {
+//            Monster.batchUpdate(from: MonsterData.items,
+//                                docInfo: docInfo)
+//            do {
+//                if docInfo.taskContext.hasChanges {
+//                    try docInfo.taskContext.save()
+//                }
+//            } catch {
+//                print("could not save context")
+//            }
+//        }
+//    }
 }

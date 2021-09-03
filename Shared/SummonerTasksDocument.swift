@@ -105,32 +105,32 @@ class SummonerJsonDocument: FileDocument {
     }
 
     required public init(configuration: ReadConfiguration) throws {
-        
+
  //       self.config = configuration
-        
+
         do {
             // what we do depends on the filename
-            
+
             guard let data = configuration.file.regularFileContents else {
                 // TODO: cover more cases
                 throw CocoaError(.fileReadCorruptFile)
             }
-            
+
             text = String(decoding: data, as: UTF8.self)
-            
+
             guard let filename = configuration.file.filename else {
                 throw CocoaError(.fileReadInvalidFileName)
             }
             if filename.contains("bestiary_data") {
                 // bestiary_data.json - base bestiary data (changes rarely)
-                
+
                 print("Loading bestiary data.")
                 let jsonWrapper = try BestiaryJsonWrapper(json: text, docInfo: self.docInfo)
-                
+
                 let buildingData = BuildingData.items
             } else {
                 // deirdresm-11223344.json - player save file (playername-com2usId.json)
- 
+
                 print("Loading player file.")
                 try loadPlayerData(json: text)
 
@@ -139,10 +139,10 @@ class SummonerJsonDocument: FileDocument {
             // TODO: cover more cases
             throw CocoaError(.fileReadCorruptFile)
         }
-        
+
         text = ""
     }
-    
+ 
     // we're only viewing files, but write configuration support is required
     public func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
         throw JSONFileError.notImplemented

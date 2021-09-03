@@ -10,8 +10,36 @@ import CoreData
 
 // MARK: - Core Data SkillEffect
 
-extension SkillEffect: CoreDataUtility {
-    
+@objc(SkillEffect)
+public class SkillEffect: NSManagedObject, Comparable, Decodable {
+
+    private enum CodingKeys: String, CodingKey {
+        case id = "pk"
+        case c2uDescription = "description"
+        case imageFilename = "icon_filename"
+        case isBuff = "is_buff"
+        case name
+    }
+
+    required convenience public init(from decoder: Decoder) throws {
+        self.init()
+
+        // create container
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        // and start decoding
+        id = try container.decode(Int64.self, forKey: .id)
+        c2uDescription = try container.decode(String.self, forKey: .c2uDescription)
+        imageFilename = try container.decode(String.self, forKey: .imageFilename)
+        isBuff = try container.decode(Bool.self, forKey: .isBuff)
+        name = try container.decode(String.self, forKey: .name)
+    }
+
+    // MARK: - Comparable conformance
+
+    public static func < (lhs: SkillEffect, rhs: SkillEffect) -> Bool {
+        lhs.id < rhs.id
+    }
+
     static func findById(_ skillEffectDataId: Int64,
                          context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
     -> SkillEffect? {
@@ -29,44 +57,44 @@ extension SkillEffect: CoreDataUtility {
         return nil
     }
 
-    func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
-        let skillEffect = from as! SkillEffectData
-        
-        // don't dirty the record if you don't have to
-        
-        if self.id != skillEffect.id {
-            self.id = Int64(skillEffect.id)
-        }
-        if self.c2uDescription != skillEffect.c2uDescription {
-            self.c2uDescription = skillEffect.c2uDescription
-        }
-        if self.name != skillEffect.name {
-            self.name = skillEffect.name
-        }
-        if self.isBuff != skillEffect.isBuff {
-            self.isBuff = skillEffect.isBuff
-        }
-        if self.imageFilename != skillEffect.imageFilename {
-            self.imageFilename = skillEffect.imageFilename
-        }
-    }
-    
-    static func insertOrUpdate<T: JsonArray>(from: T,
-                               docInfo: SummonerDocumentInfo) {
-        let skillEffectData = from as! SkillEffectData
-        let skillEffect = SkillEffect.findById(skillEffectData.id, context: docInfo.taskContext) ??
-            SkillEffect(context: docInfo.taskContext)
-        
-        skillEffect.update(from: skillEffectData, docInfo: docInfo)
-    }
-    
-    static func batchUpdate<T: JsonArray>(from: [T],
-                            docInfo: SummonerDocumentInfo) {
-        let skillEffectData = from as! [SkillEffectData]
-        for skillEffect in skillEffectData {
-            SkillEffect.insertOrUpdate(from: skillEffect, docInfo: docInfo)
-        }
-    }
+//    func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
+//        let skillEffect = from as! SkillEffectData
+//        
+//        // don't dirty the record if you don't have to
+//        
+//        if self.id != skillEffect.id {
+//            self.id = Int64(skillEffect.id)
+//        }
+//        if self.c2uDescription != skillEffect.c2uDescription {
+//            self.c2uDescription = skillEffect.c2uDescription
+//        }
+//        if self.name != skillEffect.name {
+//            self.name = skillEffect.name
+//        }
+//        if self.isBuff != skillEffect.isBuff {
+//            self.isBuff = skillEffect.isBuff
+//        }
+//        if self.imageFilename != skillEffect.imageFilename {
+//            self.imageFilename = skillEffect.imageFilename
+//        }
+//    }
+//    
+//    static func insertOrUpdate<T: JsonArray>(from: T,
+//                               docInfo: SummonerDocumentInfo) {
+//        let skillEffectData = from as! SkillEffectData
+//        let skillEffect = SkillEffect.findById(skillEffectData.id, context: docInfo.taskContext) ??
+//            SkillEffect(context: docInfo.taskContext)
+//        
+//        skillEffect.update(from: skillEffectData, docInfo: docInfo)
+//    }
+//    
+//    static func batchUpdate<T: JsonArray>(from: [T],
+//                            docInfo: SummonerDocumentInfo) {
+//        let skillEffectData = from as! [SkillEffectData]
+//        for skillEffect in skillEffectData {
+//            SkillEffect.insertOrUpdate(from: skillEffect, docInfo: docInfo)
+//        }
+//    }
 }
 
 // MARK: - JSON

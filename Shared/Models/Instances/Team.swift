@@ -8,6 +8,37 @@
 import Foundation
 import CoreData
 
+@objc(Team)
+public class Team: NSManagedObject, Comparable, Decodable {
+
+    private enum CodingKeys: String, CodingKey {
+        case id = "pk"
+        case attribute
+        case amount
+        case area
+        case element
+    }
+
+    required convenience public init(from decoder: Decoder) throws {
+        self.init()
+
+        // create container
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        // and start decoding
+        id = try container.decode(Int64.self, forKey: .id)
+        attribute = try container.decode(Int64.self, forKey: .attribute)
+        amount = try container.decode(Int64.self, forKey: .amount)
+        area = try container.decode(Int64.self, forKey: .area)
+        element = try container.decode(String.self, forKey: .element)
+    }
+
+    public static func < (lhs: Team, rhs: Team) -> Bool {
+        lhs.id < rhs.id
+    }
+
+}
+
+
 // Note that public.herders_team_roster is a many-to-many join table and thus not directly
 // represented in the data model (because there are no extra attributes where that would
 // need to happen), but they may need to be accounted for when decoding a JSON file.

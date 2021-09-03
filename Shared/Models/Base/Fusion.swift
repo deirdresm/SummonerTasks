@@ -10,8 +10,30 @@ import CoreData
 
 // MARK: - Core Data Fusion
 
-extension Fusion: CoreDataUtility {
-    
+@objc(Fusion)
+public class Fusion: NSManagedObject, Comparable, Decodable {
+
+    private enum CodingKeys: String, CodingKey {
+        case id = "pk"
+        case cost
+        case ingredients
+        case metaOrder = "meta_order"
+        case product
+    }
+
+    required convenience public init(from decoder: Decoder) throws {
+        self.init()
+
+        // create container
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        // and start decoding
+        id = try container.decode(Int64.self, forKey: .id)
+        cost = try container.decode(Int64.self, forKey: .cost)
+        metaOrder = try container.decode(Int64.self, forKey: .metaOrder)
+        product = try container.decode(Int64.self, forKey: .product)
+        // TODO: transformable [Int64] for ingredients
+    }
+
     static func findById(_ fusionId: Int64,
                                  context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
     -> Fusion? {
@@ -66,6 +88,12 @@ extension Fusion: CoreDataUtility {
         for fusion in fusions {
             Fusion.insertOrUpdate(from: fusion, docInfo: docInfo)
         }
+    }
+
+    // MARK: - Comparable conformance
+
+    public static func < (lhs: Fusion, rhs: Fusion) -> Bool {
+        lhs.id < rhs.id
     }
 }
 

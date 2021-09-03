@@ -10,8 +10,30 @@ import CoreData
 
 // MARK: - Core Data
 
-extension Skill: Comparable, CoreDataUtility {
-    
+@objc(Skill)
+public class Skill: NSManagedObject, Comparable, Decodable {
+
+    private enum CodingKeys: String, CodingKey {
+        case id = "pk"
+        case attribute
+        case amount
+        case area
+        case element
+    }
+
+    required convenience public init(from decoder: Decoder) throws {
+        self.init()
+
+        // create container
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        // and start decoding
+        id = try container.decode(Int64.self, forKey: .id)
+        attribute = try container.decode(Int64.self, forKey: .attribute)
+        amount = try container.decode(Int64.self, forKey: .amount)
+        area = try container.decode(Int64.self, forKey: .area)
+        element = try container.decode(String.self, forKey: .element)
+    }
+
     static func findById(_ skillDataId: Int64,
                          context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
     -> Skill? {
@@ -92,30 +114,6 @@ extension Skill: Comparable, CoreDataUtility {
         }
         if self.skillEffect != skillData.skillEffect {
             self.skillEffect = skillData.skillEffect
-        }
-    }
-    
-    static func insertOrUpdate<T: JsonArray>(from: T,
-                               docInfo: SummonerDocumentInfo) {
-        docInfo.taskContext.performAndWait {
-            let skillData = from as! SkillData
-            let skill = Skill.findOrCreate(skillData.com2usId, context: docInfo.taskContext)
-            skill.update(from: skillData, docInfo: docInfo)
-        }
-    }
-    
-    static func batchUpdate<T: JsonArray>(from: [T],
-                            docInfo: SummonerDocumentInfo) {
-        let skills = from as! [SkillData]
-        for skill in skills {
-            Skill.insertOrUpdate(from: skill, docInfo: docInfo)
-        }
-    }
-
-    public var skillUpgradesSorted: [SkillUpgrade] {
-        let set = upgrades as? Set<SkillUpgrade> ?? []
-        return set.sorted {
-            $0.level < $1.level
         }
     }
 

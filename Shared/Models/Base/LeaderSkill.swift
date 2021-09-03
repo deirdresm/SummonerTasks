@@ -70,7 +70,33 @@ enum LeaderSkillArea: Int64 {
 
 
 
-extension LeaderSkill: CoreDataUtility {
+@objc(LeaderSkill)
+public class LeaderSkill: NSManagedObject, Comparable, Decodable {
+    private enum CodingKeys: String, CodingKey {
+        case id = "pk"
+        case attribute
+        case amount
+        case area
+        case element
+    }
+
+    public static func < (lhs: LeaderSkill, rhs: LeaderSkill) -> Bool {
+        lhs.id < rhs.id
+    }
+
+    required convenience public init(from decoder: Decoder) throws {
+        self.init()
+
+        // create container
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        // and start decoding
+        id = try container.decode(Int64.self, forKey: .id)
+        attribute = try container.decode(Int64.self, forKey: .attribute)
+        amount = try container.decode(Int64.self, forKey: .amount)
+        area = try container.decode(Int64.self, forKey: .area)
+        element = try container.decode(String.self, forKey: .element)
+    }
+    
     
     /*     def skill_string(self):
      if self.area == self.AREA_DUNGEON:
@@ -160,46 +186,6 @@ extension LeaderSkill: CoreDataUtility {
         }
         return nil
     }
-
-    func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
-        let leaderSkillData = from as! LeaderSkillData
-        
-        // don't dirty the record if you don't have to
-        
-        if self.id != leaderSkillData.id {
-            self.id = Int64(leaderSkillData.id)
-        }
-        if (self.attribute != leaderSkillData.attribute) && (leaderSkillData.attribute != nil) {
-            self.attribute = leaderSkillData.attribute!
-        }
-        if self.amount != leaderSkillData.amount {
-            self.amount = leaderSkillData.amount
-        }
-        if self.area != leaderSkillData.area {
-            self.area = leaderSkillData.area
-        }
-        if self.element != leaderSkillData.element {
-            self.element = leaderSkillData.element
-        }
-    }
-    
-    static func insertOrUpdate<T: JsonArray>(from: T,
-                               docInfo: SummonerDocumentInfo) {
-        let leaderSkillData = from as! LeaderSkillData
-        let leaderSkill = LeaderSkill.findById(leaderSkillData.id, context: docInfo.taskContext) ??
-            LeaderSkill(context: docInfo.taskContext)
-        
-        leaderSkill.update(from: leaderSkillData, docInfo: docInfo)
-    }
-    
-    static func batchUpdate<T: JsonArray>(from: [T],
-                            docInfo: SummonerDocumentInfo) {
-        let leaderSkills = from as! [LeaderSkillData]
-        for leaderSkillData in leaderSkills {
-            LeaderSkill.insertOrUpdate(from: leaderSkillData, docInfo: docInfo)
-        }
-    }
-
 }
 
 

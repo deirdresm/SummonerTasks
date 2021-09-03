@@ -11,8 +11,34 @@ import CoreData
 
 // MARK: - Core Data ScalingStat
 
-extension ScalingStat: CoreDataUtility {
-    
+@objc(ScalingStat)
+public class ScalingStat: NSManagedObject, Comparable, Decodable {
+
+    private enum CodingKeys: String, CodingKey {
+        case id = "pk"
+        case attribute
+        case amount
+        case area
+        case element
+    }
+
+    required convenience public init(from decoder: Decoder) throws {
+        self.init()
+
+        // create container
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        // and start decoding
+        id = try container.decode(Int64.self, forKey: .id)
+        attribute = try container.decode(Int64.self, forKey: .attribute)
+        amount = try container.decode(Int64.self, forKey: .amount)
+        area = try container.decode(Int64.self, forKey: .area)
+        element = try container.decode(String.self, forKey: .element)
+    }
+
+    public static func < (lhs: ScalingStat, rhs: ScalingStat) -> Bool {
+        lhs.id < rhs.id
+    }
+
     static func findById(_ scalingStatId: Int64,
                          context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
     -> ScalingStat? {

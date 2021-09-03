@@ -11,7 +11,8 @@ import CoreData
 
 // MARK: - Core Data
 
-extension SkillUpgrade: Comparable, CoreDataUtility {
+@objc(SkillUpgrade)
+public class SkillUpgrade: NSManagedObject, Comparable, Decodable {
     
     static func findById(_ skillDataId: Int64,
                          context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)

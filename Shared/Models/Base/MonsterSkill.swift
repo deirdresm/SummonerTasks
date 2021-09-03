@@ -10,6 +10,8 @@ import CoreData
 
 // MARK: - Core Data
 
+// intermediary join, may not be needed to implement
+
 // MARK: - Original SQL Table Definition
 
 /*

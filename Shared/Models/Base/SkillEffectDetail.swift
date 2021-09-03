@@ -10,8 +10,12 @@ import CoreData
 
 // MARK: - Core Data
 
-extension SkillEffectDetail: CoreDataUtility {
-    
+@objc(SkillEffectDetail)
+public class SkillEffectDetail: NSManagedObject, Comparable, Decodable {
+    public static func < (lhs: SkillEffectDetail, rhs: SkillEffectDetail) -> Bool {
+        lhs.id < rhs.id
+    }
+
     static func findById(_ skillEffectDetailId: Int64,
                          context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
     -> SkillEffectDetail? {
@@ -27,46 +31,6 @@ extension SkillEffectDetail: CoreDataUtility {
             }
         }
         return nil
-    }
-
-    func update<T: JsonArray>(from: T,
-                              docInfo: SummonerDocumentInfo) {
-        let skillEffectDetail = from as! SkillEffectDetailData
-        // don't dirty the record if you don't have to
-        
-        if self.id != skillEffectDetail.id {
-            self.id = Int64(skillEffectDetail.id)
-        }
-        if self.aoe != skillEffectDetail.aoe {
-            self.aoe = skillEffectDetail.aoe
-        }
-        if self.singleTarget != skillEffectDetail.singleTarget {
-            self.singleTarget = skillEffectDetail.singleTarget
-        }
-        if self.selfEffect != skillEffectDetail.selfEffect {
-            self.selfEffect = skillEffectDetail.selfEffect
-        }
-        if self.aoe != skillEffectDetail.aoe {
-            self.aoe = skillEffectDetail.aoe
-        }
-
-    }
-    
-    static func insertOrUpdate<T: JsonArray>(from: T,
-                               docInfo: SummonerDocumentInfo) {
-        let skillEffectDetailData = from as! SkillEffectDetailData
-        let skillEffectDetail = SkillEffectDetail.findById(skillEffectDetailData.id, context: docInfo.taskContext) ??
-            SkillEffectDetail(context: docInfo.taskContext)
-        
-        skillEffectDetail.update(from: skillEffectDetailData, docInfo: docInfo)
-    }
-    
-    static func batchUpdate<T: JsonArray>(from: [T],
-                            docInfo: SummonerDocumentInfo) {
-        let skillEffectDetailData = from as! [SkillEffectDetailData]
-        for skillEffectDetail in skillEffectDetailData {
-            SkillEffectDetail.insertOrUpdate(from: skillEffectDetail, docInfo: docInfo)
-        }
     }
 
 }

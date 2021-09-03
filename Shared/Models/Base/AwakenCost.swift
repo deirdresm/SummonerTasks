@@ -8,7 +8,12 @@
 import Foundation
 import CoreData
 
-extension AwakenCost: CoreDataUtility {
+@objc(AwakenCost)
+public class AwakenCost: NSManagedObject, Comparable, Decodable {
+    public static func < (lhs: AwakenCost, rhs: AwakenCost) -> Bool {
+        lhs.id < rhs.id
+    }
+
     static func findById(_ awakenCostId: Int64,
                          context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
     -> AwakenCost? {
