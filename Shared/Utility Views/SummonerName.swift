@@ -8,13 +8,26 @@
 import SwiftUI
 
 struct SummonerName: View {
+    var summoner: Summoner?
+    var prefix: String
+    var suffix: String
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        if let name = summoner?.name {
+            Text("\(prefix)\(name)\(suffix)")
+        } else {
+            Text("\(prefix)\(suffix)")
+        }
     }
 }
 
 struct SummonerName_Previews: PreviewProvider {
+    static let summoner = Summoner.tisHerself
+
     static var previews: some View {
-        SummonerName()
+        Group {
+            SummonerName(summoner: summoner, prefix: "Hello, ", suffix: ".")
+            SummonerName(summoner: nil, prefix: "Hello", suffix: ".")
+        }
     }
 }
