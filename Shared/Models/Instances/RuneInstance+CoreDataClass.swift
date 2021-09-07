@@ -18,19 +18,19 @@ public class RuneInstance: NSManagedObject, Decodable {
         case occupiedType = "occupied_type"
         case assignedToId = "occupied_id"
         case slot = "slot_no"
-        case level = "level"
+        case level = "upgrade_curr"
         case stars = "class"
-        case setId = "set_id"
-        case runeType
+//        case setId
+        case runeType = "set_id"
         case upgradeLimit = "upgrade_limit"
-        case upgradeCurr = "upgrade_curr"
+//        case upgradeCurr = "upgrade_curr"
 //        case baseValue = "base_value"
         case runeValue = "sell_value"
         case priEff = "pri_eff"
         case prefixEff = "prefix_eff"
         case secEff = "sec_eff"
         case quality = "rank"
-        case originalQuality = "natural_rank"
+        case originalQuality = "extra"
     }
 
     // MARK: - Decodable
@@ -55,10 +55,28 @@ public class RuneInstance: NSManagedObject, Decodable {
         self.level = try container.decode(Int16.self, forKey: .level)
         self.stars = try container.decode(Int16.self, forKey: .stars)
         self.quality = try container.decode(Int16.self, forKey: .quality)
-        self.originalQuality = try container.decode(Int16.self, forKey: .originalQuality)
+        
+        // parse whether it's an ancient rune or not
+        let originalQuality = try container.decode(Int16.self, forKey: .originalQuality)
+        if originalQuality < 10 {
+            self.originalQuality = originalQuality
+            self.ancient = false
+        } else {
+            self.originalQuality = originalQuality - 10
+            self.ancient = true
+        }
+        
         self.runeType = try container.decode(Int16.self, forKey: .runeType)
         self.runeValue = try container.decode(Int32.self, forKey: .runeValue)
-        self.setId = try container.decode(Int64.self, forKey: .setId)
+        
+        let priEff = try container.decode([Int32].self, forKey: .priEff)
+        self.mainStat = Int16(priEff[0])
+        self.mainStatValue = Int64(priEff[1])
+        
+        let prefixEff = try container.decode([Int32].self, forKey: .prefixEff)
+        self.innateStat = Int64(prefixEff[0])
+        self.innateStatValue = Int64(prefixEff[1])
+        
+        let secEff = try container.decode([[Int32]].self, forKey: .secEff)
     }
-
 }

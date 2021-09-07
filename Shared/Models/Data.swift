@@ -148,7 +148,15 @@ enum ImageType: String {
             return ""
         }
     }
-
+    
+    var filePrefix: String {
+        switch self {
+        case .stars:
+            return "star-"
+        default:
+            return ""
+        }
+    }
 }
 
 //let landmarkData: [Landmark] = load("landmarkData.json")

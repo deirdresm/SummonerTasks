@@ -39,7 +39,7 @@ class SummonerJsonDocument: FileDocument {
     static var readableContentTypes: [UTType] { [.json] }
     
     // added second param for previews and testing
-    init(text: String = "Hello, world!", summoner: Summoner? = nil) throws {
+    init(text: String = "Hello, world!", summoner: Summoner? = nil, isPreview: Bool = false) throws {
         self.text = text
         
         if let s = summoner {

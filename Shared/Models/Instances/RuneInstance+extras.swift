@@ -48,6 +48,12 @@ class HasRuneStat {
 
 extension RuneInstance {
     
+    public static var runeTypes: [RuneType] = [.energy, .guardRune, .swift, .blade, .rage,
+                                    .focus, .endure, .fatal, .despair, .vampire,
+                                    .violent, .nemesis, .will, .shield, .revenge,
+                                    .destroy, .fight, .determination, .enhance,
+                                    .accuracy, .tolerance]
+    
     func findById(summoner: Summoner, runeId: Int64,
                   context: NSManagedObjectContext) -> RuneInstance? {
         
@@ -533,11 +539,13 @@ enum RuneError: Error {
 // MARK: - Land of Many Enums, Parsing
 // com2us mapping of rune values
 
-enum RuneType: Int16 {
+public enum RuneType: Int16, Identifiable {
     case energy = 1, guardRune, swift, blade, rage, focus, endure, fatal
     case despair = 10, vampire, violent = 13, nemesis, will, shield, revenge
     case destroy, fight, determination, enhance, accuracy, tolerance // tolerance = 23
-    
+
+    public var id: Self { self }
+
     var numInSet: Int {
         switch self {
         case .swift, .rage, .fatal, .despair, .vampire, .violent:
@@ -548,7 +556,12 @@ enum RuneType: Int16 {
     }
     
     var description: String {
-        return "\(self)"
+        switch self {
+        case .guardRune:    // because guard is a reserved word in Swift, so hack.
+            return "guard"
+        default:
+            return "\(self)"
+        }
     }
 }
 

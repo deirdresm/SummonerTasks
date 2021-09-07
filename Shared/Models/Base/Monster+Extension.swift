@@ -272,18 +272,6 @@ extension Monster: CoreDataUtility {
     }
 }
 
-extension Image {
-    func centerCropped() -> some View {
-        GeometryReader { geo in
-            self
-            .resizable()
-            .scaledToFill()
-            .frame(width: geo.size.width, height: geo.size.height)
-            .clipped()
-        }
-    }
-}
-
 //public struct MonsterCatalog: View {
 //    /// Creates a new view that displays shared UI components for given `Monster` instance.
 //    ///

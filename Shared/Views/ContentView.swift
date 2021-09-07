@@ -9,15 +9,20 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
+    let persistenceController = PersistenceController.shared
+    @State var runeType: RuneType? = RuneType.violent
     @Binding var document: SummonerJsonDocument
     @Environment(\.managedObjectContext) private var moc
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            Text((document.docInfo.summoner != nil) ? "Hello \((document.docInfo.summoner?.name)!)." : "Hello.")
-                .font(.headline)
-            BuildingList(type: .battle, document: $document)
-                .frame(height: 120, alignment: .top)
+//        VStack(alignment: .leading, spacing: 20) {
+        NavigationView {
+            VStack {
+                SummonerName(summoner: document.docInfo.summoner, prefix: "Hello, ", suffix: ".")
+                RuneSidebar(document: document, selection: $runeType)
+            }
+//            BuildingList(type: .battle, document: $document)
+//                .frame(height: 120, alignment: .top)
 
             RuneList(docInfo: document.docInfo)
             Spacer()
@@ -64,9 +69,9 @@ struct ContentView: View {
 }
 
 struct ContentView_Previews: PreviewProvider {
-    static let text = Bundle.main.openBundleFile(from: "building-mini.json")
+    static let text = Bundle.main.openBundleFile(from: "runes-mini.json")
     static var document: SummonerJsonDocument = {
-        return try! SummonerJsonDocument(text: text, summoner: Summoner.tisHerself)
+        return try! SummonerJsonDocument(text: text, summoner: Summoner.tisHerself, isPreview: true)
     }()
     
     static var previews: some View {
