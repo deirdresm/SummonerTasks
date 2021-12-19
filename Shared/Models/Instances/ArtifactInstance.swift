@@ -12,6 +12,14 @@ import CoreData
 
 // MARK: - Original SQL Table Definition
 
+public struct ArtifactSecEffect: Codable {
+	var statName: Int32
+	var statValue: Double
+	var numUpgrades: Int32
+	var numRerolls: Int32
+	var reserved: Int32 // there is a fifth field, not sure why
+}
+
 
 @objc(ArtifactInstance)
 public class ArtifactInstance: NSManagedObject, Decodable {
@@ -27,7 +35,7 @@ public class ArtifactInstance: NSManagedObject, Decodable {
         case quality = "rank"
         case level
         case primaryEffect = "pri_effect"
-//        case secondaryEffects = "sec_effects"
+        case secondaryEffects = "sec_effects"
     }
 
     required convenience public init(from decoder: Decoder) throws {
@@ -51,8 +59,47 @@ public class ArtifactInstance: NSManagedObject, Decodable {
         self.level = try container.decode(Int16.self, forKey: .level)
         self.quality = try container.decode(Int16.self, forKey: .quality)
         self.originalQuality = try container.decode(Int16.self, forKey: .originalQuality)
-        var primaryEffect = try container.decodeArray(Int16.self, forKey: .primaryEffect)
 
+		var primaryEffect = try container.decodeArray(Int16.self, forKey: .primaryEffect)
+		self.mainStat = primaryEffect[0]
+		self.mainStatValue = Int64(primaryEffect[1])
+		
+		var secEffWrapper = try container.nestedUnkeyedContainer(forKey: .secondaryEffects)
+		let numStats = secEffWrapper.count ?? 0
+		
+		if numStats > 0 {
+			var artifactStat = try secEffWrapper.nestedUnkeyedContainer()
+			self.substat1 = try Int64(artifactStat.decode(Int.self))
+			self.substat1Value = try artifactStat.decode(Double.self)
+			self.substat1Enchanted = try artifactStat.decode(Int.self) != 0
+			self.substat1Craft = try Int64(artifactStat.decode(Int.self))
+			
+			print("Substat1 = \(self.substat1)")
+		}
+		
+		if numStats > 1 {
+			var artifactStat = try secEffWrapper.nestedUnkeyedContainer()
+			self.substat2 = try Int64(artifactStat.decode(Int.self))
+			self.substat2Value = try artifactStat.decode(Double.self)
+			self.substat2Enchanted = try artifactStat.decode(Int.self) != 0
+			self.substat2Craft = try Int64(artifactStat.decode(Int.self))
+		}
+		
+		if numStats > 2 {
+			var artifactStat = try secEffWrapper.nestedUnkeyedContainer()
+			self.substat3 = try Int64(artifactStat.decode(Int.self))
+			self.substat3Value = try artifactStat.decode(Double.self)
+			self.substat3Enchanted = try artifactStat.decode(Int.self) != 0
+			self.substat3Craft = try Int64(artifactStat.decode(Int.self))
+		}
+		
+		if numStats > 3 {
+			var artifactStat = try secEffWrapper.nestedUnkeyedContainer()
+			self.substat4 = try Int64(artifactStat.decode(Int.self))
+			self.substat4Value = try artifactStat.decode(Double.self)
+			self.substat4Enchanted = try artifactStat.decode(Int.self) != 0
+			self.substat4Craft = try Int64(artifactStat.decode(Int.self))
+		}
     }
 
     static var seenArtifacts = [ArtifactInstance]()

@@ -12,12 +12,6 @@ class PersistenceController {
 
     let container: NSPersistentCloudKitContainer
     
-//    var backgroundContext: NSManagedObjectContext {
-//        get {}
-//        
-//        set {}
-//    }
-//
     /**
      Creates and configures a private queue context.
     */
@@ -39,7 +33,7 @@ class PersistenceController {
         }
         return result
     }()
-
+	
     init(inMemory: Bool = false) {
         container = NSPersistentCloudKitContainer(name: "SummonerTasks")
         if inMemory {
@@ -89,15 +83,15 @@ class PersistenceController {
     public func newTaskContext() -> NSManagedObjectContext {
         // Create a private queue context.
         let taskContext = container.newBackgroundContext()
-        taskContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        taskContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
         // Set unused undoManager to nil for macOS (it is nil by default on iOS)
         // to reduce resource requirements.
         taskContext.undoManager = nil
         return taskContext
     }
     
-    func save() {
-        let context = container.viewContext
+	func save(context: NSManagedObjectContext) {
+//        let context = container.viewContext
 
         if context.hasChanges {
             do {
@@ -147,5 +141,4 @@ class PersistenceController {
             }
         }
     }
-
 }

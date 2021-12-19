@@ -19,7 +19,7 @@ struct RuneSidebar: View {
     
     var body: some View {
         List(selection: $selection) {
-            ForEach(RuneInstance.runeTypes) { runeType in
+            ForEach(RuneInstance.displayRuneTypes) { runeType in
                 RuneSidebarLabel(runeType: runeType)
 //                    .badge(garden.numberOfPlantsNeedingWater)
             }
@@ -34,10 +34,13 @@ struct RuneSidebarLabel: View {
 
     var body: some View {
         Label {
-            Text(runeType.description)
+            Text(runeType.description.firstCapitalized)
         } icon: {
             LoadedImage(imageType: $imageType, imageName: "\(runeType.description)")
+                .scaleEffect(0.5, anchor: .center)
+                .frame(height: 24)
         }
+        .labelStyle(.titleAndIcon)
     }
 }
 

@@ -45,7 +45,6 @@ class HasRuneStat {
     }
 }
 
-
 extension RuneInstance {
     
     public static var runeTypes: [RuneType] = [.energy, .guardRune, .swift, .blade, .rage,
@@ -53,6 +52,11 @@ extension RuneInstance {
                                     .violent, .nemesis, .will, .shield, .revenge,
                                     .destroy, .fight, .determination, .enhance,
                                     .accuracy, .tolerance]
+    
+    public static var displayRuneTypes: [RuneType] = [.violent, .rage, .swift, .despair, .fatal, .vampire,
+                                    .will, .nemesis, .blade, .energy, .guardRune,
+                                    .focus, .endure, .shield, .revenge, .destroy,
+                                    .fight, .accuracy, .determination, .enhance, .tolerance]
     
     func findById(summoner: Summoner, runeId: Int64,
                   context: NSManagedObjectContext) -> RuneInstance? {
@@ -102,29 +106,39 @@ extension RuneInstance {
         switch stat {
         case .hpFlat:
             self.hpFlat = Int32(value)
+            self.hasHP = true
         case .hpPct:
             self.hpPct = Int16(value)
+            self.hasHP = true
         case .atkFlat:
             self.atkFlat = Int16(value)
+            self.hasAtk = true
         case .atkPct:
             self.atkPct = Int16(value)
+            self.hasAtk = true
         case .defFlat:
             self.defFlat = Int16(value)
+            self.hasDef = true
         case .defPct:
             self.defPct = Int16(value)
+            self.hasDef = true
         case .speed:
             self.speed = Int16(value)
+            self.hasSpeed = true
         case .critRatePct:
             self.critRate = Int16(value)
+            self.hasCritRate = true
         case .critDmgPct:
             self.critDmg = Int16(value)
+            self.hasCritDmg = true
         case .resistPct:
             self.resistance = Int16(value)
+            self.hasResist = true
         case .accuracyPct:
             self.accuracy = Int16(value)
+            self.hasAccuracy = true
         }
     }
-
 
     func getSummonerRunes(context: NSManagedObjectContext, summonerId: Int64) -> NSSet? {
         
@@ -230,9 +244,15 @@ extension RuneInstance {
         
     }
     // https://www.youtube.com/watch?v=SBWeptNNbYc
-    func calcEfficiency() {
+    func getEfficiency() {
+		
+		var runningSum = Float(self.mainStat)
         
     }
+	
+	func getMaxEfficiency() {
+		
+	}
 //    func update<T: JsonArray>(from: T,
 //                docInfo: SummonerDocumentInfo) {
 //        
@@ -539,7 +559,7 @@ enum RuneError: Error {
 // MARK: - Land of Many Enums, Parsing
 // com2us mapping of rune values
 
-public enum RuneType: Int16, Identifiable {
+public enum RuneType: Int16, Identifiable, CaseIterable {
     case energy = 1, guardRune, swift, blade, rage, focus, endure, fatal
     case despair = 10, vampire, violent = 13, nemesis, will, shield, revenge
     case destroy, fight, determination, enhance, accuracy, tolerance // tolerance = 23
@@ -579,10 +599,10 @@ struct RuneSubstat: Decodable {
 
 // MARK: - Land of Many Enums, Display
 
-enum RuneStatType: Int16 {
+enum RuneStatType: Int16, CaseIterable {
     case hpFlat = 1
     case hpPct
-    case atkFlat
+	case atkFlat
     case atkPct
     case defFlat
     case defPct
@@ -591,7 +611,6 @@ enum RuneStatType: Int16 {
     case critDmgPct
     case resistPct
     case accuracyPct
-    
     
     func intValue() -> Int16 {
         switch self {
@@ -619,6 +638,84 @@ enum RuneStatType: Int16 {
             return 12
         }
     }
+
+	func name() -> String {
+		switch self {
+		case .hpFlat:
+			return "HP Flat"
+		case .hpPct:
+			return "HP %"
+		case .atkFlat:
+			return "Attack Flat"
+		case .atkPct:
+			return "Attack %"
+		case .defFlat:
+			return "Defense Flat"
+		case .defPct:
+			return "Defense %"
+		case .speed:
+			return "Speed"
+		case .critRatePct:
+			return "Crit Rate %"
+		case .critDmgPct:
+			return "Crit Damage %"
+		case .resistPct:
+			return "Resistance"
+		case .accuracyPct:
+			return "Accuracy"
+		}
+	}
+	
+	func grade() -> Double {
+		switch self {
+		case .hpFlat:
+			return 0.2
+		case .hpPct:
+			return 1.0
+		case .atkFlat:
+			return 0.2
+		case .atkPct:
+			return 1.0
+		case .defFlat:
+			return 0.2
+		case .defPct:
+			return 1.0
+		case .speed:
+			return 2.0
+		case .critRatePct:
+			return 1.5
+		case .critDmgPct:
+			return 1.0
+		case .resistPct:
+			return 0.0
+		case .accuracyPct:
+			return 0.5
+		}
+	}
+
+
+    func runeMainStatsBySlot(slot: Int) -> [RuneStatType] {
+        switch slot {
+        case 1:
+            return [.atkFlat]
+        case 2:
+            return [.atkFlat, .atkPct, .defFlat, .defPct, .hpFlat, .hpPct, .speed]
+        case 3:
+            return [.defFlat]
+        case 4:
+            return [.atkFlat, .atkPct, .defFlat, .defPct, .hpFlat, .hpPct, .critRatePct, .critDmgPct]
+        case 5:
+            return [.hpFlat]
+        case 6:
+            return [.atkFlat, .atkPct, .defFlat, .defPct, .hpFlat, .hpPct, .speed]
+        default:
+            return []
+        }
+    }
+	
+	var description: String {
+		get { return String(reflecting: self) }
+	}
 }
 
 enum InnateStatTitle: String {
@@ -638,97 +735,6 @@ enum InnateStatTitle: String {
 
 
 // MARK: - Original SQL Table Definition
-
-/*
- "runes": [
- {
-   "rune_id": 123456,
-   "wizard_id": 6789,
-   "occupied_type": 2,
-   "occupied_id": 0,
-   "slot_no": 1,
-   "rank": 3,
-   "class": 6,
-   "set_id": 1,
-   "upgrade_limit": 15,
-   "upgrade_curr": 6,
-   "base_value": 240920,
-   "sell_value": 18012,
-   "pri_eff": [
-     3,
-     70
-   ],
-   "prefix_eff": [
-     1,
-     167
-   ],
-   "sec_eff": [
-     [
-       8,
-       10,
-       0,
-       0
-     ],
-     [
-       9,
-       9,
-       0,
-       0
-     ]
-   ],
-   "extra": 3
- },
- {
-   "rune_id": 123457,
-   "wizard_id": 6789,
-   "occupied_type": 2,
-   "occupied_id": 0,
-   "slot_no": 2,
-   "rank": 5,
-   "class": 6,
-   "set_id": 5,
-   "upgrade_limit": 15,
-   "upgrade_curr": 15,
-   "base_value": 760800,
-   "sell_value": 38040,
-   "pri_eff": [
-     4,
-     63
-   ],
-   "prefix_eff": [
-     6,
-     7
-   ],
-   "sec_eff": [
-     [
-       11,
-       17,
-       0,
-       0
-     ],
-     [
-       5,
-       14,
-       0,
-       0
-     ],
-     [
-       10,
-       6,
-       0,
-       0
-     ],
-     [
-       2,
-       6,
-       0,
-       0
-     ]
-   ],
-   "extra": 3
- },
-*/
-
 
 /*
     CREATE TABLE public.herders_runeinstance

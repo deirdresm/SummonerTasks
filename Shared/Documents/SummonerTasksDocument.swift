@@ -26,6 +26,20 @@ public class SummonerDocumentInfo {
     }
 }
 
+class BestiaryDocument: FileDocument {
+	static var readableContentTypes: [UTType] { [.json] }
+
+	required init(configuration: ReadConfiguration) throws {
+		<#code#>
+	}
+
+	func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
+		<#code#>
+	}
+
+
+}
+
 class SummonerJsonDocument: FileDocument {
     
     // Since there can be different documents open for different summoners
@@ -49,10 +63,10 @@ class SummonerJsonDocument: FileDocument {
         }
         
         print("trying bestiary json wrapper)")
-        let jsonWrapper = try BestiaryJsonWrapper(json: text, docInfo: docInfo)
+        let jsonWrapper = try BestiaryFileImport(json: text, docInfo: docInfo)
         
-        let buildingData = BuildingData.items
-        print("buildingData count = \(buildingData.count)")
+//        let buildingData = BuildingData.items
+//        print("buildingData count = \(buildingData.count)")
     }
     
     func loadBestiaryData() throws {
@@ -80,28 +94,27 @@ class SummonerJsonDocument: FileDocument {
                 decoder.dateDecodingStrategy = .formatted(DateFormatter.com2us)
 
                 let container = try decoder.decode(PlayerFile.self, from: data)
+
+				// save context
+
+				self.docInfo.taskContext.perform {
+
+					// save first to make sure we've got a full house
+
+					do {
+						if self.docInfo.taskContext.hasChanges {
+							try self.docInfo.taskContext.save()
+						}
+
+					} catch {
+						print("could not save context")
+					}
+				}
            }
             catch let parseError {
                 print("an uncaught error occurred: \(parseError)")
             }
-
-            // save context
-
-            self.docInfo.taskContext.perform {
-
-                // save first to make sure we've got a full house
-
-                do {
-                    if self.docInfo.taskContext.hasChanges {
-                        try self.docInfo.taskContext.save()
-                    }
-
-                } catch {
-                    print("could not save context")
-                }
-            }
         }
-        
     }
 
     required public init(configuration: ReadConfiguration) throws {

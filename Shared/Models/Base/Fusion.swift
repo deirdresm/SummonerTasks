@@ -10,8 +10,15 @@ import CoreData
 
 // MARK: - Core Data Fusion
 
-extension Fusion: CoreDataUtility {
-    
+extension Fusion: NSManagedCodableObject {
+	private enum CodingKeys: String, CodingKey {
+		case id = "pk"
+		case product
+		case cost
+		case metaOrder = "meta_order"
+		case ingredients
+	}
+
     static func findById(_ fusionId: Int64,
                                  context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
     -> Fusion? {
@@ -28,45 +35,45 @@ extension Fusion: CoreDataUtility {
         return nil
     }
     
-    func update<T: JsonArray>(from: T,
-                docInfo: SummonerDocumentInfo) {
-        let fusionData = from as! FusionData
-        
-        // don't dirty the record if you don't have to
-        
-        if self.id != fusionData.id {
-            self.id = Int64(fusionData.id)
-        }
-        if self.cost != fusionData.cost {
-            self.cost = Int64(fusionData.cost)
-        }
-        if self.metaOrder != fusionData.metaOrder {
-            self.metaOrder = fusionData.metaOrder
-        }
-        if self.product != fusionData.product {
-            self.product = fusionData.product
-        }
-        if self.ingredients != fusionData.ingredients {
-            self.ingredients = fusionData.ingredients
-        }
-    }
+//    func update<T: JsonArray>(from: T,
+//                docInfo: SummonerDocumentInfo) {
+//        let fusionData = from as! FusionData
+//
+//        // don't dirty the record if you don't have to
+//
+//        if self.id != fusionData.id {
+//            self.id = Int64(fusionData.id)
+//        }
+//        if self.cost != fusionData.cost {
+//            self.cost = Int64(fusionData.cost)
+//        }
+//        if self.metaOrder != fusionData.metaOrder {
+//            self.metaOrder = fusionData.metaOrder
+//        }
+//        if self.product != fusionData.product {
+//            self.product = fusionData.product
+//        }
+//        if self.ingredients != fusionData.ingredients {
+//            self.ingredients = fusionData.ingredients
+//        }
+//    }
     
-    static func insertOrUpdate<T: JsonArray>(from: T,
-                               docInfo: SummonerDocumentInfo) {
-        let fusionData = from as! FusionData
-        let fusion: Fusion = Fusion.findById(fusionData.id, context: docInfo.taskContext) ??
-            Fusion(context: docInfo.taskContext)
-        
-        fusion.update(from: fusionData, docInfo: docInfo)
-    }
-    
-    static func batchUpdate<T: JsonArray>(from: [T],
-                            docInfo: SummonerDocumentInfo) {
-        let fusions = from as! [FusionData]
-        for fusion in fusions {
-            Fusion.insertOrUpdate(from: fusion, docInfo: docInfo)
-        }
-    }
+//    static func insertOrUpdate<T: JsonArray>(from: T,
+//                               docInfo: SummonerDocumentInfo) {
+//        let fusionData = from as! FusionData
+//        let fusion: Fusion = Fusion.findById(fusionData.id, context: docInfo.taskContext) ??
+//            Fusion(context: docInfo.taskContext)
+//
+//        fusion.update(from: fusionData, docInfo: docInfo)
+//    }
+//
+//    static func batchUpdate<T: JsonArray>(from: [T],
+//                            docInfo: SummonerDocumentInfo) {
+//        let fusions = from as! [FusionData]
+//        for fusion in fusions {
+//            Fusion.insertOrUpdate(from: fusion, docInfo: docInfo)
+//        }
+//    }
 }
 
 

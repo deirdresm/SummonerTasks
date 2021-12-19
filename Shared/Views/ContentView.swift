@@ -21,9 +21,6 @@ struct ContentView: View {
                 SummonerName(summoner: document.docInfo.summoner, prefix: "Hello, ", suffix: ".")
                 RuneSidebar(document: document, selection: $runeType)
             }
-//            BuildingList(type: .battle, document: $document)
-//                .frame(height: 120, alignment: .top)
-
             RuneList(docInfo: document.docInfo)
             Spacer()
         }

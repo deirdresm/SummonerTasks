@@ -20,13 +20,13 @@ public class PlayerFile: Decodable {
     var summoner: Summoner?
     var buildings: [BuildingInstance] = []
     var monsters: [MonsterInstance] = []
-    var runes: [RuneInstance] = []
-    var artifacts: [ArtifactInstance] = []
+    public var runes: [RuneInstance] = []
+    public var artifacts: [ArtifactInstance] = []
 
     // MARK: - Decodable
     required convenience public init(from decoder: Decoder) throws {
         self.init()
-        print("player file init starting")
+        print("Player file init starting")
 
         // create container
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -35,9 +35,16 @@ public class PlayerFile: Decodable {
         self.summoner = try container.decode(Summoner.self, forKey: .summoner)
         print("Summoner ok")
         self.buildings = try container.decodeArray(BuildingInstance.self, forKey: .buildings)
+		print("Buildings imported")
+		print("Importing monsters")
         self.monsters = try container.decodeArray(MonsterInstance.self, forKey: .monsters)
-        self.runes = try container.decodeArray(RuneInstance.self, forKey: .runes)
-        self.artifacts = try container.decodeArray(ArtifactInstance.self, forKey: .artifacts)
+		print("Monsters imported")
+		print("Importing runes")
+		self.runes += try container.decodeArray(RuneInstance.self, forKey: .runes)
+		print("Runes imported")
+		print("Importing artifacts")
+		self.artifacts = try container.decodeArray(ArtifactInstance.self, forKey: .artifacts)
+		print("Artifacts imported")
     }
 }
 

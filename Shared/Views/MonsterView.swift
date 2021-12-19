@@ -46,7 +46,7 @@ struct MonsterSourceView: View {
             ForEach(sources, id: \.self) { source in
                 Image(
                     ImageStore.loadImage(type: .icons, name: source.imageFilename!),
-                    scale: 2,
+                    scale: 3,
                     label: Text("")
                 )
 
@@ -62,7 +62,7 @@ struct MonsterSkillupsView: View {
         ZStack {
             Image(
                 ImageStore.loadImage(type: .monsters, name: "devilmon_dark.png"),
-                scale: 2,
+                scale: 3,
                 label: Text("")
             )
             Text("\(monster.skillUpsToMax)")
@@ -103,9 +103,28 @@ struct LeaderSkillView: View {
     }
 }
 
+struct MonsterStatLine: View {
+	let name: String
+	let stat: Int
+	let percent: Bool
+	
+	var body: some View {
+		HStack {
+			Text("\(name):")
+			Spacer()
+			if percent {
+				Text("\(stat) %")
+			} else {
+				Text("\(stat)")
+			}
+		}
+		.padding(EdgeInsets(top: 0, leading: 0, bottom: 2, trailing: 0))
+	}
+}
+
 struct MonsterView: View {
     let monster: Monster
-    
+	
     var body: some View {
         let leaderSkill = monster.leaderSkill
 
@@ -148,64 +167,21 @@ struct MonsterView: View {
                 .padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 10))
                 
                 VStack {
-                    HStack {
-                        Text("HP:")
-                        Spacer()
-                        Text("\(monster.maxLvlHp)")
-                    }
-                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 2, trailing: 0))
+					MonsterStatLine(name: "HP", stat: Int(monster.maxLvlHp), percent: false)
+					MonsterStatLine(name: "Attack", stat: Int(monster.maxLvlAttack), percent: false)
+					MonsterStatLine(name: "Defense", stat: Int(monster.maxLvlDefense), percent: false)
+					MonsterStatLine(name: "Attack", stat: Int(monster.maxLvlAttack), percent: false)
+					MonsterStatLine(name: "Speed", stat: Int(monster.speed), percent: false)
 
-                    HStack {
-                        Text("Attack:")
-                        Spacer()
-                        Text("\(monster.maxLvlAttack)")
-                    }
-                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 2, trailing: 0))
-
-                    HStack {
-                        Text("Defense:")
-                        Spacer()
-                        Text("\(monster.maxLvlDefense)")
-                    }
-                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 2, trailing: 0))
-
-                    HStack {
-                        Text("Speed:")
-                        Spacer()
-                        Text("\(monster.speed)")
-                    }
                     Divider()
-                    HStack {
-                        Text("Crit Rate:")
-                        Spacer()
-                        Text("\(monster.critRate)")
-                    }
-                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 2, trailing: 0))
 
-
-                    HStack {
-                        Text("Crit Damage:")
-                        Spacer()
-                        Text("\(monster.critDamage)")
-                    }
-                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 2, trailing: 0))
-
-
-                    HStack {
-                        Text("Resistance:")
-                        Spacer()
-                        Text("\(monster.resistance)")
-                    }
-                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 2, trailing: 0))
-
-
-                    HStack {
-                        Text("Accuracy:")
-                        Spacer()
-                        Text("\(monster.accuracy)")
-                    }
+					MonsterStatLine(name: "Crit Rate", stat: Int(monster.critRate), percent: true)
+					MonsterStatLine(name: "Crit Damage", stat: Int(monster.critDamage), percent: true)
+					MonsterStatLine(name: "Resistance", stat: Int(monster.resistance), percent: true)
+					MonsterStatLine(name: "Accuracy", stat: Int(monster.accuracy), percent: true)
                 }
                 .padding(.top)
+				.padding(.trailing)
             }
             .frame(minWidth: 500, maxWidth: 700, minHeight: 200, maxHeight: 300)
             Divider()
@@ -213,6 +189,7 @@ struct MonsterView: View {
             Spacer()
             MonsterSkillView(skills: monster.skillsSorted)
         }
+		.padding(.leading)
     }
 }
 

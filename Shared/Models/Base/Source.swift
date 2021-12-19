@@ -8,7 +8,16 @@
 import Foundation
 import CoreData
 
-extension Source: Comparable, CoreDataUtility {
+extension Source: Comparable, NSManagedCodableObject {
+
+	private enum CodingKeys: String, CodingKey {
+		case id = "pk"
+		case name
+		case description
+		case imageFilename = "icon_filename"
+		case farmableSource
+		case metaOrder = "meta_order"
+	}
 
     static func findById(id: Int64,
                     context: NSManagedObjectContext) -> Source? {
@@ -26,48 +35,48 @@ extension Source: Comparable, CoreDataUtility {
         }
     }
 
-    func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
-        let sourceData = from as! SourceData
-        
-        // don't dirty the record if you don't have to
-        
-        if self.id != sourceData.id {
-            self.id = Int64(sourceData.id)
-        }
-        if self.name != sourceData.name {
-            self.name = sourceData.name
-        }
-        if self.c2uDescription != sourceData.description {
-            self.c2uDescription = sourceData.description
-        }
-        if self.imageFilename != sourceData.imageFilename {
-            self.imageFilename = sourceData.imageFilename
-        }
-        if self.isFarmable != sourceData.farmableSource {
-            self.isFarmable = sourceData.farmableSource
-        }
-        if self.metaOrder != sourceData.metaOrder {
-            self.metaOrder = sourceData.metaOrder
-        }
-    }
-    
-    static func insertOrUpdate<T: JsonArray>(from: T,
-                               docInfo: SummonerDocumentInfo) {
-        let sourceData = from as! SourceData
-        let source: Source = Source.findById(id: sourceData.id, context: docInfo.taskContext) ??
-            Source(context: docInfo.taskContext)
-        
-        source.update(from: sourceData, docInfo: docInfo)
-    }
-    
-    static func batchUpdate<T: JsonArray>(from: [T],
-                            docInfo: SummonerDocumentInfo) {
-        let sources = from as! [SourceData]
-        for source in sources {
-            Source.insertOrUpdate(from: source, docInfo: docInfo)
-        }
-    }
-
+//    func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
+//        let sourceData = from as! SourceData
+//        
+//        // don't dirty the record if you don't have to
+//        
+//        if self.id != sourceData.id {
+//            self.id = Int64(sourceData.id)
+//        }
+//        if self.name != sourceData.name {
+//            self.name = sourceData.name
+//        }
+//        if self.c2uDescription != sourceData.description {
+//            self.c2uDescription = sourceData.description
+//        }
+//        if self.imageFilename != sourceData.imageFilename {
+//            self.imageFilename = sourceData.imageFilename
+//        }
+//        if self.isFarmable != sourceData.farmableSource {
+//            self.isFarmable = sourceData.farmableSource
+//        }
+//        if self.metaOrder != sourceData.metaOrder {
+//            self.metaOrder = sourceData.metaOrder
+//        }
+//    }
+//    
+//    static func insertOrUpdate<T: JsonArray>(from: T,
+//                               docInfo: SummonerDocumentInfo) {
+//        let sourceData = from as! SourceData
+//        let source: Source = Source.findById(id: sourceData.id, context: docInfo.taskContext) ??
+//            Source(context: docInfo.taskContext)
+//        
+//        source.update(from: sourceData, docInfo: docInfo)
+//    }
+//    
+//    static func batchUpdate<T: JsonArray>(from: [T],
+//                            docInfo: SummonerDocumentInfo) {
+//        let sources = from as! [SourceData]
+//        for source in sources {
+//            Source.insertOrUpdate(from: source, docInfo: docInfo)
+//        }
+//    }
+//
     public static func < (lhs: Source, rhs: Source) -> Bool {
         lhs.metaOrder < rhs.metaOrder
     }

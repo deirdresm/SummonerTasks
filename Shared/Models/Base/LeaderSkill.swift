@@ -70,7 +70,7 @@ enum LeaderSkillArea: Int64 {
 
 
 
-extension LeaderSkill: CoreDataUtility {
+extension LeaderSkill: NSManagedCodableObject {
     
     /*     def skill_string(self):
      if self.area == self.AREA_DUNGEON:
@@ -161,45 +161,45 @@ extension LeaderSkill: CoreDataUtility {
         return nil
     }
 
-    func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
-        let leaderSkillData = from as! LeaderSkillData
-        
-        // don't dirty the record if you don't have to
-        
-        if self.id != leaderSkillData.id {
-            self.id = Int64(leaderSkillData.id)
-        }
-        if (self.attribute != leaderSkillData.attribute) && (leaderSkillData.attribute != nil) {
-            self.attribute = leaderSkillData.attribute!
-        }
-        if self.amount != leaderSkillData.amount {
-            self.amount = leaderSkillData.amount
-        }
-        if self.area != leaderSkillData.area {
-            self.area = leaderSkillData.area
-        }
-        if self.element != leaderSkillData.element {
-            self.element = leaderSkillData.element
-        }
-    }
-    
-    static func insertOrUpdate<T: JsonArray>(from: T,
-                               docInfo: SummonerDocumentInfo) {
-        let leaderSkillData = from as! LeaderSkillData
-        let leaderSkill = LeaderSkill.findById(leaderSkillData.id, context: docInfo.taskContext) ??
-            LeaderSkill(context: docInfo.taskContext)
-        
-        leaderSkill.update(from: leaderSkillData, docInfo: docInfo)
-    }
-    
-    static func batchUpdate<T: JsonArray>(from: [T],
-                            docInfo: SummonerDocumentInfo) {
-        let leaderSkills = from as! [LeaderSkillData]
-        for leaderSkillData in leaderSkills {
-            LeaderSkill.insertOrUpdate(from: leaderSkillData, docInfo: docInfo)
-        }
-    }
-
+//    func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
+//        let leaderSkillData = from as! LeaderSkillData
+//        
+//        // don't dirty the record if you don't have to
+//        
+//        if self.id != leaderSkillData.id {
+//            self.id = Int64(leaderSkillData.id)
+//        }
+//        if (self.attribute != leaderSkillData.attribute) && (leaderSkillData.attribute != nil) {
+//            self.attribute = leaderSkillData.attribute!
+//        }
+//        if self.amount != leaderSkillData.amount {
+//            self.amount = leaderSkillData.amount
+//        }
+//        if self.area != leaderSkillData.area {
+//            self.area = leaderSkillData.area
+//        }
+//        if self.element != leaderSkillData.element {
+//            self.element = leaderSkillData.element
+//        }
+//    }
+//    
+//    static func insertOrUpdate<T: JsonArray>(from: T,
+//                               docInfo: SummonerDocumentInfo) {
+//        let leaderSkillData = from as! LeaderSkillData
+//        let leaderSkill = LeaderSkill.findById(leaderSkillData.id, context: docInfo.taskContext) ??
+//            LeaderSkill(context: docInfo.taskContext)
+//        
+//        leaderSkill.update(from: leaderSkillData, docInfo: docInfo)
+//    }
+//    
+//    static func batchUpdate<T: JsonArray>(from: [T],
+//                            docInfo: SummonerDocumentInfo) {
+//        let leaderSkills = from as! [LeaderSkillData]
+//        for leaderSkillData in leaderSkills {
+//            LeaderSkill.insertOrUpdate(from: leaderSkillData, docInfo: docInfo)
+//        }
+//    }
+//
 }
 
 

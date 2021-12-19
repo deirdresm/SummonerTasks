@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="20D91" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="0.03">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="21A559" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="0.03">
     <entity name="ArtifactInstance" representedClassName="ArtifactInstance" syncable="YES" codeGenerationType="category">
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="effects" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[Int64]"/>
         <attribute name="effectsRerollCount" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[Int]"/>
         <attribute name="effectsUpgradeCount" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[Int]"/>
@@ -16,9 +17,29 @@
         <attribute name="originalQuality" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="quality" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="slot" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="substat1" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="substat1Craft" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="substat1Enchanted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="substat1Value" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="substat2" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="substat2Craft" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="substat2Enchanted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="substat2Value" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="substat3" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="substat3Craft" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="substat3Enchanted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="substat3Value" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="substat4" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="substat4Craft" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="substat4Enchanted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="substat4Value" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="substatsEnchanted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="substatUpgradesRemaining" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="summonerId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="unitArchetype" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" derived="YES" derivationExpression="now()" usesScalarValueType="NO"/>
         <relationship name="monster" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MonsterInstance" inverseName="artifacts" inverseEntity="MonsterInstance"/>
+        <relationship name="runeBuilds" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RuneBuild" inverseName="artifacts" inverseEntity="RuneBuild"/>
         <relationship name="summoner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Summoner" inverseName="artifacts" inverseEntity="Summoner"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
@@ -70,6 +91,29 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
+    <entity name="Dungeon" representedClassName="Dungeon" syncable="YES" codeGenerationType="class">
+        <attribute name="category" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="com2usId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="enabled" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="icon" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="slug" optional="YES" attributeType="String"/>
+        <relationship name="levels" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DungeonLevel" inverseName="dungeon" inverseEntity="DungeonLevel"/>
+    </entity>
+    <entity name="DungeonLevel" representedClassName="DungeonLevel" syncable="YES" codeGenerationType="class">
+        <attribute name="backlineSlots" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="com2usId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="difficulty" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="dungeonId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="energyCostg" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="floor" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="frontlineSlots" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="totalSlots" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="xp" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="dungeon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dungeon" inverseName="levels" inverseEntity="Dungeon"/>
+        <relationship name="waves" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Wave" inverseName="level" inverseEntity="Wave"/>
+    </entity>
+    <entity name="Enemy" representedClassName="Enemy" syncable="YES" codeGenerationType="class"/>
     <entity name="Fusion" representedClassName="Fusion" syncable="YES" codeGenerationType="class">
         <attribute name="cost" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -84,7 +128,7 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="GameItem" representedClassName="GameItem" syncable="YES" codeGenerationType="class">
+    <entity name="GameItem" representedClassName="GameItem" syncable="YES">
         <attribute name="c2uDescription" optional="YES" attributeType="String"/>
         <attribute name="category" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="com2usId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -202,6 +246,7 @@
         <relationship name="instances" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MonsterInstance" inverseName="monster" inverseEntity="MonsterInstance"/>
         <relationship name="leaderSkill" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LeaderSkill" inverseName="monsters" inverseEntity="LeaderSkill"/>
         <relationship name="monsterCraftCosts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MonsterCraftCost" inverseName="monster" inverseEntity="MonsterCraftCost"/>
+        <relationship name="secretDungeon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SecretDungeon" inverseName="monster" inverseEntity="SecretDungeon"/>
         <relationship name="skills" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Skill" inverseName="monsters" inverseEntity="Skill"/>
         <relationship name="source" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Source" inverseName="monsters" inverseEntity="Source"/>
         <uniquenessConstraints>
@@ -262,8 +307,10 @@
         <attribute name="spd" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="stars" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="summonerId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" derived="YES" derivationExpression="now()" usesScalarValueType="NO"/>
         <relationship name="artifacts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ArtifactInstance" inverseName="monster" inverseEntity="ArtifactInstance"/>
         <relationship name="monster" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Monster" inverseName="instances" inverseEntity="Monster"/>
+        <relationship name="runeBuilds" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RuneBuild" inverseName="monster" inverseEntity="RuneBuild"/>
         <relationship name="runes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RuneInstance" inverseName="monster" inverseEntity="RuneInstance"/>
         <relationship name="summoner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Summoner" inverseName="monsters" inverseEntity="Summoner"/>
         <relationship name="teamLeaders" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Team" inverseName="leader" inverseEntity="Team"/>
@@ -274,12 +321,34 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
+    <entity name="RuneBuild" representedClassName="RuneBuild" syncable="YES" codeGenerationType="class">
+        <attribute name="accuracy" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="attack" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="attackPct" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="avgEfficiency" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="critDamage" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="critRate" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="defense" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="defensePct" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="hp" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="hpPct" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="resistance" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="speed" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="speedPct" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="artifacts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ArtifactInstance" inverseName="runeBuilds" inverseEntity="ArtifactInstance"/>
+        <relationship name="monster" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MonsterInstance" inverseName="runeBuilds" inverseEntity="MonsterInstance"/>
+        <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Summoner" inverseName="runeBuilds" inverseEntity="Summoner"/>
+        <relationship name="runes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RuneInstance" inverseName="runeBuilds" inverseEntity="RuneInstance"/>
+    </entity>
     <entity name="RuneInstance" representedClassName="RuneInstance" syncable="YES" codeGenerationType="category">
         <attribute name="accuracy" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="ancient" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="assignedToId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="atkFlat" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="atkPct" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="critDmg" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="critRate" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="defFlat" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -300,6 +369,7 @@
         <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="innateStat" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="innateStatValue" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="legEndGrade" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="level" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="mainStat" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="mainStatValue" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -331,13 +401,12 @@
         <attribute name="substat4Craft" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="substat4Enchanted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="substat4Value" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="substats" optional="YES" attributeType="Binary"/>
-        <attribute name="substatsEnchanted" optional="YES" attributeType="Binary"/>
-        <attribute name="substatsGrindValue" optional="YES" attributeType="Binary"/>
+        <attribute name="substatsEnchanted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="substatUpgradesRemaining" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="substatValues" optional="YES" attributeType="Binary"/>
         <attribute name="summonerId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" derived="YES" derivationExpression="now()" usesScalarValueType="NO"/>
         <relationship name="monster" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MonsterInstance" inverseName="runes" inverseEntity="MonsterInstance"/>
+        <relationship name="runeBuilds" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RuneBuild" inverseName="runes" inverseEntity="RuneBuild"/>
         <relationship name="summoner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Summoner" inverseName="runes" inverseEntity="Summoner"/>
         <fetchedProperty name="summonerRunes" optional="YES">
             <fetchRequest name="fetchedPropertyFetchRequest" entity="RuneInstance"/>
@@ -370,6 +439,11 @@
                 <constraint value="id"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
+    </entity>
+    <entity name="SecretDungeon" representedClassName="SecretDungeon" syncable="YES" codeGenerationType="class">
+        <attribute name="com2usId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="monsterId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="monster" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Monster" inverseName="secretDungeon" inverseEntity="Monster"/>
     </entity>
     <entity name="Skill" representedClassName="Skill" syncable="YES" codeGenerationType="class">
         <attribute name="aoe" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
@@ -465,6 +539,7 @@
         </uniquenessConstraints>
     </entity>
     <entity name="Summoner" representedClassName="Summoner" syncable="YES" codeGenerationType="category">
+        <attribute name="artifactCount" optional="YES" attributeType="Integer 64" derived="YES" derivationExpression="artifacts.@count" usesScalarValueType="YES"/>
         <attribute name="bonusAtk" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="bonusCritDmg" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="bonusDark" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -485,12 +560,15 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="notes" optional="YES" attributeType="String"/>
         <attribute name="preferences" optional="YES" attributeType="String"/>
+        <attribute name="runeCount" optional="YES" attributeType="Integer 64" derived="YES" derivationExpression="runes.@count" usesScalarValueType="YES"/>
         <attribute name="server" optional="YES" attributeType="Integer 16" usesScalarValueType="YES"/>
         <attribute name="timezone" optional="YES" attributeType="String"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" derived="YES" derivationExpression="now()" usesScalarValueType="NO"/>
         <attribute name="userID" optional="YES" attributeType="Integer 64" usesScalarValueType="YES"/>
         <relationship name="artifacts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ArtifactInstance" inverseName="summoner" inverseEntity="ArtifactInstance"/>
         <relationship name="buildings" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="BuildingInstance" inverseName="summoner" inverseEntity="BuildingInstance"/>
         <relationship name="monsters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MonsterInstance" inverseName="summoner" inverseEntity="MonsterInstance"/>
+        <relationship name="runeBuilds" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RuneBuild" inverseName="owner" inverseEntity="RuneBuild"/>
         <relationship name="runes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RuneInstance" inverseName="summoner" inverseEntity="RuneInstance"/>
         <relationship name="teamGroups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TeamGroup" inverseName="toSummoner" inverseEntity="TeamGroup"/>
         <relationship name="teams" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Team" inverseName="summoner" inverseEntity="Team"/>
@@ -528,31 +606,43 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
+    <entity name="Wave" representedClassName="Wave" syncable="YES" codeGenerationType="class">
+        <attribute name="com2usId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="levelId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="level" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DungeonLevel" inverseName="waves" inverseEntity="DungeonLevel"/>
+    </entity>
     <fetchRequest name="summonerRuneById" entity="RuneInstance" predicateString="com2usId == @i AND summonerId == @i" fetchLimit="1" fetchBatchSize="1"/>
     <elements>
-        <element name="ArtifactInstance" positionX="-90" positionY="153" width="128" height="314"/>
+        <element name="ArtifactInstance" positionX="-90" positionY="153" width="128" height="629"/>
         <element name="AwakenCost" positionX="-81" positionY="162" width="128" height="89"/>
         <element name="Building" positionX="-745.9766235351562" positionY="746.3114318847656" width="128" height="223"/>
         <element name="BuildingInstance" positionX="-766.1875305175781" positionY="1009.633087158203" width="128" height="133"/>
+        <element name="Dungeon" positionX="-612" positionY="108" width="128" height="134"/>
+        <element name="DungeonLevel" positionX="-576" positionY="144" width="128" height="194"/>
+        <element name="Enemy" positionX="-585" positionY="135" width="128" height="29"/>
         <element name="Fusion" positionX="72.27294921875" positionY="192.6597900390625" width="128" height="134"/>
         <element name="GameItem" positionX="125.4957885742188" positionY="218.3388061523438" width="128" height="164"/>
         <element name="HomunculusSkill" positionX="-494.9537353515625" positionY="171.3886413574219" width="128" height="119"/>
         <element name="HomunculusSkillcraftCost" positionX="-352.7395629882812" positionY="205.7951049804688" width="128" height="89"/>
         <element name="LeaderSkill" positionX="-573.5347900390625" positionY="447.7420349121094" width="128" height="119"/>
-        <element name="Monster" positionX="174.0562133789062" positionY="-10.60525512695312" width="128" height="1004"/>
+        <element name="Monster" positionX="174.0562133789062" positionY="-10.60525512695312" width="128" height="1019"/>
         <element name="MonsterCraftCost" positionX="132.1785278320312" positionY="334.7951049804688" width="128" height="119"/>
-        <element name="MonsterInstance" positionX="-268.6402587890625" positionY="128.8222198486328" width="128" height="689"/>
-        <element name="RuneInstance" positionX="336.904052734375" positionY="238.5854949951172" width="128" height="1010"/>
+        <element name="MonsterInstance" positionX="-268.6402587890625" positionY="128.8222198486328" width="128" height="719"/>
+        <element name="RuneBuild" positionX="-612" positionY="108" width="128" height="314"/>
+        <element name="RuneInstance" positionX="336.904052734375" positionY="238.5854949951172" width="128" height="1025"/>
         <element name="RunePriority" positionX="-437.1119384765625" positionY="86.45263671875" width="128" height="89"/>
         <element name="ScalingStat" positionX="-586.6636657714844" positionY="6.030624389648438" width="128" height="104"/>
+        <element name="SecretDungeon" positionX="-603" positionY="117" width="128" height="74"/>
         <element name="Skill" positionX="-806.2515563964844" positionY="333.4104614257812" width="128" height="329"/>
         <element name="SkillEffect" positionX="-607.8872680664062" positionY="132.7097778320312" width="128" height="134"/>
         <element name="SkillEffectDetail" positionX="44.8348388671875" positionY="89.73995971679688" width="128" height="269"/>
         <element name="SkillUpgrade" positionX="-713.0382385253906" positionY="416.9775238037109" width="128" height="134"/>
         <element name="Source" positionX="-41.85833740234375" positionY="581.4371948242188" width="128" height="134"/>
-        <element name="Summoner" positionX="-589.8321228027344" positionY="757.1716766357422" width="128" height="478"/>
+        <element name="Summoner" positionX="-589.8321228027344" positionY="757.1716766357422" width="128" height="524"/>
         <element name="Task" positionX="8.27130126953125" positionY="60.91395568847656" width="128" height="14"/>
         <element name="Team" positionX="-173.1781005859375" positionY="-41.04978942871094" width="128" height="149"/>
         <element name="TeamGroup" positionX="-298.14306640625" positionY="68.78431701660156" width="128" height="104"/>
+        <element name="Wave" positionX="-594" positionY="126" width="128" height="89"/>
     </elements>
 </model>

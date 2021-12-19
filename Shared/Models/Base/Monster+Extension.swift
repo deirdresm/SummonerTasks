@@ -14,7 +14,80 @@ import SwiftUI
 /**
  Managed object subclass extension for the Quake entity.
  */
-extension Monster: CoreDataUtility {
+extension Monster: Bestiary, NSManagedCodableObject  {
+
+	public var type: String
+	public var description: String
+
+	
+
+	private enum CodingKeys: String, CodingKey {
+		case id = "pk"
+		case name
+		case com2usId = "com2us_id"
+		case familyId
+		case imageFilename
+		case element
+		case archetype
+		case baseStars
+		case obtainable
+		case canAwaken
+		case isAwakened
+		case awakenLevel
+		case awakenBonus
+		case skillUpsToMax
+		case leaderSkill
+		case rawHp
+		case rawAttack
+		case rawDefense
+		case baseHp
+		case baseAttack
+		case baseDefense
+		case maxLvlHp
+		case maxLvlAttack
+		case maxLvlDefense
+		case speed
+		case critRate
+		case critDamage
+		case resistance
+		case accuracy
+		case homunculus
+		case craftCost
+		case transformsToId = "transforms_to"
+
+		case awakenMatsFireLow
+		case awakenMatsFireMid
+		case awakenMatsFireHigh
+
+		case awakenMatsWaterLow
+		case awakenMatsWaterMid
+		case awakenMatsWaterHigh
+
+		case awakenMatsWindLow
+		case awakenMatsWindMid
+		case awakenMatsWindHigh
+
+		case awakenMatsLightLow
+		case awakenMatsLightMid
+		case awakenMatsLightHigh
+
+		case awakenMatsDarkLow
+		case awakenMatsDarkMid
+		case awakenMatsDarkHigh
+
+		case awakenMatsMagicLow
+		case awakenMatsMagicMid
+		case awakenMatsMagicHigh
+
+		case farmable
+		case fusionFood
+		case bestiarySlug
+		case awakensFromId
+		case awakensToId
+		case leaderSkillId
+		case naturalStars
+	}
+ 
 
     static func findById(id: Int64,
                     context: NSManagedObjectContext) -> Monster? {
@@ -31,202 +104,202 @@ extension Monster: CoreDataUtility {
             return(nil)
         }
     }
-
-    // import from JSON
-    func update<T: JsonArray>(from: T,
-                docInfo: SummonerDocumentInfo) {
-        let monsterData = from as! MonsterData
-
-        // don't dirty the record if you don't have to
-        // tossing swarfarm-generated monster id as not needed
-
-        if self.id != monsterData.com2usId {
-            self.id = monsterData.com2usId
-        }
-        if self.name != monsterData.name {
-            self.name = monsterData.name
-        }
-        if (self.familyId != monsterData.familyId ) && (monsterData.familyId != nil) {
-            self.familyId = monsterData.familyId!
-        }
-        if self.imageFilename != monsterData.imageFilename {
-            self.imageFilename = monsterData.imageFilename
-        }
-        if self.element != monsterData.element {
-            self.element = monsterData.element
-        }
-        if self.archetype != monsterData.archetype {
-            self.archetype = monsterData.archetype
-        }
-        if self.baseStars != monsterData.baseStars {
-            self.baseStars = monsterData.baseStars
-        }
-        if self.naturalStars != monsterData.naturalStars {
-            self.naturalStars = monsterData.naturalStars
-        }
-        if self.obtainable != monsterData.obtainable {
-            self.obtainable = monsterData.obtainable
-        }
-        if self.canAwaken != monsterData.canAwaken {
-            self.canAwaken = monsterData.canAwaken
-        }
-        if self.isAwakened != monsterData.isAwakened {
-            self.isAwakened = monsterData.isAwakened
-        }
-        if self.awakenLevel != monsterData.awakenLevel {
-            self.awakenLevel = monsterData.awakenLevel
-        }
-        if self.awakenBonus != monsterData.awakenBonus {
-            self.awakenBonus = monsterData.awakenBonus
-        }
-        if (self.awakensToId != monsterData.awakensToId) && (monsterData.awakensToId != nil) {
-            self.awakensToId = monsterData.awakensToId!
-        }
-        if (self.awakensFromId != monsterData.awakensFromId) && (monsterData.awakensFromId != nil) {
-            self.awakensFromId = monsterData.awakensFromId!
-        }
-        if (self.transformsToId != monsterData.transformsToId) && (monsterData.transformsToId != nil) {
-            self.transformsToId = monsterData.transformsToId!
-        }
-        if (self.skillUpsToMax != monsterData.skillUpsToMax) && (monsterData.skillUpsToMax != nil) {
-            self.skillUpsToMax = monsterData.skillUpsToMax!
-        }
-        if (self.leaderSkillId != monsterData.leaderSkill) && (monsterData.leaderSkill != nil) {
-            self.leaderSkillId = monsterData.leaderSkill!
-        }
-
-        if (self.rawHp != monsterData.rawHp) && (monsterData.rawHp != nil) {
-            self.rawHp = monsterData.rawHp!
-        }
-        if (self.rawAttack != monsterData.rawAttack) && (monsterData.rawAttack != nil) {
-            self.rawAttack = monsterData.rawAttack!
-        }
-        if (self.rawDefense != monsterData.rawDefense) && (monsterData.rawDefense != nil) {
-            self.rawDefense = monsterData.rawDefense!
-        }
-        if (self.baseHp != monsterData.baseHp) && (monsterData.baseHp != nil) {
-            self.baseHp = monsterData.baseHp!
-        }
-        if (self.baseAttack != monsterData.baseAttack) && (monsterData.baseAttack != nil) {
-            self.baseAttack = monsterData.baseAttack!
-        }
-        if (self.baseDefense != monsterData.baseDefense) && (monsterData.baseDefense != nil) {
-            self.baseDefense = monsterData.baseDefense!
-        }
-        if (self.maxLvlHp != monsterData.maxLvlHp) && (monsterData.maxLvlHp != nil) {
-            self.maxLvlHp = monsterData.maxLvlHp!
-        }
-        if (self.maxLvlAttack != monsterData.maxLvlAttack) && (monsterData.maxLvlAttack != nil) {
-            self.maxLvlAttack = monsterData.maxLvlAttack!
-        }
-        if (self.maxLvlDefense != monsterData.maxLvlDefense) && (monsterData.maxLvlDefense != nil) {
-            self.maxLvlDefense = monsterData.maxLvlDefense!
-        }
-
-        if (self.speed != monsterData.speed) && (monsterData.speed != nil) {
-            self.speed = monsterData.speed!
-        }
-        if (self.critRate != monsterData.critRate) && (monsterData.critRate != nil) {
-            self.critRate = monsterData.critRate!
-        }
-        if (self.critDamage != monsterData.critDamage) && (monsterData.critDamage != nil) {
-            self.critDamage = monsterData.critDamage!
-        }
-        if (self.resistance != monsterData.resistance) && (monsterData.resistance != nil) {
-            self.resistance = monsterData.resistance!
-        }
-        if (self.accuracy != monsterData.accuracy) && (monsterData.accuracy != nil) {
-            self.accuracy = monsterData.accuracy!
-        }
-        if self.isHomunculus != monsterData.homunculus {
-            self.isHomunculus = monsterData.homunculus
-        }
-        if self.craftCost != monsterData.craftCost && (monsterData.craftCost != nil) {
-            self.craftCost = monsterData.craftCost!
-        }
-
-        if self.awakenMatsFireLow != monsterData.awakenMatsFireLow {
-            self.awakenMatsFireLow = monsterData.awakenMatsFireLow
-        }
-        if self.awakenMatsFireMid != monsterData.awakenMatsFireMid {
-            self.awakenMatsFireMid = monsterData.awakenMatsFireMid
-        }
-        if self.awakenMatsFireHigh != monsterData.awakenMatsFireHigh {
-            self.awakenMatsFireHigh = monsterData.awakenMatsFireHigh
-        }
-
-        if self.awakenMatsWaterLow != monsterData.awakenMatsWaterLow {
-            self.awakenMatsWaterLow = monsterData.awakenMatsWaterLow
-        }
-        if self.awakenMatsWaterMid != monsterData.awakenMatsWaterMid {
-            self.awakenMatsWaterMid = monsterData.awakenMatsWaterMid
-        }
-        if self.awakenMatsWaterHigh != monsterData.awakenMatsWaterHigh {
-            self.awakenMatsWaterHigh = monsterData.awakenMatsWaterHigh
-        }
-
-        if self.awakenMatsWindLow != monsterData.awakenMatsWindLow {
-            self.awakenMatsWindLow = monsterData.awakenMatsWindLow
-        }
-        if self.awakenMatsWindMid != monsterData.awakenMatsWindMid {
-            self.awakenMatsWindMid = monsterData.awakenMatsWindMid
-        }
-        if self.awakenMatsWindHigh != monsterData.awakenMatsWindHigh {
-            self.awakenMatsWindHigh = monsterData.awakenMatsWindHigh
-        }
-
-        if self.awakenMatsLightLow != monsterData.awakenMatsLightLow {
-            self.awakenMatsLightLow = monsterData.awakenMatsLightLow
-        }
-        if self.awakenMatsLightMid != monsterData.awakenMatsLightMid {
-            self.awakenMatsLightMid = monsterData.awakenMatsLightMid
-        }
-        if self.awakenMatsLightHigh != monsterData.awakenMatsLightHigh {
-            self.awakenMatsLightHigh = monsterData.awakenMatsLightHigh
-        }
-
-        if self.awakenMatsDarkLow != monsterData.awakenMatsDarkLow {
-            self.awakenMatsDarkLow = monsterData.awakenMatsDarkLow
-        }
-        if self.awakenMatsDarkMid != monsterData.awakenMatsDarkMid {
-            self.awakenMatsDarkMid = monsterData.awakenMatsDarkMid
-        }
-        if self.awakenMatsDarkHigh != monsterData.awakenMatsDarkHigh {
-            self.awakenMatsDarkHigh = monsterData.awakenMatsDarkHigh
-        }
-
-        if self.awakenMatsMagicLow != monsterData.awakenMatsMagicLow {
-            self.awakenMatsMagicLow = monsterData.awakenMatsMagicLow
-        }
-        if self.awakenMatsMagicMid != monsterData.awakenMatsMagicMid {
-            self.awakenMatsMagicMid = monsterData.awakenMatsMagicMid
-        }
-        if self.awakenMatsMagicHigh != monsterData.awakenMatsMagicHigh {
-            self.awakenMatsMagicHigh = monsterData.awakenMatsMagicHigh
-        }
-
-        if self.isFarmable != monsterData.farmable {
-            self.isFarmable = monsterData.farmable
-        }
-        if self.isFusionFood != monsterData.fusionFood {
-            self.isFusionFood = monsterData.fusionFood
-        }
-        if self.bestiarySlug != monsterData.bestiarySlug {
-            self.bestiarySlug = monsterData.bestiarySlug
-        }
-
-        if self.skillArray != monsterData.skills {
-            self.skillArray = monsterData.skills
-
-            // FIXME: add skills relationship here
-        }
-
-        if self.sourceRaw != monsterData.source {
-            self.sourceRaw = monsterData.source
-
-            // FIXME: add source relationship here
-        }
-    }
+//
+//    // import from JSON
+//    func update<T: JsonArray>(from: T,
+//                docInfo: SummonerDocumentInfo) {
+//        let monsterData = from as! MonsterData
+//
+//        // don't dirty the record if you don't have to
+//        // tossing swarfarm-generated monster id as not needed
+//
+//        if self.id != monsterData.com2usId {
+//            self.id = monsterData.com2usId
+//        }
+//        if self.name != monsterData.name {
+//            self.name = monsterData.name
+//        }
+//        if (self.familyId != monsterData.familyId ) && (monsterData.familyId != nil) {
+//            self.familyId = monsterData.familyId!
+//        }
+//        if self.imageFilename != monsterData.imageFilename {
+//            self.imageFilename = monsterData.imageFilename
+//        }
+//        if self.element != monsterData.element {
+//            self.element = monsterData.element
+//        }
+//        if self.archetype != monsterData.archetype {
+//            self.archetype = monsterData.archetype
+//        }
+//        if self.baseStars != monsterData.baseStars {
+//            self.baseStars = monsterData.baseStars
+//        }
+//        if self.naturalStars != monsterData.naturalStars {
+//            self.naturalStars = monsterData.naturalStars
+//        }
+//        if self.obtainable != monsterData.obtainable {
+//            self.obtainable = monsterData.obtainable
+//        }
+//        if self.canAwaken != monsterData.canAwaken {
+//            self.canAwaken = monsterData.canAwaken
+//        }
+//        if self.isAwakened != monsterData.isAwakened {
+//            self.isAwakened = monsterData.isAwakened
+//        }
+//        if self.awakenLevel != monsterData.awakenLevel {
+//            self.awakenLevel = monsterData.awakenLevel
+//        }
+//        if self.awakenBonus != monsterData.awakenBonus {
+//            self.awakenBonus = monsterData.awakenBonus
+//        }
+//        if (self.awakensToId != monsterData.awakensToId) && (monsterData.awakensToId != nil) {
+//            self.awakensToId = monsterData.awakensToId!
+//        }
+//        if (self.awakensFromId != monsterData.awakensFromId) && (monsterData.awakensFromId != nil) {
+//            self.awakensFromId = monsterData.awakensFromId!
+//        }
+//        if (self.transformsToId != monsterData.transformsToId) && (monsterData.transformsToId != nil) {
+//            self.transformsToId = monsterData.transformsToId!
+//        }
+//        if (self.skillUpsToMax != monsterData.skillUpsToMax) && (monsterData.skillUpsToMax != nil) {
+//            self.skillUpsToMax = monsterData.skillUpsToMax!
+//        }
+//        if (self.leaderSkillId != monsterData.leaderSkill) && (monsterData.leaderSkill != nil) {
+//            self.leaderSkillId = monsterData.leaderSkill!
+//        }
+//
+//        if (self.rawHp != monsterData.rawHp) && (monsterData.rawHp != nil) {
+//            self.rawHp = monsterData.rawHp!
+//        }
+//        if (self.rawAttack != monsterData.rawAttack) && (monsterData.rawAttack != nil) {
+//            self.rawAttack = monsterData.rawAttack!
+//        }
+//        if (self.rawDefense != monsterData.rawDefense) && (monsterData.rawDefense != nil) {
+//            self.rawDefense = monsterData.rawDefense!
+//        }
+//        if (self.baseHp != monsterData.baseHp) && (monsterData.baseHp != nil) {
+//            self.baseHp = monsterData.baseHp!
+//        }
+//        if (self.baseAttack != monsterData.baseAttack) && (monsterData.baseAttack != nil) {
+//            self.baseAttack = monsterData.baseAttack!
+//        }
+//        if (self.baseDefense != monsterData.baseDefense) && (monsterData.baseDefense != nil) {
+//            self.baseDefense = monsterData.baseDefense!
+//        }
+//        if (self.maxLvlHp != monsterData.maxLvlHp) && (monsterData.maxLvlHp != nil) {
+//            self.maxLvlHp = monsterData.maxLvlHp!
+//        }
+//        if (self.maxLvlAttack != monsterData.maxLvlAttack) && (monsterData.maxLvlAttack != nil) {
+//            self.maxLvlAttack = monsterData.maxLvlAttack!
+//        }
+//        if (self.maxLvlDefense != monsterData.maxLvlDefense) && (monsterData.maxLvlDefense != nil) {
+//            self.maxLvlDefense = monsterData.maxLvlDefense!
+//        }
+//
+//        if (self.speed != monsterData.speed) && (monsterData.speed != nil) {
+//            self.speed = monsterData.speed!
+//        }
+//        if (self.critRate != monsterData.critRate) && (monsterData.critRate != nil) {
+//            self.critRate = monsterData.critRate!
+//        }
+//        if (self.critDamage != monsterData.critDamage) && (monsterData.critDamage != nil) {
+//            self.critDamage = monsterData.critDamage!
+//        }
+//        if (self.resistance != monsterData.resistance) && (monsterData.resistance != nil) {
+//            self.resistance = monsterData.resistance!
+//        }
+//        if (self.accuracy != monsterData.accuracy) && (monsterData.accuracy != nil) {
+//            self.accuracy = monsterData.accuracy!
+//        }
+//        if self.isHomunculus != monsterData.homunculus {
+//            self.isHomunculus = monsterData.homunculus
+//        }
+//        if self.craftCost != monsterData.craftCost && (monsterData.craftCost != nil) {
+//            self.craftCost = monsterData.craftCost!
+//        }
+//
+//        if self.awakenMatsFireLow != monsterData.awakenMatsFireLow {
+//            self.awakenMatsFireLow = monsterData.awakenMatsFireLow
+//        }
+//        if self.awakenMatsFireMid != monsterData.awakenMatsFireMid {
+//            self.awakenMatsFireMid = monsterData.awakenMatsFireMid
+//        }
+//        if self.awakenMatsFireHigh != monsterData.awakenMatsFireHigh {
+//            self.awakenMatsFireHigh = monsterData.awakenMatsFireHigh
+//        }
+//
+//        if self.awakenMatsWaterLow != monsterData.awakenMatsWaterLow {
+//            self.awakenMatsWaterLow = monsterData.awakenMatsWaterLow
+//        }
+//        if self.awakenMatsWaterMid != monsterData.awakenMatsWaterMid {
+//            self.awakenMatsWaterMid = monsterData.awakenMatsWaterMid
+//        }
+//        if self.awakenMatsWaterHigh != monsterData.awakenMatsWaterHigh {
+//            self.awakenMatsWaterHigh = monsterData.awakenMatsWaterHigh
+//        }
+//
+//        if self.awakenMatsWindLow != monsterData.awakenMatsWindLow {
+//            self.awakenMatsWindLow = monsterData.awakenMatsWindLow
+//        }
+//        if self.awakenMatsWindMid != monsterData.awakenMatsWindMid {
+//            self.awakenMatsWindMid = monsterData.awakenMatsWindMid
+//        }
+//        if self.awakenMatsWindHigh != monsterData.awakenMatsWindHigh {
+//            self.awakenMatsWindHigh = monsterData.awakenMatsWindHigh
+//        }
+//
+//        if self.awakenMatsLightLow != monsterData.awakenMatsLightLow {
+//            self.awakenMatsLightLow = monsterData.awakenMatsLightLow
+//        }
+//        if self.awakenMatsLightMid != monsterData.awakenMatsLightMid {
+//            self.awakenMatsLightMid = monsterData.awakenMatsLightMid
+//        }
+//        if self.awakenMatsLightHigh != monsterData.awakenMatsLightHigh {
+//            self.awakenMatsLightHigh = monsterData.awakenMatsLightHigh
+//        }
+//
+//        if self.awakenMatsDarkLow != monsterData.awakenMatsDarkLow {
+//            self.awakenMatsDarkLow = monsterData.awakenMatsDarkLow
+//        }
+//        if self.awakenMatsDarkMid != monsterData.awakenMatsDarkMid {
+//            self.awakenMatsDarkMid = monsterData.awakenMatsDarkMid
+//        }
+//        if self.awakenMatsDarkHigh != monsterData.awakenMatsDarkHigh {
+//            self.awakenMatsDarkHigh = monsterData.awakenMatsDarkHigh
+//        }
+//
+//        if self.awakenMatsMagicLow != monsterData.awakenMatsMagicLow {
+//            self.awakenMatsMagicLow = monsterData.awakenMatsMagicLow
+//        }
+//        if self.awakenMatsMagicMid != monsterData.awakenMatsMagicMid {
+//            self.awakenMatsMagicMid = monsterData.awakenMatsMagicMid
+//        }
+//        if self.awakenMatsMagicHigh != monsterData.awakenMatsMagicHigh {
+//            self.awakenMatsMagicHigh = monsterData.awakenMatsMagicHigh
+//        }
+//
+//        if self.isFarmable != monsterData.farmable {
+//            self.isFarmable = monsterData.farmable
+//        }
+//        if self.isFusionFood != monsterData.fusionFood {
+//            self.isFusionFood = monsterData.fusionFood
+//        }
+//        if self.bestiarySlug != monsterData.bestiarySlug {
+//            self.bestiarySlug = monsterData.bestiarySlug
+//        }
+//
+//        if self.skillArray != monsterData.skills {
+//            self.skillArray = monsterData.skills
+//
+//            // FIXME: add skills relationship here
+//        }
+//
+//        if self.sourceRaw != monsterData.source {
+//            self.sourceRaw = monsterData.source
+//
+//            // FIXME: add source relationship here
+//        }
+//    }
     
     static func portrait(monster: Monster) -> Image {
         return Image(
@@ -235,23 +308,23 @@ extension Monster: CoreDataUtility {
             label: Text(monster.name!))
     }
     
-    static func insertOrUpdate<T: JsonArray>(from: T,
-                               docInfo: SummonerDocumentInfo) {
-        docInfo.taskContext.performAndWait {
-            let monsterData = from as! MonsterData
-            let monster = Monster.findById(id: monsterData.com2usId, context: docInfo.taskContext) ??
-                Monster(context: docInfo.taskContext)
-            monster.update(from: monsterData, docInfo: docInfo)
-        }
-    }
-    
-    static func batchUpdate<T: JsonArray>(from: [T],
-                            docInfo: SummonerDocumentInfo) {
-        let monsters = from as! [MonsterData]
-        for monster in monsters {
-            Monster.insertOrUpdate(from: monster, docInfo: docInfo)
-        }
-    }
+//    static func insertOrUpdate<T: JsonArray>(from: T,
+//                               docInfo: SummonerDocumentInfo) {
+//        docInfo.taskContext.performAndWait {
+//            let monsterData = from as! MonsterData
+//            let monster = Monster.findById(id: monsterData.com2usId, context: docInfo.taskContext) ??
+//                Monster(context: docInfo.taskContext)
+//            monster.update(from: monsterData, docInfo: docInfo)
+//        }
+//    }
+//
+//    static func batchUpdate<T: JsonArray>(from: [T],
+//                            docInfo: SummonerDocumentInfo) {
+//        let monsters = from as! [MonsterData]
+//        for monster in monsters {
+//            Monster.insertOrUpdate(from: monster, docInfo: docInfo)
+//        }
+//    }
     
     public var sourceArray: [Source] {
         let set = source as? Set<Source> ?? []

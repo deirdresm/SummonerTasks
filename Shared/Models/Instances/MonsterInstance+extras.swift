@@ -61,6 +61,15 @@ public class MonsterInstance: NSManagedObject, Comparable, Decodable {
         self.accuracy = try container.decode(Int16.self, forKey: .accuracy)
         self.critRate = try container.decode(Int16.self, forKey: .critRate)
         self.critDamage = try container.decode(Int16.self, forKey: .critDamage)
+		
+		// in the player file, runes and artifacts are attached to the monster and not by an association
+		// so we have to add them
+		var runeSet: Set<RuneInstance> = []
+		print("Decoding runes")
+		let runes = try container.decodeArray(RuneInstance.self, forKey: .runes)
+		print("Decoding artifacts")
+		let artifacts = try container.decodeArray(ArtifactInstance.self, forKey: .artifacts)
+		print("Done decoding monster")
     }
 
     func monsterRunesSorted() -> [RuneInstance] {

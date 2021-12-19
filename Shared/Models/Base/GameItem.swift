@@ -8,8 +8,47 @@
 import Foundation
 import CoreData
 
-extension GameItem: CoreDataUtility {
-    static func findById(_ gameItemId: Int64,
+@objc(GameItem)
+public class GameItem: NSManagedObject, NSManagedCodableObject {
+
+	private enum CodingKeys: String, CodingKey {
+		case id = "pk"
+		case com2usId = "com2us_id"
+		case name
+		case c2uDescription = "description"
+		case imageFilename = "icon"
+		case category
+		case slug
+		case sellValue = "sell_value"
+	}
+//
+//	public enum CodingKeys: String, CodingKey {
+//		case c2uDescription = "model"
+//		case category
+//		case com2usId
+//		case id
+//		case imageFilename
+//		case name
+//		case sellValue
+//		case slug
+//		case monsterCraftCosts
+//	}
+
+	 @NSManaged public var c2uDescription: String?
+	 @NSManaged public var category: Int64
+	 @NSManaged public var com2usId: Int64
+	 @NSManaged public var id: Int64
+	 @NSManaged public var imageFilename: String?
+	 @NSManaged public var name: String?
+	 @NSManaged public var sellValue: Int64
+	 @NSManaged public var slug: String?
+	 @NSManaged public var monsterCraftCosts: NSSet?
+
+	@nonobjc public class func fetchRequest() -> NSFetchRequest<GameItem> {
+		 return NSFetchRequest<GameItem>(entityName: "GameItem")
+	 }
+
+	static func findById(_ gameItemId: Int64,
                          context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
     -> GameItem? {
         
@@ -26,65 +65,65 @@ extension GameItem: CoreDataUtility {
         return nil
     }
 
-    static func findOrCreate(_ id: Int64,
-                        context: NSManagedObjectContext) -> GameItem {
-        if let gameItem = GameItem.findById(id, context: context) {
-            return gameItem
-        }
-        let gameItem = GameItem(context: context)
-        gameItem.id = id
-        return gameItem
-    }
-
-    func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
-        
-        let gameItemData = from as! GameItemData
-        
-        // don't dirty the record if you don't have to
-        
-        if self.id != gameItemData.id {
-            self.id = Int64(gameItemData.id)
-        }
-        if self.name != gameItemData.name {
-            self.name = gameItemData.name
-        }
-        if self.com2usId != gameItemData.com2usId {
-            self.com2usId = Int64(gameItemData.com2usId)
-        }
-        if self.c2uDescription != gameItemData.c2uDescription {
-            self.c2uDescription = gameItemData.c2uDescription
-        }
-        if self.imageFilename != gameItemData.imageFilename {
-            self.imageFilename = gameItemData.imageFilename
-        }
-        if self.category != gameItemData.category {
-            self.category = gameItemData.category
-        }
-        if self.slug != gameItemData.slug {
-            self.slug = gameItemData.slug
-        }
-        if self.sellValue != gameItemData.sellValue {
-            self.sellValue = gameItemData.sellValue
-        }
-    }
-
-    static func insertOrUpdate<T: JsonArray>(from: T,
-                               docInfo: SummonerDocumentInfo) {
-        docInfo.taskContext.performAndWait {
-            let gameItemData = from as! GameItemData
-            let gameItem = GameItem.findOrCreate(gameItemData.com2usId, context: docInfo.taskContext)
-            gameItem.update(from: gameItemData, docInfo: docInfo)
-        }
-    }
-
-    static func batchUpdate<T: JsonArray>(from: [T],
-                            docInfo: SummonerDocumentInfo) {
-        let gameItems = from as! [GameItemData]
-        for gameItem in gameItems {
-            GameItem.insertOrUpdate(from: gameItem, docInfo: docInfo)
-        }
-    }
-
+//    static func findOrCreate(_ id: Int64,
+//                        context: NSManagedObjectContext) -> GameItem {
+//        if let gameItem = GameItem.findById(id, context: context) {
+//            return gameItem
+//        }
+//        let gameItem = GameItem(context: context)
+//        gameItem.id = id
+//        return gameItem
+//    }
+//
+//    func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
+//        
+//        let gameItemData = from as! GameItemData
+//        
+//        // don't dirty the record if you don't have to
+//        
+//        if self.id != gameItemData.id {
+//            self.id = Int64(gameItemData.id)
+//        }
+//        if self.name != gameItemData.name {
+//            self.name = gameItemData.name
+//        }
+//        if self.com2usId != gameItemData.com2usId {
+//            self.com2usId = Int64(gameItemData.com2usId)
+//        }
+//        if self.c2uDescription != gameItemData.c2uDescription {
+//            self.c2uDescription = gameItemData.c2uDescription
+//        }
+//        if self.imageFilename != gameItemData.imageFilename {
+//            self.imageFilename = gameItemData.imageFilename
+//        }
+//        if self.category != gameItemData.category {
+//            self.category = gameItemData.category
+//        }
+//        if self.slug != gameItemData.slug {
+//            self.slug = gameItemData.slug
+//        }
+//        if self.sellValue != gameItemData.sellValue {
+//            self.sellValue = gameItemData.sellValue
+//        }
+//    }
+//
+//    static func insertOrUpdate<T: JsonArray>(from: T,
+//                               docInfo: SummonerDocumentInfo) {
+//        docInfo.taskContext.performAndWait {
+//            let gameItemData = from as! GameItemData
+//            let gameItem = GameItem.findOrCreate(gameItemData.com2usId, context: docInfo.taskContext)
+//            gameItem.update(from: gameItemData, docInfo: docInfo)
+//        }
+//    }
+//
+//    static func batchUpdate<T: JsonArray>(from: [T],
+//                            docInfo: SummonerDocumentInfo) {
+//        let gameItems = from as! [GameItemData]
+//        for gameItem in gameItems {
+//            GameItem.insertOrUpdate(from: gameItem, docInfo: docInfo)
+//        }
+//    }
+//
 }
 
 /*

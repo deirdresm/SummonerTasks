@@ -10,8 +10,26 @@ import CoreData
 
 // MARK: - Core Data
 
-extension Skill: Comparable, CoreDataUtility {
-    
+extension Skill: Comparable, NSManagedCodableObject {
+	private enum CodingKeys: String, CodingKey {
+		case id = "pk"
+		case com2usId = "com2us_id"
+		case name
+		case c2uDescription = "description"
+		case slot
+		case cooltime
+		case hits
+		case aoe
+		case passive
+		case maxLevel
+		case imageFilename
+		case multiplierFormula
+		case multiplierFormulaRaw
+		case levelProgressDescription
+		case skillEffect
+		case scalingStats
+	}
+
     static func findById(_ skillDataId: Int64,
                          context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
     -> Skill? {
@@ -29,89 +47,89 @@ extension Skill: Comparable, CoreDataUtility {
         return nil
     }
 
-    static func findOrCreate(_ id: Int64,
-                        context: NSManagedObjectContext) -> Skill {
-        if let skill = Skill.findById(id, context: context) {
-            return skill
-        }
-        let skill = Skill(context: context)
-        skill.id = id
-        return skill
-    }
-
-
-    func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
-        let skillData = from as! SkillData
-        
-        // don't dirty the record if you don't have to
-        
-        if self.id != skillData.id {
-            self.id = Int64(skillData.id)
-        }
-        if self.name != skillData.name {
-            self.name = skillData.name
-        }
-        if self.com2usId != skillData.com2usId {
-            self.com2usId = skillData.com2usId
-        }
-        if self.c2uDescription != skillData.c2uDescription {
-            self.c2uDescription = skillData.c2uDescription
-        }
-        if self.slot != skillData.slot {
-            self.slot = skillData.slot
-        }
-        if self.cooltime != skillData.cooltime {
-            self.cooltime = skillData.cooltime ?? 0
-        }
-        if self.hits != skillData.hits {
-            self.hits = skillData.hits
-        }
-        if self.aoe != skillData.aoe {
-            self.aoe = skillData.aoe
-        }
-        if self.passive != skillData.passive {
-            self.passive = skillData.passive
-        }
-        if self.maxLevel != skillData.maxLevel {
-            self.maxLevel = skillData.maxLevel
-        }
-        if self.levelProgressDescription != skillData.levelProgressDescription {
-            self.levelProgressDescription = skillData.levelProgressDescription
-        }
-        if self.imageFilename != skillData.imageFilename {
-            self.imageFilename = skillData.imageFilename
-        }
-        if self.multiplierFormula != skillData.multiplierFormula {
-            self.multiplierFormula = skillData.multiplierFormula
-        }
-        if self.multiplierFormulaRaw != skillData.multiplierFormulaRaw {
-            self.multiplierFormulaRaw = skillData.multiplierFormulaRaw
-        }
-        if self.scalingStatsIds != skillData.scalingStats {
-            self.scalingStatsIds = skillData.scalingStats
-        }
-        if self.skillEffect != skillData.skillEffect {
-            self.skillEffect = skillData.skillEffect
-        }
-    }
-    
-    static func insertOrUpdate<T: JsonArray>(from: T,
-                               docInfo: SummonerDocumentInfo) {
-        docInfo.taskContext.performAndWait {
-            let skillData = from as! SkillData
-            let skill = Skill.findOrCreate(skillData.com2usId, context: docInfo.taskContext)
-            skill.update(from: skillData, docInfo: docInfo)
-        }
-    }
-    
-    static func batchUpdate<T: JsonArray>(from: [T],
-                            docInfo: SummonerDocumentInfo) {
-        let skills = from as! [SkillData]
-        for skill in skills {
-            Skill.insertOrUpdate(from: skill, docInfo: docInfo)
-        }
-    }
-
+//    static func findOrCreate(_ id: Int64,
+//                        context: NSManagedObjectContext) -> Skill {
+//        if let skill = Skill.findById(id, context: context) {
+//            return skill
+//        }
+//        let skill = Skill(context: context)
+//        skill.id = id
+//        return skill
+//    }
+//
+//
+//    func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
+//        let skillData = from as! SkillData
+//        
+//        // don't dirty the record if you don't have to
+//        
+//        if self.id != skillData.id {
+//            self.id = Int64(skillData.id)
+//        }
+//        if self.name != skillData.name {
+//            self.name = skillData.name
+//        }
+//        if self.com2usId != skillData.com2usId {
+//            self.com2usId = skillData.com2usId
+//        }
+//        if self.c2uDescription != skillData.c2uDescription {
+//            self.c2uDescription = skillData.c2uDescription
+//        }
+//        if self.slot != skillData.slot {
+//            self.slot = skillData.slot
+//        }
+//        if self.cooltime != skillData.cooltime {
+//            self.cooltime = skillData.cooltime ?? 0
+//        }
+//        if self.hits != skillData.hits {
+//            self.hits = skillData.hits
+//        }
+//        if self.aoe != skillData.aoe {
+//            self.aoe = skillData.aoe
+//        }
+//        if self.passive != skillData.passive {
+//            self.passive = skillData.passive
+//        }
+//        if self.maxLevel != skillData.maxLevel {
+//            self.maxLevel = skillData.maxLevel
+//        }
+//        if self.levelProgressDescription != skillData.levelProgressDescription {
+//            self.levelProgressDescription = skillData.levelProgressDescription
+//        }
+//        if self.imageFilename != skillData.imageFilename {
+//            self.imageFilename = skillData.imageFilename
+//        }
+//        if self.multiplierFormula != skillData.multiplierFormula {
+//            self.multiplierFormula = skillData.multiplierFormula
+//        }
+//        if self.multiplierFormulaRaw != skillData.multiplierFormulaRaw {
+//            self.multiplierFormulaRaw = skillData.multiplierFormulaRaw
+//        }
+//        if self.scalingStatsIds != skillData.scalingStats {
+//            self.scalingStatsIds = skillData.scalingStats
+//        }
+//        if self.skillEffect != skillData.skillEffect {
+//            self.skillEffect = skillData.skillEffect
+//        }
+//    }
+//    
+//    static func insertOrUpdate<T: JsonArray>(from: T,
+//                               docInfo: SummonerDocumentInfo) {
+//        docInfo.taskContext.performAndWait {
+//            let skillData = from as! SkillData
+//            let skill = Skill.findOrCreate(skillData.com2usId, context: docInfo.taskContext)
+//            skill.update(from: skillData, docInfo: docInfo)
+//        }
+//    }
+//    
+//    static func batchUpdate<T: JsonArray>(from: [T],
+//                            docInfo: SummonerDocumentInfo) {
+//        let skills = from as! [SkillData]
+//        for skill in skills {
+//            Skill.insertOrUpdate(from: skill, docInfo: docInfo)
+//        }
+//    }
+//
     public var skillUpgradesSorted: [SkillUpgrade] {
         let set = upgrades as? Set<SkillUpgrade> ?? []
         return set.sorted {

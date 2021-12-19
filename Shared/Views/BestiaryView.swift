@@ -14,11 +14,9 @@ struct BestiaryView: View {
 
     var body: some View {
 
-        let baleygr = Monster.baleygr
-        
-        let ancientSword = Building.ancientSword
+//        let baleygr = Monster.baleygr
+//        let ancientSword = Building.ancientSword
         VStack {
-            
             // summary of towers up top
             HStack {
                 BuildingIconView(building: Building.ancientSword, level: 0)

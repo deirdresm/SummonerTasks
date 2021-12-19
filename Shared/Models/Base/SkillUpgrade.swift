@@ -11,7 +11,7 @@ import CoreData
 
 // MARK: - Core Data
 
-extension SkillUpgrade: Comparable, CoreDataUtility {
+extension SkillUpgrade: Comparable, NSManagedCodableObject {
     
     static func findById(_ skillDataId: Int64,
                          context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
@@ -30,46 +30,46 @@ extension SkillUpgrade: Comparable, CoreDataUtility {
         return nil
     }
 
-    func update<T: JsonArray>(from: T,
-                              docInfo: SummonerDocumentInfo) {
-        let skillUpgrade = from as! SkillUpgradeData
-        
-        // don't dirty the record if you don't have to
-        
-        if self.id != skillUpgrade.id {
-            self.id = Int64(skillUpgrade.id)
-        }
-        if self.level != skillUpgrade.level {
-            self.level = skillUpgrade.level
-        }
-        if self.effectId != skillUpgrade.effect {
-            self.effectId = skillUpgrade.effect
-        }
-        if self.amount != skillUpgrade.amount {
-            self.amount = skillUpgrade.amount
-        }
-        if self.skillId != skillUpgrade.skill {
-            self.skillId = skillUpgrade.skill
-        }
-    }
-    
-    static func insertOrUpdate<T: JsonArray>(from: T,
-                               docInfo: SummonerDocumentInfo) {
-        let skillUpgrade = from as! SkillUpgradeData
-        let skill = SkillUpgrade.findById(skillUpgrade.id, context: docInfo.taskContext) ??
-            SkillUpgrade(context: docInfo.taskContext)
-        
-        skill.update(from: skillUpgrade, docInfo: docInfo)
-    }
-    
-    static func batchUpdate<T: JsonArray>(from: [T],
-                            docInfo: SummonerDocumentInfo) {
-        let skillUpgrades = from as! [SkillUpgradeData]
-        for skillUpgrade in skillUpgrades {
-            SkillUpgrade.insertOrUpdate(from: skillUpgrade, docInfo: docInfo)
-        }
-    }
-
+//    func update<T: JsonArray>(from: T,
+//                              docInfo: SummonerDocumentInfo) {
+//        let skillUpgrade = from as! SkillUpgradeData
+//        
+//        // don't dirty the record if you don't have to
+//        
+//        if self.id != skillUpgrade.id {
+//            self.id = Int64(skillUpgrade.id)
+//        }
+//        if self.level != skillUpgrade.level {
+//            self.level = skillUpgrade.level
+//        }
+//        if self.effectId != skillUpgrade.effect {
+//            self.effectId = skillUpgrade.effect
+//        }
+//        if self.amount != skillUpgrade.amount {
+//            self.amount = skillUpgrade.amount
+//        }
+//        if self.skillId != skillUpgrade.skill {
+//            self.skillId = skillUpgrade.skill
+//        }
+//    }
+//    
+//    static func insertOrUpdate<T: JsonArray>(from: T,
+//                               docInfo: SummonerDocumentInfo) {
+//        let skillUpgrade = from as! SkillUpgradeData
+//        let skill = SkillUpgrade.findById(skillUpgrade.id, context: docInfo.taskContext) ??
+//            SkillUpgrade(context: docInfo.taskContext)
+//        
+//        skill.update(from: skillUpgrade, docInfo: docInfo)
+//    }
+//    
+//    static func batchUpdate<T: JsonArray>(from: [T],
+//                            docInfo: SummonerDocumentInfo) {
+//        let skillUpgrades = from as! [SkillUpgradeData]
+//        for skillUpgrade in skillUpgrades {
+//            SkillUpgrade.insertOrUpdate(from: skillUpgrade, docInfo: docInfo)
+//        }
+//    }
+//
     // MARK: - Comparable conformance
     
     public static func < (lhs: SkillUpgrade, rhs: SkillUpgrade) -> Bool {

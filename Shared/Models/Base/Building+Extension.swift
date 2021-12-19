@@ -10,88 +10,102 @@ import CoreData
 
 // MARK: - Core Data
 
-extension Building: CoreDataUtility {
+extension Building: NSManagedCodableObject {
+	private enum CodingKeys: String, CodingKey {
+		case id = "pk"
+		case name
+		case com2usId = "com2us_id"
+		case maxLevel
+		case area
+		case affectedStat
+		case element
+		case statBonus
+		case upgradeCost
+		case upgradeLimit
+		case description
+		case imageFilename
+	}
 
-    convenience init(buildingData: BuildingData, docInfo: SummonerDocumentInfo) {
-        self.init()
-        update(from: buildingData, docInfo: docInfo)
-    }
-    
-    func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
-        let buildingData = from as! BuildingData
-        
-        // don't dirty the record if you don't have to
-        
-        if self.id != buildingData.id {
-            self.id = Int64(buildingData.id)
-        }
-        if self.name != buildingData.name {
-            self.name = buildingData.name
-        }
-        if self.com2usId != buildingData.com2usId {
-            self.com2usId = buildingData.com2usId
-        }
-        if self.maxLevel != buildingData.maxLevel {
-            self.maxLevel = buildingData.maxLevel
-        }
-        if self.area != buildingData.area {
-            self.area = buildingData.area ?? 0
-        }
-        if self.affectedStat != buildingData.affectedStat {
-            self.affectedStat = buildingData.affectedStat ?? 0
-        }
-        if self.element != buildingData.element {
-           self.element = buildingData.element
-        }
-        if self.c2uDescription != buildingData.description {
-            self.c2uDescription = buildingData.description
-        }
-        if self.imageFilename != buildingData.imageFilename {
-            self.imageFilename = buildingData.imageFilename
-        }
-        if self.statBonus != buildingData.statBonus {
-            self.statBonus = buildingData.statBonus
-        }
-        if self.upgradeCost != buildingData.upgradeCost {
-            self.upgradeCost = buildingData.upgradeCost
-        }
-    }
-    
-    static func insertOrUpdate<T: JsonArray>(from: T,
-                               docInfo: SummonerDocumentInfo) {
-        var building: Building!
-        let buildingData = from as! BuildingData
-        
-        docInfo.taskContext.performAndWait {
-            let request : NSFetchRequest<Building> = Building.fetchRequest()
-
-            let predicate = NSPredicate(format: "com2usId == %i", buildingData.com2usId)
-
-            request.predicate = predicate
-            
-            let results = try? docInfo.taskContext.fetch(request)
-
-            if results?.count == 0 {
-                // insert new
-                building = Building(context: docInfo.taskContext)
-                building.update(from: buildingData, docInfo: docInfo)
-             } else {
-                // update existing
-                building = results?.first
-                building.update(from: buildingData, docInfo: docInfo)
-             }
-        }
-    }
-    
-    static func batchUpdate<T: JsonArray>(from: [T],
-                            docInfo: SummonerDocumentInfo) {
-        let buildings = from as! [BuildingData]
-        
-        for building in buildings {
-            Building.insertOrUpdate(from: building, docInfo: docInfo)
-        }
-    }
-    
+//    convenience init(buildingData: BuildingData, docInfo: SummonerDocumentInfo) {
+//        self.init()
+//        update(from: buildingData, docInfo: docInfo)
+//    }
+//    
+//    func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
+//        let buildingData = from as! BuildingData
+//        
+//        // don't dirty the record if you don't have to
+//        
+//        if self.id != buildingData.id {
+//            self.id = Int64(buildingData.id)
+//        }
+//        if self.name != buildingData.name {
+//            self.name = buildingData.name
+//        }
+//        if self.com2usId != buildingData.com2usId {
+//            self.com2usId = buildingData.com2usId
+//        }
+//        if self.maxLevel != buildingData.maxLevel {
+//            self.maxLevel = buildingData.maxLevel
+//        }
+//        if self.area != buildingData.area {
+//            self.area = buildingData.area ?? 0
+//        }
+//        if self.affectedStat != buildingData.affectedStat {
+//            self.affectedStat = buildingData.affectedStat ?? 0
+//        }
+//        if self.element != buildingData.element {
+//           self.element = buildingData.element
+//        }
+//        if self.c2uDescription != buildingData.description {
+//            self.c2uDescription = buildingData.description
+//        }
+//        if self.imageFilename != buildingData.imageFilename {
+//            self.imageFilename = buildingData.imageFilename
+//        }
+//        if self.statBonus != buildingData.statBonus {
+//            self.statBonus = buildingData.statBonus
+//        }
+//        if self.upgradeCost != buildingData.upgradeCost {
+//            self.upgradeCost = buildingData.upgradeCost
+//        }
+//    }
+//    
+//    static func insertOrUpdate<T: JsonArray>(from: T,
+//                               docInfo: SummonerDocumentInfo) {
+//        var building: Building!
+//        let buildingData = from as! BuildingData
+//        
+//        docInfo.taskContext.performAndWait {
+//            let request : NSFetchRequest<Building> = Building.fetchRequest()
+//
+//            let predicate = NSPredicate(format: "com2usId == %i", buildingData.com2usId)
+//
+//            request.predicate = predicate
+//            
+//            let results = try? docInfo.taskContext.fetch(request)
+//
+//            if results?.count == 0 {
+//                // insert new
+//                building = Building(context: docInfo.taskContext)
+//                building.update(from: buildingData, docInfo: docInfo)
+//             } else {
+//                // update existing
+//                building = results?.first
+//                building.update(from: buildingData, docInfo: docInfo)
+//             }
+//        }
+//    }
+//    
+//    static func batchUpdate<T: JsonArray>(from: [T],
+//                            docInfo: SummonerDocumentInfo) {
+//        let buildings = from as! [BuildingData]
+//        
+//        for building in buildings {
+//            Building.insertOrUpdate(from: building, docInfo: docInfo)
+//        }
+//    }
+//    
     static func findById(_ id: Int64,
                     context: NSManagedObjectContext) -> Building? {
         

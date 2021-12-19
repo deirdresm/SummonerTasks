@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import UniformTypeIdentifiers
 
 extension NSOpenPanel {
     
@@ -15,7 +16,7 @@ extension NSOpenPanel {
         panel.allowsMultipleSelection = false
         panel.canChooseFiles = true
         panel.canChooseDirectories = false
-        panel.allowedFileTypes = ["json"]
+		panel.allowedContentTypes = [.swExporterJsonFile]
         panel.canChooseFiles = true
         panel.begin { (result) in
             if result == .OK,
