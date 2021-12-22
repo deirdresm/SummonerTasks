@@ -8,12 +8,28 @@
 import Foundation
 import CoreData
 
-extension AwakenCost: NSManagedCodableObject {
+@objc(AwakenCost)
+public class AwakenCost: NSManagedObject, Decodable {
 	private enum CodingKeys: String, CodingKey {
 		case id = "pk"
 		case item
 		case quantity
 		case monster
+	}
+
+	public required convenience init(from decoder: Decoder) throws {
+		// get the context and the entity in the context
+		guard let context = decoder.userInfo[CodingUserInfoKey.context!] as? NSManagedObjectContext else { fatalError("Could not get context [for GameItem]") }
+		guard let entity = NSEntityDescription.entity(forEntityName: "GameItem", in: context) else { fatalError("Could not get entity [for GameItem]") }
+
+		// init self
+		self.init(entity: entity, insertInto: context)
+
+		// create container
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		// and start decoding
+		self.id = try container.decode(Int64.self, forKey: .id)
+		self.com2usId = try container.decode(Int64.self, forKey: .com2usId)
 	}
 
     static func findById(_ awakenCostId: Int64,

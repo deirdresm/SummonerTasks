@@ -10,13 +10,40 @@ import CoreData
 
 // MARK: - Core Data Fusion
 
-extension Fusion: NSManagedCodableObject {
+@objc(Fusion)
+public class Fusion: NSManagedObject, Decodable {
 	private enum CodingKeys: String, CodingKey {
 		case id = "pk"
 		case product
 		case cost
 		case metaOrder = "meta_order"
 		case ingredients
+	}
+
+	public required convenience init(from decoder: Decoder) throws {
+		// get the context and the entity in the context
+		guard let context = decoder.userInfo[CodingUserInfoKey.context!] as? NSManagedObjectContext else { fatalError("Could not get context [for GameItem]") }
+		guard let entity = NSEntityDescription.entity(forEntityName: "GameItem", in: context) else { fatalError("Could not get entity [for GameItem]") }
+
+		// init self
+		self.init(entity: entity, insertInto: context)
+
+		// create container
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		// and start decoding
+		self.id = try container.decode(Int64.self, forKey: .id)
+		self.product = try container.decode(Int64.self, forKey: .product)
+		self.cost = try container.decode(Int64.self, forKey: .cost)
+		self.metaOrder = try container.decode(Int64.self, forKey: .metaOrder)
+		self.ingredients = try container.decodeArray(Int64.self, forKey: .ingredients)
+
+		let tempIngredients = self.ingredients ?? []
+
+		for ingredient in tempIngredients {
+			if let monster = Monster.findById(id: ingredient, context: context) {
+				addToFusionIngredients(monster)
+			}
+		}
 	}
 
     static func findById(_ fusionId: Int64,

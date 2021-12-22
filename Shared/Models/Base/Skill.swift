@@ -10,7 +10,9 @@ import CoreData
 
 // MARK: - Core Data
 
-extension Skill: Comparable, NSManagedCodableObject {
+@objc(Skill)
+public class Skill: NSManagedObject, Decodable {
+//extension Skill: Comparable, Decodable {
 	private enum CodingKeys: String, CodingKey {
 		case id = "pk"
 		case com2usId = "com2us_id"
@@ -28,6 +30,10 @@ extension Skill: Comparable, NSManagedCodableObject {
 		case levelProgressDescription
 		case skillEffect
 		case scalingStats
+	}
+
+	public required convenience init(from decoder: Decoder) throws {
+		<#code#>
 	}
 
     static func findById(_ skillDataId: Int64,

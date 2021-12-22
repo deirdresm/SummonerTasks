@@ -8,15 +8,35 @@
 import Foundation
 import CoreData
 
-extension Source: Comparable, NSManagedCodableObject {
+@objc(Source)
+public class Source: NSManagedObject, Decodable {
 
 	private enum CodingKeys: String, CodingKey {
 		case id = "pk"
 		case name
-		case description
+		case c2uDescription = "description"
 		case imageFilename = "icon_filename"
-		case farmableSource
+		case isFarmable = "farmable_source"
 		case metaOrder = "meta_order"
+	}
+
+	public required convenience init(from decoder: Decoder) throws {
+		// get the context and the entity in the context
+		guard let context = decoder.userInfo[CodingUserInfoKey.context!] as? NSManagedObjectContext else { fatalError("Could not get context [for GameItem]") }
+		guard let entity = NSEntityDescription.entity(forEntityName: "GameItem", in: context) else { fatalError("Could not get entity [for GameItem]") }
+
+		// init self
+		self.init(entity: entity, insertInto: context)
+
+		// create container
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		// and start decoding
+		self.id = try container.decode(Int64.self, forKey: .id)
+		self.c2uDescription = try container.decode(String.self, forKey: .c2uDescription)
+		self.imageFilename = try container.decode(String.self, forKey: .imageFilename)
+		self.name = try container.decode(String.self, forKey: .name)
+		self.isFarmable = try container.decode(Bool.self, forKey: .isFarmable)
+		self.metaOrder = try container.decode(Int64.self, forKey: .metaOrder)
 	}
 
     static func findById(id: Int64,

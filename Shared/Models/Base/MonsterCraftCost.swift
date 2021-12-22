@@ -7,7 +7,9 @@
 
 import CoreData
 
-extension MonsterCraftCost: NSManagedCodableObject {
+@objc(monsterCraftCost)
+public class MonsterCraftCost: NSManagedObject, Decodable {
+//extension MonsterCraftCost: Decodable {
 	private enum CodingKeys: String, CodingKey {
 		case id = "pk"
 		case item

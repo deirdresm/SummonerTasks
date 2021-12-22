@@ -47,7 +47,7 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="AwakenCost" representedClassName="AwakenCost" syncable="YES" codeGenerationType="class">
+    <entity name="AwakenCost" representedClassName="AwakenCost" syncable="YES" codeGenerationType="category">
         <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="item" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="monster" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -58,7 +58,7 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="Building" representedClassName="Building" syncable="YES" codeGenerationType="class">
+    <entity name="Building" representedClassName="Building" syncable="YES" codeGenerationType="category">
         <attribute name="affectedStat" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="area" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="c2uDescription" optional="YES" attributeType="String"/>
@@ -91,30 +91,47 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="Dungeon" representedClassName="Dungeon" syncable="YES" codeGenerationType="class">
+    <entity name="Dungeon" representedClassName="Dungeon" syncable="YES" codeGenerationType="category">
         <attribute name="category" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="com2usId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="enabled" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="icon" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="imageFilename" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="slug" optional="YES" attributeType="String"/>
         <relationship name="levels" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DungeonLevel" inverseName="dungeon" inverseEntity="DungeonLevel"/>
     </entity>
-    <entity name="DungeonLevel" representedClassName="DungeonLevel" syncable="YES" codeGenerationType="class">
+    <entity name="DungeonLevel" representedClassName="DungeonLevel" syncable="YES" codeGenerationType="category">
         <attribute name="backlineSlots" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="com2usId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="difficulty" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="dungeonId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="energyCostg" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="energyCost" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="floor" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="frontlineSlots" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="totalSlots" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="xp" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="dungeon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dungeon" inverseName="levels" inverseEntity="Dungeon"/>
         <relationship name="waves" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Wave" inverseName="level" inverseEntity="Wave"/>
     </entity>
-    <entity name="Enemy" representedClassName="Enemy" syncable="YES" codeGenerationType="class"/>
-    <entity name="Fusion" representedClassName="Fusion" syncable="YES" codeGenerationType="class">
+    <entity name="Enemy" representedClassName="Enemy" syncable="YES" codeGenerationType="category">
+        <attribute name="accuracyBonus" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="attack" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="boss" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="com2usId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="critBonus" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="critDamageReduction" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="defense" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="hp" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="level" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="monster" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="resist" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="speed" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="stars" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="wave" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="Fusion" representedClassName="Fusion" syncable="YES" codeGenerationType="category">
         <attribute name="cost" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="ingredients" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[Int64]"/>
@@ -128,7 +145,7 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="GameItem" representedClassName="GameItem" syncable="YES">
+    <entity name="GameItem" representedClassName="GameItem" syncable="YES" codeGenerationType="category">
         <attribute name="c2uDescription" optional="YES" attributeType="String"/>
         <attribute name="category" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="com2usId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -145,7 +162,7 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="HomunculusSkill" representedClassName="HomunculusSkill" syncable="YES" codeGenerationType="class">
+    <entity name="HomunculusSkill" representedClassName="HomunculusSkill" syncable="YES" codeGenerationType="category">
         <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="monsterIds" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[Int64]"/>
         <attribute name="prerequisites" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[Int64]"/>
@@ -158,18 +175,18 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="HomunculusSkillcraftCost" representedClassName="HomunculusSkillcraftCost" syncable="YES" codeGenerationType="class">
+    <entity name="HomunculusSkillcraftCost" representedClassName="HomunculusSkillcraftCost" syncable="YES" codeGenerationType="category">
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="item" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="quantity" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="skill" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="skillId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="LeaderSkill" representedClassName="LeaderSkill" syncable="YES" codeGenerationType="class">
+    <entity name="LeaderSkill" representedClassName="LeaderSkill" syncable="YES" codeGenerationType="category">
         <attribute name="amount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="area" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="attribute" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -182,7 +199,7 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="Monster" representedClassName="Monster" syncable="YES" codeGenerationType="class">
+    <entity name="Monster" representedClassName="Monster" syncable="YES" codeGenerationType="category">
         <attribute name="accuracy" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="archetype" optional="YES" attributeType="String"/>
         <attribute name="awakenBonus" optional="YES" attributeType="String"/>
@@ -255,7 +272,7 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="MonsterCraftCost" representedClassName="MonsterCraftCost" syncable="YES" codeGenerationType="class">
+    <entity name="MonsterCraftCost" representedClassName="MonsterCraftCost" syncable="YES" codeGenerationType="category">
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="itemId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="monsterId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -428,8 +445,8 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="ScalingStat" representedClassName="ScalingStat" syncable="YES" codeGenerationType="class">
-        <attribute name="c2uDesc" optional="YES" attributeType="String"/>
+    <entity name="ScalingStat" representedClassName="ScalingStat" syncable="YES" codeGenerationType="category">
+        <attribute name="c2uDescription" optional="YES" attributeType="String"/>
         <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="scalingDesc" optional="YES" attributeType="String"/>
         <attribute name="stat" optional="YES" attributeType="String"/>
@@ -440,12 +457,12 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="SecretDungeon" representedClassName="SecretDungeon" syncable="YES" codeGenerationType="class">
-        <attribute name="com2usId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+    <entity name="SecretDungeon" representedClassName="SecretDungeon" syncable="YES" codeGenerationType="category">
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="monsterId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="monster" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Monster" inverseName="secretDungeon" inverseEntity="Monster"/>
     </entity>
-    <entity name="Skill" representedClassName="Skill" syncable="YES" codeGenerationType="class">
+    <entity name="Skill" representedClassName="Skill" syncable="YES" codeGenerationType="category">
         <attribute name="aoe" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="c2uDescription" optional="YES" attributeType="String"/>
         <attribute name="com2usId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -473,7 +490,7 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="SkillEffect" representedClassName="SkillEffect" syncable="YES" codeGenerationType="class">
+    <entity name="SkillEffect" representedClassName="SkillEffect" syncable="YES" codeGenerationType="category">
         <attribute name="c2uDescription" optional="YES" attributeType="String"/>
         <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="imageFilename" optional="YES" attributeType="String"/>
@@ -487,10 +504,11 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="SkillEffectDetail" representedClassName="SkillEffectDetail" syncable="YES" codeGenerationType="class">
+    <entity name="SkillEffectDetail" representedClassName="SkillEffectDetail" syncable="YES" codeGenerationType="category">
         <attribute name="all" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="aoe" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="chance" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="damage" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="effectId" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="note" optional="YES" attributeType="String"/>
@@ -510,7 +528,7 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="SkillUpgrade" representedClassName="SkillUpgrade" syncable="YES" codeGenerationType="class">
+    <entity name="SkillUpgrade" representedClassName="SkillUpgrade" syncable="YES" codeGenerationType="category">
         <attribute name="amount" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="effectId" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -524,7 +542,7 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="Source" representedClassName="Source" syncable="YES" codeGenerationType="class">
+    <entity name="Source" representedClassName="Source" syncable="YES" codeGenerationType="category">
         <attribute name="c2uDescription" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="imageFilename" optional="YES" attributeType="String"/>
@@ -606,8 +624,8 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="Wave" representedClassName="Wave" syncable="YES" codeGenerationType="class">
-        <attribute name="com2usId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+    <entity name="Wave" representedClassName="Wave" syncable="YES" codeGenerationType="category">
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="levelId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="level" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DungeonLevel" inverseName="waves" inverseEntity="DungeonLevel"/>
@@ -616,11 +634,11 @@
     <elements>
         <element name="ArtifactInstance" positionX="-90" positionY="153" width="128" height="629"/>
         <element name="AwakenCost" positionX="-81" positionY="162" width="128" height="89"/>
-        <element name="Building" positionX="-745.9766235351562" positionY="746.3114318847656" width="128" height="223"/>
+        <element name="Building" positionX="-745.9766235351562" positionY="746.3114318847656" width="128" height="209"/>
         <element name="BuildingInstance" positionX="-766.1875305175781" positionY="1009.633087158203" width="128" height="133"/>
         <element name="Dungeon" positionX="-612" positionY="108" width="128" height="134"/>
         <element name="DungeonLevel" positionX="-576" positionY="144" width="128" height="194"/>
-        <element name="Enemy" positionX="-585" positionY="135" width="128" height="29"/>
+        <element name="Enemy" positionX="-585" positionY="135" width="128" height="269"/>
         <element name="Fusion" positionX="72.27294921875" positionY="192.6597900390625" width="128" height="134"/>
         <element name="GameItem" positionX="125.4957885742188" positionY="218.3388061523438" width="128" height="164"/>
         <element name="HomunculusSkill" positionX="-494.9537353515625" positionY="171.3886413574219" width="128" height="119"/>
@@ -636,11 +654,11 @@
         <element name="SecretDungeon" positionX="-603" positionY="117" width="128" height="74"/>
         <element name="Skill" positionX="-806.2515563964844" positionY="333.4104614257812" width="128" height="329"/>
         <element name="SkillEffect" positionX="-607.8872680664062" positionY="132.7097778320312" width="128" height="134"/>
-        <element name="SkillEffectDetail" positionX="44.8348388671875" positionY="89.73995971679688" width="128" height="269"/>
+        <element name="SkillEffectDetail" positionX="44.8348388671875" positionY="89.73995971679688" width="128" height="284"/>
         <element name="SkillUpgrade" positionX="-713.0382385253906" positionY="416.9775238037109" width="128" height="134"/>
         <element name="Source" positionX="-41.85833740234375" positionY="581.4371948242188" width="128" height="134"/>
         <element name="Summoner" positionX="-589.8321228027344" positionY="757.1716766357422" width="128" height="524"/>
-        <element name="Task" positionX="8.27130126953125" positionY="60.91395568847656" width="128" height="14"/>
+        <element name="Task" positionX="8.27130126953125" positionY="60.91395568847656" width="128" height="29"/>
         <element name="Team" positionX="-173.1781005859375" positionY="-41.04978942871094" width="128" height="149"/>
         <element name="TeamGroup" positionX="-298.14306640625" positionY="68.78431701660156" width="128" height="104"/>
         <element name="Wave" positionX="-594" positionY="126" width="128" height="89"/>

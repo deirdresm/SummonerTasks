@@ -11,8 +11,33 @@ import CoreData
 
 // MARK: - Core Data ScalingStat
 
-extension ScalingStat: NSManagedCodableObject {
-    
+@objc(ScalingStat)
+public class ScalingStat: NSManagedObject, Decodable {
+
+	private enum CodingKeys: String, CodingKey {
+		case id = "pk"
+		case c2uDescription = "description"
+		case scalingDesc = "scaling_desc"
+		case stat
+	}
+
+	public required convenience init(from decoder: Decoder) throws {
+		// get the context and the entity in the context
+		guard let context = decoder.userInfo[CodingUserInfoKey.context!] as? NSManagedObjectContext else { fatalError("Could not get context [for GameItem]") }
+		guard let entity = NSEntityDescription.entity(forEntityName: "GameItem", in: context) else { fatalError("Could not get entity [for GameItem]") }
+
+		// init self
+		self.init(entity: entity, insertInto: context)
+
+		// create container
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		// and start decoding
+		self.id = try container.decode(Int64.self, forKey: .id)
+		self.c2uDescription = try container.decode(String.self, forKey: .c2uDescription)
+		self.scalingDesc = try container.decode(String.self, forKey: .scalingDesc)
+		self.stat = try container.decode(String.self, forKey: .stat)
+	}
+
     static func findById(_ scalingStatId: Int64,
                          context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
     -> ScalingStat? {

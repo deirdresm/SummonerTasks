@@ -10,7 +10,30 @@ import CoreData
 
 // MARK: - Core Data SkillEffect
 
-extension SkillEffect: NSManagedCodableObject {
+@objc(SkillEffect)
+public class SkillEffect: NSManagedObject, Decodable {
+
+	enum CodingKeys: String, CodingKey {
+		case id
+		case com2UsId = "com2us_id"
+		case enabled, name, slug, category, icon
+	}
+
+	public required convenience init(from decoder: Decoder) throws {
+		// get the context and the entity in the context
+		guard let context = decoder.userInfo[CodingUserInfoKey.context!] as? NSManagedObjectContext else { fatalError("Could not get context [for GameItem]") }
+		guard let entity = NSEntityDescription.entity(forEntityName: "GameItem", in: context) else { fatalError("Could not get entity [for GameItem]") }
+
+		// init self
+		self.init(entity: entity, insertInto: context)
+
+		// create container
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		// and start decoding
+		self.id = try container.decode(Int64.self, forKey: .id)
+		self.com2usId = try container.decode(Int64.self, forKey: .com2usId)
+	}
+
     
     static func findById(_ skillEffectDataId: Int64,
                          context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)

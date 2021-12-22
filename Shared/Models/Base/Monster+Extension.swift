@@ -14,12 +14,12 @@ import SwiftUI
 /**
  Managed object subclass extension for the Quake entity.
  */
-extension Monster: Bestiary, NSManagedCodableObject  {
+@objc(Monster)
+public class Monster: NSManagedObject, Bestiary, Decodable {
 
-	public var type: String
-	public var description: String
 
-	
+	public var type: String?
+	public var descrip: String?
 
 	private enum CodingKeys: String, CodingKey {
 		case id = "pk"

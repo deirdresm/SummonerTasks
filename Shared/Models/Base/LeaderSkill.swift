@@ -70,8 +70,36 @@ enum LeaderSkillArea: Int64 {
 
 
 
-extension LeaderSkill: NSManagedCodableObject {
-    
+@objc(LeaderSkill)
+public class LeaderSkill: NSManagedObject, Decodable {
+
+	private enum CodingKeys: String, CodingKey {
+		case id = "pk"
+		case amount
+		case area
+		case attribute
+		case element
+	}
+
+	public required convenience init(from decoder: Decoder) throws {
+		// get the context and the entity in the context
+		guard let context = decoder.userInfo[CodingUserInfoKey.context!] as? NSManagedObjectContext else { fatalError("Could not get context [for GameItem]") }
+		guard let entity = NSEntityDescription.entity(forEntityName: "GameItem", in: context) else { fatalError("Could not get entity [for GameItem]") }
+
+		// init self
+		self.init(entity: entity, insertInto: context)
+
+		// create container
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		// and start decoding
+		self.id = try container.decode(Int64.self, forKey: .id)
+		self.amount = try container.decode(Int64.self, forKey: .amount)
+		self.area = try container.decode(Int64.self, forKey: .area)
+		self.attribute = try container.decode(Int64.self, forKey: .attribute)
+		let element = try container.decode(String.self, forKey: .element)
+	}
+
+	
     /*     def skill_string(self):
      if self.area == self.AREA_DUNGEON:
          condition = 'in the Dungeons '

@@ -11,7 +11,39 @@ import CoreData
 
 // MARK: - Core Data
 
-extension SkillUpgrade: Comparable, NSManagedCodableObject {
+@objc(SkillUpgrade)
+public class SkillUpgrade: NSManagedObject, Decodable {
+
+	private enum CodingKeys: String, CodingKey {
+		case id = "pk"
+		case skill, level, effect, amount
+	}
+
+	public required convenience init(from decoder: Decoder) throws {
+		// get the context and the entity in the context
+		guard let context = decoder.userInfo[CodingUserInfoKey.context!] as? NSManagedObjectContext else { fatalError("Could not get context [for GameItem]") }
+		guard let entity = NSEntityDescription.entity(forEntityName: "GameItem", in: context) else { fatalError("Could not get entity [for GameItem]") }
+
+		// init self
+		self.init(entity: entity, insertInto: context)
+
+		// create container
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		// and start decoding
+		self.id = try container.decode(Int64.self, forKey: .id)
+		self.skillId = try container.decode(Int64.self, forKey: .skill)
+		if let skill = Skill.findById(self.skillId, context: context) {
+			self.skill = skill
+		}
+		self.level = try container.decode(Int64.self, forKey: .level)
+
+		let effect = try container.decode(Int64.self, forKey: .effect)
+		if let skilleffect = SkillEffect.findById(effect, context: context) {
+			self.effect = skilleffect
+		}
+		self.amount = try container.decode(Int64.self, forKey: .amount)
+	}
+
     
     static func findById(_ skillDataId: Int64,
                          context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)

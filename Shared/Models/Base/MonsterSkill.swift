@@ -12,6 +12,8 @@ import CoreData
 
 // MARK: - Original SQL Table Definition
 
+
+
 /*
     CREATE TABLE public.bestiary_monster_skills
     (

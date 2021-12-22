@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 @objc(GameItem)
-public class GameItem: NSManagedObject, NSManagedCodableObject {
+public class GameItem: NSManagedObject, Decodable {
 
 	private enum CodingKeys: String, CodingKey {
 		case id = "pk"
@@ -21,33 +21,32 @@ public class GameItem: NSManagedObject, NSManagedCodableObject {
 		case slug
 		case sellValue = "sell_value"
 	}
-//
-//	public enum CodingKeys: String, CodingKey {
-//		case c2uDescription = "model"
-//		case category
-//		case com2usId
-//		case id
-//		case imageFilename
-//		case name
-//		case sellValue
-//		case slug
-//		case monsterCraftCosts
-//	}
 
-	 @NSManaged public var c2uDescription: String?
-	 @NSManaged public var category: Int64
-	 @NSManaged public var com2usId: Int64
-	 @NSManaged public var id: Int64
-	 @NSManaged public var imageFilename: String?
-	 @NSManaged public var name: String?
-	 @NSManaged public var sellValue: Int64
-	 @NSManaged public var slug: String?
-	 @NSManaged public var monsterCraftCosts: NSSet?
+	/// Required init for Decodable conformance
+	public required convenience init(from decoder: Decoder) throws {
+		// get the context and the entity in the context
+		guard let context = decoder.userInfo[CodingUserInfoKey.context!] as? NSManagedObjectContext else { fatalError("Could not get context [for GameItem]") }
+		guard let entity = NSEntityDescription.entity(forEntityName: "GameItem", in: context) else { fatalError("Could not get entity [for GameItem]") }
 
-	@nonobjc public class func fetchRequest() -> NSFetchRequest<GameItem> {
-		 return NSFetchRequest<GameItem>(entityName: "GameItem")
-	 }
+		// init self
+		self.init(entity: entity, insertInto: context)
 
+		// create container
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		// and start decoding
+		self.id = try container.decode(Int64.self, forKey: .id)
+		self.com2usId = try container.decode(Int64.self, forKey: .com2usId)
+		self.name = try container.decode(String.self, forKey: .name)
+		self.c2uDescription = try container.decode(String.self, forKey: .c2uDescription)
+		self.category = try container.decode(Int64.self, forKey: .category)
+		self.imageFilename = try container.decode(String.self, forKey: .imageFilename)
+		self.sellValue = try container.decode(Int64.self, forKey: .sellValue)
+		self.slug = try container.decode(String.self, forKey: .slug)
+	}
+
+}
+
+extension GameItem {
 	static func findById(_ gameItemId: Int64,
                          context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
     -> GameItem? {

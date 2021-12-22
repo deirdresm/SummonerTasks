@@ -10,7 +10,9 @@ import CoreData
 
 // MARK: - Core Data
 
-extension Building: NSManagedCodableObject {
+@objc(Building)
+public class Building: NSManagedObject, Decodable {
+//extension Building: Decodable {
 	private enum CodingKeys: String, CodingKey {
 		case id = "pk"
 		case name
@@ -26,7 +28,22 @@ extension Building: NSManagedCodableObject {
 		case imageFilename
 	}
 
-//    convenience init(buildingData: BuildingData, docInfo: SummonerDocumentInfo) {
+	public required convenience init(from decoder: Decoder) throws {
+		// get the context and the entity in the context
+		guard let context = decoder.userInfo[CodingUserInfoKey.context!] as? NSManagedObjectContext else { fatalError("Could not get context [for GameItem]") }
+		guard let entity = NSEntityDescription.entity(forEntityName: "GameItem", in: context) else { fatalError("Could not get entity [for GameItem]") }
+
+		// init self
+		self.init(entity: entity, insertInto: context)
+
+		// create container
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		// and start decoding
+		self.id = try container.decode(Int64.self, forKey: .id)
+		self.com2usId = try container.decode(Int64.self, forKey: .com2usId)
+	}
+
+	//    convenience init(buildingData: BuildingData, docInfo: SummonerDocumentInfo) {
 //        self.init()
 //        update(from: buildingData, docInfo: docInfo)
 //    }
