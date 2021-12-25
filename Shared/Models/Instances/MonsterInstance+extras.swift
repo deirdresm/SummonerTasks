@@ -50,7 +50,7 @@ public class MonsterInstance: NSManagedObject, Comparable, Decodable {
         self.summonerId = try container.decode(Int64.self, forKey: .summonerId)
         self.summoner = Summoner.findById(self.summonerId, context: context)
         self.monsterId = try container.decode(Int64.self, forKey: .monsterId)
-        self.monster = Monster.findById(id: self.monsterId, context: context)
+        self.monster = Monster.findById(self.monsterId, context: context)
         self.level = try container.decode(Int16.self, forKey: .level)
         self.stars = try container.decode(Int16.self, forKey: .stars)
         self.con = try container.decode(Int32.self, forKey: .con)

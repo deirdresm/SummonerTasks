@@ -49,9 +49,11 @@
     </entity>
     <entity name="AwakenCost" representedClassName="AwakenCost" syncable="YES" codeGenerationType="category">
         <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="item" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="monster" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="itemId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="monsterId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="quantity" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="item" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GameItem" inverseName="awakenCosts" inverseEntity="GameItem"/>
+        <relationship name="monster" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Monster" inverseName="awakenCosts" inverseEntity="Monster"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
@@ -154,6 +156,7 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="sellValue" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="slug" optional="YES" attributeType="String"/>
+        <relationship name="awakenCosts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AwakenCost" inverseName="item" inverseEntity="AwakenCost"/>
         <relationship name="monsterCraftCosts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MonsterCraftCost" inverseName="item" inverseEntity="MonsterCraftCost"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
@@ -203,33 +206,34 @@
         <attribute name="accuracy" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="archetype" optional="YES" attributeType="String"/>
         <attribute name="awakenBonus" optional="YES" attributeType="String"/>
-        <attribute name="awakenLevel" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="awakenMatsDarkHigh" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="awakenMatsDarkLow" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="awakenMatsDarkMid" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="awakenMatsFireHigh" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="awakenMatsFireLow" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="awakenMatsFireMid" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="awakenMatsLightHigh" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="awakenMatsLightLow" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="awakenMatsLightMid" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="awakenMatsMagicHigh" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="awakenMatsMagicLow" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="awakenMatsMagicMid" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="awakenMatsWaterHigh" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="awakenMatsWaterLow" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="awakenMatsWaterMid" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="awakenMatsWindHigh" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="awakenMatsWindLow" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="awakenMatsWindMid" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="awakenLevel" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="awakenMatsDarkHigh" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="awakenMatsDarkLow" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="awakenMatsDarkMid" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="awakenMatsFireHigh" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="awakenMatsFireLow" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="awakenMatsFireMid" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="awakenMatsLightHigh" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="awakenMatsLightLow" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="awakenMatsLightMid" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="awakenMatsMagicHigh" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="awakenMatsMagicLow" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="awakenMatsMagicMid" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="awakenMatsWaterHigh" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="awakenMatsWaterLow" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="awakenMatsWaterMid" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="awakenMatsWindHigh" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="awakenMatsWindLow" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="awakenMatsWindMid" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="awakensFromId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="awakensToId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="baseAttack" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="baseDefense" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="baseHp" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="baseStars" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="baseStars" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="bestiarySlug" optional="YES" attributeType="String"/>
         <attribute name="canAwaken" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="com2usId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="craftCost" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="critDamage" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="critRate" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -246,17 +250,19 @@
         <attribute name="maxLvlDefense" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="maxLvlHp" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="naturalStars" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="naturalStars" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="obtainable" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="rawAttack" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="rawDefense" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="rawHp" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="resistance" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="skillArray" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[Int64]"/>
+        <attribute name="skillGroupId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="skillUpsToMax" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="sourceRaw" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[Int64]"/>
         <attribute name="speed" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="transformsToId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="awakenCosts" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AwakenCost" inverseName="monster" inverseEntity="AwakenCost"/>
         <relationship name="fusionIngredient" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Fusion" inverseName="fusionIngredients" inverseEntity="Fusion"/>
         <relationship name="fusionProduct" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Fusion" inverseName="fusionProduct" inverseEntity="Fusion"/>
         <relationship name="homuSKills" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HomunculusSkill" inverseName="monsters" inverseEntity="HomunculusSkill"/>
@@ -402,19 +408,19 @@
         <attribute name="slot" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="speed" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="stars" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="substat1" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="substat1" optional="YES" attributeType="Integer 64" usesScalarValueType="YES"/>
         <attribute name="substat1Craft" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="substat1Enchanted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="substat1Value" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="substat2" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="substat2" optional="YES" attributeType="Integer 64" usesScalarValueType="YES"/>
         <attribute name="substat2Craft" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="substat2Enchanted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="substat2Value" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="substat3" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="substat3" optional="YES" attributeType="Integer 64" usesScalarValueType="YES"/>
         <attribute name="substat3Craft" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="substat3Enchanted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="substat3Value" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="substat4" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="substat4" optional="YES" attributeType="Integer 64" usesScalarValueType="YES"/>
         <attribute name="substat4Craft" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="substat4Enchanted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="substat4Value" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -473,7 +479,7 @@
         <attribute name="levelProgressDescription" optional="YES" attributeType="String"/>
         <attribute name="maxLevel" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="multiplierFormula" optional="YES" attributeType="String" valueTransformerName="[String]" customClassName="[String]"/>
-        <attribute name="multiplierFormulaRaw" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
+        <attribute name="multiplierFormulaRaw" optional="YES" attributeType="String" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="passive" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="scalingStatsIds" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[Int64]"/>
@@ -492,6 +498,7 @@
     </entity>
     <entity name="SkillEffect" representedClassName="SkillEffect" syncable="YES" codeGenerationType="category">
         <attribute name="c2uDescription" optional="YES" attributeType="String"/>
+        <attribute name="effectType" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="imageFilename" optional="YES" attributeType="String"/>
         <attribute name="isBuff" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
@@ -633,27 +640,27 @@
     <fetchRequest name="summonerRuneById" entity="RuneInstance" predicateString="com2usId == @i AND summonerId == @i" fetchLimit="1" fetchBatchSize="1"/>
     <elements>
         <element name="ArtifactInstance" positionX="-90" positionY="153" width="128" height="629"/>
-        <element name="AwakenCost" positionX="-81" positionY="162" width="128" height="89"/>
+        <element name="AwakenCost" positionX="-81" positionY="162" width="128" height="119"/>
         <element name="Building" positionX="-745.9766235351562" positionY="746.3114318847656" width="128" height="209"/>
         <element name="BuildingInstance" positionX="-766.1875305175781" positionY="1009.633087158203" width="128" height="133"/>
         <element name="Dungeon" positionX="-612" positionY="108" width="128" height="134"/>
         <element name="DungeonLevel" positionX="-576" positionY="144" width="128" height="194"/>
         <element name="Enemy" positionX="-585" positionY="135" width="128" height="269"/>
         <element name="Fusion" positionX="72.27294921875" positionY="192.6597900390625" width="128" height="134"/>
-        <element name="GameItem" positionX="125.4957885742188" positionY="218.3388061523438" width="128" height="164"/>
+        <element name="GameItem" positionX="125.4957885742188" positionY="218.3388061523438" width="128" height="179"/>
         <element name="HomunculusSkill" positionX="-494.9537353515625" positionY="171.3886413574219" width="128" height="119"/>
         <element name="HomunculusSkillcraftCost" positionX="-352.7395629882812" positionY="205.7951049804688" width="128" height="89"/>
         <element name="LeaderSkill" positionX="-573.5347900390625" positionY="447.7420349121094" width="128" height="119"/>
-        <element name="Monster" positionX="174.0562133789062" positionY="-10.60525512695312" width="128" height="1019"/>
+        <element name="Monster" positionX="174.0562133789062" positionY="-10.60525512695312" width="128" height="1064"/>
         <element name="MonsterCraftCost" positionX="132.1785278320312" positionY="334.7951049804688" width="128" height="119"/>
         <element name="MonsterInstance" positionX="-268.6402587890625" positionY="128.8222198486328" width="128" height="719"/>
         <element name="RuneBuild" positionX="-612" positionY="108" width="128" height="314"/>
-        <element name="RuneInstance" positionX="336.904052734375" positionY="238.5854949951172" width="128" height="1025"/>
+        <element name="RuneInstance" positionX="336.904052734375" positionY="238.5854949951172" width="128" height="20"/>
         <element name="RunePriority" positionX="-437.1119384765625" positionY="86.45263671875" width="128" height="89"/>
         <element name="ScalingStat" positionX="-586.6636657714844" positionY="6.030624389648438" width="128" height="104"/>
         <element name="SecretDungeon" positionX="-603" positionY="117" width="128" height="74"/>
         <element name="Skill" positionX="-806.2515563964844" positionY="333.4104614257812" width="128" height="329"/>
-        <element name="SkillEffect" positionX="-607.8872680664062" positionY="132.7097778320312" width="128" height="134"/>
+        <element name="SkillEffect" positionX="-607.8872680664062" positionY="132.7097778320312" width="128" height="149"/>
         <element name="SkillEffectDetail" positionX="44.8348388671875" positionY="89.73995971679688" width="128" height="284"/>
         <element name="SkillUpgrade" positionX="-713.0382385253906" positionY="416.9775238037109" width="128" height="134"/>
         <element name="Source" positionX="-41.85833740234375" positionY="581.4371948242188" width="128" height="134"/>

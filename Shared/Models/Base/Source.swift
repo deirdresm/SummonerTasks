@@ -39,7 +39,7 @@ public class Source: NSManagedObject, Decodable {
 		self.metaOrder = try container.decode(Int64.self, forKey: .metaOrder)
 	}
 
-    static func findById(id: Int64,
+    static func findById(_ id: Int64,
                     context: NSManagedObjectContext) -> Source? {
         
         let request : NSFetchRequest<Source> = Source.fetchRequest()
@@ -83,7 +83,7 @@ public class Source: NSManagedObject, Decodable {
 //    static func insertOrUpdate<T: JsonArray>(from: T,
 //                               docInfo: SummonerDocumentInfo) {
 //        let sourceData = from as! SourceData
-//        let source: Source = Source.findById(id: sourceData.id, context: docInfo.taskContext) ??
+//        let source: Source = Source.findById(sourceData.id, context: docInfo.taskContext) ??
 //            Source(context: docInfo.taskContext)
 //        
 //        source.update(from: sourceData, docInfo: docInfo)

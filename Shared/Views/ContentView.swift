@@ -11,7 +11,7 @@ import CoreData
 struct ContentView: View {
     let persistenceController = PersistenceController.shared
     @State var runeType: RuneType? = RuneType.violent
-    @Binding var document: SummonerJsonDocument
+    @Binding var document: SWDocument
     @Environment(\.managedObjectContext) private var moc
 
     var body: some View {
@@ -67,8 +67,8 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static let text = Bundle.main.openBundleFile(from: "runes-mini.json")
-    static var document: SummonerJsonDocument = {
-        return try! SummonerJsonDocument(text: text, summoner: Summoner.tisHerself, isPreview: true)
+    static var document: SWDocument = {
+        return try! SWDocument(text: text, summoner: Summoner.tisHerself, isPreview: true)
     }()
     
     static var previews: some View {

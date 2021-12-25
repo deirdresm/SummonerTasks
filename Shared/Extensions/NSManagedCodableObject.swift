@@ -6,3 +6,8 @@
 //
 
 import Foundation
+import CoreData
+
+protocol NSManagedCodableObject: NSManagedObject, Codable {
+
+}

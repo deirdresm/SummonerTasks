@@ -15,8 +15,10 @@ public class SkillEffect: NSManagedObject, Decodable {
 
 	enum CodingKeys: String, CodingKey {
 		case id
-		case com2UsId = "com2us_id"
-		case enabled, name, slug, category, icon
+		case effectType = "type"
+		case isBuff = "is_buff"
+		case name, c2uDescription = "description"
+		case imageFilename = "icon_filename"
 	}
 
 	public required convenience init(from decoder: Decoder) throws {
@@ -31,7 +33,13 @@ public class SkillEffect: NSManagedObject, Decodable {
 		let container = try decoder.container(keyedBy: CodingKeys.self)
 		// and start decoding
 		self.id = try container.decode(Int64.self, forKey: .id)
-		self.com2usId = try container.decode(Int64.self, forKey: .com2usId)
+		self.effectType = try container.decode(Int64.self, forKey: .effectType)
+		self.isBuff = try container.decode(Bool.self, forKey: .isBuff)
+		self.name = try container.decode(String.self, forKey: .name)
+		self.c2uDescription = try container.decode(String.self, forKey: .c2uDescription)
+		self.imageFilename = try container.decode(String.self, forKey: .imageFilename)
+
+
 	}
 
     

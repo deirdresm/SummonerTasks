@@ -60,7 +60,7 @@ public class ArtifactInstance: NSManagedObject, Decodable {
         self.quality = try container.decode(Int16.self, forKey: .quality)
         self.originalQuality = try container.decode(Int16.self, forKey: .originalQuality)
 
-		var primaryEffect = try container.decodeArray(Int16.self, forKey: .primaryEffect)
+		let primaryEffect = try container.decodeArray(Int16.self, forKey: .primaryEffect)
 		self.mainStat = primaryEffect[0]
 		self.mainStatValue = Int64(primaryEffect[1])
 		

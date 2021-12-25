@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -24,10 +24,18 @@
 		3818B168259D843F00CCE47E /* Skill+Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3818B167259D843F00CCE47E /* Skill+Previews.swift */; };
 		3818B169259D843F00CCE47E /* Skill+Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3818B167259D843F00CCE47E /* Skill+Previews.swift */; };
 		382A71D225E9FB950004DD67 /* BestiaryGoalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A1C645257DE5280032878E /* BestiaryGoalsView.swift */; };
+		3835305C26E330BC0018E908 /* RuneSidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3835305B26E330BC0018E908 /* RuneSidebar.swift */; };
+		3835305D26E330BC0018E908 /* RuneSidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3835305B26E330BC0018E908 /* RuneSidebar.swift */; };
+		3835305F26E3FA650018E908 /* Image+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3835305E26E3FA650018E908 /* Image+Extension.swift */; };
+		3835306026E3FA650018E908 /* Image+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3835305E26E3FA650018E908 /* Image+Extension.swift */; };
+		3835306226E4307A0018E908 /* runes-mini.json in Resources */ = {isa = PBXBuildFile; fileRef = 3835306126E4307A0018E908 /* runes-mini.json */; };
+		3835306326E4307A0018E908 /* runes-mini.json in Resources */ = {isa = PBXBuildFile; fileRef = 3835306126E4307A0018E908 /* runes-mini.json */; };
 		383CAB4325AEC0CA00A24A4D /* ArtifactEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383CAB4225AEC0CA00A24A4D /* ArtifactEnums.swift */; };
 		383CAB4425AEC0CA00A24A4D /* ArtifactEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383CAB4225AEC0CA00A24A4D /* ArtifactEnums.swift */; };
 		383EF43625E32A7B00FAE7DA /* ArtifactSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383EF43525E32A7A00FAE7DA /* ArtifactSummary.swift */; };
 		383EF43725E32A7B00FAE7DA /* ArtifactSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383EF43525E32A7A00FAE7DA /* ArtifactSummary.swift */; };
+		383F6BEF2702DA0600A26978 /* HStackWrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383F6BEE2702DA0600A26978 /* HStackWrap.swift */; };
+		383F6BF02702DA0600A26978 /* HStackWrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383F6BEE2702DA0600A26978 /* HStackWrap.swift */; };
 		3848A414258D700C000809EF /* BestiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3848A413258D700C000809EF /* BestiaryView.swift */; };
 		3848A415258D700C000809EF /* BestiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3848A413258D700C000809EF /* BestiaryView.swift */; };
 		384A48F82575A074002E04CB /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384A48F72575A074002E04CB /* Tests_iOS.swift */; };
@@ -64,18 +72,28 @@
 		386010132599B32900118951 /* HomunculusSkill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386010112599B32900118951 /* HomunculusSkill.swift */; };
 		386010212599C12E00118951 /* AwakenCost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386010202599C12E00118951 /* AwakenCost.swift */; };
 		386010222599C12E00118951 /* AwakenCost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386010202599C12E00118951 /* AwakenCost.swift */; };
-		386010302599C3EF00118951 /* MonsterCraftCostData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3860102F2599C3EF00118951 /* MonsterCraftCostData.swift */; };
-		386010312599C3EF00118951 /* MonsterCraftCostData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3860102F2599C3EF00118951 /* MonsterCraftCostData.swift */; };
 		386010372599C4B500118951 /* MonsterCraftCost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386010362599C4B500118951 /* MonsterCraftCost.swift */; };
 		386010382599C4B500118951 /* MonsterCraftCost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386010362599C4B500118951 /* MonsterCraftCost.swift */; };
-		38601046259AB19A00118951 /* GameItemData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38601045259AB19900118951 /* GameItemData.swift */; };
-		38601047259AB19A00118951 /* GameItemData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38601045259AB19900118951 /* GameItemData.swift */; };
 		3860104D259AB48F00118951 /* GameItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3860104C259AB48F00118951 /* GameItem.swift */; };
 		3860104E259AB48F00118951 /* GameItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3860104C259AB48F00118951 /* GameItem.swift */; };
+		38647F06271272860050FC06 /* NonZeroValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38647F04271272860050FC06 /* NonZeroValidator.swift */; };
+		38647F092713D3DE0050FC06 /* Publisher+IntValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38647F072713D3DE0050FC06 /* Publisher+IntValidator.swift */; };
+		386E21652708E64D006A4F98 /* RuneSetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386E21642708E64D006A4F98 /* RuneSetView.swift */; };
+		386E21662708E64D006A4F98 /* RuneSetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386E21642708E64D006A4F98 /* RuneSetView.swift */; };
+		386E216827096598006A4F98 /* RuneBuildEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386E216727096598006A4F98 /* RuneBuildEnums.swift */; };
+		386E216927096598006A4F98 /* RuneBuildEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386E216727096598006A4F98 /* RuneBuildEnums.swift */; };
+		386E216B270A6F7E006A4F98 /* RuneChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386E216A270A6F7E006A4F98 /* RuneChecker.swift */; };
+		386E216C270A6F7E006A4F98 /* RuneChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386E216A270A6F7E006A4F98 /* RuneChecker.swift */; };
+		386E216E270A6FCF006A4F98 /* RuneCheckerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386E216D270A6FCF006A4F98 /* RuneCheckerVM.swift */; };
+		386E216F270A6FCF006A4F98 /* RuneCheckerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386E216D270A6FCF006A4F98 /* RuneCheckerVM.swift */; };
+		386E2172270C122A006A4F98 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		386EA5F025CC8A1E00C6C2D0 /* BuildingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386EA5EF25CC8A1E00C6C2D0 /* BuildingListView.swift */; };
 		386EA5F125CC8A1E00C6C2D0 /* BuildingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386EA5EF25CC8A1E00C6C2D0 /* BuildingListView.swift */; };
-		38705B9E25C0BB0100FA247C /* DungeonData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38705B9D25C0BB0100FA247C /* DungeonData.swift */; };
-		38705B9F25C0BB0100FA247C /* DungeonData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38705B9D25C0BB0100FA247C /* DungeonData.swift */; };
+		3871569526E727F800586272 /* SummonerName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3871569426E727F800586272 /* SummonerName.swift */; };
+		3871569626E727F800586272 /* SummonerName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3871569426E727F800586272 /* SummonerName.swift */; };
+		3871569826E8928700586272 /* RuneTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3871569726E8928700586272 /* RuneTableView.swift */; };
+		3871569A26EDB88F00586272 /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3871569926EDB88F00586272 /* View+Extension.swift */; };
+		3871569B26EDB88F00586272 /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3871569926EDB88F00586272 /* View+Extension.swift */; };
 		38922C7F2599562800CCF63B /* MonsterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38922C7E2599562800CCF63B /* MonsterView.swift */; };
 		38922C802599562800CCF63B /* MonsterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38922C7E2599562800CCF63B /* MonsterView.swift */; };
 		38922C91259999FB00CCF63B /* LeaderSkill+Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38922C90259999FB00CCF63B /* LeaderSkill+Previews.swift */; };
@@ -112,20 +130,8 @@
 		38B9F77125BA2C6600F4C112 /* BuildingEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B9F76F25BA2C6600F4C112 /* BuildingEnums.swift */; };
 		38BC3AC52589CCBD00A85FBE /* BestiaryImport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC3AC42589CCBD00A85FBE /* BestiaryImport.swift */; };
 		38BC3AC62589CCBD00A85FBE /* BestiaryImport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC3AC42589CCBD00A85FBE /* BestiaryImport.swift */; };
-		38BC3ACF2589CCE500A85FBE /* BuildingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC3AC02589CC8E00A85FBE /* BuildingData.swift */; };
-		38BC3AD02589CCE600A85FBE /* BuildingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC3AC02589CC8E00A85FBE /* BuildingData.swift */; };
-		38BC3AD52589CCE900A85FBE /* FusionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC3ABF2589CC8C00A85FBE /* FusionData.swift */; };
-		38BC3AD62589CCEA00A85FBE /* FusionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC3ABF2589CC8C00A85FBE /* FusionData.swift */; };
-		38BC3ADB2589CCED00A85FBE /* MonsterData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC3AC12589CC9000A85FBE /* MonsterData.swift */; };
-		38BC3ADC2589CCEE00A85FBE /* MonsterData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC3AC12589CC9000A85FBE /* MonsterData.swift */; };
-		38BC3AE12589CCF200A85FBE /* SkillData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC3AC22589CC9300A85FBE /* SkillData.swift */; };
-		38BC3AE22589CCF200A85FBE /* SkillData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC3AC22589CC9300A85FBE /* SkillData.swift */; };
-		38BC3AE72589CCF900A85FBE /* SourceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC3AC32589CC9500A85FBE /* SourceData.swift */; };
-		38BC3AE82589CCFA00A85FBE /* SourceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC3AC32589CC9500A85FBE /* SourceData.swift */; };
 		38BC3AF9258B0AD700A85FBE /* Building+Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC3AF8258B0AD700A85FBE /* Building+Previews.swift */; };
 		38BC3AFA258B0AD700A85FBE /* Building+Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC3AF8258B0AD700A85FBE /* Building+Previews.swift */; };
-		38BC3B13258C50AC00A85FBE /* AwakenCostDataOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC3B12258C50AC00A85FBE /* AwakenCostDataOld.swift */; };
-		38BC3B14258C50AC00A85FBE /* AwakenCostDataOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC3B12258C50AC00A85FBE /* AwakenCostDataOld.swift */; };
 		38BE67C825BB76F300CA67E9 /* NSPredicate+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BE67C725BB76F300CA67E9 /* NSPredicate+Extension.swift */; };
 		38BE67C925BB76F300CA67E9 /* NSPredicate+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BE67C725BB76F300CA67E9 /* NSPredicate+Extension.swift */; };
 		38BE67D325BB8AC900CA67E9 /* BuildingInstance+Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BE67D225BB8AC900CA67E9 /* BuildingInstance+Previews.swift */; };
@@ -134,6 +140,22 @@
 		38BE67DB25BC07F800CA67E9 /* RuneListGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BE67D925BC07F800CA67E9 /* RuneListGridView.swift */; };
 		38C7E06D260A896400F9BB4C /* PlayerFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C7E06C260A896400F9BB4C /* PlayerFile.swift */; };
 		38C7E06E260A896400F9BB4C /* PlayerFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C7E06C260A896400F9BB4C /* PlayerFile.swift */; };
+		38CCFA75276EF594007BD37B /* BestiaryDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CCFA74276EF594007BD37B /* BestiaryDocument.swift */; };
+		38CCFA76276EF594007BD37B /* BestiaryDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CCFA74276EF594007BD37B /* BestiaryDocument.swift */; };
+		38CCFA78276FB52D007BD37B /* ArtifactWhichMonster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CCFA77276FB52D007BD37B /* ArtifactWhichMonster.swift */; };
+		38CCFA79276FB52D007BD37B /* ArtifactWhichMonster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CCFA77276FB52D007BD37B /* ArtifactWhichMonster.swift */; };
+		38CCFA7B276FC793007BD37B /* NSManagedCodableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CCFA7A276FC793007BD37B /* NSManagedCodableObject.swift */; };
+		38CCFA7C276FC793007BD37B /* NSManagedCodableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CCFA7A276FC793007BD37B /* NSManagedCodableObject.swift */; };
+		38CCFA7E276FD4E8007BD37B /* DungeonLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CCFA7D276FD4E8007BD37B /* DungeonLevel.swift */; };
+		38CCFA7F276FD4E8007BD37B /* DungeonLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CCFA7D276FD4E8007BD37B /* DungeonLevel.swift */; };
+		38CCFA81276FD4F4007BD37B /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CCFA80276FD4F4007BD37B /* Enemy.swift */; };
+		38CCFA82276FD4F4007BD37B /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CCFA80276FD4F4007BD37B /* Enemy.swift */; };
+		38CCFA84276FD56D007BD37B /* SecretDungeon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CCFA83276FD56D007BD37B /* SecretDungeon.swift */; };
+		38CCFA85276FD56D007BD37B /* SecretDungeon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CCFA83276FD56D007BD37B /* SecretDungeon.swift */; };
+		38CCFA87276FD582007BD37B /* Wave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CCFA86276FD582007BD37B /* Wave.swift */; };
+		38CCFA88276FD582007BD37B /* Wave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CCFA86276FD582007BD37B /* Wave.swift */; };
+		38CCFA8A27742ECF007BD37B /* RuneInstance+ItemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CCFA8927742ECF007BD37B /* RuneInstance+ItemProvider.swift */; };
+		38CCFA8B27742ECF007BD37B /* RuneInstance+ItemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CCFA8927742ECF007BD37B /* RuneInstance+ItemProvider.swift */; };
 		38CFB6B92576EFC600F0C398 /* Monster+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB6B82576EFC600F0C398 /* Monster+Extension.swift */; };
 		38CFB6C72577291800F0C398 /* TeamGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB6C62577291800F0C398 /* TeamGroup.swift */; };
 		38CFB6C82577291800F0C398 /* TeamGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB6C62577291800F0C398 /* TeamGroup.swift */; };
@@ -187,6 +209,13 @@
 		38ECB153259BD1920021E891 /* Source+Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38ECB152259BD1920021E891 /* Source+Previews.swift */; };
 		38ECB154259BD1920021E891 /* Source+Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38ECB152259BD1920021E891 /* Source+Previews.swift */; };
 		38ECB15A259BED2A0021E891 /* Test_LeaderSkill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38ECB159259BED2A0021E891 /* Test_LeaderSkill.swift */; };
+		38F02E92272C7C55007899C6 /* DecodedArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F02E91272C7C55007899C6 /* DecodedArray.swift */; };
+		38F02E93272C7C55007899C6 /* DecodedArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F02E91272C7C55007899C6 /* DecodedArray.swift */; };
+		38F02E95272C7C99007899C6 /* Unboxing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F02E94272C7C99007899C6 /* Unboxing.swift */; };
+		38F02E96272C7C99007899C6 /* Unboxing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F02E94272C7C99007899C6 /* Unboxing.swift */; };
+		38F02E99272C8160007899C6 /* FormValidator in Frameworks */ = {isa = PBXBuildFile; productRef = 38F02E98272C8160007899C6 /* FormValidator */; };
+		38F02E9B272CACA8007899C6 /* Dungeon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F02E9A272CACA8007899C6 /* Dungeon.swift */; };
+		38F02E9C272CACA8007899C6 /* Dungeon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F02E9A272CACA8007899C6 /* Dungeon.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -216,8 +245,12 @@
 		380DF61B25D4B3A200848DE0 /* building.jsonschema */ = {isa = PBXFileReference; lastKnownFileType = text; path = building.jsonschema; sourceTree = "<group>"; };
 		380DF62225D4B5F200848DE0 /* BuildingInstanceData.jsonschema */ = {isa = PBXFileReference; lastKnownFileType = text; path = BuildingInstanceData.jsonschema; sourceTree = "<group>"; };
 		3818B167259D843F00CCE47E /* Skill+Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Skill+Previews.swift"; sourceTree = "<group>"; };
+		3835305B26E330BC0018E908 /* RuneSidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuneSidebar.swift; sourceTree = "<group>"; };
+		3835305E26E3FA650018E908 /* Image+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Extension.swift"; sourceTree = "<group>"; };
+		3835306126E4307A0018E908 /* runes-mini.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "runes-mini.json"; sourceTree = "<group>"; };
 		383CAB4225AEC0CA00A24A4D /* ArtifactEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtifactEnums.swift; sourceTree = "<group>"; };
 		383EF43525E32A7A00FAE7DA /* ArtifactSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtifactSummary.swift; sourceTree = "<group>"; };
+		383F6BEE2702DA0600A26978 /* HStackWrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HStackWrap.swift; sourceTree = "<group>"; };
 		3848A413258D700C000809EF /* BestiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestiaryView.swift; sourceTree = "<group>"; };
 		384A48DB2575A071002E04CB /* SummonerTasksApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummonerTasksApp.swift; sourceTree = "<group>"; };
 		384A48DC2575A071002E04CB /* SummonerTasksDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummonerTasksDocument.swift; sourceTree = "<group>"; };
@@ -247,14 +280,20 @@
 		38600F6125B80BA90071E7A3 /* CoreData+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreData+Extension.swift"; sourceTree = "<group>"; };
 		386010112599B32900118951 /* HomunculusSkill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomunculusSkill.swift; sourceTree = "<group>"; };
 		386010202599C12E00118951 /* AwakenCost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AwakenCost.swift; sourceTree = "<group>"; };
-		3860102F2599C3EF00118951 /* MonsterCraftCostData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterCraftCostData.swift; sourceTree = "<group>"; };
 		386010362599C4B500118951 /* MonsterCraftCost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterCraftCost.swift; sourceTree = "<group>"; };
-		38601045259AB19900118951 /* GameItemData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameItemData.swift; sourceTree = "<group>"; };
 		3860104C259AB48F00118951 /* GameItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameItem.swift; sourceTree = "<group>"; };
+		38647F04271272860050FC06 /* NonZeroValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonZeroValidator.swift; sourceTree = "<group>"; };
+		38647F072713D3DE0050FC06 /* Publisher+IntValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+IntValidator.swift"; sourceTree = "<group>"; };
+		386E21642708E64D006A4F98 /* RuneSetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuneSetView.swift; sourceTree = "<group>"; };
+		386E216727096598006A4F98 /* RuneBuildEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuneBuildEnums.swift; sourceTree = "<group>"; };
+		386E216A270A6F7E006A4F98 /* RuneChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuneChecker.swift; sourceTree = "<group>"; };
+		386E216D270A6FCF006A4F98 /* RuneCheckerVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RuneCheckerVM.swift; path = Shared/RuneCheckerVM.swift; sourceTree = SOURCE_ROOT; };
 		386EA5EF25CC8A1E00C6C2D0 /* BuildingListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BuildingListView.swift; path = "Shared/Utility Views/BuildingListView.swift"; sourceTree = SOURCE_ROOT; };
-		38705B9D25C0BB0100FA247C /* DungeonData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DungeonData.swift; sourceTree = "<group>"; };
 		38705BA425C0F72800FA247C /* First Version.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "First Version.xcdatamodel"; sourceTree = "<group>"; };
 		38705BE325C21A4A00FA247C /* SummonerBattleStats.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SummonerBattleStats.xcdatamodel; sourceTree = "<group>"; };
+		3871569426E727F800586272 /* SummonerName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummonerName.swift; sourceTree = "<group>"; };
+		3871569726E8928700586272 /* RuneTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuneTableView.swift; sourceTree = "<group>"; };
+		3871569926EDB88F00586272 /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
 		38922C7E2599562800CCF63B /* MonsterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterView.swift; sourceTree = "<group>"; };
 		38922C90259999FB00CCF63B /* LeaderSkill+Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LeaderSkill+Previews.swift"; sourceTree = "<group>"; };
 		3898A086260964C900B3E81B /* CodingUserInfoKey+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CodingUserInfoKey+Extension.swift"; sourceTree = "<group>"; };
@@ -263,10 +302,8 @@
 		389F89DF25982BB100006C09 /* Decoration+Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Decoration+Previews.swift"; sourceTree = "<group>"; };
 		38A0AD59258DCC05005C01D0 /* BuildingInstanceData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingInstanceData.swift; sourceTree = "<group>"; };
 		38A0AD60258DD08C005C01D0 /* BuildingInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingInstance.swift; sourceTree = "<group>"; };
-		38A0AD67258DD4FA005C01D0 /* RuneInstanceData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuneInstanceData.swift; sourceTree = "<group>"; };
 		38A0ADAD258EC067005C01D0 /* RuneGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuneGrid.swift; sourceTree = "<group>"; };
 		38A0ADB8258EE9A5005C01D0 /* RuneInstance+Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RuneInstance+Previews.swift"; sourceTree = "<group>"; };
-		38A0ADC7258F0C77005C01D0 /* MonsterInstanceData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterInstanceData.swift; sourceTree = "<group>"; };
 		38A1C644257DE5270032878E /* BestiaryGoalsDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BestiaryGoalsDelegate.swift; sourceTree = "<group>"; };
 		38A1C645257DE5280032878E /* BestiaryGoalsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BestiaryGoalsView.swift; sourceTree = "<group>"; };
 		38A1C646257DE5280032878E /* FusionSceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FusionSceneDelegate.swift; sourceTree = "<group>"; };
@@ -279,18 +316,20 @@
 		38B6A43F25DDFC64006E5A2D /* ElementColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementColor.swift; sourceTree = "<group>"; };
 		38B9F76F25BA2C6600F4C112 /* BuildingEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingEnums.swift; sourceTree = "<group>"; };
 		38BC3ABE2589CC8B00A85FBE /* JSONDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecodable.swift; sourceTree = "<group>"; };
-		38BC3ABF2589CC8C00A85FBE /* FusionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FusionData.swift; sourceTree = "<group>"; };
-		38BC3AC02589CC8E00A85FBE /* BuildingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingData.swift; sourceTree = "<group>"; };
-		38BC3AC12589CC9000A85FBE /* MonsterData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterData.swift; sourceTree = "<group>"; };
-		38BC3AC22589CC9300A85FBE /* SkillData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillData.swift; sourceTree = "<group>"; };
-		38BC3AC32589CC9500A85FBE /* SourceData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceData.swift; sourceTree = "<group>"; };
 		38BC3AC42589CCBD00A85FBE /* BestiaryImport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestiaryImport.swift; sourceTree = "<group>"; };
 		38BC3AF8258B0AD700A85FBE /* Building+Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Building+Previews.swift"; sourceTree = "<group>"; };
-		38BC3B12258C50AC00A85FBE /* AwakenCostDataOld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AwakenCostDataOld.swift; sourceTree = "<group>"; };
 		38BE67C725BB76F300CA67E9 /* NSPredicate+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSPredicate+Extension.swift"; sourceTree = "<group>"; };
 		38BE67D225BB8AC900CA67E9 /* BuildingInstance+Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BuildingInstance+Previews.swift"; sourceTree = "<group>"; };
 		38BE67D925BC07F800CA67E9 /* RuneListGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuneListGridView.swift; sourceTree = "<group>"; };
 		38C7E06C260A896400F9BB4C /* PlayerFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerFile.swift; sourceTree = "<group>"; };
+		38CCFA74276EF594007BD37B /* BestiaryDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestiaryDocument.swift; sourceTree = "<group>"; };
+		38CCFA77276FB52D007BD37B /* ArtifactWhichMonster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtifactWhichMonster.swift; sourceTree = "<group>"; };
+		38CCFA7A276FC793007BD37B /* NSManagedCodableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSManagedCodableObject.swift; sourceTree = "<group>"; };
+		38CCFA7D276FD4E8007BD37B /* DungeonLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DungeonLevel.swift; sourceTree = "<group>"; };
+		38CCFA80276FD4F4007BD37B /* Enemy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
+		38CCFA83276FD56D007BD37B /* SecretDungeon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretDungeon.swift; sourceTree = "<group>"; };
+		38CCFA86276FD582007BD37B /* Wave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wave.swift; sourceTree = "<group>"; };
+		38CCFA8927742ECF007BD37B /* RuneInstance+ItemProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RuneInstance+ItemProvider.swift"; sourceTree = "<group>"; };
 		38CFB6B82576EFC600F0C398 /* Monster+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Monster+Extension.swift"; sourceTree = "<group>"; };
 		38CFB6C62577291800F0C398 /* TeamGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamGroup.swift; sourceTree = "<group>"; };
 		38CFB6D225772A3100F0C398 /* Summoner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Summoner.swift; sourceTree = "<group>"; };
@@ -319,7 +358,9 @@
 		38ECB147259BCFF30021E891 /* Monster+Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Monster+Previews.swift"; path = "Shared/Previews/Monster+Previews.swift"; sourceTree = SOURCE_ROOT; };
 		38ECB152259BD1920021E891 /* Source+Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Source+Previews.swift"; sourceTree = "<group>"; };
 		38ECB159259BED2A0021E891 /* Test_LeaderSkill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test_LeaderSkill.swift; sourceTree = "<group>"; };
-		38F1BD2825A016460070B13E /* ArtifactInstanceData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtifactInstanceData.swift; sourceTree = "<group>"; };
+		38F02E91272C7C55007899C6 /* DecodedArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodedArray.swift; sourceTree = "<group>"; };
+		38F02E94272C7C99007899C6 /* Unboxing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Unboxing.swift; sourceTree = "<group>"; };
+		38F02E9A272CACA8007899C6 /* Dungeon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dungeon.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -334,6 +375,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				386E2172270C122A006A4F98 /* (null) in Frameworks */,
+				38F02E99272C8160007899C6 /* FormValidator in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -358,6 +401,7 @@
 			isa = PBXGroup;
 			children = (
 				38000B3F2587F9DA00BED558 /* building-mini.json */,
+				3835306126E4307A0018E908 /* runes-mini.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -379,14 +423,15 @@
 		384A48DA2575A071002E04CB /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				38CCFA73276EF547007BD37B /* Documents */,
+				38F02E90272C7C2C007899C6 /* OP Code */,
 				38BC3AF7258B087800A85FBE /* Previews */,
 				38535E222582BBE9009411A1 /* Fixtures */,
 				38CFB793257AFB1900F0C398 /* Extensions */,
 				38CFB6B72576EF9E00F0C398 /* Models */,
-				38A1C649257DE52A0032878E /* Utility Views */,
-				38535E2A25832E71009411A1 /* Views */,
 				384A48DB2575A071002E04CB /* SummonerTasksApp.swift */,
-				384A48DC2575A071002E04CB /* SummonerTasksDocument.swift */,
+				38535E2A25832E71009411A1 /* Views */,
+				38A1C649257DE52A0032878E /* Utility Views */,
 				38A1C644257DE5270032878E /* BestiaryGoalsDelegate.swift */,
 				38A1C647257DE5290032878E /* Event.swift */,
 				38A1C646257DE5280032878E /* FusionSceneDelegate.swift */,
@@ -456,16 +501,22 @@
 		38535E2A25832E71009411A1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				38607FA62776F0D700452EFF /* Bestiary */,
 				384A48DD2575A071002E04CB /* ContentView.swift */,
+				386E216A270A6F7E006A4F98 /* RuneChecker.swift */,
+				3835305B26E330BC0018E908 /* RuneSidebar.swift */,
 				38A1C648257DE5290032878E /* FusionContentView.swift */,
 				38A1C645257DE5280032878E /* BestiaryGoalsView.swift */,
 				38535E2B25832E95009411A1 /* BJr5.swift */,
 				38BE67D925BC07F800CA67E9 /* RuneListGridView.swift */,
+				3871569726E8928700586272 /* RuneTableView.swift */,
 				3848A413258D700C000809EF /* BestiaryView.swift */,
 				38922C7E2599562800CCF63B /* MonsterView.swift */,
 				38A0ADAD258EC067005C01D0 /* RuneGrid.swift */,
+				386E21642708E64D006A4F98 /* RuneSetView.swift */,
 				386EA5EF25CC8A1E00C6C2D0 /* BuildingListView.swift */,
 				383EF43525E32A7A00FAE7DA /* ArtifactSummary.swift */,
+				38CCFA77276FB52D007BD37B /* ArtifactWhichMonster.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -473,12 +524,12 @@
 		38535E3D25833C3F009411A1 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				3860104C259AB48F00118951 /* GameItem.swift */,
 				38CFB6B82576EFC600F0C398 /* Monster+Extension.swift */,
 				38535E3625833145009411A1 /* Building+Extension.swift */,
 				386010202599C12E00118951 /* AwakenCost.swift */,
 				386010362599C4B500118951 /* MonsterCraftCost.swift */,
 				38CFB7882579E28400F0C398 /* Source.swift */,
-				3860104C259AB48F00118951 /* GameItem.swift */,
 				38CFB6FF25782F9B00F0C398 /* LeaderSkill.swift */,
 				38CFB7652579DE4D00F0C398 /* Skill.swift */,
 				38CFB7812579E24000F0C398 /* SkillUpgrade.swift */,
@@ -488,6 +539,11 @@
 				38CFB72E2578494400F0C398 /* MonsterSkill.swift */,
 				38CFB7732579DEC000F0C398 /* SkillEffect.swift */,
 				38CFB77A2579DEE800F0C398 /* SkillEffectDetail.swift */,
+				38CCFA83276FD56D007BD37B /* SecretDungeon.swift */,
+				38F02E9A272CACA8007899C6 /* Dungeon.swift */,
+				38CCFA7D276FD4E8007BD37B /* DungeonLevel.swift */,
+				38CCFA80276FD4F4007BD37B /* Enemy.swift */,
+				38CCFA86276FD582007BD37B /* Wave.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -499,6 +555,7 @@
 				38A0AD60258DD08C005C01D0 /* BuildingInstance.swift */,
 				38CFB7152578388E00F0C398 /* MonsterInstance+extras.swift */,
 				38CFB7202578462700F0C398 /* RuneInstance+extras.swift */,
+				38CCFA8927742ECF007BD37B /* RuneInstance+ItemProvider.swift */,
 				38D4389425BE9EE5004A2271 /* RuneInstance+CoreDataClass.swift */,
 				38CFB727257848C900F0C398 /* ArtifactInstance.swift */,
 				38CFB7062578303E00F0C398 /* FusionIngredients.swift */,
@@ -514,8 +571,16 @@
 				38600029259276130071569A /* MonsterEnums.swift */,
 				383CAB4225AEC0CA00A24A4D /* ArtifactEnums.swift */,
 				38B9F76F25BA2C6600F4C112 /* BuildingEnums.swift */,
+				386E216727096598006A4F98 /* RuneBuildEnums.swift */,
 			);
 			path = Enums;
+			sourceTree = "<group>";
+		};
+		38607FA62776F0D700452EFF /* Bestiary */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Bestiary;
 			sourceTree = "<group>";
 		};
 		38A0AD58258DCBE7005C01D0 /* JSON Instance */ = {
@@ -525,10 +590,7 @@
 				38A0AD59258DCC05005C01D0 /* BuildingInstanceData.swift */,
 				380DF61B25D4B3A200848DE0 /* building.jsonschema */,
 				380DF62225D4B5F200848DE0 /* BuildingInstanceData.jsonschema */,
-				38F1BD2825A016460070B13E /* ArtifactInstanceData.swift */,
 				389F89BC259805B300006C09 /* SummonerData.swift */,
-				38A0ADC7258F0C77005C01D0 /* MonsterInstanceData.swift */,
-				38A0AD67258DD4FA005C01D0 /* RuneInstanceData.swift */,
 			);
 			path = "JSON Instance";
 			sourceTree = "<group>";
@@ -540,6 +602,7 @@
 				38038CA725DDBE260036BAC6 /* RuneColor.swift */,
 				38B6A43F25DDFC64006E5A2D /* ElementColor.swift */,
 				38E1101B25903C6100D4BBB0 /* RuneIconBase.swift */,
+				3871569426E727F800586272 /* SummonerName.swift */,
 				38A1C64A257DE52A0032878E /* RuneIconView.swift */,
 				38A1C64B257DE52A0032878E /* MonsterIconView.swift */,
 				38535E54258480A6009411A1 /* BuildingViews.swift */,
@@ -550,17 +613,7 @@
 		38BC3ABD2589CC7800A85FBE /* JSON Base */ = {
 			isa = PBXGroup;
 			children = (
-				38BC3AC42589CCBD00A85FBE /* BestiaryImport.swift */,
-				38BC3B12258C50AC00A85FBE /* AwakenCostDataOld.swift */,
-				3860102F2599C3EF00118951 /* MonsterCraftCostData.swift */,
-				38BC3AC02589CC8E00A85FBE /* BuildingData.swift */,
-				38BC3ABF2589CC8C00A85FBE /* FusionData.swift */,
-				38BC3AC12589CC9000A85FBE /* MonsterData.swift */,
-				38BC3AC22589CC9300A85FBE /* SkillData.swift */,
-				38BC3AC32589CC9500A85FBE /* SourceData.swift */,
-				38601045259AB19900118951 /* GameItemData.swift */,
 				38BC3ABE2589CC8B00A85FBE /* JSONDecodable.swift */,
-				38705B9D25C0BB0100FA247C /* DungeonData.swift */,
 				380DF61425D4B13C00848DE0 /* profile.jsonschema */,
 			);
 			path = "JSON Base";
@@ -583,9 +636,20 @@
 			path = Previews;
 			sourceTree = "<group>";
 		};
+		38CCFA73276EF547007BD37B /* Documents */ = {
+			isa = PBXGroup;
+			children = (
+				384A48DC2575A071002E04CB /* SummonerTasksDocument.swift */,
+				38CCFA74276EF594007BD37B /* BestiaryDocument.swift */,
+				38BC3AC42589CCBD00A85FBE /* BestiaryImport.swift */,
+			);
+			path = Documents;
+			sourceTree = "<group>";
+		};
 		38CFB6B72576EF9E00F0C398 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				386E216D270A6FCF006A4F98 /* RuneCheckerVM.swift */,
 				384A496D2575A1ED002E04CB /* Persistence.swift */,
 				384A49782575A359002E04CB /* SummonerTasks.xcdatamodeld */,
 				38600028259275FE0071569A /* Enums */,
@@ -603,6 +667,7 @@
 		38CFB793257AFB1900F0C398 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				3871569926EDB88F00586272 /* View+Extension.swift */,
 				38AC993325D2717D00E13839 /* FilePanel+Extension.swift */,
 				38CFB794257AFB3700F0C398 /* DateFormatter+extensions.swift */,
 				38000B302585CEFD00BED558 /* Bundle-decoder.swift */,
@@ -611,6 +676,11 @@
 				38600F6125B80BA90071E7A3 /* CoreData+Extension.swift */,
 				38BE67C725BB76F300CA67E9 /* NSPredicate+Extension.swift */,
 				3898A086260964C900B3E81B /* CodingUserInfoKey+Extension.swift */,
+				3835305E26E3FA650018E908 /* Image+Extension.swift */,
+				383F6BEE2702DA0600A26978 /* HStackWrap.swift */,
+				38647F04271272860050FC06 /* NonZeroValidator.swift */,
+				38647F072713D3DE0050FC06 /* Publisher+IntValidator.swift */,
+				38CCFA7A276FC793007BD37B /* NSManagedCodableObject.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -621,6 +691,15 @@
 				38DB9D54257EF7F90038BDC0 /* LICENSE.txt */,
 			);
 			path = LICENSE;
+			sourceTree = "<group>";
+		};
+		38F02E90272C7C2C007899C6 /* OP Code */ = {
+			isa = PBXGroup;
+			children = (
+				38F02E91272C7C55007899C6 /* DecodedArray.swift */,
+				38F02E94272C7C99007899C6 /* Unboxing.swift */,
+			);
+			path = "OP Code";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -656,6 +735,9 @@
 			dependencies = (
 			);
 			name = "SummonerTasks (macOS)";
+			packageProductDependencies = (
+				38F02E98272C8160007899C6 /* FormValidator */,
+			);
 			productName = "SummonerTasks (macOS)";
 			productReference = 384A48EB2575A074002E04CB /* SummonerTasks.app */;
 			productType = "com.apple.product-type.application";
@@ -730,12 +812,15 @@
 				Base,
 			);
 			mainGroup = 384A48D52575A070002E04CB;
+			packageReferences = (
+				38F02E97272C8160007899C6 /* XCRemoteSwiftPackageReference "SwiftUIFormValidator" */,
+			);
 			productRefGroup = 384A48E42575A074002E04CB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				384A48E22575A074002E04CB /* SummonerTasks (iOS) */,
 				384A48EA2575A074002E04CB /* SummonerTasks (macOS) */,
+				384A48E22575A074002E04CB /* SummonerTasks (iOS) */,
 				384A48F22575A074002E04CB /* Tests iOS */,
 				384A48FD2575A074002E04CB /* Tests macOS */,
 			);
@@ -753,6 +838,7 @@
 				38000B402587F9DA00BED558 /* building-mini.json in Resources */,
 				384A490B2575A074002E04CB /* Assets.xcassets in Resources */,
 				38535E242582BCA9009411A1 /* bestiary_data.json.zip in Resources */,
+				3835306226E4307A0018E908 /* runes-mini.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -766,6 +852,7 @@
 				38000B412587F9DA00BED558 /* building-mini.json in Resources */,
 				384A490C2575A074002E04CB /* Assets.xcassets in Resources */,
 				38535E252582BCA9009411A1 /* bestiary_data.json.zip in Resources */,
+				3835306326E4307A0018E908 /* runes-mini.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -791,30 +878,35 @@
 			buildActionMask = 2147483647;
 			files = (
 				38A1C656257DE52A0032878E /* RuneIconView.swift in Sources */,
-				38BC3AD52589CCE900A85FBE /* FusionData.swift in Sources */,
 				38CFB70025782F9B00F0C398 /* LeaderSkill.swift in Sources */,
 				38CFB7742579DEC000F0C398 /* SkillEffect.swift in Sources */,
+				386E216F270A6FCF006A4F98 /* RuneCheckerVM.swift in Sources */,
 				3818B168259D843F00CCE47E /* Skill+Previews.swift in Sources */,
+				386E216927096598006A4F98 /* RuneBuildEnums.swift in Sources */,
+				38CCFA76276EF594007BD37B /* BestiaryDocument.swift in Sources */,
 				38A0ADB9258EE9A5005C01D0 /* RuneInstance+Previews.swift in Sources */,
 				38A1C64E257DE52A0032878E /* BestiaryGoalsView.swift in Sources */,
-				38BC3AE72589CCF900A85FBE /* SourceData.swift in Sources */,
-				38BC3AE12589CCF200A85FBE /* SkillData.swift in Sources */,
 				38DB9D5C257EF83A0038BDC0 /* Data.swift in Sources */,
 				38D4389A25BE9EE6004A2271 /* RuneInstance+CoreDataClass.swift in Sources */,
 				384A49052575A074002E04CB /* SummonerTasksApp.swift in Sources */,
+				3835305C26E330BC0018E908 /* RuneSidebar.swift in Sources */,
 				38ECB153259BD1920021E891 /* Source+Previews.swift in Sources */,
+				38647F06271272860050FC06 /* NonZeroValidator.swift in Sources */,
 				38600F5B25B6CABD0071E7A3 /* SwiftUI+Extension.swift in Sources */,
 				38A1C654257DE52A0032878E /* FusionContentView.swift in Sources */,
 				38CFB7212578462700F0C398 /* RuneInstance+extras.swift in Sources */,
 				38A1C658257DE52A0032878E /* MonsterIconView.swift in Sources */,
 				389F89E025982BB100006C09 /* Decoration+Previews.swift in Sources */,
-				38BC3ACF2589CCE500A85FBE /* BuildingData.swift in Sources */,
 				386EA5F025CC8A1E00C6C2D0 /* BuildingListView.swift in Sources */,
 				38CFB6C72577291800F0C398 /* TeamGroup.swift in Sources */,
+				3871569526E727F800586272 /* SummonerName.swift in Sources */,
+				38CCFA85276FD56D007BD37B /* SecretDungeon.swift in Sources */,
 				386010372599C4B500118951 /* MonsterCraftCost.swift in Sources */,
 				38CFB7822579E24000F0C398 /* SkillUpgrade.swift in Sources */,
 				38A0ADAE258EC067005C01D0 /* RuneGrid.swift in Sources */,
 				3848A414258D700C000809EF /* BestiaryView.swift in Sources */,
+				383F6BF02702DA0600A26978 /* HStackWrap.swift in Sources */,
+				38CCFA79276FB52D007BD37B /* ArtifactWhichMonster.swift in Sources */,
 				38A0AD61258DD08C005C01D0 /* BuildingInstance.swift in Sources */,
 				38BE67D325BB8AC900CA67E9 /* BuildingInstance+Previews.swift in Sources */,
 				38AC993425D2717D00E13839 /* FilePanel+Extension.swift in Sources */,
@@ -822,15 +914,15 @@
 				38CFB728257848C900F0C398 /* ArtifactInstance.swift in Sources */,
 				380044FB259E61940098A75C /* MonsterInstance+Previews.swift in Sources */,
 				3898A087260964C900B3E81B /* CodingUserInfoKey+Extension.swift in Sources */,
-				38BC3B13258C50AC00A85FBE /* AwakenCostDataOld.swift in Sources */,
 				38535E2C25832E95009411A1 /* BJr5.swift in Sources */,
 				386010122599B32900118951 /* HomunculusSkill.swift in Sources */,
 				38922C91259999FB00CCF63B /* LeaderSkill+Previews.swift in Sources */,
-				38BC3ADC2589CCEE00A85FBE /* MonsterData.swift in Sources */,
-				386010302599C3EF00118951 /* MonsterCraftCostData.swift in Sources */,
 				38CFB72F2578494400F0C398 /* MonsterSkill.swift in Sources */,
+				38CCFA88276FD582007BD37B /* Wave.swift in Sources */,
+				38CCFA7F276FD4E8007BD37B /* DungeonLevel.swift in Sources */,
 				38CFB77B2579DEE800F0C398 /* SkillEffectDetail.swift in Sources */,
 				38535E55258480A6009411A1 /* BuildingViews.swift in Sources */,
+				3871569A26EDB88F00586272 /* View+Extension.swift in Sources */,
 				38ECB148259BCFF30021E891 /* Monster+Previews.swift in Sources */,
 				384A496E2575A1ED002E04CB /* Persistence.swift in Sources */,
 				38C7E06D260A896400F9BB4C /* PlayerFile.swift in Sources */,
@@ -839,36 +931,44 @@
 				38600F6225B80BA90071E7A3 /* CoreData+Extension.swift in Sources */,
 				389F89D025982B5F00006C09 /* Summoner+Previews.swift in Sources */,
 				384A49822575A3E1002E04CB /* SummonerTasks.xcdatamodeld in Sources */,
+				386E21662708E64D006A4F98 /* RuneSetView.swift in Sources */,
+				38647F092713D3DE0050FC06 /* Publisher+IntValidator.swift in Sources */,
 				383EF43625E32A7B00FAE7DA /* ArtifactSummary.swift in Sources */,
 				38038CA825DDBE260036BAC6 /* RuneColor.swift in Sources */,
 				38BC3AF9258B0AD700A85FBE /* Building+Previews.swift in Sources */,
+				38F02E93272C7C55007899C6 /* DecodedArray.swift in Sources */,
 				38CFB7162578388E00F0C398 /* MonsterInstance+extras.swift in Sources */,
 				38CFB7072578303E00F0C398 /* FusionIngredients.swift in Sources */,
 				38CFB795257AFB3700F0C398 /* DateFormatter+extensions.swift in Sources */,
-				38705B9E25C0BB0100FA247C /* DungeonData.swift in Sources */,
 				38A1C681257E06820032878E /* Bundle+Extension.swift in Sources */,
 				38E1101C25903C6100D4BBB0 /* RuneIconBase.swift in Sources */,
 				384A49072575A074002E04CB /* SummonerTasksDocument.swift in Sources */,
+				3835305F26E3FA650018E908 /* Image+Extension.swift in Sources */,
 				38CFB6D325772A3100F0C398 /* Summoner.swift in Sources */,
 				38CFB70E2578306C00F0C398 /* Fusion.swift in Sources */,
+				38CCFA7C276FC793007BD37B /* NSManagedCodableObject.swift in Sources */,
 				380DF62D25D5191200848DE0 /* JSONDecodable.swift in Sources */,
 				384A499A2575A9DB002E04CB /* ModelEnums.swift in Sources */,
 				38922C7F2599562800CCF63B /* MonsterView.swift in Sources */,
+				386E216C270A6F7E006A4F98 /* RuneChecker.swift in Sources */,
 				38CFB6F92577701800F0C398 /* Team.swift in Sources */,
 				38000B312585CEFD00BED558 /* Bundle-decoder.swift in Sources */,
+				38F02E9C272CACA8007899C6 /* Dungeon.swift in Sources */,
 				38004502259E93140098A75C /* MonsterInstanceSummaryView.swift in Sources */,
+				38CCFA8B27742ECF007BD37B /* RuneInstance+ItemProvider.swift in Sources */,
 				38BC3AC52589CCBD00A85FBE /* BestiaryImport.swift in Sources */,
 				38535E3725833145009411A1 /* Building+Extension.swift in Sources */,
 				38BE67C825BB76F300CA67E9 /* NSPredicate+Extension.swift in Sources */,
 				38A1C64C257DE52A0032878E /* BestiaryGoalsDelegate.swift in Sources */,
+				38F02E96272C7C99007899C6 /* Unboxing.swift in Sources */,
 				38CFB7892579E28400F0C398 /* Source.swift in Sources */,
 				38CFB7662579DE4D00F0C398 /* Skill.swift in Sources */,
 				38CFB76D2579DE8700F0C398 /* SkillScalingStat.swift in Sources */,
+				38CCFA82276FD4F4007BD37B /* Enemy.swift in Sources */,
 				38BE67DA25BC07F800CA67E9 /* RuneListGridView.swift in Sources */,
 				38A1C650257DE52A0032878E /* FusionSceneDelegate.swift in Sources */,
 				386010212599C12E00118951 /* AwakenCost.swift in Sources */,
 				38CFB75F2579B84300F0C398 /* Task.swift in Sources */,
-				38601046259AB19A00118951 /* GameItemData.swift in Sources */,
 				38B9F77025BA2C6600F4C112 /* BuildingEnums.swift in Sources */,
 				383CAB4325AEC0CA00A24A4D /* ArtifactEnums.swift in Sources */,
 				3860104D259AB48F00118951 /* GameItem.swift in Sources */,
@@ -882,9 +982,12 @@
 			files = (
 				38A1C657257DE52A0032878E /* RuneIconView.swift in Sources */,
 				38A0ADBA258EE9A5005C01D0 /* RuneInstance+Previews.swift in Sources */,
-				38BC3B14258C50AC00A85FBE /* AwakenCostDataOld.swift in Sources */,
+				38CCFA78276FB52D007BD37B /* ArtifactWhichMonster.swift in Sources */,
 				38A1C682257E06820032878E /* Bundle+Extension.swift in Sources */,
+				38CCFA75276EF594007BD37B /* BestiaryDocument.swift in Sources */,
+				386E216E270A6FCF006A4F98 /* RuneCheckerVM.swift in Sources */,
 				38DB9D74258059A30038BDC0 /* Monster+Extension.swift in Sources */,
+				386E216827096598006A4F98 /* RuneBuildEnums.swift in Sources */,
 				38C7E06E260A896400F9BB4C /* PlayerFile.swift in Sources */,
 				38038CA925DDBE260036BAC6 /* RuneColor.swift in Sources */,
 				383CAB4425AEC0CA00A24A4D /* ArtifactEnums.swift in Sources */,
@@ -895,72 +998,81 @@
 				38600F6325B80BAA0071E7A3 /* CoreData+Extension.swift in Sources */,
 				382A71D225E9FB950004DD67 /* BestiaryGoalsView.swift in Sources */,
 				38ECB154259BD1920021E891 /* Source+Previews.swift in Sources */,
+				38CCFA7E276FD4E8007BD37B /* DungeonLevel.swift in Sources */,
 				3860104E259AB48F00118951 /* GameItem.swift in Sources */,
 				38922C92259999FB00CCF63B /* LeaderSkill+Previews.swift in Sources */,
-				38BC3AD62589CCEA00A85FBE /* FusionData.swift in Sources */,
 				38CFB70125782F9C00F0C398 /* LeaderSkill.swift in Sources */,
+				38CCFA87276FD582007BD37B /* Wave.swift in Sources */,
 				38004503259E93140098A75C /* MonsterInstanceSummaryView.swift in Sources */,
 				389F89E125982BB100006C09 /* Decoration+Previews.swift in Sources */,
 				38AC993525D2717D00E13839 /* FilePanel+Extension.swift in Sources */,
+				38CCFA8A27742ECF007BD37B /* RuneInstance+ItemProvider.swift in Sources */,
 				38CFB7752579DEC000F0C398 /* SkillEffect.swift in Sources */,
 				384A49062575A074002E04CB /* SummonerTasksApp.swift in Sources */,
 				38ECB149259BCFF30021E891 /* Monster+Previews.swift in Sources */,
 				38A1C655257DE52A0032878E /* FusionContentView.swift in Sources */,
 				38600F5C25B6CABD0071E7A3 /* SwiftUI+Extension.swift in Sources */,
+				383F6BEF2702DA0600A26978 /* HStackWrap.swift in Sources */,
 				38CFB7222578462700F0C398 /* RuneInstance+extras.swift in Sources */,
 				386010222599C12E00118951 /* AwakenCost.swift in Sources */,
 				38A1C659257DE52A0032878E /* MonsterIconView.swift in Sources */,
+				3871569626E727F800586272 /* SummonerName.swift in Sources */,
 				38BE67C925BB76F300CA67E9 /* NSPredicate+Extension.swift in Sources */,
 				38535E56258480A6009411A1 /* BuildingViews.swift in Sources */,
 				386EA5F125CC8A1E00C6C2D0 /* BuildingListView.swift in Sources */,
 				384A496F2575A1ED002E04CB /* Persistence.swift in Sources */,
 				38CFB7832579E24000F0C398 /* SkillUpgrade.swift in Sources */,
+				3835306026E3FA650018E908 /* Image+Extension.swift in Sources */,
 				38CFB729257848C900F0C398 /* ArtifactInstance.swift in Sources */,
 				38E1101D25903C6100D4BBB0 /* RuneIconBase.swift in Sources */,
 				38CFB7302578494400F0C398 /* MonsterSkill.swift in Sources */,
+				38CCFA84276FD56D007BD37B /* SecretDungeon.swift in Sources */,
 				38CFB77C2579DEE800F0C398 /* SkillEffectDetail.swift in Sources */,
-				38705B9F25C0BB0100FA247C /* DungeonData.swift in Sources */,
+				38CCFA7B276FC793007BD37B /* NSManagedCodableObject.swift in Sources */,
 				38DB9D5D257EF83A0038BDC0 /* Data.swift in Sources */,
+				3871569B26EDB88F00586272 /* View+Extension.swift in Sources */,
 				38BE67DB25BC07F800CA67E9 /* RuneListGridView.swift in Sources */,
 				384A49872575A3E2002E04CB /* SummonerTasks.xcdatamodeld in Sources */,
 				384A49082575A074002E04CB /* SummonerTasksDocument.swift in Sources */,
-				38BC3AE22589CCF200A85FBE /* SkillData.swift in Sources */,
 				38CFB7172578388E00F0C398 /* MonsterInstance+extras.swift in Sources */,
 				38CFB7082578303E00F0C398 /* FusionIngredients.swift in Sources */,
 				38CFB796257AFB3700F0C398 /* DateFormatter+extensions.swift in Sources */,
 				3898A088260964C900B3E81B /* CodingUserInfoKey+Extension.swift in Sources */,
+				38CCFA81276FD4F4007BD37B /* Enemy.swift in Sources */,
+				386E21652708E64D006A4F98 /* RuneSetView.swift in Sources */,
 				3848A415258D700C000809EF /* BestiaryView.swift in Sources */,
 				38922C802599562800CCF63B /* MonsterView.swift in Sources */,
 				380DF63225D5191300848DE0 /* JSONDecodable.swift in Sources */,
 				389F89D125982B5F00006C09 /* Summoner+Previews.swift in Sources */,
-				38BC3AE82589CCFA00A85FBE /* SourceData.swift in Sources */,
+				3835305D26E330BC0018E908 /* RuneSidebar.swift in Sources */,
 				384A499B2575A9DB002E04CB /* ModelEnums.swift in Sources */,
 				38000B322585CEFD00BED558 /* Bundle-decoder.swift in Sources */,
 				386010382599C4B500118951 /* MonsterCraftCost.swift in Sources */,
 				38CFB6D425772A3100F0C398 /* Summoner.swift in Sources */,
+				3871569826E8928700586272 /* RuneTableView.swift in Sources */,
 				38A0ADAF258EC067005C01D0 /* RuneGrid.swift in Sources */,
 				3818B169259D843F00CCE47E /* Skill+Previews.swift in Sources */,
+				38F02E95272C7C99007899C6 /* Unboxing.swift in Sources */,
 				38CFB70F2578306C00F0C398 /* Fusion.swift in Sources */,
 				38BC3AC62589CCBD00A85FBE /* BestiaryImport.swift in Sources */,
 				38D4389B25BE9EE6004A2271 /* RuneInstance+CoreDataClass.swift in Sources */,
+				386E216B270A6F7E006A4F98 /* RuneChecker.swift in Sources */,
 				38CFB6C82577291800F0C398 /* TeamGroup.swift in Sources */,
 				38535E2D25832E95009411A1 /* BJr5.swift in Sources */,
-				38601047259AB19A00118951 /* GameItemData.swift in Sources */,
 				38535E3825833145009411A1 /* Building+Extension.swift in Sources */,
 				38CFB6FA2577701800F0C398 /* Team.swift in Sources */,
 				380044FC259E61940098A75C /* MonsterInstance+Previews.swift in Sources */,
 				38CFB78A2579E28400F0C398 /* Source.swift in Sources */,
-				38BC3ADB2589CCED00A85FBE /* MonsterData.swift in Sources */,
+				38F02E9B272CACA8007899C6 /* Dungeon.swift in Sources */,
 				38CFB7672579DE4D00F0C398 /* Skill.swift in Sources */,
 				38BC3AFA258B0AD700A85FBE /* Building+Previews.swift in Sources */,
 				38CFB76E2579DE8700F0C398 /* SkillScalingStat.swift in Sources */,
 				38A1C651257DE52A0032878E /* FusionSceneDelegate.swift in Sources */,
-				386010312599C3EF00118951 /* MonsterCraftCostData.swift in Sources */,
 				38CFB7602579B84300F0C398 /* Task.swift in Sources */,
 				384A490A2575A074002E04CB /* ContentView.swift in Sources */,
+				38F02E92272C7C55007899C6 /* DecodedArray.swift in Sources */,
 				386010132599B32900118951 /* HomunculusSkill.swift in Sources */,
 				38B6A44125DDFC64006E5A2D /* ElementColor.swift in Sources */,
-				38BC3AD02589CCE600A85FBE /* BuildingData.swift in Sources */,
 				38600033259276690071569A /* MonsterEnums.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1049,8 +1161,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1104,8 +1216,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -1122,7 +1234,7 @@
 				DEVELOPMENT_TEAM = V3N8JZ2T92;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1144,7 +1256,7 @@
 				DEVELOPMENT_TEAM = V3N8JZ2T92;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1164,6 +1276,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = V3N8JZ2T92;
@@ -1174,7 +1287,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_BUNDLE_IDENTIFIER = net.deirdre.SummonerTasks;
 				PRODUCT_NAME = SummonerTasks;
 				SDKROOT = macosx;
@@ -1188,6 +1301,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = V3N8JZ2T92;
@@ -1198,7 +1312,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_BUNDLE_IDENTIFIER = net.deirdre.SummonerTasks;
 				PRODUCT_NAME = SummonerTasks;
 				SDKROOT = macosx;
@@ -1213,7 +1327,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V3N8JZ2T92;
 				INFOPLIST_FILE = "Tests iOS/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1235,7 +1349,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V3N8JZ2T92;
 				INFOPLIST_FILE = "Tests iOS/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1264,7 +1378,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.deirdre.Tests-macOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -1286,7 +1400,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.deirdre.Tests-macOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -1344,6 +1458,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		38F02E97272C8160007899C6 /* XCRemoteSwiftPackageReference "SwiftUIFormValidator" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/deirdresm/SwiftUIFormValidator";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		38F02E98272C8160007899C6 /* FormValidator */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 38F02E97272C8160007899C6 /* XCRemoteSwiftPackageReference "SwiftUIFormValidator" */;
+			productName = FormValidator;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		384A49782575A359002E04CB /* SummonerTasks.xcdatamodeld */ = {

@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreData
 
-struct RuneTableView: View {
+struct RuneDetail: View {
 	@Environment(\.managedObjectContext) private var context
 	
 	let columns = [ GridItem(.adaptive(minimum: 100), spacing: 3) ]
@@ -26,7 +26,7 @@ struct RuneTableView: View {
 		predicate: NSPredicate(format: "name == %@", "Python")
 	) var runes: FetchedResults<RuneInstance>
     
-//    var table: some View {
+    var table: some View {
 //		VStack {
 //			Text("Header").font(.largeTitle)
 //			TagCloudView(tags: ["Ninetendo", "XBox", "PlayStation", "PlayStation 2", "PlayStation 3", "PlayStation 4"])
@@ -37,7 +37,7 @@ struct RuneTableView: View {
 //		}
 //
 //		HStackWrap(models: [runes], viewGenerator: <#T##HStackWrap<_, _>.ViewGenerator##HStackWrap<_, _>.ViewGenerator##(_) -> _#>)
-		Table(runes, selection: $selectedRunes, sortOrder: $sortOrder) {
+		Table(selection: $selectedRunes, sortOrder: $sortOrder) {
 			
 			TableColumn("Slot", value: \.slot) { rune in
 				Text("\(rune.slot)")
@@ -51,11 +51,10 @@ struct RuneTableView: View {
                 Text("\(rune.innateStat)")
             }
 
-        }
-		.id(UUID())
-		rows: {
+        } rows: {
             ForEach(runes) { rune in
                 TableRow(rune)
+					.itemProvider { rune.itemProvider }
 			}
 		}
 //            .onInsert(of: [Plant.draggableType]) { index, providers in
@@ -63,7 +62,7 @@ struct RuneTableView: View {
 //                    garden.plants.insert(contentsOf: plants, at: index)
 //                }
 //            }
-//    }
+    }
 
 	var body: some View {
 		
@@ -81,9 +80,9 @@ struct RuneTableView: View {
 	}
 }
 
-struct RuneTableView_Previews: PreviewProvider {
+struct RuneDetail_Previews: PreviewProvider {
 	
     static var previews: some View {
-        RuneTableView()
+		RuneDetail()
     }
 }

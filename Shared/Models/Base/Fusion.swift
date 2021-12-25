@@ -40,7 +40,7 @@ public class Fusion: NSManagedObject, Decodable {
 		let tempIngredients = self.ingredients ?? []
 
 		for ingredient in tempIngredients {
-			if let monster = Monster.findById(id: ingredient, context: context) {
+			if let monster = Monster.findById(ingredient, context: context) {
 				addToFusionIngredients(monster)
 			}
 		}

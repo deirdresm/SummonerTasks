@@ -16,7 +16,7 @@ extension NSOpenPanel {
         panel.allowsMultipleSelection = false
         panel.canChooseFiles = true
         panel.canChooseDirectories = false
-		panel.allowedContentTypes = [.swExporterJsonFile]
+		panel.allowedContentTypes = [UTType.json]
         panel.canChooseFiles = true
         panel.begin { (result) in
             if result == .OK,

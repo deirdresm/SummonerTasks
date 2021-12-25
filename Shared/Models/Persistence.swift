@@ -15,7 +15,6 @@ class PersistenceController {
     /**
      Creates and configures a private queue context.
     */
-    
 
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)

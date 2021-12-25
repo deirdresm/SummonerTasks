@@ -41,7 +41,7 @@ public class HomunculusSkill: NSManagedObject, Decodable {
 
 	//extension HomunculusSkill: Decodable {
 //    
-//    static func findById(id: Int64,
+//    static func findById(_ id: Int64,
 //                    context: NSManagedObjectContext) -> HomunculusSkill? {
 //        
 //        let request : NSFetchRequest<HomunculusSkill> = HomunculusSkill.fetchRequest()

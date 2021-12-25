@@ -9,12 +9,6 @@ import SwiftUI
 import UniformTypeIdentifiers
 import Combine
 
-extension UTType {
-    static var swExporterJsonFile: UTType {
-        UTType(importedAs: "public.json")
-    }
-}
-
 public class SummonerDocumentInfo {
     public var summoner: Summoner?
     public var summonerId: Int64 = 0
@@ -26,21 +20,7 @@ public class SummonerDocumentInfo {
     }
 }
 
-class BestiaryDocument: FileDocument {
-	static var readableContentTypes: [UTType] { [.json] }
-
-	required init(configuration: ReadConfiguration) throws {
-		<#code#>
-	}
-
-	func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
-		<#code#>
-	}
-
-
-}
-
-class SummonerJsonDocument: FileDocument {
+class SWDocument: FileDocument {
     
     // Since there can be different documents open for different summoners
     // keep the summoner in the Document class
@@ -92,6 +72,7 @@ class SummonerJsonDocument: FileDocument {
                 print("got JSON object, iterating through object")
                 decoder.userInfo[CodingUserInfoKey.context!] = self.docInfo.taskContext
                 decoder.dateDecodingStrategy = .formatted(DateFormatter.com2us)
+				decoder.keyDecodingStrategy = .convertFromSnakeCase
 
                 let container = try decoder.decode(PlayerFile.self, from: data)
 

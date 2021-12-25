@@ -43,7 +43,6 @@ public class GameItem: NSManagedObject, Decodable {
 		self.sellValue = try container.decode(Int64.self, forKey: .sellValue)
 		self.slug = try container.decode(String.self, forKey: .slug)
 	}
-
 }
 
 extension GameItem {

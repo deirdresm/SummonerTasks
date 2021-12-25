@@ -29,7 +29,7 @@ public class SecretDungeon: NSManagedObject, Decodable {
 		// and start decoding
 		self.id = try container.decode(Int64.self, forKey: .id)
 		self.monsterId = try container.decode(Int64.self, forKey: .monsterId)
-		if let monster = Monster.findById(id: self.monsterId, context: context) {
+		if let monster = Monster.findById(self.monsterId, context: context) {
 			self.monster = monster
 		}
 	}

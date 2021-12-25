@@ -62,7 +62,7 @@ public struct RuneList: View {
             VStack {
                 Text("Rune List")
                     .font(.headline)
-				RuneTableView(/* runes: summoner.runesSorted() */)
+				RuneDetail(/* runes: summoner.runesSorted() */)
             }
         } else {
             EmptyView()

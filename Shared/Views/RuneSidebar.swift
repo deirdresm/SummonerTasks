@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RuneSidebar: View {
-    var document: SummonerJsonDocument
+    var document: SWDocument
     @Environment(\.managedObjectContext) private var moc
 
     @Binding var selection: RuneType?
@@ -47,8 +47,8 @@ struct RuneSidebarLabel: View {
 
 struct RuneSidebar_Previews: PreviewProvider {
     static let text = Bundle.main.openBundleFile(from: "runes-mini.json")
-    static var document: SummonerJsonDocument = {
-        return try! SummonerJsonDocument(text: text, summoner: Summoner.tisHerself)
+    static var document: SWDocument = {
+        return try! SWDocument(text: text, summoner: Summoner.tisHerself)
     }()
     @State static var selection: RuneType? = .violent
     

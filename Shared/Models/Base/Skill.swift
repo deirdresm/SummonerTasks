@@ -10,6 +10,32 @@ import CoreData
 
 // MARK: - Core Data
 
+struct MultiplierFormula: Decodable {
+	var stat: String
+	var operation: String
+	var amount: Int64
+
+	private enum CodingKeys: String, CodingKey {
+		case stat
+		case operation
+		case amount
+	}
+
+	public init(from decoder: Decoder) throws {
+		// get the context and the entity in the context
+		guard let context = decoder.userInfo[CodingUserInfoKey.context!] as? NSManagedObjectContext else { fatalError("Could not get context [for GameItem]") }
+		guard let entity = NSEntityDescription.entity(forEntityName: "Skill", in: context) else { fatalError("Could not get entity [for Skill]") }
+
+		// create container
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		// and start decoding
+		self.stat = try container.decode(String.self, forKey: .stat)
+		self.operation = try container.decode(String.self, forKey: .operation)
+		self.amount = try container.decode(Int64.self, forKey: .amount)
+	}
+
+}
+
 @objc(Skill)
 public class Skill: NSManagedObject, Decodable {
 //extension Skill: Comparable, Decodable {
@@ -33,7 +59,30 @@ public class Skill: NSManagedObject, Decodable {
 	}
 
 	public required convenience init(from decoder: Decoder) throws {
-		<#code#>
+		// get the context and the entity in the context
+		guard let context = decoder.userInfo[CodingUserInfoKey.context!] as? NSManagedObjectContext else { fatalError("Could not get context [for GameItem]") }
+		guard let entity = NSEntityDescription.entity(forEntityName: "GameItem", in: context) else { fatalError("Could not get entity [for GameItem]") }
+
+		// init self
+		self.init(entity: entity, insertInto: context)
+
+		// create container
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		// and start decoding
+		self.id = try container.decode(Int64.self, forKey: .id)
+		self.com2usId = try container.decode(Int64.self, forKey: .com2usId)
+		self.name = try container.decode(String.self, forKey: .name)
+		self.c2uDescription = try container.decode(String.self, forKey: .c2uDescription)
+		self.slot = try container.decode(Int64.self, forKey: .slot)
+		self.cooltime = try container.decode(Int64.self, forKey: .cooltime)
+		self.hits = try container.decode(Int64.self, forKey: .hits)
+		self.aoe = try container.decode(Bool.self, forKey: .aoe)
+		self.passive = try container.decode(Bool.self, forKey: .passive)
+
+		self.maxLevel = try container.decode(Int64.self, forKey: .maxLevel)
+		self.imageFilename = try container.decode(String.self, forKey: .imageFilename)
+		self.multiplierFormula = try container.decode(String.self, forKey: .multiplierFormula)
+
 	}
 
     static func findById(_ skillDataId: Int64,

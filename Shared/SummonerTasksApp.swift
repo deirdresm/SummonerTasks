@@ -14,10 +14,14 @@ struct SummonerTasksApp: App {
     let persistenceController = PersistenceController.shared
 
     var body: some Scene {
-        DocumentGroup(viewing: SummonerJsonDocument.self) { file in
+        DocumentGroup(viewing: SWDocument.self) { file in
             ContentView(document: file.$document)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
+		DocumentGroup(viewing: SWDocument.self) { file in
+			BestiaryOverview(document: file.$document)
+				.environment(\.managedObjectContext, persistenceController.container.viewContext)
+		}
         .onChange(of: scenePhase) { _ in
             do {
                 try persistenceController.container.viewContext.save()

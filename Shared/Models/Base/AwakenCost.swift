@@ -12,9 +12,9 @@ import CoreData
 public class AwakenCost: NSManagedObject, Decodable {
 	private enum CodingKeys: String, CodingKey {
 		case id = "pk"
-		case item
+		case itemId
 		case quantity
-		case monster
+		case monsterId
 	}
 
 	public required convenience init(from decoder: Decoder) throws {
@@ -29,7 +29,15 @@ public class AwakenCost: NSManagedObject, Decodable {
 		let container = try decoder.container(keyedBy: CodingKeys.self)
 		// and start decoding
 		self.id = try container.decode(Int64.self, forKey: .id)
-		self.com2usId = try container.decode(Int64.self, forKey: .com2usId)
+		self.itemId = try container.decode(Int64.self, forKey: .itemId)
+		if let gitem = GameItem.findById(self.itemId, context: context) {
+			self.item = gitem
+		}
+		self.quantity = try container.decode(Int64.self, forKey: .quantity)
+		self.monsterId = try container.decode(Int64.self, forKey: .monsterId)
+		if let monster = Monster.findById(self.monsterId, context: context) {
+			self.monster = monster
+		}
 	}
 
     static func findById(_ awakenCostId: Int64,

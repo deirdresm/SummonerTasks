@@ -12,7 +12,7 @@ struct BuildingList: View {
     var type: BuildingFilter
     var gridItems: [GridItem] = [GridItem(.adaptive(minimum: 150, maximum: 150))]
     
-    @Binding var document: SummonerJsonDocument
+    @Binding var document: SWDocument
     @Environment(\.managedObjectContext) private var moc
 
     var body: some View {

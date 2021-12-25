@@ -15,28 +15,35 @@ import SwiftUI
  Managed object subclass extension for the Quake entity.
  */
 @objc(Monster)
-public class Monster: NSManagedObject, Bestiary, Decodable {
+public class Monster: NSManagedObject, Decodable {
 
 
-	public var type: String?
-	public var descrip: String?
+//	public var type: String?
+//	public var descrip: String?
 
 	private enum CodingKeys: String, CodingKey {
 		case id = "pk"
 		case name
-		case com2usId = "com2us_id"
+		case com2usId
+		case skillGroupId
 		case familyId
 		case imageFilename
 		case element
 		case archetype
 		case baseStars
+		case naturalStars
 		case obtainable
+
+		// awakening stuff
 		case canAwaken
 		case isAwakened
 		case awakenLevel
 		case awakenBonus
+		case awakensToId = "awakens_to"
+		case awakensFromId = "awakens_from"
+
 		case skillUpsToMax
-		case leaderSkill
+		case leaderSkillId = "leader_skill"
 		case rawHp
 		case rawAttack
 		case rawDefense
@@ -51,45 +58,60 @@ public class Monster: NSManagedObject, Bestiary, Decodable {
 		case critDamage
 		case resistance
 		case accuracy
+
 		case homunculus
 		case craftCost
 		case transformsToId = "transforms_to"
 
-		case awakenMatsFireLow
-		case awakenMatsFireMid
-		case awakenMatsFireHigh
-
-		case awakenMatsWaterLow
-		case awakenMatsWaterMid
-		case awakenMatsWaterHigh
-
-		case awakenMatsWindLow
-		case awakenMatsWindMid
-		case awakenMatsWindHigh
-
-		case awakenMatsLightLow
-		case awakenMatsLightMid
-		case awakenMatsLightHigh
-
-		case awakenMatsDarkLow
-		case awakenMatsDarkMid
-		case awakenMatsDarkHigh
-
-		case awakenMatsMagicLow
-		case awakenMatsMagicMid
-		case awakenMatsMagicHigh
+		case awakenMatsFireLow, awakenMatsFireMid, awakenMatsFireHigh
+		case awakenMatsWaterLow, awakenMatsWaterMid, awakenMatsWaterHigh
+		case awakenMatsWindLow, awakenMatsWindMid, awakenMatsWindHigh
+		case awakenMatsLightLow, awakenMatsLightMid, awakenMatsLightHigh
+		case awakenMatsDarkLow, awakenMatsDarkMid, awakenMatsDarkHigh
+		case awakenMatsMagicLow, awakenMatsMagicMid, awakenMatsMagicHigh
 
 		case farmable
 		case fusionFood
 		case bestiarySlug
-		case awakensFromId
-		case awakensToId
-		case leaderSkillId
-		case naturalStars
-	}
- 
 
-    static func findById(id: Int64,
+		case skills
+		case source
+	}
+
+	/// Required init for Decodable conformance
+	public required convenience init(from decoder: Decoder) throws {
+		// get the context and the entity in the context
+		guard let context = decoder.userInfo[CodingUserInfoKey.context!] as? NSManagedObjectContext else { fatalError("Could not get context [for GameItem]") }
+		guard let entity = NSEntityDescription.entity(forEntityName: "GameItem", in: context) else { fatalError("Could not get entity [for GameItem]") }
+
+		// init self
+		self.init(entity: entity, insertInto: context)
+
+		// create container
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		// and start decoding
+		self.id = try container.decode(Int64.self, forKey: .id)
+		self.name = try container.decode(String.self, forKey: .name)
+		self.com2usId = try container.decode(Int64.self, forKey: .com2usId)
+		self.familyId = try container.decode(Int64.self, forKey: .familyId)
+		self.skillGroupId = try container.decode(Int64.self, forKey: .skillGroupId)
+		self.imageFilename = try container.decode(String.self, forKey: .imageFilename)
+		self.element = try container.decode(String.self, forKey: .element)
+		self.archetype = try container.decode(String.self, forKey: .archetype)
+		self.baseStars = try container.decode(Int16.self, forKey: .baseStars)
+		self.naturalStars = try container.decode(Int16.self, forKey: .naturalStars)
+		self.obtainable = try container.decode(Bool.self, forKey: .obtainable)
+
+		// awakening
+		self.canAwaken = try container.decode(Bool.self, forKey: .canAwaken)
+		self.isAwakened = try container.decode(Bool.self, forKey: .isAwakened)
+		self.awakenLevel = try container.decode(Int16.self, forKey: .awakenLevel)
+		self.awakenBonus = try container.decode(String.self, forKey: .awakenBonus)
+		self.awakensToId = try container.decode(Int64.self, forKey: .awakensToId)
+		self.awakensFromId = try container.decode(Int64.self, forKey: .awakensFromId)
+	}
+
+    static func findById(_ id: Int64,
                     context: NSManagedObjectContext) -> Monster? {
 
         let request: NSFetchRequest<Monster> = Monster.fetchRequest()
@@ -312,7 +334,7 @@ public class Monster: NSManagedObject, Bestiary, Decodable {
 //                               docInfo: SummonerDocumentInfo) {
 //        docInfo.taskContext.performAndWait {
 //            let monsterData = from as! MonsterData
-//            let monster = Monster.findById(id: monsterData.com2usId, context: docInfo.taskContext) ??
+//            let monster = Monster.findById(monsterData.com2usId, context: docInfo.taskContext) ??
 //                Monster(context: docInfo.taskContext)
 //            monster.update(from: monsterData, docInfo: docInfo)
 //        }
