@@ -86,7 +86,7 @@ public class Skill: NSManagedObject, Decodable {
 	}
 
     static func findById(_ skillDataId: Int64,
-                         context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
+                         context: NSManagedObjectContext = Persistence.shared.container.viewContext)
     -> Skill? {
         
         let request : NSFetchRequest<Skill> = Skill.fetchRequest()

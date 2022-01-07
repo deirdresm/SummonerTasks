@@ -41,7 +41,7 @@ public class AwakenCost: NSManagedObject, Decodable {
 	}
 
     static func findById(_ awakenCostId: Int64,
-                         context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
+                         context: NSManagedObjectContext = Persistence.shared.container.viewContext)
     -> AwakenCost? {
         
         let request : NSFetchRequest<AwakenCost> = AwakenCost.fetchRequest()

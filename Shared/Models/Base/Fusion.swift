@@ -47,7 +47,7 @@ public class Fusion: NSManagedObject, Decodable {
 	}
 
     static func findById(_ fusionId: Int64,
-                                 context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
+                                 context: NSManagedObjectContext = Persistence.shared.container.viewContext)
     -> Fusion? {
         
         let request : NSFetchRequest<Fusion> = Fusion.fetchRequest()

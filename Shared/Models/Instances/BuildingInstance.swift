@@ -44,7 +44,7 @@ public class BuildingInstance: NSManagedObject, Decodable {
 extension BuildingInstance {
 
     static func findById(_ buildingInstanceId: Int64,
-                         context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
+                         context: NSManagedObjectContext = Persistence.shared.container.viewContext)
     -> BuildingInstance? {
         
         let request : NSFetchRequest<BuildingInstance> = BuildingInstance.fetchRequest()
@@ -61,7 +61,7 @@ extension BuildingInstance {
     }
     
     static func findBySummonerAndBuildingId(_ summoner: Int64?, _ buildingId: Int64,
-                                            context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
+                                            context: NSManagedObjectContext = Persistence.shared.container.viewContext)
     -> BuildingInstance? {
         
         guard let sId = summoner else {
@@ -86,7 +86,7 @@ extension BuildingInstance {
     }
     
     static func getBuildingLevel(_ summoner: Int64?, _ buildingId: Int64,
-                                 context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> Int64 {
+                                 context: NSManagedObjectContext = Persistence.shared.container.viewContext) -> Int64 {
         let bi = BuildingInstance.findBySummonerAndBuildingId(summoner, buildingId, context: context)
         return bi?.level ?? 0 // zero means "no such building" but is suppressed on output in views
     }
@@ -184,7 +184,7 @@ extension BuildingInstance {
 //            BuildingInstance.insertOrUpdate(from: building, docInfo: docInfo)
 //        }
 //    }
-    static func battleList(_ summoner: Int64, context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [BuildingInstance] {
+    static func battleList(_ summoner: Int64, context: NSManagedObjectContext = Persistence.shared.container.viewContext) -> [BuildingInstance] {
         var buildingList: [BuildingInstance] = []
         
         for b in BattleBuilding.battleBuildings() {
@@ -195,7 +195,7 @@ extension BuildingInstance {
         return buildingList
     }
     
-    static func elementalList(_ summoner: Int64, context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [BuildingInstance] {
+    static func elementalList(_ summoner: Int64, context: NSManagedObjectContext = Persistence.shared.container.viewContext) -> [BuildingInstance] {
         var buildingList: [BuildingInstance] = []
         
         for b in BattleBuilding.elementalBuildings() {
@@ -206,7 +206,7 @@ extension BuildingInstance {
         return buildingList
     }
     
-    static func guildList(_ summoner: Int64, context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [BuildingInstance] {
+    static func guildList(_ summoner: Int64, context: NSManagedObjectContext = Persistence.shared.container.viewContext) -> [BuildingInstance] {
         var buildingList: [BuildingInstance] = []
         
         for b in BattleBuilding.guildBuildings() {
@@ -217,7 +217,7 @@ extension BuildingInstance {
         return buildingList
     }
     
-    static func arenaList(_ summoner: Int64, context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [BuildingInstance] {
+    static func arenaList(_ summoner: Int64, context: NSManagedObjectContext = Persistence.shared.container.viewContext) -> [BuildingInstance] {
         var buildingList: [BuildingInstance] = []
         
         for b in BattleBuilding.arenaBuildings() {

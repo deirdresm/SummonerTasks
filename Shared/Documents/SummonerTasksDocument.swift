@@ -16,7 +16,7 @@ public class SummonerDocumentInfo {
     public var taskContext: NSManagedObjectContext
     
     public init() {
-        taskContext = PersistenceController.shared.newTaskContext()
+        taskContext = Persistence.shared.newTaskContext()
     }
 }
 
@@ -41,20 +41,8 @@ class SWDocument: FileDocument {
             docInfo.summonerId = s.id
             docInfo.summonerSet = true
         }
-        
-        print("trying bestiary json wrapper)")
-        let jsonWrapper = try BestiaryFileImport(json: text, docInfo: docInfo)
-        
-//        let buildingData = BuildingData.items
-//        print("buildingData count = \(buildingData.count)")
-    }
+	}
     
-    func loadBestiaryData() throws {
-        let jsonWrapper = try BestiaryJsonWrapper(json: text, docInfo: docInfo)
-        
-//        let buildingData = BuildingData.items
-    }
-
     func loadPlayerData(json: String) throws {
         // TODO: unlike the bestiary data, we have a few unfixed problems:
         
@@ -62,12 +50,10 @@ class SWDocument: FileDocument {
 
         print("created task context")
         DispatchQueue.global(qos: .background).async {
-//            var object: JSON
             var data: Data = json.data(using: .utf8)! // non-nil
 
             do {
                 print("trying to get JSON object")
-//                object = try JSON(string: json)
                 let decoder = JSONDecoder()
                 print("got JSON object, iterating through object")
                 decoder.userInfo[CodingUserInfoKey.context!] = self.docInfo.taskContext
@@ -115,20 +101,8 @@ class SWDocument: FileDocument {
             guard let filename = configuration.file.filename else {
                 throw CocoaError(.fileReadInvalidFileName)
             }
-            if filename.contains("bestiary_data") {
-                // bestiary_data.json - base bestiary data (changes rarely)
-                
-                print("Loading bestiary data.")
-                let jsonWrapper = try BestiaryJsonWrapper(json: text, docInfo: self.docInfo)
-                
-                let buildingData = BuildingData.items
-            } else {
-                // deirdresm-11223344.json - player save file (playername-com2usId.json)
- 
-                print("Loading player file.")
-                try loadPlayerData(json: text)
-
-            }
+			print("Loading player file.")
+			try loadPlayerData(json: text)
          } catch {
             // TODO: cover more cases
             throw CocoaError(.fileReadCorruptFile)

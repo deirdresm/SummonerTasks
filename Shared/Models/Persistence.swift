@@ -7,8 +7,8 @@
 
 import CoreData
 
-class PersistenceController {
-    static let shared = PersistenceController()
+class Persistence {
+    static let shared = Persistence()
 
     let container: NSPersistentCloudKitContainer
     
@@ -16,8 +16,8 @@ class PersistenceController {
      Creates and configures a private queue context.
     */
 
-    static var preview: PersistenceController = {
-        let result = PersistenceController(inMemory: true)
+    static var preview: Persistence = {
+        let result = Persistence(inMemory: true)
         let viewContext = result.container.viewContext
         
         // TODO: read in the preview file
@@ -88,10 +88,8 @@ class PersistenceController {
         taskContext.undoManager = nil
         return taskContext
     }
-    
-	func save(context: NSManagedObjectContext) {
-//        let context = container.viewContext
 
+	func save(context: NSManagedObjectContext = Persistence.shared.container.viewContext) {
         if context.hasChanges {
             do {
                 try context.save()

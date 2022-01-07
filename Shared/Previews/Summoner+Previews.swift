@@ -10,7 +10,7 @@ import Foundation
 extension Summoner {
     
     public static var tisHerself: Summoner {
-        let summoner = Summoner(context: PersistenceController.shared.container.viewContext)
+        let summoner = Summoner(context: Persistence.shared.container.viewContext)
         summoner.id = 14
         summoner.name = "TisHerself"
 

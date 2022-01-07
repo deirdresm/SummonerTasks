@@ -105,7 +105,7 @@ public class ArtifactInstance: NSManagedObject, Decodable {
     static var seenArtifacts = [ArtifactInstance]()
 
     static func findById(_ artifactInstanceId: Int64,
-                                 context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
+                                 context: NSManagedObjectContext = Persistence.shared.container.viewContext)
     -> ArtifactInstance? {
         
         let request : NSFetchRequest<ArtifactInstance> = ArtifactInstance.fetchRequest()

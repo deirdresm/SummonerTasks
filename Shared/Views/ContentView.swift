@@ -9,7 +9,7 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-    let persistenceController = PersistenceController.shared
+    let persistence = Persistence.shared
     @State var runeType: RuneType? = RuneType.violent
     @Binding var document: SWDocument
     @Environment(\.managedObjectContext) private var moc
@@ -73,6 +73,6 @@ struct ContentView_Previews: PreviewProvider {
     
     static var previews: some View {
         ContentView(document: .constant(document))
-            .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+            .environment(\.managedObjectContext, Persistence.shared.container.viewContext)
     }
 }

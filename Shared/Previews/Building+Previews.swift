@@ -13,7 +13,7 @@ import CoreData
 extension Building {
     
     public static var ancientSword: Building {
-        let building = Building(context: PersistenceController.shared.container.viewContext)
+        let building = Building(context: Persistence.shared.container.viewContext)
         building.id = 14
         building.com2usId = 9
         building.name = "Ancient Sword"
@@ -29,7 +29,7 @@ extension Building {
     }
 
     public static var skyTribeTotem: Building {
-        let building = Building(context: PersistenceController.shared.container.viewContext)
+        let building = Building(context: Persistence.shared.container.viewContext)
         building.id = 8
         building.com2usId = 6
         building.name = "Sky Tribe Totem"
@@ -45,7 +45,7 @@ extension Building {
     }
 
     public static var fallenAncientGuardian: Building {
-        let building = Building(context: PersistenceController.shared.container.viewContext)
+        let building = Building(context: Persistence.shared.container.viewContext)
         building.id = 7
         building.com2usId = 31
         building.name = "Fallen Ancient Guardian"
@@ -61,7 +61,7 @@ extension Building {
     }
 
     public static var darkSanctuary: Building {
-        let building = Building(context: PersistenceController.shared.container.viewContext)
+        let building = Building(context: Persistence.shared.container.viewContext)
         building.id = 6
         building.com2usId = 19
         building.name = "Dark Sanctuary"

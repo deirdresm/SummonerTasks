@@ -63,7 +63,7 @@ public class SkillEffectDetail: NSManagedObject, Decodable {
 
     
     static func findById(_ skillEffectDetailId: Int64,
-                         context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
+                         context: NSManagedObjectContext = Persistence.shared.container.viewContext)
     -> SkillEffectDetail? {
         
         let request : NSFetchRequest<SkillEffectDetail> = SkillEffectDetail.fetchRequest()

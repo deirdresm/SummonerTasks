@@ -154,7 +154,7 @@ public class Building: NSManagedObject, Decodable {
         }
     }
     
-    static func battleList(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [Building] {
+    static func battleList(context: NSManagedObjectContext = Persistence.shared.container.viewContext) -> [Building] {
         var buildingList: [Building] = []
         
         for b in BattleBuilding.battleBuildings() {
@@ -165,7 +165,7 @@ public class Building: NSManagedObject, Decodable {
         return buildingList
     }
     
-    static func elementalList(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [Building] {
+    static func elementalList(context: NSManagedObjectContext = Persistence.shared.container.viewContext) -> [Building] {
         var buildingList: [Building] = []
         
         for b in BattleBuilding.elementalBuildings() {
@@ -176,7 +176,7 @@ public class Building: NSManagedObject, Decodable {
         return buildingList
     }
     
-    static func guildList(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [Building] {
+    static func guildList(context: NSManagedObjectContext = Persistence.shared.container.viewContext) -> [Building] {
         var buildingList: [Building] = []
         
         for b in BattleBuilding.guildBuildings() {
@@ -187,7 +187,7 @@ public class Building: NSManagedObject, Decodable {
         return buildingList
     }
     
-    static func arenaList(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [Building] {
+    static func arenaList(context: NSManagedObjectContext = Persistence.shared.container.viewContext) -> [Building] {
         var buildingList: [Building] = []
         
         for b in BattleBuilding.arenaBuildings() {

@@ -190,52 +190,30 @@ public class RuneInstance: NSManagedObject, Codable {
 		try container.encode(prefixEffArray(), forKey: .prefixEff)
 
 
-		let secEff = try container.decode([[Int32]].self, forKey: .secEff)
+		var secEff: [[Int64]] = [[Int64]]()
 		let numStats = secEff.count
 
-		if numStats > 0 {
-			if secEff[0].count > 0 {
-				self.substat1 = Int64(secEff[0][0])
-				self.substat1Value = Int64(secEff[0][1])
-				self.substat1Enchanted = Int64(secEff[0][2]) != 0
-				self.substat1Craft = Int64(secEff[0][3])
-
-				self.setStat(RuneStatType(rawValue: Int16(self.substat1))!, value: self.substat1Value)
-			}
+		if self.substat1 != 0 {
+			let enchanted: Int64 = self.substat1Enchanted ? 1 : 0
+			secEff[0] = [self.substat1, self.substat1Value, enchanted, substat1Craft]
 		}
 
-		if numStats > 1 {
-			if secEff[1].count > 0 {
-				self.substat2 = Int64(secEff[1][0])
-				self.substat2Value = Int64(secEff[1][1])
-				self.substat2Enchanted = Int64(secEff[1][2]) != 0
-				self.substat2Craft = Int64(secEff[1][3])
-
-				self.setStat(RuneStatType(rawValue: Int16(self.substat2))!, value: self.substat2Value)
-			}
+		if self.substat2 != 0 {
+			let enchanted: Int64 = self.substat2Enchanted ? 1 : 0
+			secEff[1] = [self.substat2, self.substat2Value, enchanted, substat2Craft]
 		}
 
-		if numStats > 2 {
-			if secEff[2].count > 0 {
-				self.substat3 = Int64(secEff[2][0])
-				self.substat3Value = Int64(secEff[2][1])
-				self.substat3Enchanted = Int64(secEff[2][2]) != 0
-				self.substat3Craft = Int64(secEff[2][3])
-
-				self.setStat(RuneStatType(rawValue: Int16(self.substat3))!, value: self.substat3Value)
-			}
+		if self.substat3 != 0 {
+			let enchanted: Int64 = self.substat3Enchanted ? 1 : 0
+			secEff[2] = [self.substat3, self.substat3Value, enchanted, substat3Craft]
 		}
 
-		if numStats > 3 {
-			if secEff[3].count > 0 {
-				self.substat4 = Int64(secEff[3][0])
-				self.substat4Value = Int64(secEff[3][1])
-				self.substat4Enchanted = Int64(secEff[3][2]) != 0
-				self.substat4Craft = Int64(secEff[3][3])
-
-				self.setStat(RuneStatType(rawValue: Int16(self.substat4))!, value: self.substat4Value)
-			}
+		if self.substat4 != 0 {
+			let enchanted: Int64 = self.substat4Enchanted ? 1 : 0
+			secEff[3] = [self.substat4, self.substat4Value, enchanted, substat4Craft]
 		}
+		try container.encode(secEff, forKey: .secEff)
+
 	}
 	
 	func calcSubstatsEnchanted() {

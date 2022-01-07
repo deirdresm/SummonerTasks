@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="21A559" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="0.03">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="21C52" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="0.03">
     <entity name="ArtifactInstance" representedClassName="ArtifactInstance" syncable="YES" codeGenerationType="category">
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="effects" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[Int64]"/>
@@ -113,6 +113,7 @@
         <attribute name="totalSlots" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="xp" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="dungeon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dungeon" inverseName="levels" inverseEntity="Dungeon"/>
+        <relationship name="enemies" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Enemy" inverseName="level" inverseEntity="Enemy"/>
         <relationship name="waves" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Wave" inverseName="level" inverseEntity="Wave"/>
     </entity>
     <entity name="Enemy" representedClassName="Enemy" syncable="YES" codeGenerationType="category">
@@ -125,13 +126,15 @@
         <attribute name="defense" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="hp" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="level" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="levelid" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="monster" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="resist" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="speed" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="stars" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="wave" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="waveid" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="level" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DungeonLevel" inverseName="enemies" inverseEntity="DungeonLevel"/>
+        <relationship name="wave" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Wave" inverseName="enemies" inverseEntity="Wave"/>
     </entity>
     <entity name="Fusion" representedClassName="Fusion" syncable="YES" codeGenerationType="category">
         <attribute name="cost" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -635,39 +638,40 @@
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="levelId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="enemies" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Enemy" inverseName="wave" inverseEntity="Enemy"/>
         <relationship name="level" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DungeonLevel" inverseName="waves" inverseEntity="DungeonLevel"/>
     </entity>
     <fetchRequest name="summonerRuneById" entity="RuneInstance" predicateString="com2usId == @i AND summonerId == @i" fetchLimit="1" fetchBatchSize="1"/>
     <elements>
         <element name="ArtifactInstance" positionX="-90" positionY="153" width="128" height="629"/>
         <element name="AwakenCost" positionX="-81" positionY="162" width="128" height="119"/>
-        <element name="Building" positionX="-745.9766235351562" positionY="746.3114318847656" width="128" height="209"/>
-        <element name="BuildingInstance" positionX="-766.1875305175781" positionY="1009.633087158203" width="128" height="133"/>
-        <element name="Dungeon" positionX="-612" positionY="108" width="128" height="134"/>
-        <element name="DungeonLevel" positionX="-576" positionY="144" width="128" height="194"/>
-        <element name="Enemy" positionX="-585" positionY="135" width="128" height="269"/>
+        <element name="Building" positionX="-932.2500610351562" positionY="778.2215881347656" width="128" height="209"/>
+        <element name="BuildingInstance" positionX="-928.4179992675781" positionY="1096.316680908203" width="128" height="133"/>
+        <element name="Dungeon" positionX="-179.3515625" positionY="1527.69921875" width="128" height="134"/>
+        <element name="DungeonLevel" positionX="-32.80078125" positionY="1471.3203125" width="128" height="223"/>
+        <element name="Enemy" positionX="259.83984375" positionY="1396.78515625" width="128" height="313"/>
         <element name="Fusion" positionX="72.27294921875" positionY="192.6597900390625" width="128" height="134"/>
         <element name="GameItem" positionX="125.4957885742188" positionY="218.3388061523438" width="128" height="179"/>
         <element name="HomunculusSkill" positionX="-494.9537353515625" positionY="171.3886413574219" width="128" height="119"/>
         <element name="HomunculusSkillcraftCost" positionX="-352.7395629882812" positionY="205.7951049804688" width="128" height="89"/>
-        <element name="LeaderSkill" positionX="-573.5347900390625" positionY="447.7420349121094" width="128" height="119"/>
-        <element name="Monster" positionX="174.0562133789062" positionY="-10.60525512695312" width="128" height="1064"/>
+        <element name="LeaderSkill" positionX="-836.8394775390625" positionY="628.8787536621094" width="128" height="119"/>
+        <element name="Monster" positionX="-452.5297241210938" positionY="98.49240112304688" width="128" height="1064"/>
         <element name="MonsterCraftCost" positionX="132.1785278320312" positionY="334.7951049804688" width="128" height="119"/>
-        <element name="MonsterInstance" positionX="-268.6402587890625" positionY="128.8222198486328" width="128" height="719"/>
-        <element name="RuneBuild" positionX="-612" positionY="108" width="128" height="314"/>
+        <element name="MonsterInstance" positionX="-177.2222900390625" positionY="77.45893859863281" width="128" height="719"/>
+        <element name="RuneBuild" positionX="-288.71875" positionY="1052.14453125" width="128" height="314"/>
         <element name="RuneInstance" positionX="336.904052734375" positionY="238.5854949951172" width="128" height="20"/>
         <element name="RunePriority" positionX="-437.1119384765625" positionY="86.45263671875" width="128" height="89"/>
-        <element name="ScalingStat" positionX="-586.6636657714844" positionY="6.030624389648438" width="128" height="104"/>
-        <element name="SecretDungeon" positionX="-603" positionY="117" width="128" height="74"/>
-        <element name="Skill" positionX="-806.2515563964844" positionY="333.4104614257812" width="128" height="329"/>
-        <element name="SkillEffect" positionX="-607.8872680664062" positionY="132.7097778320312" width="128" height="149"/>
-        <element name="SkillEffectDetail" positionX="44.8348388671875" positionY="89.73995971679688" width="128" height="284"/>
-        <element name="SkillUpgrade" positionX="-713.0382385253906" positionY="416.9775238037109" width="128" height="134"/>
+        <element name="ScalingStat" positionX="-1058.519134521484" positionY="84.66734313964844" width="128" height="104"/>
+        <element name="SecretDungeon" positionX="-65.25390625" positionY="1381.7578125" width="128" height="74"/>
+        <element name="Skill" positionX="-906.3999938964844" positionY="39.27764892578125" width="128" height="329"/>
+        <element name="SkillEffect" positionX="-1053.367736816406" positionY="605.3933715820312" width="128" height="149"/>
+        <element name="SkillEffectDetail" positionX="-1071.157348632812" positionY="242.3610534667969" width="128" height="284"/>
+        <element name="SkillUpgrade" positionX="-865.9093322753906" positionY="465.0048675537109" width="128" height="134"/>
         <element name="Source" positionX="-41.85833740234375" positionY="581.4371948242188" width="128" height="134"/>
-        <element name="Summoner" positionX="-589.8321228027344" positionY="757.1716766357422" width="128" height="524"/>
+        <element name="Summoner" positionX="-714.7305603027344" positionY="1127.808395385742" width="128" height="524"/>
         <element name="Task" positionX="8.27130126953125" positionY="60.91395568847656" width="128" height="29"/>
-        <element name="Team" positionX="-173.1781005859375" positionY="-41.04978942871094" width="128" height="149"/>
+        <element name="Team" positionX="286.6890869140625" positionY="474.0283355712891" width="128" height="149"/>
         <element name="TeamGroup" positionX="-298.14306640625" positionY="68.78431701660156" width="128" height="104"/>
-        <element name="Wave" positionX="-594" positionY="126" width="128" height="89"/>
+        <element name="Wave" positionX="114.48828125" positionY="1584.70703125" width="128" height="118"/>
     </elements>
 </model>

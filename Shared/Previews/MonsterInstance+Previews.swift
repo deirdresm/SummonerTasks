@@ -11,7 +11,7 @@ import CoreData
 extension MonsterInstance {
     
     public static var baleygr: MonsterInstance {
-        let monster = MonsterInstance(context: PersistenceController.shared.container.viewContext)
+        let monster = MonsterInstance(context: Persistence.shared.container.viewContext)
         
         
         

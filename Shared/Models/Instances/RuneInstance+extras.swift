@@ -61,7 +61,7 @@ extension RuneInstance {
     func findById(summoner: Summoner, runeId: Int64,
                   context: NSManagedObjectContext) -> RuneInstance? {
         
-//        PersistenceController.shared.container.viewContext.fetch
+//        Persistence.shared.container.viewContext.fetch
         guard let model =
                 context.persistentStoreCoordinator?.managedObjectModel,
           let request = model
@@ -201,7 +201,7 @@ extension RuneInstance {
     }
 
     static func findById(_ runeInstanceId: Int64,
-                                 context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
+                                 context: NSManagedObjectContext = Persistence.shared.container.viewContext)
     -> RuneInstance? {
         
         let request : NSFetchRequest<RuneInstance> = RuneInstance.fetchRequest()

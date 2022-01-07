@@ -11,20 +11,26 @@ import SwiftUI
 struct SummonerTasksApp: App {
     @Environment(\.scenePhase) var scenePhase
     
-    let persistenceController = PersistenceController.shared
+    let persistence = Persistence.shared
 
     var body: some Scene {
         DocumentGroup(viewing: SWDocument.self) { file in
             ContentView(document: file.$document)
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .environment(\.managedObjectContext, persistence.container.viewContext)
         }
 		DocumentGroup(viewing: SWDocument.self) { file in
-			BestiaryOverview(document: file.$document)
-				.environment(\.managedObjectContext, persistenceController.container.viewContext)
+			BestiaryContentView(document: file.$document)
+				.environment(\.managedObjectContext, persistence.container.viewContext)
+				.toolbar {
+					BestiaryToolbar(mode: $mode)
+					Button(action: addPlant) {
+						Label("Add Plant", systemImage: "plus")
+					}
+				}
 		}
         .onChange(of: scenePhase) { _ in
             do {
-                try persistenceController.container.viewContext.save()
+                try persistence.container.viewContext.save()
             } catch {
                 print("error saving")
             }

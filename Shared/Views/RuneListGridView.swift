@@ -72,7 +72,7 @@ public struct RuneList: View {
 
 // list one rune
 //public struct RuneListGridView: View {
-//    var viewContext = PersistenceController.shared.container.viewContext
+//    var viewContext = Persistence.shared.container.viewContext
 //
 //    var runes: [RuneInstance]
 //

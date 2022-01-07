@@ -11,7 +11,7 @@ import CoreData
 extension Source {
     
     public static var fusion: Source {
-        let source = Source(context: PersistenceController.shared.container.viewContext)
+        let source = Source(context: Persistence.shared.container.viewContext)
         source.id = 35
         source.name = "Fusion"
         source.imageFilename = "fusion.png"

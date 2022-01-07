@@ -7,12 +7,14 @@
 
 import Foundation
 import CoreData
+import Codextended
 
 @objc(GameItem)
 public class GameItem: NSManagedObject, Decodable {
 
 	private enum CodingKeys: String, CodingKey {
 		case id = "pk"
+		case fields
 		case com2usId = "com2us_id"
 		case name
 		case c2uDescription = "description"
@@ -35,6 +37,7 @@ public class GameItem: NSManagedObject, Decodable {
 		let container = try decoder.container(keyedBy: CodingKeys.self)
 		// and start decoding
 		self.id = try container.decode(Int64.self, forKey: .id)
+		let fields = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .fields)
 		self.com2usId = try container.decode(Int64.self, forKey: .com2usId)
 		self.name = try container.decode(String.self, forKey: .name)
 		self.c2uDescription = try container.decode(String.self, forKey: .c2uDescription)
@@ -47,7 +50,7 @@ public class GameItem: NSManagedObject, Decodable {
 
 extension GameItem {
 	static func findById(_ gameItemId: Int64,
-                         context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
+                         context: NSManagedObjectContext = Persistence.shared.container.viewContext)
     -> GameItem? {
         
         let request : NSFetchRequest<GameItem> = GameItem.fetchRequest()

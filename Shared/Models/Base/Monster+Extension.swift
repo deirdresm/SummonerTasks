@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreData
+import Codextended
 import SwiftUI
 
 // MARK: - Core Data
@@ -91,24 +92,68 @@ public class Monster: NSManagedObject, Decodable {
 		let container = try decoder.container(keyedBy: CodingKeys.self)
 		// and start decoding
 		self.id = try container.decode(Int64.self, forKey: .id)
-		self.name = try container.decode(String.self, forKey: .name)
-		self.com2usId = try container.decode(Int64.self, forKey: .com2usId)
-		self.familyId = try container.decode(Int64.self, forKey: .familyId)
-		self.skillGroupId = try container.decode(Int64.self, forKey: .skillGroupId)
-		self.imageFilename = try container.decode(String.self, forKey: .imageFilename)
-		self.element = try container.decode(String.self, forKey: .element)
-		self.archetype = try container.decode(String.self, forKey: .archetype)
-		self.baseStars = try container.decode(Int16.self, forKey: .baseStars)
-		self.naturalStars = try container.decode(Int16.self, forKey: .naturalStars)
-		self.obtainable = try container.decode(Bool.self, forKey: .obtainable)
+		self.name = try decoder.decode("name")
+		self.com2usId = try decoder.decode("com2usId")
+		self.familyId = try decoder.decode("familyId")
+		self.skillGroupId = try decoder.decode("skillGroupId")
+		self.imageFilename = try decoder.decode("imageFilename")
+		self.element = try decoder.decode("element")
+		self.archetype = try decoder.decode("archetype")
+		self.baseStars = try decoder.decode("baseStars")
+		self.naturalStars = try decoder.decode("naturalStars")
+		self.obtainable = try decoder.decode("obtainable")
 
 		// awakening
-		self.canAwaken = try container.decode(Bool.self, forKey: .canAwaken)
-		self.isAwakened = try container.decode(Bool.self, forKey: .isAwakened)
-		self.awakenLevel = try container.decode(Int16.self, forKey: .awakenLevel)
-		self.awakenBonus = try container.decode(String.self, forKey: .awakenBonus)
-		self.awakensToId = try container.decode(Int64.self, forKey: .awakensToId)
-		self.awakensFromId = try container.decode(Int64.self, forKey: .awakensFromId)
+		self.canAwaken = try decoder.decode("canAwaken")
+		self.isAwakened = try decoder.decode("isAwakened")
+		self.awakenLevel = try decoder.decode("awakenLevel")
+		self.awakenBonus = try decoder.decode("awakenBonus")
+		self.awakensToId = try decoder.decode("awakensToId")
+		self.awakensFromId = try decoder.decode("awakensFromId")
+
+		self.skillUpsToMax = try decoder.decode("skillUpsToMax")
+		self.leaderSkillId = try decoder.decode("leaderSkillId")
+		self.rawHp = try decoder.decode("rawHp")
+		self.rawAttack = try decoder.decode("rawAttack")
+		self.rawDefense = try decoder.decode("rawDefense")
+		self.baseHp = try decoder.decode("baseHp")
+		self.baseAttack = try decoder.decode("baseAttack")
+		self.baseDefense = try decoder.decode("baseDefense")
+		self.maxLvlHp = try decoder.decode("maxLvlHp")
+		self.maxLvlAttack = try decoder.decode("maxLvlAttack")
+		self.maxLvlDefense = try decoder.decode("maxLvlDefense")
+		self.speed = try decoder.decode("speed")
+		self.critRate = try decoder.decode("critRate")
+		self.critDamage = try decoder.decode("critDamage")
+		self.resistance = try decoder.decode("resistance")
+		self.accuracy = try decoder.decode("accuracy")
+		self.isHomunculus = try decoder.decode("homunculus")
+		self.craftCost = try decoder.decode("craftCost")
+		self.transformsToId = try decoder.decode("transformsToId")
+
+		// materials
+		self.awakenMatsFireLow = try decoder.decode("awakenMatsFireLow")
+		self.awakenMatsFireMid = try decoder.decode("awakenMatsFireMid")
+		self.awakenMatsFireHigh = try decoder.decode("awakenMatsFireHigh")
+		self.awakenMatsWaterLow = try decoder.decode("awakenMatsWaterLow")
+		self.awakenMatsWaterMid = try decoder.decode("awakenMatsWaterMid")
+		self.awakenMatsWaterHigh = try decoder.decode("awakenMatsWaterHigh")
+		self.awakenMatsWindLow = try decoder.decode("awakenMatsWindLow")
+		self.awakenMatsWindMid = try decoder.decode("awakenMatsWindMid")
+		self.awakenMatsWindHigh = try decoder.decode("awakenMatsWindHigh")
+		self.awakenMatsLightLow = try decoder.decode("awakenMatsLightLow")
+		self.awakenMatsLightMid = try decoder.decode("awakenMatsLightMid")
+		self.awakenMatsLightHigh = try decoder.decode("awakenMatsLightHigh")
+		self.awakenMatsDarkLow = try decoder.decode("awakenMatsDarkLow")
+		self.awakenMatsDarkMid = try decoder.decode("awakenMatsDarkMid")
+		self.awakenMatsDarkHigh = try decoder.decode("awakenMatsDarkHigh")
+		self.awakenMatsMagicLow = try decoder.decode("awakenMatsMagicLow")
+		self.awakenMatsMagicMid = try decoder.decode("awakenMatsMagicMid")
+		self.awakenMatsMagicHigh = try decoder.decode("awakenMatsMagicHigh")
+		self.isFarmable = try decoder.decode("farmable")
+		self.isFusionFood = try decoder.decode("fusionFood")
+		self.bestiarySlug = try decoder.decode("bestiarySlug")
+
 	}
 
     static func findById(_ id: Int64,

@@ -10,7 +10,7 @@ import SwiftUI
 import CoreData
 
 struct RuneIconGridView: View {
-    var viewContext = PersistenceController.shared.container.viewContext
+    var viewContext = Persistence.shared.container.viewContext
 
     var runes: [RuneInstance]
     

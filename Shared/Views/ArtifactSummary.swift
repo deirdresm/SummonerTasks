@@ -9,7 +9,7 @@ import SwiftUI
 import CoreData
 
 struct ArtifactSummaryView: View {
-    @Binding var document: SummonerJsonDocument
+    @Binding var document: SWDocument
     @Environment(\.managedObjectContext) private var moc
     @FetchRequest(entity: ArtifactInstance.entity(), sortDescriptors: [
             NSSortDescriptor(keyPath: \ArtifactInstance.slot, ascending: true),

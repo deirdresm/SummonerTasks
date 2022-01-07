@@ -173,7 +173,7 @@ public class LeaderSkill: NSManagedObject, Decodable {
     }
     
     static func findById(_ skillDataId: Int64,
-                         context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
+                         context: NSManagedObjectContext = Persistence.shared.container.viewContext)
     -> LeaderSkill? {
         
         let request : NSFetchRequest<LeaderSkill> = LeaderSkill.fetchRequest()

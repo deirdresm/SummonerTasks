@@ -39,7 +39,7 @@ public class ScalingStat: NSManagedObject, Decodable {
 	}
 
     static func findById(_ scalingStatId: Int64,
-                         context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
+                         context: NSManagedObjectContext = Persistence.shared.container.viewContext)
     -> ScalingStat? {
         
         let request : NSFetchRequest<ScalingStat> = ScalingStat.fetchRequest()

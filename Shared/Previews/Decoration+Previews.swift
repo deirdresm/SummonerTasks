@@ -26,7 +26,7 @@ import CoreData
 extension BuildingInstance {
 
     public static var skyTribeTotemInstance: BuildingInstance {
-        let buildingInstance = BuildingInstance(context: PersistenceController.shared.container.viewContext)
+        let buildingInstance = BuildingInstance(context: Persistence.shared.container.viewContext)
         
         let building = Building.skyTribeTotem
         let summoner = Summoner.tisHerself
@@ -43,7 +43,7 @@ extension BuildingInstance {
     }
 
    public static var ancientSwordInstance: BuildingInstance {
-        let buildingInstance = BuildingInstance(context: PersistenceController.shared.container.viewContext)
+        let buildingInstance = BuildingInstance(context: Persistence.shared.container.viewContext)
         let building = Building.ancientSword
         let summoner = Summoner.tisHerself
         
@@ -59,7 +59,7 @@ extension BuildingInstance {
     }
 
     public static var darkSanctuaryInstance: BuildingInstance {
-        let buildingInstance = BuildingInstance(context: PersistenceController.shared.container.viewContext)
+        let buildingInstance = BuildingInstance(context: Persistence.shared.container.viewContext)
         let building = Building.darkSanctuary
         let summoner = Summoner.tisHerself
         

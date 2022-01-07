@@ -93,7 +93,7 @@ extension Skill {
      */
     
     public static var baleygr1: Skill {
-        let skill = Skill(context: PersistenceController.shared.container.viewContext)
+        let skill = Skill(context: Persistence.shared.container.viewContext)
         skill.id = 2083
         skill.slot = 1
         skill.name = "Lightning Strike"
@@ -111,7 +111,7 @@ extension Skill {
     }
 
     public static var baleygr2: Skill {
-        let skill = Skill(context: PersistenceController.shared.container.viewContext)
+        let skill = Skill(context: Persistence.shared.container.viewContext)
         skill.id = 2088
         skill.slot = 2
         skill.name = "Gain Knowledge (Passive)"
@@ -127,7 +127,7 @@ extension Skill {
 
 
     public static var baleygr3: Skill {
-        let skill = Skill(context: PersistenceController.shared.container.viewContext)
+        let skill = Skill(context: Persistence.shared.container.viewContext)
         skill.id = 2093
         skill.slot = 3
         skill.name = "Start of Apocalypse"

@@ -45,7 +45,7 @@ public class MonsterCraftCost: NSManagedObject, Decodable {
 	}
 
     static func findById(_ monsterCraftCostId: Int64,
-                                 context: NSManagedObjectContext = PersistenceController.shared.container.viewContext)
+                                 context: NSManagedObjectContext = Persistence.shared.container.viewContext)
     -> MonsterCraftCost? {
         
         let request : NSFetchRequest<MonsterCraftCost> = MonsterCraftCost.fetchRequest()

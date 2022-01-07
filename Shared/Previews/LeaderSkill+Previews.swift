@@ -23,7 +23,7 @@ import Foundation
 extension LeaderSkill {
     
     public static var baleygrLeader: LeaderSkill {
-        let baleygr = LeaderSkill(context: PersistenceController.shared.container.viewContext)
+        let baleygr = LeaderSkill(context: Persistence.shared.container.viewContext)
         baleygr.id = 183
         baleygr.attribute = 2
         baleygr.amount = 44

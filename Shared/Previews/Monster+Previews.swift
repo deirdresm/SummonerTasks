@@ -10,7 +10,7 @@ import CoreData
 
 extension Monster {
     public static var lightSlayer: Monster {
-        let monster = Monster(context: PersistenceController.shared.container.viewContext)
+        let monster = Monster(context: Persistence.shared.container.viewContext)
         monster.name = "Craig"
         monster.imageFilename = "unit_icon_0068_1_4.png"
         monster.id = 24714
@@ -26,7 +26,7 @@ extension Monster {
     }
 
     public static var darkSlayer: Monster {
-        let monster = Monster(context: PersistenceController.shared.container.viewContext)
+        let monster = Monster(context: Persistence.shared.container.viewContext)
         monster.name = "Gurkha"
         monster.imageFilename = "unit_icon_0068_1_5.png"
         monster.id = 24715
@@ -42,7 +42,7 @@ extension Monster {
     }
 
     public static var baleygr: Monster {
-        let monster = Monster(context: PersistenceController.shared.container.viewContext)
+        let monster = Monster(context: Persistence.shared.container.viewContext)
         monster.name = "Baleygr"
         monster.imageFilename = "unit_icon_0047_1_2.png"
         monster.id = 22612
