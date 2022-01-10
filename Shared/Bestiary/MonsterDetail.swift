@@ -9,8 +9,12 @@ import Foundation
 import SwiftUI
 
 struct MonsterDetail: View {
-	@EnvironmentObject var monsterDetailId: Monster
+	@EnvironmentObject var monster: Monster
+	
 	var body: some View {
-		Text("Monster Detail")
+		Section(header: Text("Basic Info")) {
+			Text(monster.nameWrapped)
+				.font(.title).bold()
+		}
 	}
 }

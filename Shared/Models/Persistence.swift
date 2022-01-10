@@ -7,7 +7,7 @@
 
 import CoreData
 
-class Persistence {
+class Persistence: ObservableObject {
     static let shared = Persistence()
 
     let container: NSPersistentCloudKitContainer

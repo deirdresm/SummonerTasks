@@ -34,4 +34,9 @@ public class Wave: NSManagedObject, Decodable {
 		self.order = try container.decode(Int16.self, forKey: .order)
 	}
 
+	/// Wrapper around decodable initializer to add field that's wrapped weird.
+	public convenience init(from decoder: Decoder, pk: Int64) throws {
+		try self.init(from: decoder)
+		self.id = pk
+	}
 }

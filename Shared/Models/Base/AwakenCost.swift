@@ -40,6 +40,11 @@ public class AwakenCost: NSManagedObject, Decodable {
 		}
 	}
 
+	public convenience init(from decoder: Decoder, pk: Int64) throws {
+		try self.init(from: decoder)
+		self.id = pk
+	}
+
     static func findById(_ awakenCostId: Int64,
                          context: NSManagedObjectContext = Persistence.shared.container.viewContext)
     -> AwakenCost? {

@@ -16,8 +16,6 @@ final class BestiaryDocument: ObservableObject, FileDocument {
 
 	required init(configuration: ReadConfiguration) throws {
 		do {
-			// what we do depends on the filename
-
 			guard let data = configuration.file.regularFileContents else {
 				// TODO: cover more cases
 				throw CocoaError(.fileReadCorruptFile)
@@ -39,8 +37,6 @@ final class BestiaryDocument: ObservableObject, FileDocument {
 			// TODO: cover more cases
 			throw CocoaError(.fileReadCorruptFile)
 		}
-
-		text = ""
 	}
 
 	func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {

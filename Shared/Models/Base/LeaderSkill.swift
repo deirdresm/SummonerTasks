@@ -99,7 +99,12 @@ public class LeaderSkill: NSManagedObject, Decodable {
 		let element = try container.decode(String.self, forKey: .element)
 	}
 
-	
+
+	public convenience init(from decoder: Decoder, pk: Int64) throws {
+		try self.init(from: decoder)
+		self.id = pk
+	}
+
     /*     def skill_string(self):
      if self.area == self.AREA_DUNGEON:
          condition = 'in the Dungeons '

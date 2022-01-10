@@ -18,6 +18,9 @@ class BestiaryVC {
 	 case dungeon
  }
 
+	static var bestiary: BestiaryVC.ViewMode = .bestiary
+	static var dungeon: BestiaryVC.ViewMode = .dungeon
+
 }
 
 extension BestiaryVC.ViewMode {

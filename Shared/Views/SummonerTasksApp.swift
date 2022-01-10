@@ -18,7 +18,7 @@ struct SummonerTasksApp: App {
             ContentView(document: file.$document)
                 .environment(\.managedObjectContext, persistence.container.viewContext)
         }
-		DocumentGroup(viewing: SWDocument.self) { file in
+		DocumentGroup(viewing: BestiaryDocument.self) { file in
 			BestiaryContentView(document: file.$document)
 				.environment(\.managedObjectContext, persistence.container.viewContext)
 				.toolbar {

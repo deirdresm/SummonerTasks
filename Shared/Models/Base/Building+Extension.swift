@@ -43,6 +43,11 @@ public class Building: NSManagedObject, Decodable {
 		self.com2usId = try container.decode(Int64.self, forKey: .com2usId)
 	}
 
+	public convenience init(from decoder: Decoder, pk: Int64) throws {
+		try self.init(from: decoder)
+		self.id = pk
+	}
+
 	//    convenience init(buildingData: BuildingData, docInfo: SummonerDocumentInfo) {
 //        self.init()
 //        update(from: buildingData, docInfo: docInfo)

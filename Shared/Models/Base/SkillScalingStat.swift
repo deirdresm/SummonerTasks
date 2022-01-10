@@ -38,6 +38,12 @@ public class ScalingStat: NSManagedObject, Decodable {
 		self.stat = try container.decode(String.self, forKey: .stat)
 	}
 
+	/// Wrapper around decodable initializer to add field that's wrapped weird.
+	public convenience init(from decoder: Decoder, pk: Int64) throws {
+		try self.init(from: decoder)
+		self.id = pk
+	}
+
     static func findById(_ scalingStatId: Int64,
                          context: NSManagedObjectContext = Persistence.shared.container.viewContext)
     -> ScalingStat? {

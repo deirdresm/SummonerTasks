@@ -38,6 +38,12 @@ public class HomunculusSkill: NSManagedObject, Decodable {
 		self.prerequisites = try container.decodeArray(Int64.self, forKey: .prerequisites)
 	}
 
+	/// Wrapper around decodable initializer to add field that's wrapped weird.
+	public convenience init(from decoder: Decoder, pk: Int64) throws {
+		try self.init(from: decoder)
+		self.id = pk
+	}
+
 
 	//extension HomunculusSkill: Decodable {
 //    

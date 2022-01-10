@@ -39,6 +39,11 @@ public class Source: NSManagedObject, Decodable {
 		self.metaOrder = try container.decode(Int64.self, forKey: .metaOrder)
 	}
 
+	public convenience init(from decoder: Decoder, pk: Int64) throws {
+		try self.init(from: decoder)
+		self.id = pk
+	}
+
     static func findById(_ id: Int64,
                     context: NSManagedObjectContext) -> Source? {
         

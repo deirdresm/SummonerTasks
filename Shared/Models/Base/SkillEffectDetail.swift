@@ -61,6 +61,12 @@ public class SkillEffectDetail: NSManagedObject, Decodable {
 		self.note = try container.decode(String.self, forKey: .note)
 	}
 
+	/// Wrapper around decodable initializer to add field that's wrapped weird.
+	public convenience init(from decoder: Decoder, pk: Int64) throws {
+		try self.init(from: decoder)
+		self.id = pk
+	}
+
     
     static func findById(_ skillEffectDetailId: Int64,
                          context: NSManagedObjectContext = Persistence.shared.container.viewContext)

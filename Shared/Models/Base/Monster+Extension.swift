@@ -88,10 +88,8 @@ public class Monster: NSManagedObject, Decodable {
 		// init self
 		self.init(entity: entity, insertInto: context)
 
-		// create container
-		let container = try decoder.container(keyedBy: CodingKeys.self)
 		// and start decoding
-		self.id = try container.decode(Int64.self, forKey: .id)
+		self.id = try decoder.decode("id")
 		self.name = try decoder.decode("name")
 		self.com2usId = try decoder.decode("com2usId")
 		self.familyId = try decoder.decode("familyId")
@@ -156,6 +154,11 @@ public class Monster: NSManagedObject, Decodable {
 
 	}
 
+	public convenience init(from decoder: Decoder, pk: Int64) throws {
+		try self.init(from: decoder)
+		self.id = pk
+	}
+
     static func findById(_ id: Int64,
                     context: NSManagedObjectContext) -> Monster? {
 
@@ -171,6 +174,11 @@ public class Monster: NSManagedObject, Decodable {
             return(nil)
         }
     }
+
+	var nameWrapped: String {
+		name ?? ""
+	}
+
 //
 //    // import from JSON
 //    func update<T: JsonArray>(from: T,

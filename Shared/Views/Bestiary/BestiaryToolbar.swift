@@ -20,7 +20,11 @@ struct BestiaryToolbar: View {
 }
 
 struct BestiaryToolbar_Previews: PreviewProvider {
+
+
+
     static var previews: some View {
-		BestiaryToolbar(mode: BestiaryVC.ViewMode.bestiary)
+		let mode: BestiaryVC.ViewMode = .bestiary
+		BestiaryToolbar(mode: .constant(mode))
     }
 }

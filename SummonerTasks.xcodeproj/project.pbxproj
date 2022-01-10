@@ -419,6 +419,22 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		38497536278BB8C100C505F8 /* Bestiary */ = {
+			isa = PBXGroup;
+			children = (
+				381BC03F277C09060055712F /* MonsterDetail.swift */,
+				38607FB4277A622900452EFF /* BestiaryContentView.swift */,
+			);
+			path = Bestiary;
+			sourceTree = "<group>";
+		};
+		38497537278BB8D000C505F8 /* Dungeons */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Dungeons;
+			sourceTree = "<group>";
+		};
 		384A48D52575A070002E04CB = {
 			isa = PBXGroup;
 			children = (
@@ -441,6 +457,8 @@
 				38F02E90272C7C2C007899C6 /* OP Code */,
 				38BC3AF7258B087800A85FBE /* Previews */,
 				38535E222582BBE9009411A1 /* Fixtures */,
+				38497536278BB8C100C505F8 /* Bestiary */,
+				38497537278BB8D000C505F8 /* Dungeons */,
 				38CFB793257AFB1900F0C398 /* Extensions */,
 				38535E2A25832E71009411A1 /* Views */,
 				38A1C649257DE52A0032878E /* Utility Views */,
@@ -593,10 +611,8 @@
 			isa = PBXGroup;
 			children = (
 				3848A413258D700C000809EF /* BestiaryView.swift */,
-				38607FB4277A622900452EFF /* BestiaryContentView.swift */,
 				38607FA72777B9FE00452EFF /* BestiarySidebar.swift */,
 				38607FA92778320B00452EFF /* BestiaryToolbar.swift */,
-				381BC03F277C09060055712F /* MonsterDetail.swift */,
 			);
 			path = Bestiary;
 			sourceTree = "<group>";

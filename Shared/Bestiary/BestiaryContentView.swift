@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct BestiaryContentView: View {
-	@EnvironmentObject var store: Persistence
-	@SceneStorage("selection") private var selectedMonsterId: Monster.com2usId?
+	@EnvironmentObject var persistence: Persistence
+
+	@SceneStorage("selection") private var selectedMonsterId: (Monster.com2usId)?
 	@AppStorage("monsterFamily") private var defaultMonsterId: Monster.com2usId?
 
 	var body: some View {
 		NavigationView {
-			BestiarySidebar(selection: selection)
+			BestiarySidebar(document: <#BestiaryDocument#>, selection: selection)
 			MonsterDetail(monster: selectedMonsterId)
 		}
 	}
@@ -29,6 +30,8 @@ struct BestiaryContentView: View {
 }
 
 struct BestiaryContentView_Previews: PreviewProvider {
+	static var persistence = PersistenceController.preview
+
     static var previews: some View {
         BestiaryContentView()
     }

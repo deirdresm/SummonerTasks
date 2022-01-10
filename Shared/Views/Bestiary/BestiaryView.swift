@@ -11,10 +11,10 @@ import CoreData
 
 struct BestiaryView: View {
 	public enum ViewMode: String, CaseIterable, Identifiable {
-	 var id: Self { self }
-	 case bestiary
-	 case dungeon
- }
+		 var id: Self { self }
+		 case bestiary
+		 case dungeon
+	 }
 
 	@Binding var monster: Monster
 	@State var searchText: String = ""
@@ -25,7 +25,7 @@ struct BestiaryView: View {
 	 .init(\.familyId, order: SortOrder.forward)
 	]
 
-	let monsters: [Monster]
+//	let monsters: [Monster]
 
 	// TODO: write this function
 	var table: some View {
@@ -64,7 +64,7 @@ struct BestiaryView: View {
 struct BestiaryView_Previews: PreviewProvider {
 
     static var previews: some View {
-        BestiaryView(monsters: [Monster.lightSlayer, Monster.darkSlayer])
+		BestiaryView(monster: .constant(Monster.lightSlayer))
         .previewLayout(.fixed(width: 600, height: 800))
     }
 }
