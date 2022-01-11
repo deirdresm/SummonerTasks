@@ -9,7 +9,7 @@ import SwiftUI
 
 // TODO: make this bestiary-ish
 struct BestiarySidebar: View {
-	var document: BestiaryDocument
+	var document: BestiaryDocument = BestiaryDocument(text: "")
 	@Environment(\.managedObjectContext) private var moc
 
 	@Binding var selection: RuneType?
@@ -47,12 +47,9 @@ struct BestiarySidebar: View {
 
 struct BestiarySidebar_Previews: PreviewProvider {
 	static let text = Bundle.main.openBundleFile(from: "runes-mini.json")
-	static var document: BestiaryDocument = {
-		return try! BestiaryDocument(text: text)
-	}()
 	@State static var selection: RuneType? = .violent
 
 	static var previews: some View {
-		BestiarySidebar(document: document, selection: $selection)
+		BestiarySidebar(selection: $selection)
 	}
 }

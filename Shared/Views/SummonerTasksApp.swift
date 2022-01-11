@@ -10,7 +10,8 @@ import SwiftUI
 @main
 struct SummonerTasksApp: App {
     @Environment(\.scenePhase) var scenePhase
-    
+	@SceneStorage("viewMode") private var mode: BestiaryVC.ViewMode = .bestiary
+
     let persistence = Persistence.shared
 
     var body: some Scene {
@@ -23,9 +24,6 @@ struct SummonerTasksApp: App {
 				.environment(\.managedObjectContext, persistence.container.viewContext)
 				.toolbar {
 					BestiaryToolbar(mode: $mode)
-					Button(action: addPlant) {
-						Label("Add Plant", systemImage: "plus")
-					}
 				}
 		}
         .onChange(of: scenePhase) { _ in

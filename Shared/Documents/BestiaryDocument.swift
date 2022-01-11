@@ -14,6 +14,11 @@ final class BestiaryDocument: ObservableObject, FileDocument {
 
 	var text: String = ""
 
+	/// Currently only used by testing.
+	init(text: String) {
+		self.text = text
+	}
+
 	required init(configuration: ReadConfiguration) throws {
 		do {
 			guard let data = configuration.file.regularFileContents else {
@@ -43,4 +48,11 @@ final class BestiaryDocument: ObservableObject, FileDocument {
 		throw JSONFileError.notImplemented
 	}
 
+	public func testingDocConfig() -> FileDocumentReadConfiguration {
+
+		let f = FileDocumentReadConfiguration()
+
+		return f
+
+	}
 }

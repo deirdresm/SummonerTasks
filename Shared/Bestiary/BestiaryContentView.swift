@@ -9,30 +9,35 @@ import SwiftUI
 
 struct BestiaryContentView: View {
 	@EnvironmentObject var persistence: Persistence
+	@Binding var document: BestiaryDocument = BestiaryDocument(text: "")
 
-	@SceneStorage("selection") private var selectedMonsterId: (Monster.com2usId)?
+	@SceneStorage("selectedMonster") private var selectedMonsterId: (Monster.com2usId)?
 	@AppStorage("monsterFamily") private var defaultMonsterId: Monster.com2usId?
+	@SceneStorage("selectedDungeon") private var selectedDungeonId: (Dungeon.com2usId)?
+	@AppStorage("defaultDungeon") private var defaultDungeonId: Dungeon.com2usId?
+
 
 	var body: some View {
 		NavigationView {
-			BestiarySidebar(document: <#BestiaryDocument#>, selection: selection)
+			BestiarySidebar(document: document, selection: selection)
 			MonsterDetail(monster: selectedMonsterId)
 		}
 	}
 
 	private var selection: Binding<Monster?> {
-		Binding(get: { selectedMonsterId ?? defaultMonsterId }, set: { selectedMonsterId = $0 })
+		Binding(get: { selectedMonsterId ?? defaultMonsterId },
+				set: { selectedMonsterId = $0 })
 	}
 
-	private var selectedGarden: Binding<Monster> {
-		$store[selection.wrappedValue]
+	private var selectedDungeon: Binding<Dungeon> {
+		Binding(get: { selectedDungeonId ?? defaultDungeonId },
+				set: { selectedDungeonId = $0 })
 	}
 }
 
 struct BestiaryContentView_Previews: PreviewProvider {
-	static var persistence = PersistenceController.preview
-
+	static var persistence = Persistence.preview
     static var previews: some View {
-        BestiaryContentView()
+		BestiaryContentView()
     }
 }
