@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct SummonerName: View {
-    var summoner: Summoner?
-    var prefix: String
-    var suffix: String
+    let name: String
+    let prefix: String
+    let suffix: String
     
     var body: some View {
-        if let name = summoner?.name {
+		if name.isEmpty {
             Text("\(prefix)\(name)\(suffix)")
         } else {
             Text("\(prefix)\(suffix)")
@@ -22,12 +22,12 @@ struct SummonerName: View {
 }
 
 struct SummonerName_Previews: PreviewProvider {
-    static let summoner = Summoner.tisHerself
+    static let summonerName =  "TisHerself"
 
     static var previews: some View {
         Group {
-            SummonerName(summoner: summoner, prefix: "Hello, ", suffix: ".")
-            SummonerName(summoner: nil, prefix: "Hello", suffix: ".")
+            SummonerName(name: summonerName, prefix: "Hello, ", suffix: ".")
+			SummonerName(name: "", prefix: "Hello", suffix: ".")
         }
     }
 }

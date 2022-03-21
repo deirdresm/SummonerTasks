@@ -24,7 +24,7 @@ class BestiaryLoader {
 		do {
 			let data = try Data(contentsOf: url)
 			let decoder = JSONDecoder()
-			return try decoder.decode(Content.self, from: data)
+			try decoder.decode(BestiaryItem.self, from: data)
 		} catch {
 			throw Error.fileDecodingFailed(name: name, error)
 		}

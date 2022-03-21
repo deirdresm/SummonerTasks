@@ -126,8 +126,8 @@
             filePath = "Shared/Models/Instances/BuildingInstance.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "67"
-            endingLineNumber = "67"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
             landmarkName = "BuildingInstance"
             landmarkType = "21">
          </BreakpointContent>
@@ -306,22 +306,38 @@
             endingLineNumber = "15"
             landmarkName = "CodingKeys"
             landmarkType = "13">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "80693D1E-577F-45C6-A497-F9149220ED30"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Shared/Documents/BestiaryImport.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "232"
-            endingLineNumber = "232"
-            landmarkName = "init(from:)"
-            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "0121A529-021B-4AC2-813D-709FA7305160 - 4532a7d5fef71582"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SummonerTasks.Wave.CodingKeys.init(rawValue: Swift.String) -&gt; Swift.Optional&lt;SummonerTasks.Wave.CodingKeys&gt;"
+                  moduleName = "SummonerTasks"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/deirdre/Development/SummonerTasks/Shared/Models/Base/Wave.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "100">
+               </Location>
+               <Location
+                  uuid = "0121A529-021B-4AC2-813D-709FA7305160 - e8bb342318709df9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SummonerTasks.Wave.CodingKeys.rawValue.getter : Swift.String"
+                  moduleName = "SummonerTasks"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/deirdre/Development/SummonerTasks/Shared/Models/Base/Wave.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "80">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

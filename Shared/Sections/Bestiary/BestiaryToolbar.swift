@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct BestiaryToolbar: View {
-	@Binding var mode: BestiaryVC.ViewMode
+	@Binding var mode: BestiaryContentView.ViewModel.ViewMode
     var body: some View {
 		Picker("Display Mode", selection: $mode) {
-			ForEach(BestiaryVC.ViewMode.allCases) { viewMode in
+			ForEach(BestiaryContentView.ViewModel.ViewMode.allCases) { viewMode in
 				viewMode.label
 			}
 		}
@@ -24,7 +24,7 @@ struct BestiaryToolbar_Previews: PreviewProvider {
 
 
     static var previews: some View {
-		let mode: BestiaryVC.ViewMode = .bestiary
+		let mode: BestiaryContentView.ViewModel.ViewMode = .bestiary
 		BestiaryToolbar(mode: .constant(mode))
     }
 }

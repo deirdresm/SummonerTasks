@@ -10,10 +10,6 @@ import CoreData
 class Persistence: ObservableObject {
     static let shared = Persistence()
 
-	@Published var selectedMonster: Monster.ID?
-	@Published var bestiaryMode: BestiaryVC.ViewMode = .bestiary
-
-
     let container: NSPersistentCloudKitContainer
     
     /**

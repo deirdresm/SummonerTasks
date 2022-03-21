@@ -81,8 +81,8 @@
 		3860104E259AB48F00118951 /* GameItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3860104C259AB48F00118951 /* GameItem.swift */; };
 		38607FA82777B9FE00452EFF /* BestiarySidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38607FA72777B9FE00452EFF /* BestiarySidebar.swift */; };
 		38607FAA2778320B00452EFF /* BestiaryToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38607FA92778320B00452EFF /* BestiaryToolbar.swift */; };
-		38607FAF277901B200452EFF /* BestiaryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38607FAE277901B200452EFF /* BestiaryVC.swift */; };
-		38607FB0277901B200452EFF /* BestiaryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38607FAE277901B200452EFF /* BestiaryVC.swift */; };
+		38607FAF277901B200452EFF /* BestiaryVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38607FAE277901B200452EFF /* BestiaryVM.swift */; };
+		38607FB0277901B200452EFF /* BestiaryVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38607FAE277901B200452EFF /* BestiaryVM.swift */; };
 		38607FB5277A622900452EFF /* BestiaryContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38607FB4277A622900452EFF /* BestiaryContentView.swift */; };
 		38607FB6277A622900452EFF /* BestiaryContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38607FB4277A622900452EFF /* BestiaryContentView.swift */; };
 		38647F06271272860050FC06 /* NonZeroValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38647F04271272860050FC06 /* NonZeroValidator.swift */; };
@@ -134,6 +134,10 @@
 		38A1C682257E06820032878E /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A1C680257E06820032878E /* Bundle+Extension.swift */; };
 		38AC993425D2717D00E13839 /* FilePanel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AC993325D2717D00E13839 /* FilePanel+Extension.swift */; };
 		38AC993525D2717D00E13839 /* FilePanel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AC993325D2717D00E13839 /* FilePanel+Extension.swift */; };
+		38B211CE27E6732000FB0A29 /* PlayerFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B211CD27E6732000FB0A29 /* PlayerFile.swift */; };
+		38B211CF27E6732000FB0A29 /* PlayerFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B211CD27E6732000FB0A29 /* PlayerFile.swift */; };
+		38B211D127E7006C00FB0A29 /* Optional+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B211D027E7006C00FB0A29 /* Optional+Extension.swift */; };
+		38B211D227E7006C00FB0A29 /* Optional+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B211D027E7006C00FB0A29 /* Optional+Extension.swift */; };
 		38B6A44025DDFC64006E5A2D /* ElementColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B6A43F25DDFC64006E5A2D /* ElementColor.swift */; };
 		38B6A44125DDFC64006E5A2D /* ElementColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B6A43F25DDFC64006E5A2D /* ElementColor.swift */; };
 		38B9F77025BA2C6600F4C112 /* BuildingEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B9F76F25BA2C6600F4C112 /* BuildingEnums.swift */; };
@@ -148,8 +152,8 @@
 		38BE67D425BB8AC900CA67E9 /* BuildingInstance+Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BE67D225BB8AC900CA67E9 /* BuildingInstance+Previews.swift */; };
 		38BE67DA25BC07F800CA67E9 /* RuneListGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BE67D925BC07F800CA67E9 /* RuneListGridView.swift */; };
 		38BE67DB25BC07F800CA67E9 /* RuneListGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BE67D925BC07F800CA67E9 /* RuneListGridView.swift */; };
-		38C7E06D260A896400F9BB4C /* PlayerFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C7E06C260A896400F9BB4C /* PlayerFile.swift */; };
-		38C7E06E260A896400F9BB4C /* PlayerFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C7E06C260A896400F9BB4C /* PlayerFile.swift */; };
+		38BFE43827DEE74A00A897F5 /* Data+Checksum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BFE43727DEE74A00A897F5 /* Data+Checksum.swift */; };
+		38BFE43927DEE74A00A897F5 /* Data+Checksum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BFE43727DEE74A00A897F5 /* Data+Checksum.swift */; };
 		38CCFA75276EF594007BD37B /* BestiaryDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CCFA74276EF594007BD37B /* BestiaryDocument.swift */; };
 		38CCFA76276EF594007BD37B /* BestiaryDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CCFA74276EF594007BD37B /* BestiaryDocument.swift */; };
 		38CCFA78276FB52D007BD37B /* ArtifactWhichMonster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CCFA77276FB52D007BD37B /* ArtifactWhichMonster.swift */; };
@@ -205,6 +209,10 @@
 		38CFB796257AFB3700F0C398 /* DateFormatter+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB794257AFB3700F0C398 /* DateFormatter+extensions.swift */; };
 		38D4389A25BE9EE6004A2271 /* RuneInstance+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D4389425BE9EE5004A2271 /* RuneInstance+CoreDataClass.swift */; };
 		38D4389B25BE9EE6004A2271 /* RuneInstance+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D4389425BE9EE5004A2271 /* RuneInstance+CoreDataClass.swift */; };
+		38D98AF627BB6C8D00B78B91 /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D98AF527BB6C8D00B78B91 /* Binding+Extension.swift */; };
+		38D98AF727BB6C8D00B78B91 /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D98AF527BB6C8D00B78B91 /* Binding+Extension.swift */; };
+		38D98AFB27BC967900B78B91 /* ContentViewVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D98AFA27BC967900B78B91 /* ContentViewVM.swift */; };
+		38D98AFC27BC967900B78B91 /* ContentViewVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D98AFA27BC967900B78B91 /* ContentViewVM.swift */; };
 		38DB9D55257EF7F90038BDC0 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 38DB9D54257EF7F90038BDC0 /* LICENSE.txt */; };
 		38DB9D56257EF7F90038BDC0 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 38DB9D54257EF7F90038BDC0 /* LICENSE.txt */; };
 		38DB9D5C257EF83A0038BDC0 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DB9D5B257EF83A0038BDC0 /* Data.swift */; };
@@ -248,8 +256,6 @@
 		38004501259E93140098A75C /* MonsterInstanceSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterInstanceSummaryView.swift; sourceTree = "<group>"; };
 		38038CA725DDBE260036BAC6 /* RuneColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuneColor.swift; sourceTree = "<group>"; };
 		380DF61425D4B13C00848DE0 /* profile.jsonschema */ = {isa = PBXFileReference; lastKnownFileType = text; path = profile.jsonschema; sourceTree = "<group>"; };
-		380DF61B25D4B3A200848DE0 /* building.jsonschema */ = {isa = PBXFileReference; lastKnownFileType = text; path = building.jsonschema; sourceTree = "<group>"; };
-		380DF62225D4B5F200848DE0 /* BuildingInstanceData.jsonschema */ = {isa = PBXFileReference; lastKnownFileType = text; path = BuildingInstanceData.jsonschema; sourceTree = "<group>"; };
 		3818B167259D843F00CCE47E /* Skill+Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Skill+Previews.swift"; sourceTree = "<group>"; };
 		381BC03C277AE8990055712F /* ContentLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentLoader.swift; sourceTree = "<group>"; };
 		381BC03F277C09060055712F /* MonsterDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterDetail.swift; sourceTree = "<group>"; };
@@ -292,7 +298,7 @@
 		3860104C259AB48F00118951 /* GameItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameItem.swift; sourceTree = "<group>"; };
 		38607FA72777B9FE00452EFF /* BestiarySidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestiarySidebar.swift; sourceTree = "<group>"; };
 		38607FA92778320B00452EFF /* BestiaryToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestiaryToolbar.swift; sourceTree = "<group>"; };
-		38607FAE277901B200452EFF /* BestiaryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestiaryVC.swift; sourceTree = "<group>"; };
+		38607FAE277901B200452EFF /* BestiaryVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestiaryVM.swift; sourceTree = "<group>"; };
 		38607FB4277A622900452EFF /* BestiaryContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestiaryContentView.swift; sourceTree = "<group>"; };
 		38647F04271272860050FC06 /* NonZeroValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonZeroValidator.swift; sourceTree = "<group>"; };
 		38647F072713D3DE0050FC06 /* Publisher+IntValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+IntValidator.swift"; sourceTree = "<group>"; };
@@ -325,6 +331,8 @@
 		38A1C64B257DE52A0032878E /* MonsterIconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonsterIconView.swift; sourceTree = "<group>"; };
 		38A1C680257E06820032878E /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Bundle+Extension.swift"; path = "Shared/Extensions/Bundle+Extension.swift"; sourceTree = SOURCE_ROOT; };
 		38AC993325D2717D00E13839 /* FilePanel+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FilePanel+Extension.swift"; sourceTree = "<group>"; };
+		38B211CD27E6732000FB0A29 /* PlayerFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerFile.swift; sourceTree = "<group>"; };
+		38B211D027E7006C00FB0A29 /* Optional+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+Extension.swift"; sourceTree = "<group>"; };
 		38B6A43F25DDFC64006E5A2D /* ElementColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementColor.swift; sourceTree = "<group>"; };
 		38B9F76F25BA2C6600F4C112 /* BuildingEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingEnums.swift; sourceTree = "<group>"; };
 		38BC3ABE2589CC8B00A85FBE /* JSONDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecodable.swift; sourceTree = "<group>"; };
@@ -333,7 +341,7 @@
 		38BE67C725BB76F300CA67E9 /* NSPredicate+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSPredicate+Extension.swift"; sourceTree = "<group>"; };
 		38BE67D225BB8AC900CA67E9 /* BuildingInstance+Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BuildingInstance+Previews.swift"; sourceTree = "<group>"; };
 		38BE67D925BC07F800CA67E9 /* RuneListGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuneListGridView.swift; sourceTree = "<group>"; };
-		38C7E06C260A896400F9BB4C /* PlayerFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerFile.swift; sourceTree = "<group>"; };
+		38BFE43727DEE74A00A897F5 /* Data+Checksum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Checksum.swift"; sourceTree = "<group>"; };
 		38CCFA74276EF594007BD37B /* BestiaryDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestiaryDocument.swift; sourceTree = "<group>"; };
 		38CCFA77276FB52D007BD37B /* ArtifactWhichMonster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtifactWhichMonster.swift; sourceTree = "<group>"; };
 		38CCFA7A276FC793007BD37B /* NSManagedCodableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSManagedCodableObject.swift; sourceTree = "<group>"; };
@@ -364,6 +372,8 @@
 		38CFB794257AFB3700F0C398 /* DateFormatter+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+extensions.swift"; sourceTree = "<group>"; };
 		38D4389425BE9EE5004A2271 /* RuneInstance+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RuneInstance+CoreDataClass.swift"; sourceTree = "<group>"; };
 		38D8DC3525A2BD6600194E7E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		38D98AF527BB6C8D00B78B91 /* Binding+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extension.swift"; sourceTree = "<group>"; };
+		38D98AFA27BC967900B78B91 /* ContentViewVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewVM.swift; sourceTree = "<group>"; };
 		38DB9D54257EF7F90038BDC0 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		38DB9D5B257EF83A0038BDC0 /* Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		38E1101B25903C6100D4BBB0 /* RuneIconBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuneIconBase.swift; sourceTree = "<group>"; };
@@ -422,8 +432,12 @@
 		38497536278BB8C100C505F8 /* Bestiary */ = {
 			isa = PBXGroup;
 			children = (
-				381BC03F277C09060055712F /* MonsterDetail.swift */,
 				38607FB4277A622900452EFF /* BestiaryContentView.swift */,
+				38607FAE277901B200452EFF /* BestiaryVM.swift */,
+				381BC03F277C09060055712F /* MonsterDetail.swift */,
+				3848A413258D700C000809EF /* BestiaryView.swift */,
+				38607FA72777B9FE00452EFF /* BestiarySidebar.swift */,
+				38607FA92778320B00452EFF /* BestiaryToolbar.swift */,
 			);
 			path = Bestiary;
 			sourceTree = "<group>";
@@ -452,18 +466,17 @@
 		384A48DA2575A071002E04CB /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				38D98AF827BC706600B78B91 /* Sections */,
 				38CCFA73276EF547007BD37B /* Documents */,
 				38CFB6B72576EF9E00F0C398 /* Models */,
 				38F02E90272C7C2C007899C6 /* OP Code */,
 				38BC3AF7258B087800A85FBE /* Previews */,
 				38535E222582BBE9009411A1 /* Fixtures */,
-				38497536278BB8C100C505F8 /* Bestiary */,
 				38497537278BB8D000C505F8 /* Dungeons */,
 				38CFB793257AFB1900F0C398 /* Extensions */,
 				38535E2A25832E71009411A1 /* Views */,
 				38A1C649257DE52A0032878E /* Utility Views */,
 				38A1C644257DE5270032878E /* BestiaryGoalsDelegate.swift */,
-				38607FAE277901B200452EFF /* BestiaryVC.swift */,
 				38A1C647257DE5290032878E /* Event.swift */,
 				38A1C646257DE5280032878E /* FusionSceneDelegate.swift */,
 				384A48DE2575A074002E04CB /* Assets.xcassets */,
@@ -532,9 +545,7 @@
 		38535E2A25832E71009411A1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				384A48DB2575A071002E04CB /* SummonerTasksApp.swift */,
 				38607FA62776F0D700452EFF /* Bestiary */,
-				384A48DD2575A071002E04CB /* ContentView.swift */,
 				386E216A270A6F7E006A4F98 /* RuneChecker.swift */,
 				3835305B26E330BC0018E908 /* RuneSidebar.swift */,
 				38A1C648257DE5290032878E /* FusionContentView.swift */,
@@ -592,6 +603,7 @@
 				38CFB7062578303E00F0C398 /* FusionIngredients.swift */,
 				38CFB6C62577291800F0C398 /* TeamGroup.swift */,
 				38CFB6F82577701800F0C398 /* Team.swift */,
+				38B211CD27E6732000FB0A29 /* PlayerFile.swift */,
 			);
 			path = Instances;
 			sourceTree = "<group>";
@@ -610,9 +622,6 @@
 		38607FA62776F0D700452EFF /* Bestiary */ = {
 			isa = PBXGroup;
 			children = (
-				3848A413258D700C000809EF /* BestiaryView.swift */,
-				38607FA72777B9FE00452EFF /* BestiarySidebar.swift */,
-				38607FA92778320B00452EFF /* BestiaryToolbar.swift */,
 			);
 			path = Bestiary;
 			sourceTree = "<group>";
@@ -620,10 +629,7 @@
 		38A0AD58258DCBE7005C01D0 /* JSON Instance */ = {
 			isa = PBXGroup;
 			children = (
-				38C7E06C260A896400F9BB4C /* PlayerFile.swift */,
 				38A0AD59258DCC05005C01D0 /* BuildingInstanceData.swift */,
-				380DF61B25D4B3A200848DE0 /* building.jsonschema */,
-				380DF62225D4B5F200848DE0 /* BuildingInstanceData.jsonschema */,
 				389F89BC259805B300006C09 /* SummonerData.swift */,
 			);
 			path = "JSON Instance";
@@ -716,8 +722,30 @@
 				38647F04271272860050FC06 /* NonZeroValidator.swift */,
 				38647F072713D3DE0050FC06 /* Publisher+IntValidator.swift */,
 				38CCFA7A276FC793007BD37B /* NSManagedCodableObject.swift */,
+				38D98AF527BB6C8D00B78B91 /* Binding+Extension.swift */,
+				38BFE43727DEE74A00A897F5 /* Data+Checksum.swift */,
+				38B211D027E7006C00FB0A29 /* Optional+Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		38D98AF827BC706600B78B91 /* Sections */ = {
+			isa = PBXGroup;
+			children = (
+				38D98AF927BC707300B78B91 /* ContentView */,
+				38497536278BB8C100C505F8 /* Bestiary */,
+			);
+			path = Sections;
+			sourceTree = "<group>";
+		};
+		38D98AF927BC707300B78B91 /* ContentView */ = {
+			isa = PBXGroup;
+			children = (
+				384A48DB2575A071002E04CB /* SummonerTasksApp.swift */,
+				38D98AFA27BC967900B78B91 /* ContentViewVM.swift */,
+				384A48DD2575A071002E04CB /* ContentView.swift */,
+			);
+			path = ContentView;
 			sourceTree = "<group>";
 		};
 		38DB9D53257EF7B90038BDC0 /* LICENSE */ = {
@@ -926,6 +954,7 @@
 				38A1C64E257DE52A0032878E /* BestiaryGoalsView.swift in Sources */,
 				38DB9D5C257EF83A0038BDC0 /* Data.swift in Sources */,
 				38D4389A25BE9EE6004A2271 /* RuneInstance+CoreDataClass.swift in Sources */,
+				38D98AFC27BC967900B78B91 /* ContentViewVM.swift in Sources */,
 				384A49052575A074002E04CB /* SummonerTasksApp.swift in Sources */,
 				3835305C26E330BC0018E908 /* RuneSidebar.swift in Sources */,
 				38ECB153259BD1920021E891 /* Source+Previews.swift in Sources */,
@@ -962,11 +991,12 @@
 				3871569A26EDB88F00586272 /* View+Extension.swift in Sources */,
 				38ECB148259BCFF30021E891 /* Monster+Previews.swift in Sources */,
 				384A496E2575A1ED002E04CB /* Persistence.swift in Sources */,
-				38C7E06D260A896400F9BB4C /* PlayerFile.swift in Sources */,
+				38B211D227E7006C00FB0A29 /* Optional+Extension.swift in Sources */,
 				38CFB6B92576EFC600F0C398 /* Monster+Extension.swift in Sources */,
 				38B6A44025DDFC64006E5A2D /* ElementColor.swift in Sources */,
 				38600F6225B80BA90071E7A3 /* CoreData+Extension.swift in Sources */,
 				389F89D025982B5F00006C09 /* Summoner+Previews.swift in Sources */,
+				38BFE43927DEE74A00A897F5 /* Data+Checksum.swift in Sources */,
 				384A49822575A3E1002E04CB /* SummonerTasks.xcdatamodeld in Sources */,
 				386E21662708E64D006A4F98 /* RuneSetView.swift in Sources */,
 				38647F092713D3DE0050FC06 /* Publisher+IntValidator.swift in Sources */,
@@ -981,8 +1011,9 @@
 				384A49072575A074002E04CB /* SummonerTasksDocument.swift in Sources */,
 				3835305F26E3FA650018E908 /* Image+Extension.swift in Sources */,
 				38CFB6D325772A3100F0C398 /* Summoner.swift in Sources */,
-				38607FB0277901B200452EFF /* BestiaryVC.swift in Sources */,
+				38607FB0277901B200452EFF /* BestiaryVM.swift in Sources */,
 				38CFB70E2578306C00F0C398 /* Fusion.swift in Sources */,
+				38D98AF727BB6C8D00B78B91 /* Binding+Extension.swift in Sources */,
 				38CCFA7C276FC793007BD37B /* NSManagedCodableObject.swift in Sources */,
 				380DF62D25D5191200848DE0 /* JSONDecodable.swift in Sources */,
 				384A499A2575A9DB002E04CB /* ModelEnums.swift in Sources */,
@@ -1000,6 +1031,7 @@
 				38607FB6277A622900452EFF /* BestiaryContentView.swift in Sources */,
 				38CFB7892579E28400F0C398 /* Source.swift in Sources */,
 				38CFB7662579DE4D00F0C398 /* Skill.swift in Sources */,
+				38B211CF27E6732000FB0A29 /* PlayerFile.swift in Sources */,
 				38CFB76D2579DE8700F0C398 /* SkillScalingStat.swift in Sources */,
 				38CCFA82276FD4F4007BD37B /* Enemy.swift in Sources */,
 				38BE67DA25BC07F800CA67E9 /* RuneListGridView.swift in Sources */,
@@ -1026,7 +1058,6 @@
 				386E216E270A6FCF006A4F98 /* RuneCheckerVM.swift in Sources */,
 				38DB9D74258059A30038BDC0 /* Monster+Extension.swift in Sources */,
 				386E216827096598006A4F98 /* RuneBuildEnums.swift in Sources */,
-				38C7E06E260A896400F9BB4C /* PlayerFile.swift in Sources */,
 				38038CA925DDBE260036BAC6 /* RuneColor.swift in Sources */,
 				383CAB4425AEC0CA00A24A4D /* ArtifactEnums.swift in Sources */,
 				38A0AD62258DD08C005C01D0 /* BuildingInstance.swift in Sources */,
@@ -1038,12 +1069,14 @@
 				38ECB154259BD1920021E891 /* Source+Previews.swift in Sources */,
 				38CCFA7E276FD4E8007BD37B /* DungeonLevel.swift in Sources */,
 				3860104E259AB48F00118951 /* GameItem.swift in Sources */,
+				38B211D127E7006C00FB0A29 /* Optional+Extension.swift in Sources */,
 				38922C92259999FB00CCF63B /* LeaderSkill+Previews.swift in Sources */,
 				38CFB70125782F9C00F0C398 /* LeaderSkill.swift in Sources */,
 				38CCFA87276FD582007BD37B /* Wave.swift in Sources */,
 				38004503259E93140098A75C /* MonsterInstanceSummaryView.swift in Sources */,
 				389F89E125982BB100006C09 /* Decoration+Previews.swift in Sources */,
 				38AC993525D2717D00E13839 /* FilePanel+Extension.swift in Sources */,
+				38B211CE27E6732000FB0A29 /* PlayerFile.swift in Sources */,
 				38CCFA8A27742ECF007BD37B /* RuneInstance+ItemProvider.swift in Sources */,
 				38CFB7752579DEC000F0C398 /* SkillEffect.swift in Sources */,
 				384A49062575A074002E04CB /* SummonerTasksApp.swift in Sources */,
@@ -1087,8 +1120,10 @@
 				3835305D26E330BC0018E908 /* RuneSidebar.swift in Sources */,
 				384A499B2575A9DB002E04CB /* ModelEnums.swift in Sources */,
 				38000B322585CEFD00BED558 /* Bundle-decoder.swift in Sources */,
+				38BFE43827DEE74A00A897F5 /* Data+Checksum.swift in Sources */,
 				386010382599C4B500118951 /* MonsterCraftCost.swift in Sources */,
-				38607FAF277901B200452EFF /* BestiaryVC.swift in Sources */,
+				38607FAF277901B200452EFF /* BestiaryVM.swift in Sources */,
+				38D98AFB27BC967900B78B91 /* ContentViewVM.swift in Sources */,
 				38CFB6D425772A3100F0C398 /* Summoner.swift in Sources */,
 				3871569826E8928700586272 /* RuneTableView.swift in Sources */,
 				381BC040277C09060055712F /* MonsterDetail.swift in Sources */,
@@ -1112,6 +1147,7 @@
 				38CFB76E2579DE8700F0C398 /* SkillScalingStat.swift in Sources */,
 				38A1C651257DE52A0032878E /* FusionSceneDelegate.swift in Sources */,
 				38CFB7602579B84300F0C398 /* Task.swift in Sources */,
+				38D98AF627BB6C8D00B78B91 /* Binding+Extension.swift in Sources */,
 				384A490A2575A074002E04CB /* ContentView.swift in Sources */,
 				386010132599B32900118951 /* HomunculusSkill.swift in Sources */,
 				38B6A44125DDFC64006E5A2D /* ElementColor.swift in Sources */,

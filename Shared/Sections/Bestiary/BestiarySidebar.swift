@@ -9,20 +9,24 @@ import SwiftUI
 
 // TODO: make this bestiary-ish
 struct BestiarySidebar: View {
-	var document: BestiaryDocument = BestiaryDocument(text: "")
+//	var document: BestiaryDocument = BestiaryDocument(text: "")
+	@StateObject var viewModel: BestiaryContentView.ViewModel
+
 	@Environment(\.managedObjectContext) private var moc
 
-	@Binding var selection: RuneType?
+	@AppStorage("monsterFamily") private var defaultMonsterId = 19801
+	@SceneStorage("selectedMonsterId") private var selectedMonsterId: Int = 19811 // Lapis
 
-	@FetchRequest(entity: RuneInstance.entity(), sortDescriptors: [])
+	@State private var monsterId: Monster?
+
+	@FetchRequest(entity: Monster.entity(), sortDescriptors: [])
 
 	private var runes: FetchedResults<RuneInstance>
 
 	var body: some View {
-		List(selection: $selection) {
+		List {
 			ForEach(RuneInstance.displayRuneTypes) { runeType in
 				RuneSidebarLabel(runeType: runeType)
-//                    .badge(garden.numberOfPlantsNeedingWater)
 			}
 		}
 		.frame(minWidth: 250)
@@ -43,13 +47,33 @@ struct BestiarySidebar: View {
 			.labelStyle(.titleAndIcon)
 		}
     }
+
+	private var selectedMonster: Binding<Int> {
+		Binding(
+			get: {
+				selectedMonsterId
+			}, // get
+
+			set: {
+				selectedMonsterId = $0
+			} // set
+		) // Binding
+	}
 }
 
 struct BestiarySidebar_Previews: PreviewProvider {
+	static var persistence = Persistence.preview
+
 	static let text = Bundle.main.openBundleFile(from: "runes-mini.json")
+	static var document: BestiaryDocument = {
+		return try! BestiaryDocument(text: text)
+	}()
+
+	static let viewModel = BestiaryContentView.ViewModel(persistence: persistence)
 	@State static var selection: RuneType? = .violent
 
 	static var previews: some View {
-		BestiarySidebar(selection: $selection)
+		BestiarySidebar(viewModel: viewModel)
+			.environment(\.managedObjectContext, persistence.container.viewContext)
 	}
 }

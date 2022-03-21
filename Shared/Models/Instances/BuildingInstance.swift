@@ -29,7 +29,7 @@ public class BuildingInstance: NSManagedObject, Decodable {
 
         // create container
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        // and start decoding
+		// and start decoding
         self.id = try container.decode(Int64.self, forKey: .id)
         self.buildingId = try container.decode(Int64.self, forKey: .buildingId)
         self.summonerId = try container.decode(Int64.self, forKey: .summonerId)
@@ -43,23 +43,6 @@ public class BuildingInstance: NSManagedObject, Decodable {
 //extension BuildingInstance: CoreDataUtility {
 extension BuildingInstance {
 
-    static func findById(_ buildingInstanceId: Int64,
-                         context: NSManagedObjectContext = Persistence.shared.container.viewContext)
-    -> BuildingInstance? {
-        
-        let request : NSFetchRequest<BuildingInstance> = BuildingInstance.fetchRequest()
-
-        request.predicate = NSPredicate(format: "id = %i", buildingInstanceId)
-        
-        if let results = try? context.fetch(request) {
-
-            if let buildingInstance = results.first {
-                return buildingInstance
-            }
-        }
-        return nil
-    }
-    
     static func findBySummonerAndBuildingId(_ summoner: Int64?, _ buildingId: Int64,
                                             context: NSManagedObjectContext = Persistence.shared.container.viewContext)
     -> BuildingInstance? {

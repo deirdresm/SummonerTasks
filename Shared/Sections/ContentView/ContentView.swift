@@ -9,19 +9,20 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-    let persistence = Persistence.shared
+	@StateObject var viewModel: ViewModel
+//	@Binding var document: SWDocument
+
     @State var runeType: RuneType? = RuneType.violent
-    @Binding var document: SWDocument
     @Environment(\.managedObjectContext) private var moc
 
     var body: some View {
 //        VStack(alignment: .leading, spacing: 20) {
         NavigationView {
             VStack {
-                SummonerName(summoner: document.docInfo.summoner, prefix: "Hello, ", suffix: ".")
-                RuneSidebar(document: document, selection: $runeType)
+				SummonerName(name: viewModel.summonerName, prefix: "Hello, ", suffix: ".")
+                RuneSidebar(document: viewModel.document, selection: $runeType)
             }
-            RuneList(docInfo: document.docInfo)
+			RuneList(docInfo: viewModel.document.docInfo)
             Spacer()
         }
         .padding()
@@ -63,16 +64,24 @@ struct ContentView: View {
         formatter.timeStyle = .medium
         return formatter
     }()
+
+	init(persistence: Persistence, document: SWDocument) {
+		let viewModel = ViewModel(persistence: persistence, document: document)
+		_viewModel = StateObject(wrappedValue: viewModel)
+	}
 }
 
 struct ContentView_Previews: PreviewProvider {
+	static var persistence = Persistence.preview
+
     static let text = Bundle.main.openBundleFile(from: "runes-mini.json")
     static var document: SWDocument = {
         return try! SWDocument(text: text, summoner: Summoner.tisHerself, isPreview: true)
     }()
     
     static var previews: some View {
-        ContentView(document: .constant(document))
+		ContentView(persistence: persistence,
+					document: document)
             .environment(\.managedObjectContext, Persistence.shared.container.viewContext)
     }
 }

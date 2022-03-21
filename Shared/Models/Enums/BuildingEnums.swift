@@ -30,17 +30,17 @@ enum BattleBuilding: Int64 {
     static func battleBuildings() -> [BattleBuilding] {
         return([.crystalAltar, .ancientSword, .guardstone, .skyTribeTotem, .fallenAncientKeeper])
     }
-    
+
     // in same order as usually given: fire, water, wind, light, dark
     static func elementalBuildings() -> [BattleBuilding] {
         return([.fireSanctuary, .waterSanctuary, .windSanctuary, .lightSanctuary, .darkSanctuary])
     }
-    
+
     // in same order as on profile: hp, atk, def, cd
     static func guildBuildings() -> [BattleBuilding] {
         return([.flagOfHope, .flagOfBattle, .flagOfWill, .flagOfRage])
     }
-    
+
     // in shop order
     static func arenaBuildings() -> [BattleBuilding] {
         return([.crystalRock, .arcaneBoosterTower])
