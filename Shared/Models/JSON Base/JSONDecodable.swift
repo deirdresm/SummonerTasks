@@ -45,6 +45,10 @@ public struct JSON: RandomAccessCollection {
         value as? Int64
     }
 
+	var optionalInt16: Int16? {
+		value as? Int16
+	}
+
     var optionalString: String? {
         value as? String
     }
@@ -60,6 +64,10 @@ public struct JSON: RandomAccessCollection {
     var int: Int64 {
         optionalInt ?? 0
     }
+
+	var int16: Int16 {
+		optionalInt16 ?? 0
+	}
 
     var string: String {
         optionalString ?? ""

@@ -66,42 +66,42 @@ public class MonsterCraftCost: NSManagedObject, Decodable {
         return nil
     }
     
-//    func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
-//        let monsterCraftCostData = from as! MonsterCraftCostData
-//        
-//        // don't dirty the record if you don't have to
-//        
-//        if self.id != monsterCraftCostData.id {
-//            self.id = Int64(monsterCraftCostData.id)
-//        }
-//        if self.itemId != monsterCraftCostData.item {
-//            self.itemId = monsterCraftCostData.item
-//        }
-//        if self.monsterId != monsterCraftCostData.monster {
-//            self.monsterId = monsterCraftCostData.monster
-//        }
-//        if self.quantity != monsterCraftCostData.quantity {
-//            self.quantity = monsterCraftCostData.quantity
-//        }
-//    }
-//    
-//    static func insertOrUpdate<T: JsonArray>(from: T,
-//                               docInfo: SummonerDocumentInfo) {
-//        docInfo.taskContext.performAndWait {
-//            let monsterCraftCostData = from as! MonsterCraftCostData
-//            let monsterCraftCost = MonsterCraftCost.findById(monsterCraftCostData.id, context: docInfo.taskContext) ?? MonsterCraftCost(context: docInfo.taskContext)
-//            monsterCraftCost.update(from: monsterCraftCostData, docInfo: docInfo)
-//        }
-//        
-//    }
-//    
-//    static func batchUpdate<T: JsonArray>(from: [T],
-//                            docInfo: SummonerDocumentInfo) {
-//        let monsterCraftCosts = from as! [MonsterCraftCostData]
-//        for monsterCraftCost in monsterCraftCosts {
-//            MonsterCraftCost.insertOrUpdate(from: monsterCraftCost, docInfo: docInfo)
-//        }
-//    }
-//
+    func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
+        let monsterCraftCostData = from as! MonsterCraftCostData
+        
+        // don't dirty the record if you don't have to
+        
+        if self.id != monsterCraftCostData.id {
+            self.id = Int64(monsterCraftCostData.id)
+        }
+        if self.itemId != monsterCraftCostData.item {
+            self.itemId = monsterCraftCostData.item
+        }
+        if self.monsterId != monsterCraftCostData.monster {
+            self.monsterId = monsterCraftCostData.monster
+        }
+        if self.quantity != monsterCraftCostData.quantity {
+            self.quantity = monsterCraftCostData.quantity
+        }
+    }
+    
+    static func insertOrUpdate<T: JsonArray>(from: T,
+                               docInfo: SummonerDocumentInfo) {
+        docInfo.taskContext.performAndWait {
+            let monsterCraftCostData = from as! MonsterCraftCostData
+            let monsterCraftCost = MonsterCraftCost.findById(monsterCraftCostData.id, context: docInfo.taskContext) ?? MonsterCraftCost(context: docInfo.taskContext)
+            monsterCraftCost.update(from: monsterCraftCostData, docInfo: docInfo)
+        }
+        
+    }
+    
+    static func batchUpdate<T: JsonArray>(from: [T],
+                            docInfo: SummonerDocumentInfo) {
+        let monsterCraftCosts = from as! [MonsterCraftCostData]
+        for monsterCraftCost in monsterCraftCosts {
+            MonsterCraftCost.insertOrUpdate(from: monsterCraftCost, docInfo: docInfo)
+        }
+    }
+
 }
 

@@ -17,7 +17,7 @@ struct SummonerTasksApp: App {
     var body: some Scene {
         DocumentGroup(viewing: SWDocument.self) { file in
 			ContentView(persistence: persistence, document: file.document)
-				.environmentObject(persistence)
+				.environment(\.managedObjectContext, persistence.container.viewContext)
         }
 		.onChange(of: scenePhase) { phase in
 			do {

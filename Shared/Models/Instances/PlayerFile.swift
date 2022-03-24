@@ -7,6 +7,13 @@
 
 import Foundation
 
+struct SummonerWrapper: Decodable {
+	private enum CodingKeys: String, CodingKey {
+		case wizard = "wizard_info"
+	}
+	var wizard: Summoner
+}
+
 public class PlayerFile: Decodable {
 
     public enum CodingKeys: String, CodingKey {

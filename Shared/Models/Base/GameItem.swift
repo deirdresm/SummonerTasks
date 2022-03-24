@@ -71,4 +71,54 @@ extension GameItem {
         }
         return nil
     }
+
+	static func findOrCreate(_ id: Int64,
+					 context: NSManagedObjectContext) -> GameItem {
+	 if let gameItem = GameItem.findById(id, context: context) {
+		 return gameItem
+	 }
+	 let gameItem = GameItem(context: context)
+	 gameItem.id = id
+	 return gameItem
+ }
+
+ func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
+
+	 let gameItemData = from as! GameItemData
+
+	 if self.id != gameItemData.id {
+		 self.id = Int64(gameItemData.id)
+	 }
+	 self.name = gameItemData.name
+
+	 self.com2usId = Int64(gameItemData.com2usId)
+
+	 self.c2uDescription = gameItemData.c2uDescription
+
+	 self.imageFilename = gameItemData.imageFilename
+
+	 self.category = gameItemData.category
+
+	 self.slug = gameItemData.slug
+
+	 self.sellValue = gameItemData.sellValue
+ }
+
+ static func insertOrUpdate<T: JsonArray>(from: T,
+							docInfo: SummonerDocumentInfo) {
+	 docInfo.taskContext.performAndWait {
+		 let gameItemData = from as! GameItemData
+		 let gameItem = GameItem.findOrCreate(gameItemData.com2usId, context: docInfo.taskContext)
+		 gameItem.update(from: gameItemData, docInfo: docInfo)
+	 }
+ }
+
+ static func batchUpdate<T: JsonArray>(from: [T],
+						 docInfo: SummonerDocumentInfo) {
+	 let gameItems = from as! [GameItemData]
+	 for gameItem in gameItems {
+		 GameItem.insertOrUpdate(from: gameItem, docInfo: docInfo)
+	 }
+ }
+
 }
