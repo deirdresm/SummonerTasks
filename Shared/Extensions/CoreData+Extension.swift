@@ -12,7 +12,12 @@ extension NSManagedObject {
     static func markDirty<C, T>(_ obj: C, _ keyPath: ReferenceWritableKeyPath<C, T>) {
         obj[keyPath: keyPath] = obj[keyPath: keyPath]
     }
-    
+
+	func addObject(value: NSManagedObject, forKey: String) {
+		var items = self.mutableSetValue(forKey: forKey);
+		items.add(value)
+	}
+
 //    open func setIfDifferent(_ newValue: Any?,forKey key: String) {
 //        if let currValue = value(forKey: key) {
 //            if let newValueUnwrapped = newValue {

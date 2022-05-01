@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="21D62" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="0.03">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21E258" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
     <entity name="ArtifactInstance" representedClassName=".ArtifactInstance" syncable="YES" codeGenerationType="category">
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="effects" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[Int64]"/>
@@ -80,7 +80,7 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="BuildingInstance" representedClassName="BuildingInstance" syncable="YES" codeGenerationType="category">
+    <entity name="BuildingInstance" representedClassName=".BuildingInstance" syncable="YES" codeGenerationType="category">
         <attribute name="buildingId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="level" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -101,6 +101,11 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="slug" optional="YES" attributeType="String"/>
         <relationship name="levels" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DungeonLevel" inverseName="dungeon" inverseEntity="DungeonLevel"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <entity name="DungeonLevel" representedClassName=".DungeonLevel" syncable="YES" codeGenerationType="category">
         <attribute name="backlineSlots" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -115,6 +120,11 @@
         <relationship name="dungeon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dungeon" inverseName="levels" inverseEntity="Dungeon"/>
         <relationship name="enemies" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Enemy" inverseName="level" inverseEntity="Enemy"/>
         <relationship name="waves" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Wave" inverseName="level" inverseEntity="Wave"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <entity name="Enemy" representedClassName=".Enemy" syncable="YES" codeGenerationType="category">
         <attribute name="accuracyBonus" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -135,6 +145,11 @@
         <attribute name="waveid" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="level" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DungeonLevel" inverseName="enemies" inverseEntity="DungeonLevel"/>
         <relationship name="wave" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Wave" inverseName="enemies" inverseEntity="Wave"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <entity name="Fusion" representedClassName=".Fusion" syncable="YES" codeGenerationType="category">
         <attribute name="cost" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -173,19 +188,21 @@
         <attribute name="monsterIds" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[Int64]"/>
         <attribute name="prerequisites" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[Int64]"/>
         <attribute name="skillId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="monsters" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Monster" inverseName="homuSKills" inverseEntity="Monster"/>
+        <relationship name="monsters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Monster" inverseName="homuSKills" inverseEntity="Monster"/>
         <relationship name="skill" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Skill" inverseName="homuSkills" inverseEntity="Skill"/>
+        <relationship name="skillcraftCosts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HomunculusSkillcraftCost" inverseName="homuSkill" inverseEntity="HomunculusSkillcraftCost"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="HomunculusSkillcraftCost" representedClassName="HomunculusSkillcraftCost" syncable="YES" codeGenerationType="category">
+    <entity name="HomunculusSkillcraftCost" representedClassName=".HomunculusSkillcraftCost" syncable="YES" codeGenerationType="category">
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="item" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="quantity" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="skillId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="homuSkill" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="HomunculusSkill" inverseName="skillcraftCosts" inverseEntity="HomunculusSkill"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
@@ -228,8 +245,8 @@
         <attribute name="awakenMatsWindHigh" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="awakenMatsWindLow" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="awakenMatsWindMid" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="awakensFromId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="awakensToId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="awakensFromId" optional="YES" attributeType="Integer 64" usesScalarValueType="NO"/>
+        <attribute name="awakensToId" optional="YES" attributeType="Integer 64" usesScalarValueType="NO"/>
         <attribute name="baseAttack" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="baseDefense" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="baseHp" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -248,7 +265,7 @@
         <attribute name="isFarmable" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="isFusionFood" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="isHomunculus" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="leaderSkillId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="leaderSkillId" optional="YES" attributeType="Integer 64" usesScalarValueType="NO"/>
         <attribute name="maxLvlAttack" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="maxLvlDefense" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="maxLvlHp" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -264,7 +281,7 @@
         <attribute name="skillUpsToMax" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="sourceRaw" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[Int64]"/>
         <attribute name="speed" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="transformsToId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="transformsToId" optional="YES" attributeType="Integer 64" usesScalarValueType="NO"/>
         <relationship name="awakenCosts" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AwakenCost" inverseName="monster" inverseEntity="AwakenCost"/>
         <relationship name="fusionIngredient" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Fusion" inverseName="fusionIngredients" inverseEntity="Fusion"/>
         <relationship name="fusionProduct" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Fusion" inverseName="fusionProduct" inverseEntity="Fusion"/>
@@ -367,6 +384,11 @@
         <relationship name="monster" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MonsterInstance" inverseName="runeBuilds" inverseEntity="MonsterInstance"/>
         <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Summoner" inverseName="runeBuilds" inverseEntity="Summoner"/>
         <relationship name="runes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RuneInstance" inverseName="runeBuilds" inverseEntity="RuneInstance"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <entity name="RuneInstance" representedClassName=".RuneInstance" syncable="YES" codeGenerationType="category">
         <attribute name="accuracy" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -454,7 +476,7 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="ScalingStat" representedClassName="ScalingStat" syncable="YES" codeGenerationType="category">
+    <entity name="ScalingStat" representedClassName=".ScalingStat" syncable="YES" codeGenerationType="category">
         <attribute name="c2uDescription" optional="YES" attributeType="String"/>
         <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="scalingDesc" optional="YES" attributeType="String"/>
@@ -466,7 +488,7 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="SecretDungeon" representedClassName="SecretDungeon" syncable="YES" codeGenerationType="category">
+    <entity name="SecretDungeon" representedClassName=".SecretDungeon" syncable="YES" codeGenerationType="category">
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="monsterId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="monster" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Monster" inverseName="secretDungeon" inverseEntity="Monster"/>
@@ -482,7 +504,7 @@
         <attribute name="levelProgressDescription" optional="YES" attributeType="String"/>
         <attribute name="maxLevel" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="multiplierFormula" optional="YES" attributeType="String" valueTransformerName="[String]" customClassName="[String]"/>
-        <attribute name="multiplierFormulaRaw" optional="YES" attributeType="String" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
+        <attribute name="multiplierFormulaRaw" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="passive" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="scalingStatsIds" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[Int64]"/>
@@ -606,7 +628,15 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="Task" representedClassName=".Task" syncable="YES" codeGenerationType="class"/>
+    <entity name="Task" representedClassName=".Task" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
     <entity name="Team" representedClassName=".Team" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="isFavorite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
@@ -640,6 +670,11 @@
         <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="enemies" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Enemy" inverseName="wave" inverseEntity="Enemy"/>
         <relationship name="level" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DungeonLevel" inverseName="waves" inverseEntity="DungeonLevel"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <fetchRequest name="summonerRuneById" entity="RuneInstance" predicateString="com2usId == @i AND summonerId == @i" fetchLimit="1" fetchBatchSize="1"/>
     <elements>
@@ -652,8 +687,8 @@
         <element name="Enemy" positionX="259.83984375" positionY="1396.78515625" width="128" height="299"/>
         <element name="Fusion" positionX="72.27294921875" positionY="192.6597900390625" width="128" height="134"/>
         <element name="GameItem" positionX="125.4957885742188" positionY="218.3388061523438" width="128" height="179"/>
-        <element name="HomunculusSkill" positionX="-494.9537353515625" positionY="171.3886413574219" width="128" height="119"/>
-        <element name="HomunculusSkillcraftCost" positionX="-352.7395629882812" positionY="205.7951049804688" width="128" height="89"/>
+        <element name="HomunculusSkill" positionX="-494.9537353515625" positionY="171.3886413574219" width="128" height="134"/>
+        <element name="HomunculusSkillcraftCost" positionX="-352.7395629882812" positionY="205.7951049804688" width="128" height="104"/>
         <element name="LeaderSkill" positionX="-836.8394775390625" positionY="628.8787536621094" width="128" height="119"/>
         <element name="Monster" positionX="-452.5297241210938" positionY="98.49240112304688" width="128" height="1064"/>
         <element name="MonsterCraftCost" positionX="132.1785278320312" positionY="334.7951049804688" width="128" height="119"/>
@@ -669,7 +704,7 @@
         <element name="SkillUpgrade" positionX="-865.9093322753906" positionY="465.0048675537109" width="128" height="134"/>
         <element name="Source" positionX="-41.85833740234375" positionY="581.4371948242188" width="128" height="134"/>
         <element name="Summoner" positionX="-714.7305603027344" positionY="1127.808395385742" width="128" height="524"/>
-        <element name="Task" positionX="8.27130126953125" positionY="60.91395568847656" width="128" height="29"/>
+        <element name="Task" positionX="8.27130126953125" positionY="60.91395568847656" width="128" height="59"/>
         <element name="Team" positionX="286.6890869140625" positionY="474.0283355712891" width="128" height="149"/>
         <element name="TeamGroup" positionX="-298.14306640625" positionY="68.78431701660156" width="128" height="104"/>
         <element name="Wave" positionX="114.48828125" positionY="1584.70703125" width="128" height="104"/>

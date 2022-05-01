@@ -27,7 +27,6 @@ extension Bundle {
         }
         
         return String(decoding: data, as: UTF8.self)
-
     }
 
 	/// Decode JSON from our bundle.

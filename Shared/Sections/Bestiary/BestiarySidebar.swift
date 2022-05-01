@@ -19,9 +19,9 @@ struct BestiarySidebar: View {
 
 	@State private var monsterId: Monster?
 
-	@FetchRequest(entity: Monster.entity(), sortDescriptors: [])
+	let monsterRequest: NSFetchRequest<Monster> = Monster.fetchRequest()
 
-	private var runes: FetchedResults<RuneInstance>
+//	private var runes: FetchedResults<RuneInstance>
 
 	var body: some View {
 		List {
@@ -65,9 +65,9 @@ struct BestiarySidebar_Previews: PreviewProvider {
 	static var persistence = Persistence.preview
 
 	static let text = Bundle.main.openBundleFile(from: "runes-mini.json")
-	static var document: BestiaryDocument = {
-		return try! BestiaryDocument(text: text)
-	}()
+//	static var document: BestiaryDocument = {
+//		return try! BestiaryDocument(text: text)
+//	}()
 
 	static let viewModel = BestiaryContentView.ViewModel(persistence: persistence)
 	@State static var selection: RuneType? = .violent

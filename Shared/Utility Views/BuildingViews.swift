@@ -19,7 +19,7 @@ struct BuildingIconView: View {
     }
     
     var LevelStringOverlay: some View {
-        var width = CGFloat()
+        let width = CGFloat()
         return ZStack {
             Text(levelString(level: level))
                 .frame(idealWidth: width, maxWidth: width,

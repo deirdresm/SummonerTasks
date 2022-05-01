@@ -36,12 +36,12 @@
 //    
 //    static func saveToCoreData(_ docInfo: SummonerDocumentInfo) {
 //        
-//        docInfo.taskContext.perform {
+//        provider.taskContext.perform {
 //            BuildingInstance.batchUpdate(from: BuildingInstanceData.items,
 //                                         docInfo: docInfo)
 //            do {
-//                if docInfo.taskContext.hasChanges {
-//                    try docInfo.taskContext.save()
+//                if provider.taskContext.hasChanges {
+//                    try provider.taskContext.save()
 //                }
 //                else
 //                {

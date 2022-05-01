@@ -60,43 +60,6 @@ public class ScalingStat: NSManagedObject, Decodable {
         }
         return nil
     }
-    
-    func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo)
-    {
-        let scalingStatData = from as! ScalingStatData
-        
-        // don't dirty the record if you don't have to
-        
-        if self.id != scalingStatData.id {
-            self.id = Int64(scalingStatData.id)
-        }
-        if self.c2uDesc != scalingStatData.c2uDesc {
-            self.c2uDesc = scalingStatData.c2uDesc
-        }
-        if self.scalingDesc != scalingStatData.scalingDesc {
-            self.scalingDesc = scalingStatData.scalingDesc
-        }
-        if self.stat != scalingStatData.stat {
-            self.stat = scalingStatData.stat
-        }
-    }
-    
-    static func insertOrUpdate<T: JsonArray>(from: T,
-                               docInfo: SummonerDocumentInfo) {
-        docInfo.taskContext.performAndWait {
-            let scalingStatData = from as! ScalingStatData
-            let scalingStat = ScalingStat.findById(scalingStatData.id, context: docInfo.taskContext) ?? ScalingStat(context: docInfo.taskContext)
-            scalingStat.update(from: scalingStatData, docInfo: docInfo)
-        }
-    }
-    
-    static func batchUpdate<T: JsonArray>(from: [T],
-                            docInfo: SummonerDocumentInfo) {
-        let scalingStats = from as! [ScalingStatData]
-        for scalingStat in scalingStats {
-            ScalingStat.insertOrUpdate(from: scalingStat, docInfo: docInfo)
-        }
-    }
 }
 
 // MARK: - JSON

@@ -80,8 +80,7 @@ struct ContentView_Previews: PreviewProvider {
     }()
     
     static var previews: some View {
-		ContentView(persistence: persistence,
-					document: document)
-            .environment(\.managedObjectContext, Persistence.shared.container.viewContext)
+		ContentView(persistence: persistence, document: document)
+            .environment(\.managedObjectContext, Persistence.preview.container.viewContext)
     }
 }

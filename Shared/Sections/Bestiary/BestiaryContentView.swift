@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct BestiaryContentView: View {
-//	@EnvironmentObject var persistence: Persistence
+	@EnvironmentObject var persistence: Persistence
 	@StateObject var viewModel: ViewModel
 
 	var body: some View {

@@ -7,6 +7,7 @@
 
 import CoreData
 import SwiftUI
+import OSLog
 
 /// Keeps track of the DB and SummonerTasksDocument for ContentView and related.
 extension ContentView {

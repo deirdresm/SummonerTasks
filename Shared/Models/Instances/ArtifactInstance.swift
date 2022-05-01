@@ -195,9 +195,9 @@ public class ArtifactInstance: NSManagedObject, Decodable {
 //    
 //    static func insertOrUpdate<T: JsonArray>(from: T,
 //                               docInfo: SummonerDocumentInfo) {
-//        docInfo.taskContext.performAndWait {
+//        provider.taskContext.performAndWait {
 //            let artifactInstanceData = from as! ArtifactInstanceData
-//            let artifactInstance = ArtifactInstance.findById(artifactInstanceData.com2usId, context: docInfo.taskContext) ?? ArtifactInstance(context: docInfo.taskContext)
+//            let artifactInstance = ArtifactInstance.findById(artifactInstanceData.com2usId, context: provider.taskContext) ?? ArtifactInstance(context: provider.taskContext)
 //            artifactInstance.update(from: artifactInstanceData, docInfo: docInfo)
 //            seenArtifacts.append(artifactInstance)
 //        }
@@ -210,13 +210,13 @@ public class ArtifactInstance: NSManagedObject, Decodable {
 //        for artifact in artifacts {
 //            ArtifactInstance.insertOrUpdate(from: artifact, docInfo: docInfo)
 //        }
-//        docInfo.taskContext.perform {
+//        provider.taskContext.perform {
 //
 //            // save first to make sure we've got a full house
 //
 //            do {
-//                if docInfo.taskContext.hasChanges {
-//                    try docInfo.taskContext.save()
+//                if provider.taskContext.hasChanges {
+//                    try provider.taskContext.save()
 //                }
 //
 //            } catch {
@@ -230,11 +230,11 @@ public class ArtifactInstance: NSManagedObject, Decodable {
 //            print("Deleting \(notSeenArtifacts.count) we didn't see this time")
 //
 //            for i in 0 ..< notSeenArtifacts.count {
-//                docInfo.taskContext.delete(notSeenArtifacts[i])
+//                provider.taskContext.delete(notSeenArtifacts[i])
 //            }
 //            do {
-//                if docInfo.taskContext.hasChanges {
-//                    try docInfo.taskContext.save()
+//                if provider.taskContext.hasChanges {
+//                    try provider.taskContext.save()
 //                }
 //
 //            } catch {

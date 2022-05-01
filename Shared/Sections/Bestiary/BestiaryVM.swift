@@ -11,6 +11,8 @@ import SwiftUI
 extension BestiaryContentView {
 	class ViewModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
 
+		var bestiaryProvider: BestiaryProvider = .shared
+
 		@Published var selectedMonster: Monster?
 
 		@Published var monsters = [Monster]()

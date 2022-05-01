@@ -47,8 +47,8 @@ public struct SummonerData: JsonArrayMutable {
         Summoner.batchUpdate(from: SummonerData.items,
                              docInfo: &docInfo)
         do {
-            if docInfo.taskContext.hasChanges {
-                try docInfo.taskContext.save()
+            if provider.taskContext.hasChanges {
+                try provider.taskContext.save()
             }
             
         } catch {

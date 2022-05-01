@@ -169,8 +169,6 @@ func load<T: Decodable>(_ filename: String) -> T {
         fatalError("Couldn't find \(filename) in main bundle.")
     }
     
-    // TODO: will need to unzip the bestiary_data.json.zip
-    
     do {
         data = try Data(contentsOf: file)
     } catch {

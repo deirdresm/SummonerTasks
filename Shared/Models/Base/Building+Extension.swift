@@ -15,6 +15,7 @@ public class Building: NSManagedObject, Decodable {
 //extension Building: Decodable {
 	private enum CodingKeys: String, CodingKey {
 		case id = "pk"
+		case fields
 		case name
 		case com2usId = "com2us_id"
 		case maxLevel
@@ -30,17 +31,25 @@ public class Building: NSManagedObject, Decodable {
 
 	public required convenience init(from decoder: Decoder) throws {
 		// get the context and the entity in the context
-		guard let context = decoder.userInfo[CodingUserInfoKey.context!] as? NSManagedObjectContext else { fatalError("Could not get context [for GameItem]") }
-		guard let entity = NSEntityDescription.entity(forEntityName: "GameItem", in: context) else { fatalError("Could not get entity [for GameItem]") }
+		guard let context = decoder.userInfo[CodingUserInfoKey.managedObjectContext] as? NSManagedObjectContext else { fatalError("Could not get context [for GameItem]") }
+		guard let entity = NSEntityDescription.entity(forEntityName: "Building", in: context) else { fatalError("Could not get entity [for GameItem]") }
 
 		// init self
 		self.init(entity: entity, insertInto: context)
 
 		// create container
 		let container = try decoder.container(keyedBy: CodingKeys.self)
-		// and start decoding
-		self.id = try container.decode(Int64.self, forKey: .id)
-		self.com2usId = try container.decode(Int64.self, forKey: .com2usId)
+		let fields: [String: Any] = try container.decode([String: Any].self, forKey: .fields)
+
+		self.id = (fields["com2us_id"]).orInt
+		self.name = (fields["name"]).orEmpty
+		self.c2uDescription = (fields["description"]).orEmpty
+		self.maxLevel = (fields["max_level"]).orInt
+		self.area = (fields["area"]).orInt
+		self.affectedStat = (fields["affected_stat"]).orInt
+		self.imageFilename = (fields["icon_filename"]).orEmpty
+		self.statBonus = (fields["stat_bonus"]).orIntArray
+		self.upgradeCost = (fields["upgradeCost"]).orIntArray
 	}
 
 	public convenience init(from decoder: Decoder, pk: Int64) throws {
@@ -106,106 +115,4 @@ public class Building: NSManagedObject, Decodable {
         }
         return buildingList
     }
-	
-	convenience init(buildingData: BuildingData, docInfo: SummonerDocumentInfo) {
-		self.init()
-		update(from: buildingData, docInfo: docInfo)
-	}
-
-	func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
-		let buildingData = from as! BuildingData
-
-		// don't dirty the record if you don't have to
-
-		if self.id != buildingData.id {
-			self.id = Int64(buildingData.id)
-		}
-		if self.name != buildingData.name {
-			self.name = buildingData.name
-		}
-		if self.com2usId != buildingData.com2usId {
-			self.com2usId = buildingData.com2usId
-		}
-		if self.maxLevel != buildingData.maxLevel {
-			self.maxLevel = buildingData.maxLevel
-		}
-		if self.area != buildingData.area {
-			self.area = buildingData.area ?? 0
-		}
-		if self.affectedStat != buildingData.affectedStat {
-			self.affectedStat = buildingData.affectedStat ?? 0
-		}
-		if self.element != buildingData.element {
-		   self.element = buildingData.element
-		}
-		if self.c2uDescription != buildingData.description {
-			self.c2uDescription = buildingData.description
-		}
-		if self.imageFilename != buildingData.imageFilename {
-			self.imageFilename = buildingData.imageFilename
-		}
-		if self.statBonus != buildingData.statBonus {
-			self.statBonus = buildingData.statBonus
-		}
-		if self.upgradeCost != buildingData.upgradeCost {
-			self.upgradeCost = buildingData.upgradeCost
-		}
-	}
-
-	static func insertOrUpdate<T: JsonArray>(from: T,
-							   docInfo: SummonerDocumentInfo) {
-		var building: Building!
-		let buildingData = from as! BuildingData
-
-		docInfo.taskContext.performAndWait {
-			let request : NSFetchRequest<Building> = Building.fetchRequest()
-
-			let predicate = NSPredicate(format: "com2usId == %i", buildingData.com2usId)
-
-			request.predicate = predicate
-
-			let results = try? docInfo.taskContext.fetch(request)
-
-			if results?.count == 0 {
-				// insert new
-				building = Building(context: docInfo.taskContext)
-				building.update(from: buildingData, docInfo: docInfo)
-			 } else {
-				// update existing
-				building = results?.first
-				building.update(from: buildingData, docInfo: docInfo)
-			 }
-		}
-	}
-
-	static func batchUpdate<T: JsonArray>(from: [T],
-							docInfo: SummonerDocumentInfo) {
-		let buildings = from as! [BuildingData]
-
-		for building in buildings {
-			Building.insertOrUpdate(from: building, docInfo: docInfo)
-		}
-	}
-
- }
-
-/*
- CREATE TABLE public.bestiary_building
- (
-     id integer NOT NULL DEFAULT nextval('bestiary_building_id_seq'::regclass),
-     com2us_id integer NOT NULL,
-     name character varying(30) COLLATE pg_catalog."default" NOT NULL,
-     max_level integer NOT NULL,
-     area integer,
-     affected_stat integer,
-     element character varying(6) COLLATE pg_catalog."default",
-     stat_bonus integer[] NOT NULL,
-     upgrade_cost integer[] NOT NULL,
-     description text COLLATE pg_catalog."default",
-     icon_filename character varying(100) COLLATE pg_catalog."default",
-     CONSTRAINT bestiary_building_pkey PRIMARY KEY (id)
- )
- WITH (
-     OIDS = FALSE
- )
- */
+}

@@ -14,6 +14,7 @@ public class Source: NSManagedObject, Decodable {
 	private enum CodingKeys: String, CodingKey {
 		case id = "pk"
 		case name
+		case fields
 		case c2uDescription = "description"
 		case imageFilename = "icon_filename"
 		case isFarmable = "farmable_source"
@@ -21,9 +22,11 @@ public class Source: NSManagedObject, Decodable {
 	}
 
 	public required convenience init(from decoder: Decoder) throws {
-		// get the context and the entity in the context
-		guard let context = decoder.userInfo[CodingUserInfoKey.context!] as? NSManagedObjectContext else { fatalError("Could not get context [for GameItem]") }
-		guard let entity = NSEntityDescription.entity(forEntityName: "GameItem", in: context) else { fatalError("Could not get entity [for GameItem]") }
+		guard let context = decoder.userInfo[CodingUserInfoKey.managedObjectContext]  as? NSManagedObjectContext else {
+			throw DecoderConfigurationError.missingManagedObjectContext
+		}
+
+		guard let entity = NSEntityDescription.entity(forEntityName: "Source", in: context) else { fatalError("Could not get entity [for Source]") }
 
 		// init self
 		self.init(entity: entity, insertInto: context)
@@ -31,12 +34,14 @@ public class Source: NSManagedObject, Decodable {
 		// create container
 		let container = try decoder.container(keyedBy: CodingKeys.self)
 		// and start decoding
-		self.id = try container.decode(Int64.self, forKey: .id)
-		self.c2uDescription = try container.decode(String.self, forKey: .c2uDescription)
-		self.imageFilename = try container.decode(String.self, forKey: .imageFilename)
-		self.name = try container.decode(String.self, forKey: .name)
-		self.isFarmable = try container.decode(Bool.self, forKey: .isFarmable)
-		self.metaOrder = try container.decode(Int64.self, forKey: .metaOrder)
+		let fields: [String: Any] = try container.decode([String: Any].self, forKey: .fields)
+
+		self.id = (fields["com2us_id"]).orInt
+		self.c2uDescription = (fields["description"]).orEmpty
+		self.imageFilename = (fields["icon_filename"]).orEmpty
+		self.name = (fields["name"]).orEmpty
+		self.isFarmable = (fields["farmable_source"]).orFalse
+		self.metaOrder = (fields["meta_order"]).orInt
 	}
 
 	public convenience init(from decoder: Decoder, pk: Int64) throws {
@@ -58,49 +63,7 @@ public class Source: NSManagedObject, Decodable {
         } else {
             return(nil)
         }
-    }
-
-    func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
-        let sourceData = from as! SourceData
-        
-        // don't dirty the record if you don't have to
-        
-        if self.id != sourceData.id {
-            self.id = Int64(sourceData.id)
-        }
-        if self.name != sourceData.name {
-            self.name = sourceData.name
-        }
-        if self.c2uDescription != sourceData.description {
-            self.c2uDescription = sourceData.description
-        }
-        if self.imageFilename != sourceData.imageFilename {
-            self.imageFilename = sourceData.imageFilename
-        }
-        if self.isFarmable != sourceData.farmableSource {
-            self.isFarmable = sourceData.farmableSource
-        }
-        if self.metaOrder != sourceData.metaOrder {
-            self.metaOrder = sourceData.metaOrder
-        }
-    }
-    
-    static func insertOrUpdate<T: JsonArray>(from: T,
-                               docInfo: SummonerDocumentInfo) {
-        let sourceData = from as! SourceData
-        let source: Source = Source.findById(sourceData.id, context: docInfo.taskContext) ??
-            Source(context: docInfo.taskContext)
-        
-        source.update(from: sourceData, docInfo: docInfo)
-    }
-    
-    static func batchUpdate<T: JsonArray>(from: [T],
-                            docInfo: SummonerDocumentInfo) {
-        let sources = from as! [SourceData]
-        for source in sources {
-            Source.insertOrUpdate(from: source, docInfo: docInfo)
-        }
-    }
+	}
 
     public static func < (lhs: Source, rhs: Source) -> Bool {
         lhs.metaOrder < rhs.metaOrder

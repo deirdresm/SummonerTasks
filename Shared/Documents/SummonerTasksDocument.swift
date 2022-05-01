@@ -8,6 +8,7 @@
 import SwiftUI
 import UniformTypeIdentifiers
 import Combine
+import OSLog
 
 public class SummonerDocumentInfo {
     public var summoner: Summoner?
@@ -15,8 +16,8 @@ public class SummonerDocumentInfo {
     public var summonerSet = false
     public var taskContext: NSManagedObjectContext
     
-    public init() {
-        taskContext = Persistence.shared.newTaskContext()
+	public init(_ context: NSManagedObjectContext?) {
+		taskContext = context ?? Persistence.shared.newTaskContext()
     }
 }
 
@@ -26,15 +27,18 @@ class SWDocument: FileDocument {
     // keep the summoner in the Document class
     
     public var summonerObjectId: NSManagedObjectID? // for passing between threads
-    @Published var docInfo = SummonerDocumentInfo()
+    @Published var docInfo = SummonerDocumentInfo(Persistence.shared.newTaskContext())
 
     var text: String = ""
+
+	var logger: Logger
 
     static var readableContentTypes: [UTType] { [.json] }
     
     // added second param for previews and testing
     init(text: String = "Hello, world!", summoner: Summoner? = nil, isPreview: Bool = false) throws {
         self.text = text
+		logger = Logger(subsystem: "net.deirdre.SummonerTasks", category: "summonerImpoprt")
         
         if let s = summoner {
             docInfo.summoner = s
@@ -50,13 +54,13 @@ class SWDocument: FileDocument {
 
         print("created task context")
         DispatchQueue.global(qos: .background).async {
-            var data: Data = json.data(using: .utf8)! // non-nil
+            let data: Data = json.data(using: .utf8)! // non-nil
 
             do {
                 print("trying to get JSON object")
                 let decoder = JSONDecoder()
                 print("got JSON object, iterating through object")
-                decoder.userInfo[CodingUserInfoKey.context!] = self.docInfo.taskContext
+                decoder.userInfo[CodingUserInfoKey.managedObjectContext] = self.docInfo.taskContext
                 decoder.dateDecodingStrategy = .formatted(DateFormatter.com2us)
 				decoder.keyDecodingStrategy = .convertFromSnakeCase
 
@@ -85,7 +89,8 @@ class SWDocument: FileDocument {
     }
 
     required public init(configuration: ReadConfiguration) throws {
-        
+		logger = Logger(subsystem: "net.deirdre.SummonerTasks", category: "summonerImpoprt")
+
  //       self.config = configuration
         
         do {

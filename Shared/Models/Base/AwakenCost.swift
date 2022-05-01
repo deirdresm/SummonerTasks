@@ -15,12 +15,16 @@ public class AwakenCost: NSManagedObject, Decodable {
 		case itemId
 		case quantity
 		case monsterId
+		case fields
 	}
 
 	public required convenience init(from decoder: Decoder) throws {
 		// get the context and the entity in the context
-		guard let context = decoder.userInfo[CodingUserInfoKey.context!] as? NSManagedObjectContext else { fatalError("Could not get context [for GameItem]") }
-		guard let entity = NSEntityDescription.entity(forEntityName: "GameItem", in: context) else { fatalError("Could not get entity [for GameItem]") }
+		guard let context = decoder.userInfo[CodingUserInfoKey.managedObjectContext]  as? NSManagedObjectContext else {
+			throw DecoderConfigurationError.missingManagedObjectContext
+		}
+
+		guard let entity = NSEntityDescription.entity(forEntityName: "AwakenCost", in: context) else { fatalError("Could not get entity [for AwakenCost]") }
 
 		// init self
 		self.init(entity: entity, insertInto: context)
@@ -28,13 +32,17 @@ public class AwakenCost: NSManagedObject, Decodable {
 		// create container
 		let container = try decoder.container(keyedBy: CodingKeys.self)
 		// and start decoding
-		self.id = try container.decode(Int64.self, forKey: .id)
-		self.itemId = try container.decode(Int64.self, forKey: .itemId)
+
+		let fields: [String: Any] = try container.decode([String: Any].self, forKey: .fields)
+
+		self.itemId = (fields["item"]).orInt
 		if let gitem = GameItem.findById(self.itemId, context: context) {
 			self.item = gitem
 		}
-		self.quantity = try container.decode(Int64.self, forKey: .quantity)
-		self.monsterId = try container.decode(Int64.self, forKey: .monsterId)
+
+		self.quantity = (fields["quantity"]).orInt
+
+		self.monsterId = (fields["monster"]).orInt
 		if let monster = Monster.findById(self.monsterId, context: context) {
 			self.monster = monster
 		}
@@ -61,42 +69,5 @@ public class AwakenCost: NSManagedObject, Decodable {
         }
         return nil
     }
-
-    func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
-        let awakenCostData = from as! AwakenCostData
-        
-        // don't dirty the record if you don't have to
-        
-        if self.id != awakenCostData.id {
-            self.id = Int64(awakenCostData.id)
-        }
-        if self.item != awakenCostData.item {
-            self.item = awakenCostData.item
-        }
-        if self.monster != awakenCostData.monster {
-            self.monster = awakenCostData.monster
-        }
-        if self.quantity != awakenCostData.quantity {
-            self.quantity = awakenCostData.quantity
-        }
-    }
-    
-    static func insertOrUpdate<T: JsonArray>(from: T,
-                               docInfo: SummonerDocumentInfo) {
-        let awakenCostData = from as! AwakenCostData
-        let awakenCost = AwakenCost.findById(awakenCostData.id, context: docInfo.taskContext) ??
-            AwakenCost(context: docInfo.taskContext)
-        
-        awakenCost.update(from: awakenCostData, docInfo: docInfo)
-    }
-    
-    static func batchUpdate<T: JsonArray>(from: [T],
-                            docInfo: SummonerDocumentInfo) {
-        let awakenCosts = from as! [AwakenCostData]
-        for awakenCost in awakenCosts {
-            AwakenCost.insertOrUpdate(from: awakenCost, docInfo: docInfo)
-        }
-    }
-
 }
 

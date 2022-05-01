@@ -8,10 +8,15 @@
 import CoreData
 
 class Persistence: ObservableObject {
-    static let shared = Persistence()
+    public static let shared = Persistence()
 
     let container: NSPersistentCloudKitContainer
-    
+
+	// main navigation types
+
+	@Published var buildings = [Building]()
+	@Published var monsters = [Monster]()
+
     /**
      Creates and configures a private queue context.
     */
@@ -34,8 +39,9 @@ class Persistence: ObservableObject {
     }()
 	
     init(inMemory: Bool = false) {
-        container = NSPersistentCloudKitContainer(name: "SummonerTasks")
-        if inMemory {
+		container = NSPersistentCloudKitContainer(name: "SummonerTasks")
+
+		if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
         }
         if #available(iOS 13, macOS 10.15, *) {

@@ -7,12 +7,17 @@
 
 import Foundation
 
-struct SummonerWrapper: Decodable {
-	private enum CodingKeys: String, CodingKey {
-		case wizard = "wizard_info"
-	}
-	var wizard: Summoner
-}
+/// `SummonerWrapper` is a wrapper around the Summoner's War player file.
+//struct SummonerWrapper: Decodable {
+//	private enum CodingKeys: String, CodingKey {
+//		case wizard = "wizard_info"
+//		case decoList = "deco_list"
+//		case runes
+//		case artifacts
+//		case unitLockList
+//	}
+//	var wizard: Summoner
+//}
 
 public class PlayerFile: Decodable {
 
@@ -39,7 +44,11 @@ public class PlayerFile: Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         print("container set up")
         // and start decoding
-        self.summoner = try container.decode(Summoner.self, forKey: .summoner)
+
+		self.summoner = try container.decode(Summoner.self, forKey: .summoner)
+//		self.summoner = summonerWrapper.wizard
+
+//        self.summoner = try container.decode(Summoner.self, forKey: .summoner)
         print("Summoner ok")
         self.buildings = try container.decodeArray(BuildingInstance.self, forKey: .buildings)
 		print("Buildings imported")

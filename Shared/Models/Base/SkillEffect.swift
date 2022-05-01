@@ -63,45 +63,6 @@ public class SkillEffect: NSManagedObject, Decodable {
         }
         return nil
     }
-
-    func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
-        let skillEffect = from as! SkillEffectData
-        
-        // don't dirty the record if you don't have to
-        
-        if self.id != skillEffect.id {
-            self.id = Int64(skillEffect.id)
-        }
-        if self.c2uDescription != skillEffect.c2uDescription {
-            self.c2uDescription = skillEffect.c2uDescription
-        }
-        if self.name != skillEffect.name {
-            self.name = skillEffect.name
-        }
-        if self.isBuff != skillEffect.isBuff {
-            self.isBuff = skillEffect.isBuff
-        }
-        if self.imageFilename != skillEffect.imageFilename {
-            self.imageFilename = skillEffect.imageFilename
-        }
-    }
-    
-    static func insertOrUpdate<T: JsonArray>(from: T,
-                               docInfo: SummonerDocumentInfo) {
-        let skillEffectData = from as! SkillEffectData
-        let skillEffect = SkillEffect.findById(skillEffectData.id, context: docInfo.taskContext) ??
-            SkillEffect(context: docInfo.taskContext)
-        
-        skillEffect.update(from: skillEffectData, docInfo: docInfo)
-    }
-    
-    static func batchUpdate<T: JsonArray>(from: [T],
-                            docInfo: SummonerDocumentInfo) {
-        let skillEffectData = from as! [SkillEffectData]
-        for skillEffect in skillEffectData {
-            SkillEffect.insertOrUpdate(from: skillEffect, docInfo: docInfo)
-        }
-    }
 }
 
 // MARK: - JSON

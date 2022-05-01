@@ -9,6 +9,10 @@ import Foundation
 import CoreData
 import Codextended
 
+enum DecoderConfigurationError: Error {
+  case missingManagedObjectContext
+}
+
 @objc(GameItem)
 public class GameItem: NSManagedObject, Decodable {
 
@@ -27,8 +31,10 @@ public class GameItem: NSManagedObject, Decodable {
 	/// Required init for Decodable conformance
 	///
 	public required convenience init(from decoder: Decoder) throws {
-		// get the context and the entity in the context
-		guard let context = decoder.userInfo[CodingUserInfoKey.context!] as? NSManagedObjectContext else { fatalError("Could not get context [for GameItem]") }
+		guard let context = decoder.userInfo[CodingUserInfoKey.managedObjectContext]  as? NSManagedObjectContext else {
+			throw DecoderConfigurationError.missingManagedObjectContext
+		}
+
 		guard let entity = NSEntityDescription.entity(forEntityName: "GameItem", in: context) else { fatalError("Could not get entity [for GameItem]") }
 
 		// init self
@@ -38,14 +44,16 @@ public class GameItem: NSManagedObject, Decodable {
 		let container = try decoder.container(keyedBy: CodingKeys.self)
 		// and start decoding
 //		self.id = try decoder.decode(Int64.self, forKey: .id)
-//		let fields = try decoder.nestedContainer("fields")
-		self.com2usId = try decoder.decode("com2usId")
-		self.name = try decoder.decode("name")
-		self.c2uDescription = try decoder.decode("c2uDescription")
-		self.category = try decoder.decode("category")
-		self.imageFilename = try decoder.decode("imageFilename")
-		self.sellValue = try decoder.decode("sellValue")
-		self.slug = try decoder.decode("slug")
+//		let fields: [String: Any] = decoder.decode("fields")
+		let fields: [String: Any] = try container.decode([String: Any].self, forKey: .fields)
+
+		self.com2usId = (fields["com2us_id"]).orInt
+		self.name = (fields["name"]).orEmpty
+		self.c2uDescription = (fields["description"]).orEmpty
+		self.category = (fields["category"]).orInt
+		self.imageFilename = (fields["icon"]).orEmpty
+		self.sellValue = (fields["sell_value"]).orInt
+		self.slug = (fields["slug"]).orEmpty
 	}
 
 	public convenience init(from decoder: Decoder, pk: Int64) throws {
@@ -73,52 +81,52 @@ extension GameItem {
     }
 
 	static func findOrCreate(_ id: Int64,
-					 context: NSManagedObjectContext) -> GameItem {
-	 if let gameItem = GameItem.findById(id, context: context) {
-		 return gameItem
-	 }
-	 let gameItem = GameItem(context: context)
-	 gameItem.id = id
-	 return gameItem
- }
+							 context: NSManagedObjectContext) -> GameItem {
+		if let gameItem = GameItem.findById(id, context: context) {
+			return gameItem
+		}
+		let gameItem = GameItem(context: context)
+		gameItem.id = id
+		return gameItem
+	}
 
- func update<T: JsonArray>(from: T, docInfo: SummonerDocumentInfo) {
-
-	 let gameItemData = from as! GameItemData
-
-	 if self.id != gameItemData.id {
-		 self.id = Int64(gameItemData.id)
-	 }
-	 self.name = gameItemData.name
-
-	 self.com2usId = Int64(gameItemData.com2usId)
-
-	 self.c2uDescription = gameItemData.c2uDescription
-
-	 self.imageFilename = gameItemData.imageFilename
-
-	 self.category = gameItemData.category
-
-	 self.slug = gameItemData.slug
-
-	 self.sellValue = gameItemData.sellValue
- }
-
- static func insertOrUpdate<T: JsonArray>(from: T,
-							docInfo: SummonerDocumentInfo) {
-	 docInfo.taskContext.performAndWait {
-		 let gameItemData = from as! GameItemData
-		 let gameItem = GameItem.findOrCreate(gameItemData.com2usId, context: docInfo.taskContext)
-		 gameItem.update(from: gameItemData, docInfo: docInfo)
-	 }
- }
-
- static func batchUpdate<T: JsonArray>(from: [T],
-						 docInfo: SummonerDocumentInfo) {
-	 let gameItems = from as! [GameItemData]
-	 for gameItem in gameItems {
-		 GameItem.insertOrUpdate(from: gameItem, docInfo: docInfo)
-	 }
- }
+// func update<T: JsonArray>(from: T, provider: BestiaryProvider) {
+//
+//	 let gameItemData = from as! GameItemData
+//
+//	 if self.id != gameItemData.id {
+//		 self.id = Int64(gameItemData.id)
+//	 }
+//	 self.name = gameItemData.name
+//
+//	 self.com2usId = Int64(gameItemData.com2usId)
+//
+//	 self.c2uDescription = gameItemData.c2uDescription
+//
+//	 self.imageFilename = gameItemData.imageFilename
+//
+//	 self.category = gameItemData.category
+//
+//	 self.slug = gameItemData.slug
+//
+//	 self.sellValue = gameItemData.sellValue
+// }
+//
+// static func insertOrUpdate<T: JsonArray>(from: T,
+//										  provider: BestiaryProvider) {
+//	 provider.taskContext.performAndWait {
+//		 let gameItemData = from as! GameItemData
+//		 let gameItem = GameItem.findOrCreate(gameItemData.com2usId, context: provider.taskContext)
+//		 gameItem.update(from: gameItemData, provider: provider)
+//	 }
+// }
+//
+// static func batchUpdate<T: JsonArray>(from: [T],
+//									   provider: BestiaryProvider) {
+//	 let gameItems = from as! [GameItemData]
+//	 for gameItem in gameItems {
+//		 GameItem.insertOrUpdate(from: gameItem, provider: provider)
+//	 }
+// }
 
 }

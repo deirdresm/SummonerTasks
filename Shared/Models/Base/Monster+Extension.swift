@@ -18,7 +18,6 @@ import SwiftUI
 @objc(Monster)
 public class Monster: NSManagedObject, Decodable {
 
-
 //	public var type: String?
 //	public var descrip: String?
 
@@ -77,80 +76,110 @@ public class Monster: NSManagedObject, Decodable {
 
 		case skills
 		case source
+
+		case fields
 	}
 
 	/// Required init for Decodable conformance
 	public required convenience init(from decoder: Decoder) throws {
 		// get the context and the entity in the context
-		guard let context = decoder.userInfo[CodingUserInfoKey.context!] as? NSManagedObjectContext else { fatalError("Could not get context [for GameItem]") }
-		guard let entity = NSEntityDescription.entity(forEntityName: "GameItem", in: context) else { fatalError("Could not get entity [for GameItem]") }
+		guard let context = decoder.userInfo[CodingUserInfoKey.managedObjectContext]  as? NSManagedObjectContext else {
+			throw DecoderConfigurationError.missingManagedObjectContext
+		}
+
+		guard let entity = NSEntityDescription.entity(forEntityName: "Monster", in: context) else { fatalError("Could not get entity [for Monster]") }
 
 		// init self
 		self.init(entity: entity, insertInto: context)
 
+		// create container
+		let container = try decoder.container(keyedBy: CodingKeys.self)
 		// and start decoding
-		self.id = try decoder.decode("id")
-		self.name = try decoder.decode("name")
-		self.com2usId = try decoder.decode("com2usId")
-		self.familyId = try decoder.decode("familyId")
-		self.skillGroupId = try decoder.decode("skillGroupId")
-		self.imageFilename = try decoder.decode("imageFilename")
-		self.element = try decoder.decode("element")
-		self.archetype = try decoder.decode("archetype")
-		self.baseStars = try decoder.decode("baseStars")
-		self.naturalStars = try decoder.decode("naturalStars")
-		self.obtainable = try decoder.decode("obtainable")
+		let fields: [String: Any] = try container.decode([String: Any].self, forKey: .fields)
+
+		// and start decoding
+		self.id = (fields["id"]).orInt
+		self.name = (fields["name"]).orEmpty
+		self.com2usId = (fields["com2us_id"]).orInt
+		self.familyId = (fields["family_id"]).orInt
+		self.skillGroupId = (fields["skill_group_id"]).orInt
+		self.imageFilename = (fields["image_filename"]).orEmpty
+		self.element = (fields["element"]).orEmpty
+		self.archetype = (fields["archetype"]).orEmpty
+		self.baseStars =  (fields["base_stars"]).orInt16
+		self.naturalStars = (fields["natural_stars"]).orInt16
+		self.obtainable = (fields["obtainable"]).orFalse
 
 		// awakening
-		self.canAwaken = try decoder.decode("canAwaken")
-		self.isAwakened = try decoder.decode("isAwakened")
-		self.awakenLevel = try decoder.decode("awakenLevel")
-		self.awakenBonus = try decoder.decode("awakenBonus")
-		self.awakensToId = try decoder.decode("awakensToId")
-		self.awakensFromId = try decoder.decode("awakensFromId")
+		self.canAwaken = (fields["can_awaken"]).orFalse
+		self.isAwakened = (fields["is_awakened"]).orFalse
+		self.awakenLevel = (fields["awaken_level"]).orInt16
+		self.awakenBonus = (fields["awaken_bonus"]).orEmpty
+		self.awakensToId = (fields["awakens_to"]).orOptionalInt
+		self.awakensFromId = (fields["awakens_from"]).orOptionalInt
 
-		self.skillUpsToMax = try decoder.decode("skillUpsToMax")
-		self.leaderSkillId = try decoder.decode("leaderSkillId")
-		self.rawHp = try decoder.decode("rawHp")
-		self.rawAttack = try decoder.decode("rawAttack")
-		self.rawDefense = try decoder.decode("rawDefense")
-		self.baseHp = try decoder.decode("baseHp")
-		self.baseAttack = try decoder.decode("baseAttack")
-		self.baseDefense = try decoder.decode("baseDefense")
-		self.maxLvlHp = try decoder.decode("maxLvlHp")
-		self.maxLvlAttack = try decoder.decode("maxLvlAttack")
-		self.maxLvlDefense = try decoder.decode("maxLvlDefense")
-		self.speed = try decoder.decode("speed")
-		self.critRate = try decoder.decode("critRate")
-		self.critDamage = try decoder.decode("critDamage")
-		self.resistance = try decoder.decode("resistance")
-		self.accuracy = try decoder.decode("accuracy")
-		self.isHomunculus = try decoder.decode("homunculus")
-		self.craftCost = try decoder.decode("craftCost")
-		self.transformsToId = try decoder.decode("transformsToId")
+		self.skillUpsToMax = (fields["skill_ups_to_max"]).orInt
+		self.leaderSkillId = (fields["leader_skill"]).orOptionalInt
+		self.rawHp = (fields["raw_hp"]).orInt
+		self.rawAttack = (fields["raw_attack"]).orInt
+		self.rawDefense = (fields["raw_defense"]).orInt
+		self.baseHp = (fields["base_hp"]).orInt
+		self.baseAttack = (fields["base_attack"]).orInt
+		self.baseDefense = (fields["base_defense"]).orInt
+		self.maxLvlHp = (fields["max_lvl_hp"]).orInt
+		self.maxLvlAttack = (fields["max_lvl_attack"]).orInt
+		self.maxLvlDefense = (fields["max_lvl_defense"]).orInt
+		self.speed = (fields["speed"]).orInt
+		self.critRate = (fields["crit_rate"]).orInt
+		self.critDamage = (fields["crit_damage"]).orInt
+		self.resistance = (fields["resistance"]).orInt
+		self.accuracy = (fields["accuracy"]).orInt
+		self.isHomunculus = (fields["homunculus"]).orFalse
+		self.craftCost = (fields["craft_cost"]).orInt
+		self.transformsToId = (fields["transforms_to"]).orOptionalInt
 
 		// materials
-		self.awakenMatsFireLow = try decoder.decode("awakenMatsFireLow")
-		self.awakenMatsFireMid = try decoder.decode("awakenMatsFireMid")
-		self.awakenMatsFireHigh = try decoder.decode("awakenMatsFireHigh")
-		self.awakenMatsWaterLow = try decoder.decode("awakenMatsWaterLow")
-		self.awakenMatsWaterMid = try decoder.decode("awakenMatsWaterMid")
-		self.awakenMatsWaterHigh = try decoder.decode("awakenMatsWaterHigh")
-		self.awakenMatsWindLow = try decoder.decode("awakenMatsWindLow")
-		self.awakenMatsWindMid = try decoder.decode("awakenMatsWindMid")
-		self.awakenMatsWindHigh = try decoder.decode("awakenMatsWindHigh")
-		self.awakenMatsLightLow = try decoder.decode("awakenMatsLightLow")
-		self.awakenMatsLightMid = try decoder.decode("awakenMatsLightMid")
-		self.awakenMatsLightHigh = try decoder.decode("awakenMatsLightHigh")
-		self.awakenMatsDarkLow = try decoder.decode("awakenMatsDarkLow")
-		self.awakenMatsDarkMid = try decoder.decode("awakenMatsDarkMid")
-		self.awakenMatsDarkHigh = try decoder.decode("awakenMatsDarkHigh")
-		self.awakenMatsMagicLow = try decoder.decode("awakenMatsMagicLow")
-		self.awakenMatsMagicMid = try decoder.decode("awakenMatsMagicMid")
-		self.awakenMatsMagicHigh = try decoder.decode("awakenMatsMagicHigh")
-		self.isFarmable = try decoder.decode("farmable")
-		self.isFusionFood = try decoder.decode("fusionFood")
-		self.bestiarySlug = try decoder.decode("bestiarySlug")
+		self.awakenMatsFireLow = (fields["awaken_mats_fire_low"]).orInt16
+		self.awakenMatsFireMid = (fields["awaken_mats_fire_mid"]).orInt16
+		self.awakenMatsFireHigh = (fields["awaken_mats_fire_high"]).orInt16
+		self.awakenMatsWaterLow = (fields["awaken_mats_water_low"]).orInt16
+		self.awakenMatsWaterMid = (fields["awaken_mats_water_mid"]).orInt16
+		self.awakenMatsWaterHigh = (fields["awaken_mats_water_high"]).orInt16
+		self.awakenMatsWindLow = (fields["awaken_mats_wind_low"]).orInt16
+		self.awakenMatsWindMid = (fields["awaken_mats_wind_mid"]).orInt16
+		self.awakenMatsWindHigh = (fields["awaken_mats_wind_high"]).orInt16
+		self.awakenMatsLightLow = (fields["awaken_mats_light_low"]).orInt16
+		self.awakenMatsLightMid = (fields["awaken_mats_light_mid"]).orInt16
+		self.awakenMatsLightHigh = (fields["awaken_mats_light_high"]).orInt16
+		self.awakenMatsDarkLow = (fields["awaken_mats_dark_low"]).orInt16
+		self.awakenMatsDarkMid = (fields["awaken_mats_dark_mid"]).orInt16
+		self.awakenMatsDarkHigh = (fields["awaken_mats_dark_high"]).orInt16
+		self.awakenMatsMagicLow = (fields["awaken_mats_magic_low"]).orInt16
+		self.awakenMatsMagicMid = (fields["awaken_mats_magic_mid"]).orInt16
+		self.awakenMatsMagicHigh = (fields["awaken_mats_magic_high"]).orInt16
+		self.isFarmable = (fields["farmable"]).orFalse
+		self.isFusionFood = (fields["fusion_food"]).orFalse
+		self.bestiarySlug = (fields["bestiary_slug"]).orEmpty
+
+		let skills = fields["skills"].orIntArray
+		for skillNum in skills {
+			if let skill = Skill.findById(skillNum) {
+				self.addObject(value: skill, forKey: "skills")
+			}
+		}
+
+		if let ls = self.leaderSkillId {
+			if let skill = LeaderSkill.findById(Int64(ls)) {
+				self.leaderSkill = skill
+			}
+		}
+
+		let sources = fields["sources"].orIntArray
+		for sourceId in sources {
+			if let source = Source.findById(sourceId, context: context) {
+				self.addObject(value: source, forKey: "source")
+			}
+		}
 	}
 
 	public convenience init(from decoder: Decoder, pk: Int64) throws {
@@ -203,218 +232,14 @@ public class Monster: NSManagedObject, Decodable {
         return Int64((Float(self.maxLvlHp) * (1140 + (Float(self.maxLvlDefense) * 3.5))/1000))
     }
 
-	static func insertOrUpdate<T: JsonArray>(from: T,
-							   docInfo: SummonerDocumentInfo) {
-		docInfo.taskContext.performAndWait {
-			let monsterData = from as! MonsterData
-			let monster = Monster.findById(id: monsterData.com2usId, context: docInfo.taskContext) ??
-				Monster(context: docInfo.taskContext)
-			monster.update(from: monsterData, docInfo: docInfo)
+	static func findOrCreate(_ id: Int64,
+							 context: NSManagedObjectContext) -> Monster {
+		if let monster = Monster.findById(id, context: context) {
+			return monster
 		}
-	}
-
-	static func batchUpdate<T: JsonArray>(from: [T],
-							docInfo: SummonerDocumentInfo) {
-		let monsters = from as! [MonsterData]
-		for monster in monsters {
-			Monster.insertOrUpdate(from: monster, docInfo: docInfo)
-		}
-	}
-
-	// import from JSON
-	func update<T: JsonArray>(from: T,
-				docInfo: SummonerDocumentInfo) {
-		let monsterData = from as! MonsterData
-
-		// don't dirty the record if you don't have to
-		// tossing swarfarm-generated monster id as not needed
-
-		if self.id != monsterData.com2usId {
-			self.id = monsterData.com2usId
-		}
-		if self.name != monsterData.name {
-			self.name = monsterData.name
-		}
-		if (self.familyId != monsterData.familyId ) && (monsterData.familyId != nil) {
-			self.familyId = monsterData.familyId!
-		}
-		if self.imageFilename != monsterData.imageFilename {
-			self.imageFilename = monsterData.imageFilename
-		}
-		if self.element != monsterData.element {
-			self.element = monsterData.element
-		}
-		if self.archetype != monsterData.archetype {
-			self.archetype = monsterData.archetype
-		}
-		if self.baseStars != monsterData.baseStars {
-			self.baseStars = monsterData.baseStars
-		}
-		if self.naturalStars != monsterData.naturalStars {
-			self.naturalStars = monsterData.naturalStars
-		}
-		if self.obtainable != monsterData.obtainable {
-			self.obtainable = monsterData.obtainable
-		}
-		if self.canAwaken != monsterData.canAwaken {
-			self.canAwaken = monsterData.canAwaken
-		}
-		if self.isAwakened != monsterData.isAwakened {
-			self.isAwakened = monsterData.isAwakened
-		}
-		if self.awakenLevel != monsterData.awakenLevel {
-			self.awakenLevel = monsterData.awakenLevel
-		}
-		if self.awakenBonus != monsterData.awakenBonus {
-			self.awakenBonus = monsterData.awakenBonus
-		}
-		if (self.awakensToId != monsterData.awakensToId) && (monsterData.awakensToId != nil) {
-			self.awakensToId = monsterData.awakensToId!
-		}
-		if (self.awakensFromId != monsterData.awakensFromId) && (monsterData.awakensFromId != nil) {
-			self.awakensFromId = monsterData.awakensFromId!
-		}
-		if (self.transformsToId != monsterData.transformsToId) && (monsterData.transformsToId != nil) {
-			self.transformsToId = monsterData.transformsToId!
-		}
-		if (self.skillUpsToMax != monsterData.skillUpsToMax) && (monsterData.skillUpsToMax != nil) {
-			self.skillUpsToMax = monsterData.skillUpsToMax!
-		}
-		if (self.leaderSkillId != monsterData.leaderSkill) && (monsterData.leaderSkill != nil) {
-			self.leaderSkillId = monsterData.leaderSkill!
-		}
-
-		if (self.rawHp != monsterData.rawHp) && (monsterData.rawHp != nil) {
-			self.rawHp = monsterData.rawHp!
-		}
-		if (self.rawAttack != monsterData.rawAttack) && (monsterData.rawAttack != nil) {
-			self.rawAttack = monsterData.rawAttack!
-		}
-		if (self.rawDefense != monsterData.rawDefense) && (monsterData.rawDefense != nil) {
-			self.rawDefense = monsterData.rawDefense!
-		}
-		if (self.baseHp != monsterData.baseHp) && (monsterData.baseHp != nil) {
-			self.baseHp = monsterData.baseHp!
-		}
-		if (self.baseAttack != monsterData.baseAttack) && (monsterData.baseAttack != nil) {
-			self.baseAttack = monsterData.baseAttack!
-		}
-		if (self.baseDefense != monsterData.baseDefense) && (monsterData.baseDefense != nil) {
-			self.baseDefense = monsterData.baseDefense!
-		}
-		if (self.maxLvlHp != monsterData.maxLvlHp) && (monsterData.maxLvlHp != nil) {
-			self.maxLvlHp = monsterData.maxLvlHp!
-		}
-		if (self.maxLvlAttack != monsterData.maxLvlAttack) && (monsterData.maxLvlAttack != nil) {
-			self.maxLvlAttack = monsterData.maxLvlAttack!
-		}
-		if (self.maxLvlDefense != monsterData.maxLvlDefense) && (monsterData.maxLvlDefense != nil) {
-			self.maxLvlDefense = monsterData.maxLvlDefense!
-		}
-
-		if (self.speed != monsterData.speed) && (monsterData.speed != nil) {
-			self.speed = monsterData.speed!
-		}
-		if (self.critRate != monsterData.critRate) && (monsterData.critRate != nil) {
-			self.critRate = monsterData.critRate!
-		}
-		if (self.critDamage != monsterData.critDamage) && (monsterData.critDamage != nil) {
-			self.critDamage = monsterData.critDamage!
-		}
-		if (self.resistance != monsterData.resistance) && (monsterData.resistance != nil) {
-			self.resistance = monsterData.resistance!
-		}
-		if (self.accuracy != monsterData.accuracy) && (monsterData.accuracy != nil) {
-			self.accuracy = monsterData.accuracy!
-		}
-		if self.isHomunculus != monsterData.homunculus {
-			self.isHomunculus = monsterData.homunculus
-		}
-		if self.craftCost != monsterData.craftCost && (monsterData.craftCost != nil) {
-			self.craftCost = monsterData.craftCost!
-		}
-
-		if self.awakenMatsFireLow != monsterData.awakenMatsFireLow {
-			self.awakenMatsFireLow = monsterData.awakenMatsFireLow
-		}
-		if self.awakenMatsFireMid != monsterData.awakenMatsFireMid {
-			self.awakenMatsFireMid = monsterData.awakenMatsFireMid
-		}
-		if self.awakenMatsFireHigh != monsterData.awakenMatsFireHigh {
-			self.awakenMatsFireHigh = monsterData.awakenMatsFireHigh
-		}
-
-		if self.awakenMatsWaterLow != monsterData.awakenMatsWaterLow {
-			self.awakenMatsWaterLow = monsterData.awakenMatsWaterLow
-		}
-		if self.awakenMatsWaterMid != monsterData.awakenMatsWaterMid {
-			self.awakenMatsWaterMid = monsterData.awakenMatsWaterMid
-		}
-		if self.awakenMatsWaterHigh != monsterData.awakenMatsWaterHigh {
-			self.awakenMatsWaterHigh = monsterData.awakenMatsWaterHigh
-		}
-
-		if self.awakenMatsWindLow != monsterData.awakenMatsWindLow {
-			self.awakenMatsWindLow = monsterData.awakenMatsWindLow
-		}
-		if self.awakenMatsWindMid != monsterData.awakenMatsWindMid {
-			self.awakenMatsWindMid = monsterData.awakenMatsWindMid
-		}
-		if self.awakenMatsWindHigh != monsterData.awakenMatsWindHigh {
-			self.awakenMatsWindHigh = monsterData.awakenMatsWindHigh
-		}
-
-		if self.awakenMatsLightLow != monsterData.awakenMatsLightLow {
-			self.awakenMatsLightLow = monsterData.awakenMatsLightLow
-		}
-		if self.awakenMatsLightMid != monsterData.awakenMatsLightMid {
-			self.awakenMatsLightMid = monsterData.awakenMatsLightMid
-		}
-		if self.awakenMatsLightHigh != monsterData.awakenMatsLightHigh {
-			self.awakenMatsLightHigh = monsterData.awakenMatsLightHigh
-		}
-
-		if self.awakenMatsDarkLow != monsterData.awakenMatsDarkLow {
-			self.awakenMatsDarkLow = monsterData.awakenMatsDarkLow
-		}
-		if self.awakenMatsDarkMid != monsterData.awakenMatsDarkMid {
-			self.awakenMatsDarkMid = monsterData.awakenMatsDarkMid
-		}
-		if self.awakenMatsDarkHigh != monsterData.awakenMatsDarkHigh {
-			self.awakenMatsDarkHigh = monsterData.awakenMatsDarkHigh
-		}
-
-		if self.awakenMatsMagicLow != monsterData.awakenMatsMagicLow {
-			self.awakenMatsMagicLow = monsterData.awakenMatsMagicLow
-		}
-		if self.awakenMatsMagicMid != monsterData.awakenMatsMagicMid {
-			self.awakenMatsMagicMid = monsterData.awakenMatsMagicMid
-		}
-		if self.awakenMatsMagicHigh != monsterData.awakenMatsMagicHigh {
-			self.awakenMatsMagicHigh = monsterData.awakenMatsMagicHigh
-		}
-
-		if self.isFarmable != monsterData.farmable {
-			self.isFarmable = monsterData.farmable
-		}
-		if self.isFusionFood != monsterData.fusionFood {
-			self.isFusionFood = monsterData.fusionFood
-		}
-		if self.bestiarySlug != monsterData.bestiarySlug {
-			self.bestiarySlug = monsterData.bestiarySlug
-		}
-
-		if self.skillArray != monsterData.skills {
-			self.skillArray = monsterData.skills
-
-			// FIXME: add skills relationship here
-		}
-
-		if self.sourceRaw != monsterData.source {
-			self.sourceRaw = monsterData.source
-
-			// FIXME: add source relationship here
-		}
+		let monster = Monster(context: context)
+		monster.id = id
+		return monster
 	}
 }
 
@@ -442,165 +267,4 @@ public class Monster: NSManagedObject, Decodable {
 //
 //}
 
-/**
- A struct encapsulating the properties of a Quake. All members are
- optional in case they are missing from the data.
- */
-
 // TODO: set up relations and indices
-
-// MARK: - Original SQL Table Definition
-
-/*
- -- Table: public.bestiary_monster
-
- -- DROP TABLE public.bestiary_monster;
-
- CREATE TABLE public.bestiary_monster
- (
-     id integer NOT NULL DEFAULT nextval('bestiary_monster_id_seq'::regclass),
-     name character varying(40) COLLATE pg_catalog."default" NOT NULL,
-     com2us_id integer,
-     family_id integer,
-     image_filename character varying(250) COLLATE pg_catalog."default",
-     element character varying(6) COLLATE pg_catalog."default" NOT NULL,
-     archetype character varying(10) COLLATE pg_catalog."default" NOT NULL,
-     base_stars integer NOT NULL,
-     obtainable boolean NOT NULL,
-     can_awaken boolean NOT NULL,
-     is_awakened boolean NOT NULL,
-     awaken_bonus text COLLATE pg_catalog."default" NOT NULL,
-     skill_ups_to_max integer,
-     raw_hp integer,
-     raw_attack integer,
-     raw_defense integer,
-     base_hp integer,
-     base_attack integer,
-     base_defense integer,
-     max_lvl_hp integer,
-     max_lvl_attack integer,
-     max_lvl_defense integer,
-     speed integer,
-     crit_rate integer,
-     crit_damage integer,
-     resistance integer,
-     accuracy integer,
-     homunculus boolean NOT NULL,
-     craft_cost integer,
-     awaken_mats_fire_low integer NOT NULL,
-     awaken_mats_fire_mid integer NOT NULL,
-     awaken_mats_fire_high integer NOT NULL,
-     awaken_mats_water_low integer NOT NULL,
-     awaken_mats_water_mid integer NOT NULL,
-     awaken_mats_water_high integer NOT NULL,
-     awaken_mats_wind_low integer NOT NULL,
-     awaken_mats_wind_mid integer NOT NULL,
-     awaken_mats_wind_high integer NOT NULL,
-     awaken_mats_light_low integer NOT NULL,
-     awaken_mats_light_mid integer NOT NULL,
-     awaken_mats_light_high integer NOT NULL,
-     awaken_mats_dark_low integer NOT NULL,
-     awaken_mats_dark_mid integer NOT NULL,
-     awaken_mats_dark_high integer NOT NULL,
-     awaken_mats_magic_low integer NOT NULL,
-     awaken_mats_magic_mid integer NOT NULL,
-     awaken_mats_magic_high integer NOT NULL,
-     farmable boolean NOT NULL,
-     fusion_food boolean NOT NULL,
-     bestiary_slug character varying(255) COLLATE pg_catalog."default",
-     awakens_from_id integer,
-     awakens_to_id integer,
-     leader_skill_id integer,
-     awaken_level integer NOT NULL,
-     natural_stars integer NOT NULL,
-     transforms_to_id integer,
-     CONSTRAINT bestiary_monster_pkey PRIMARY KEY (id),
-     CONSTRAINT bestiary_monster_awakens_from_id_38a30ba6_fk_bestiary_ FOREIGN KEY (awakens_from_id)
-         REFERENCES public.bestiary_monster (id) MATCH SIMPLE
-         ON UPDATE NO ACTION
-         ON DELETE NO ACTION
-         DEFERRABLE INITIALLY DEFERRED,
-     CONSTRAINT bestiary_monster_awakens_to_id_daac8302_fk_bestiary_monster_id FOREIGN KEY (awakens_to_id)
-         REFERENCES public.bestiary_monster (id) MATCH SIMPLE
-         ON UPDATE NO ACTION
-         ON DELETE NO ACTION
-         DEFERRABLE INITIALLY DEFERRED,
-     CONSTRAINT bestiary_monster_leader_skill_id_7fc43dfc_fk_bestiary_ FOREIGN KEY (leader_skill_id)
-         REFERENCES public.bestiary_leaderskill (id) MATCH SIMPLE
-         ON UPDATE NO ACTION
-         ON DELETE NO ACTION
-         DEFERRABLE INITIALLY DEFERRED,
-     CONSTRAINT bestiary_monster_transforms_to_id_ecb4e99c_fk_bestiary_ FOREIGN KEY (transforms_to_id)
-         REFERENCES public.bestiary_monster (id) MATCH SIMPLE
-         ON UPDATE NO ACTION
-         ON DELETE NO ACTION
-         DEFERRABLE INITIALLY DEFERRED
- )
- WITH (
-     OIDS = FALSE
- )
- TABLESPACE pg_default;
-
- ALTER TABLE public.bestiary_monster
-     OWNER to swarfarmer_dev;
-
- -- Index: bestiary_monster_awakens_from_id_38a30ba6
-
- -- DROP INDEX public.bestiary_monster_awakens_from_id_38a30ba6;
-
- CREATE INDEX bestiary_monster_awakens_from_id_38a30ba6
-     ON public.bestiary_monster USING btree
-     (awakens_from_id ASC NULLS LAST)
-     TABLESPACE pg_default;
-
-
- -- Index: bestiary_monster_awakens_to_id_daac8302
-
- -- DROP INDEX public.bestiary_monster_awakens_to_id_daac8302;
-
- CREATE INDEX bestiary_monster_awakens_to_id_daac8302
-     ON public.bestiary_monster USING btree
-     (awakens_to_id ASC NULLS LAST)
-     TABLESPACE pg_default;
-
-
- -- Index: bestiary_monster_bestiary_slug_67ff9e5f
-
- -- DROP INDEX public.bestiary_monster_bestiary_slug_67ff9e5f;
-
- CREATE INDEX bestiary_monster_bestiary_slug_67ff9e5f
-     ON public.bestiary_monster USING btree
-     (bestiary_slug COLLATE pg_catalog."default" ASC NULLS LAST)
-     TABLESPACE pg_default;
-
-
- -- Index: bestiary_monster_bestiary_slug_67ff9e5f_like
-
- -- DROP INDEX public.bestiary_monster_bestiary_slug_67ff9e5f_like;
-
- CREATE INDEX bestiary_monster_bestiary_slug_67ff9e5f_like
-     ON public.bestiary_monster USING btree
-     (bestiary_slug COLLATE pg_catalog."default" varchar_pattern_ops ASC NULLS LAST)
-     TABLESPACE pg_default;
-
-
- -- Index: bestiary_monster_leader_skill_id_7fc43dfc
-
- -- DROP INDEX public.bestiary_monster_leader_skill_id_7fc43dfc;
-
- CREATE INDEX bestiary_monster_leader_skill_id_7fc43dfc
-     ON public.bestiary_monster USING btree
-     (leader_skill_id ASC NULLS LAST)
-     TABLESPACE pg_default;
-
-
- -- Index: bestiary_monster_transforms_to_id_ecb4e99c
-
- -- DROP INDEX public.bestiary_monster_transforms_to_id_ecb4e99c;
-
- CREATE INDEX bestiary_monster_transforms_to_id_ecb4e99c
-     ON public.bestiary_monster USING btree
-     (transforms_to_id ASC NULLS LAST)
-     TABLESPACE pg_default;
- 
-*/

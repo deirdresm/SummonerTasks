@@ -112,10 +112,10 @@ extension BuildingInstance {
 
     
     func getBuildingBonus() -> Int64 {
-        var bonus: Int64 = 0
+		var bonus: Int64 = 0
         
         let levels = self.building?.statBonus
-        bonus = levels?[Int(self.level)] ?? 0
+		bonus = levels?[Int(self.level)] ?? 0
         
         return bonus
     }
@@ -131,31 +131,31 @@ extension BuildingInstance {
 //        if self.buildingId != buildingInstanceData.buildingId {
 //            self.buildingId = buildingInstanceData.buildingId
 //
-//            self.building = Building.findById(buildingInstanceData.com2usId, context: docInfo.taskContext)
+//            self.building = Building.findById(buildingInstanceData.com2usId, context: provider.taskContext)
 //        }
 //        if self.summonerId != buildingInstanceData.summonerId {
 //            self.summonerId = buildingInstanceData.summonerId
 //
-//            self.summoner = Summoner.findById(buildingInstanceData.summonerId, context: docInfo.taskContext)
+//            self.summoner = Summoner.findById(buildingInstanceData.summonerId, context: provider.taskContext)
 //        }
 //        if self.level != buildingInstanceData.level {
 //            self.level = buildingInstanceData.level
 //        }
 //
 //        if (self.building == nil) {
-//            self.building = Building.findById(buildingInstanceData.com2usId, context: docInfo.taskContext)
+//            self.building = Building.findById(buildingInstanceData.com2usId, context: provider.taskContext)
 //        }
 //
 //        if (self.summoner == nil) {
-//            self.summoner = Summoner.findById(buildingInstanceData.summonerId, context: docInfo.taskContext)
+//            self.summoner = Summoner.findById(buildingInstanceData.summonerId, context: provider.taskContext)
 //        }
 //    }
 //
 //    static func insertOrUpdate<T: JsonArray>(from: T,
 //                                             docInfo: SummonerDocumentInfo) {
-//        docInfo.taskContext.performAndWait {
+//        provider.taskContext.performAndWait {
 //            let buildingInstanceData = from as! BuildingInstanceData
-//            var buildingInstance = BuildingInstance.findById(buildingInstanceData.com2usId, context: docInfo.taskContext) ?? BuildingInstance(context: docInfo.taskContext)
+//            var buildingInstance = BuildingInstance.findById(buildingInstanceData.com2usId, context: provider.taskContext) ?? BuildingInstance(context: provider.taskContext)
 //            buildingInstance.update(from: buildingInstanceData, docInfo: docInfo)
 //        }
 //    }
