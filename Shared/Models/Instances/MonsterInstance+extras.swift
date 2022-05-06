@@ -37,7 +37,10 @@ public class MonsterInstance: NSManagedObject, Comparable, Decodable {
     // MARK: - Decodable
     required convenience public init(from decoder: Decoder) throws {
         // get the context and the entity in the context
-        guard let context = decoder.userInfo[CodingUserInfoKey.context!] as? NSManagedObjectContext else { fatalError("Could not get context [for MonsterInstance]") }
+		guard let context = decoder.userInfo[CodingUserInfoKey.managedObjectContext]  as? NSManagedObjectContext else {
+			throw DecoderConfigurationError.missingManagedObjectContext
+		}
+
         guard let entity = NSEntityDescription.entity(forEntityName: "MonsterInstance", in: context) else { fatalError("Could not get entity [for MonsterInstance]") }
 
         // init self

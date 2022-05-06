@@ -21,7 +21,10 @@ public class BuildingInstance: NSManagedObject, Decodable {
     // MARK: - Decodable
     required convenience public init(from decoder: Decoder) throws {
         // get the context and the entity in the context
-        guard let context = decoder.userInfo[CodingUserInfoKey.context!] as? NSManagedObjectContext else { fatalError("Could not get context [for BuildingInstance]") }
+		guard let context = decoder.userInfo[CodingUserInfoKey.managedObjectContext]  as? NSManagedObjectContext else {
+			throw DecoderConfigurationError.missingManagedObjectContext
+		}
+
         guard let entity = NSEntityDescription.entity(forEntityName: "BuildingInstance", in: context) else { fatalError("Could not get entity [for BuildingInstance]") }
 
         // init self

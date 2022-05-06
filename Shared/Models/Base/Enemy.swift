@@ -21,36 +21,41 @@ public class Enemy: NSManagedObject, Decodable {
 		case accuracyBonus = "accuracy_bonus"
 		case critBonus = "crit_bonus"
 		case critDamageReduction = "crit_damage_reduction"
+		case fields
 	}
 
 	public required convenience init(from decoder: Decoder) throws {
 		// get the context and the entity in the context
 		guard let context = decoder.userInfo[CodingUserInfoKey.managedObjectContext] as? NSManagedObjectContext else { fatalError("Could not get context [for GameItem]") }
-		guard let entity = NSEntityDescription.entity(forEntityName: "GameItem", in: context) else { fatalError("Could not get entity [for GameItem]") }
+		guard let entity = NSEntityDescription.entity(forEntityName: "Enemy", in: context) else { fatalError("Could not get entity [for Enemy]") }
 
 		// init self
 		self.init(entity: entity, insertInto: context)
 
+		// create container
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		// and start decoding
+
+		let fields: [String: Any] = try container.decode([String: Any].self, forKey: .fields)
 		// start decoding
-		self.id = try decoder.decode("id")
-		self.com2usId = try decoder.decode("com2usId")
+		self.com2usId = (fields["com2usId"]).orInt
+		self.order = (fields["order"]).orInt16
+		self.waveid = (fields["wave"]).orInt16
+		self.monsterId = (fields["com2usId"]).orInt
 
-		self.order = try decoder.decode("order")
-		self.waveid = try decoder.decode("wave")
-		self.monster = try decoder.decode("monster")
-		self.boss = try decoder.decode("boss")
-		self.stars = try decoder.decode("stars")
-		self.levelid = try decoder.decode("level")
+		self.boss = (fields["boss"]).orFalse
+		self.stars = (fields["stars"]).orInt16
+		self.levelid = (fields["level"]).orInt16
 
-		self.hp = try decoder.decode("hp")
-		self.attack = try decoder.decode("attack")
-		self.defense = try decoder.decode("defense")
-		self.speed = try decoder.decode("speed")
-		self.resist = try decoder.decode("resist")
+		self.hp = (fields["hp"]).orInt
+		self.attack = (fields["attack"]).orInt
+		self.defense = (fields["defense"]).orInt
+		self.speed = (fields["speed"]).orInt16
+		self.resist = (fields["resist"]).orInt16
 
-		self.accuracyBonus = try decoder.decode("accuracyBonus")
-		self.critBonus = try decoder.decode("critBonus")
-		self.critDamageReduction = try decoder.decode("critDamageReduction")
+		self.accuracyBonus = (fields["accuracy_bonus"]).orInt16
+		self.critBonus = (fields["crit_bonus"]).orInt16
+		self.critDamageReduction = (fields["crit_damage_reduction"]).orInt16
 
 	}
 

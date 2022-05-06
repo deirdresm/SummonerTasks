@@ -108,7 +108,7 @@
         </uniquenessConstraints>
     </entity>
     <entity name="DungeonLevel" representedClassName=".DungeonLevel" syncable="YES" codeGenerationType="category">
-        <attribute name="backlineSlots" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="backlineSlots" optional="YES" attributeType="Integer 16" usesScalarValueType="NO"/>
         <attribute name="difficulty" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="dungeonId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="energyCost" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -116,7 +116,7 @@
         <attribute name="frontlineSlots" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="totalSlots" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="xp" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="xp" optional="YES" attributeType="Integer 64" usesScalarValueType="NO"/>
         <relationship name="dungeon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dungeon" inverseName="levels" inverseEntity="Dungeon"/>
         <relationship name="enemies" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Enemy" inverseName="level" inverseEntity="Enemy"/>
         <relationship name="waves" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Wave" inverseName="level" inverseEntity="Wave"/>
@@ -137,13 +137,14 @@
         <attribute name="hp" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="levelid" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="monster" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="monsterId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="resist" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="speed" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="stars" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="waveid" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="level" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DungeonLevel" inverseName="enemies" inverseEntity="DungeonLevel"/>
+        <relationship name="monster" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Monster" inverseName="enemy" inverseEntity="Monster"/>
         <relationship name="wave" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Wave" inverseName="enemies" inverseEntity="Wave"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
@@ -283,6 +284,7 @@
         <attribute name="speed" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="transformsToId" optional="YES" attributeType="Integer 64" usesScalarValueType="NO"/>
         <relationship name="awakenCosts" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AwakenCost" inverseName="monster" inverseEntity="AwakenCost"/>
+        <relationship name="enemy" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Enemy" inverseName="monster" inverseEntity="Enemy"/>
         <relationship name="fusionIngredient" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Fusion" inverseName="fusionIngredients" inverseEntity="Fusion"/>
         <relationship name="fusionProduct" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Fusion" inverseName="fusionProduct" inverseEntity="Fusion"/>
         <relationship name="homuSKills" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HomunculusSkill" inverseName="monsters" inverseEntity="HomunculusSkill"/>
@@ -684,13 +686,13 @@
         <element name="BuildingInstance" positionX="-928.4179992675781" positionY="1096.316680908203" width="128" height="119"/>
         <element name="Dungeon" positionX="-179.3515625" positionY="1527.69921875" width="128" height="134"/>
         <element name="DungeonLevel" positionX="-32.80078125" positionY="1471.3203125" width="128" height="209"/>
-        <element name="Enemy" positionX="259.83984375" positionY="1396.78515625" width="128" height="299"/>
+        <element name="Enemy" positionX="259.83984375" positionY="1396.78515625" width="128" height="314"/>
         <element name="Fusion" positionX="72.27294921875" positionY="192.6597900390625" width="128" height="134"/>
         <element name="GameItem" positionX="125.4957885742188" positionY="218.3388061523438" width="128" height="179"/>
         <element name="HomunculusSkill" positionX="-494.9537353515625" positionY="171.3886413574219" width="128" height="134"/>
         <element name="HomunculusSkillcraftCost" positionX="-352.7395629882812" positionY="205.7951049804688" width="128" height="104"/>
         <element name="LeaderSkill" positionX="-836.8394775390625" positionY="628.8787536621094" width="128" height="119"/>
-        <element name="Monster" positionX="-452.5297241210938" positionY="98.49240112304688" width="128" height="1064"/>
+        <element name="Monster" positionX="-452.5297241210938" positionY="98.49240112304688" width="128" height="1079"/>
         <element name="MonsterCraftCost" positionX="132.1785278320312" positionY="334.7951049804688" width="128" height="119"/>
         <element name="MonsterInstance" positionX="-177.2222900390625" positionY="77.45893859863281" width="128" height="719"/>
         <element name="RuneBuild" positionX="-288.71875" positionY="1052.14453125" width="128" height="314"/>

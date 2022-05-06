@@ -15,13 +15,17 @@ public class MonsterCraftCost: NSManagedObject, Decodable {
 		case itemId
 		case quantity
 		case monsterId
+		case fields
 	}
 
 
 	public required convenience init(from decoder: Decoder) throws {
 		// get the context and the entity in the context
-		guard let context = decoder.userInfo[CodingUserInfoKey.context!] as? NSManagedObjectContext else { fatalError("Could not get context [for GameItem]") }
-		guard let entity = NSEntityDescription.entity(forEntityName: "GameItem", in: context) else { fatalError("Could not get entity [for GameItem]") }
+		guard let context = decoder.userInfo[CodingUserInfoKey.managedObjectContext]  as? NSManagedObjectContext else {
+			throw DecoderConfigurationError.missingManagedObjectContext
+		}
+
+		guard let entity = NSEntityDescription.entity(forEntityName: "MonsterCraftCost", in: context) else { fatalError("Could not get entity [for MonsterCraftCost]") }
 
 		// init self
 		self.init(entity: entity, insertInto: context)
@@ -29,16 +33,17 @@ public class MonsterCraftCost: NSManagedObject, Decodable {
 		// create container
 		let container = try decoder.container(keyedBy: CodingKeys.self)
 		// and start decoding
-		self.id = try container.decode(Int64.self, forKey: .id)
 
-		self.itemId = try container.decode(Int64.self, forKey: .itemId)
+		let fields: [String: Any] = try container.decode([String: Any].self, forKey: .fields)
+
+		self.itemId = (fields["item"]).orInt
 		if let gitem = GameItem.findById(self.itemId, context: context) {
 			self.item = gitem
 		}
 
-		self.quantity = try container.decode(Int64.self, forKey: .quantity)
+		self.quantity = (fields["quantity"]).orInt
 
-		self.monsterId = try container.decode(Int64.self, forKey: .monsterId)
+		self.monsterId = (fields["monster"]).orInt
 		if let monster = Monster.findById(self.monsterId, context: context) {
 			self.monster = monster
 		}

@@ -40,7 +40,10 @@ public class ArtifactInstance: NSManagedObject, Decodable {
 
     required convenience public init(from decoder: Decoder) throws {
         // get the context and the entity in the context
-        guard let context = decoder.userInfo[CodingUserInfoKey.context!] as? NSManagedObjectContext else { fatalError("Could not get context [for ArtifactInstance]") }
+		guard let context = decoder.userInfo[CodingUserInfoKey.managedObjectContext]  as? NSManagedObjectContext else {
+			throw DecoderConfigurationError.missingManagedObjectContext
+		}
+
         guard let entity = NSEntityDescription.entity(forEntityName: "ArtifactInstance", in: context) else { fatalError("Could not get entity [for ArtifactInstance]") }
 
         // init self

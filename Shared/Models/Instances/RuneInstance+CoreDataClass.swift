@@ -36,7 +36,10 @@ public class RuneInstance: NSManagedObject, Codable {
     // MARK: - Decodable
     required convenience public init(from decoder: Decoder) throws {
         // get the context and the entity in the context
-        guard let context = decoder.userInfo[CodingUserInfoKey.context!] as? NSManagedObjectContext else { fatalError("Could not get context [for RuneInstance]") }
+		guard let context = decoder.userInfo[CodingUserInfoKey.managedObjectContext]  as? NSManagedObjectContext else {
+			throw DecoderConfigurationError.missingManagedObjectContext
+		}
+
         guard let entity = NSEntityDescription.entity(forEntityName: "RuneInstance", in: context) else { fatalError("Could not get entity [for RuneInstance]") }
 
         // init self

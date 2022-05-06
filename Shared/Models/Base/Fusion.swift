@@ -18,6 +18,7 @@ public class Fusion: NSManagedObject, Decodable {
 		case cost
 		case metaOrder = "meta_order"
 		case ingredients
+		case fields
 	}
 
 	public required convenience init(from decoder: Decoder) throws {
@@ -25,8 +26,6 @@ public class Fusion: NSManagedObject, Decodable {
 		guard let context = decoder.userInfo[CodingUserInfoKey.managedObjectContext]  as? NSManagedObjectContext else {
 			throw DecoderConfigurationError.missingManagedObjectContext
 		}
-
-		self.init(context: context)
 
 		guard let entity = NSEntityDescription.entity(forEntityName: "Fusion", in: context) else { fatalError("Could not get entity [for Fusion]") }
 
@@ -36,19 +35,27 @@ public class Fusion: NSManagedObject, Decodable {
 		// create container
 		let container = try decoder.container(keyedBy: CodingKeys.self)
 		// and start decoding
-		self.id = try container.decode(Int64.self, forKey: .id)
-		self.product = try container.decode(Int64.self, forKey: .product)
-		self.cost = try container.decode(Int64.self, forKey: .cost)
-		self.metaOrder = try container.decode(Int64.self, forKey: .metaOrder)
-		self.ingredients = try container.decodeArray(Int64.self, forKey: .ingredients)
 
-		let tempIngredients = self.ingredients ?? []
+		let fields: [String: Any] = try container.decode([String: Any].self, forKey: .fields)
 
+		self.product = (fields["product"]).orInt
+		self.metaOrder = (fields["meta_order"]).orInt
+
+		if let monster = Monster.findById(self.product, context: context) {
+			self.fusionProduct = monster
+		}
+
+		self.cost = (fields["cost"]).orInt
+
+		var finalIngredients: Set<Monster> = []
+
+		let tempIngredients = fields["ingredients"].orIntArray
 		for ingredient in tempIngredients {
 			if let monster = Monster.findById(ingredient, context: context) {
-				addToFusionIngredients(monster)
+				finalIngredients.insert(monster)
 			}
 		}
+		self.fusionIngredients = finalIngredients as NSSet
 	}
 
 	/// Wrapper around decodable initializer to add field that's wrapped weird.

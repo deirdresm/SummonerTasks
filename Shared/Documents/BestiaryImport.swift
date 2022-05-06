@@ -187,8 +187,10 @@ enum BestiaryFamily: String {
 		case .fusion:
 			return Fusion.self
 		case .dungeon:
+			print("Dungeon")
 			return Dungeon.self
 		case .secretDungeon:
+			print("SecretDungeon")
 			return SecretDungeon.self
 		case .dungeonLevel:
 			return DungeonLevel.self
