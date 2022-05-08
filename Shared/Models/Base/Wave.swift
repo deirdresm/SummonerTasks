@@ -14,8 +14,9 @@ public class Wave: NSManagedObject, Decodable {
 //extension Wave: Decodable {
 	private enum CodingKeys: String, CodingKey {
 		case id = "pk"
-		case levelId = "level_id"
+		case levelId = "level"
 		case order
+		case fields
 	}
 
 	public required convenience init(from decoder: Decoder) throws {
@@ -29,12 +30,12 @@ public class Wave: NSManagedObject, Decodable {
 		// init self
 		self.init(entity: entity, insertInto: context)
 
-		// create container
 		let container = try decoder.container(keyedBy: CodingKeys.self)
+		let fields: [String: Any] = try container.decode([String: Any].self, forKey: .fields)
+
 		// and start decoding
-		self.id = try container.decode(Int64.self, forKey: .id)
-		self.levelId = try container.decode(Int64.self, forKey: .levelId)
-		self.order = try container.decode(Int16.self, forKey: .order)
+		self.levelId = (fields["level"]).orInt
+		self.order = (fields["order"]).orInt16
 	}
 
 	/// Wrapper around decodable initializer to add field that's wrapped weird.

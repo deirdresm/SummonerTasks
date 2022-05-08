@@ -45,6 +45,4 @@ public class SecretDungeon: NSManagedObject, Decodable {
 		try self.init(from: decoder)
 		self.id = pk
 	}
-
-
 }

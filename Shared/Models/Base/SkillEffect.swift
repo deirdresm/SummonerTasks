@@ -19,6 +19,7 @@ public class SkillEffect: NSManagedObject, Decodable {
 		case isBuff = "is_buff"
 		case name, c2uDescription = "description"
 		case imageFilename = "icon_filename"
+		case fields
 	}
 
 	public required convenience init(from decoder: Decoder) throws {
@@ -34,19 +35,22 @@ public class SkillEffect: NSManagedObject, Decodable {
 
 		// create container
 		let container = try decoder.container(keyedBy: CodingKeys.self)
+		let fields: [String: Any] = try container.decode([String: Any].self, forKey: .fields)
+
 		// and start decoding
-		self.id = try container.decode(Int64.self, forKey: .id)
-		self.effectType = try container.decode(Int64.self, forKey: .effectType)
-		self.isBuff = try container.decode(Bool.self, forKey: .isBuff)
-		self.name = try container.decode(String.self, forKey: .name)
-		self.c2uDescription = try container.decode(String.self, forKey: .c2uDescription)
-		self.imageFilename = try container.decode(String.self, forKey: .imageFilename)
+//		self.id = try container.decode(Int64.self, forKey: .id)
+		self.id = (fields["id"]).orInt
+		self.effectType = (fields["type"]).orInt
+		self.isBuff = (fields["is_buff"]).orFalse
+		self.name = (fields["name"]).orEmpty
+		self.c2uDescription = (fields["description"]).orEmpty
+		self.imageFilename = (fields["icon_filename"]).orEmpty
 	}
 
 	/// Wrapper around decodable initializer to add field that's wrapped weird.
 	public convenience init(from decoder: Decoder, pk: Int64) throws {
 		try self.init(from: decoder)
-		self.id = pk
+//		self.id = pk
 	}
 
     

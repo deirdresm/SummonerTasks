@@ -77,6 +77,7 @@ public class HomunculusSkillcraftCost: NSManagedObject, Decodable {
 		case quantity
 		case skillNum
 		case skillId = "skill"
+		case fields
 	}
 
 	public required convenience init(from decoder: Decoder) throws {
@@ -92,9 +93,11 @@ public class HomunculusSkillcraftCost: NSManagedObject, Decodable {
 		// create container
 		let container = try decoder.container(keyedBy: CodingKeys.self)
 		// and start decoding
-		self.id = try container.decode(Int64.self, forKey: .id)
-		self.item = try container.decode(Int64.self, forKey: .item)
-		self.quantity = try container.decode(Int64.self, forKey: .quantity)
-		self.skillId = try container.decode(Int64.self, forKey: .skillId)
+
+		let fields: [String: Any] = try container.decode([String: Any].self, forKey: .fields)
+
+		self.item = (fields["item"]).orInt
+		self.quantity = (fields["quantity"]).orInt
+		self.skillId = (fields["skill"]).orInt
 	}
 }

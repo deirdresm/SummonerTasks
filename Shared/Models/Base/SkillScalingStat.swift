@@ -19,6 +19,7 @@ public class ScalingStat: NSManagedObject, Decodable {
 		case c2uDescription = "description"
 		case scalingDesc = "scaling_desc"
 		case stat
+		case fields
 	}
 
 	public required convenience init(from decoder: Decoder) throws {
@@ -27,18 +28,20 @@ public class ScalingStat: NSManagedObject, Decodable {
 			throw DecoderConfigurationError.missingManagedObjectContext
 		}
 
-		guard let entity = NSEntityDescription.entity(forEntityName: "SkillScalingStat", in: context) else { fatalError("Could not get entity [for SkillScalingStat]") }
+		guard let entity = NSEntityDescription.entity(forEntityName: "ScalingStat", in: context) else { fatalError("Could not get entity [for ScalingStat]") }
 
 		// init self
 		self.init(entity: entity, insertInto: context)
 
 		// create container
 		let container = try decoder.container(keyedBy: CodingKeys.self)
+		let fields: [String: Any] = try container.decode([String: Any].self, forKey: .fields)
+
 		// and start decoding
-		self.id = try container.decode(Int64.self, forKey: .id)
-		self.c2uDescription = try container.decode(String.self, forKey: .c2uDescription)
-		self.scalingDesc = try container.decode(String.self, forKey: .scalingDesc)
-		self.stat = try container.decode(String.self, forKey: .stat)
+		self.id = (fields["id"]).orInt
+		self.c2uDescription = (fields["description"]).orEmpty
+		self.scalingDesc = (fields["scaling_desc"]).orEmpty
+		self.stat = (fields["stat"]).orEmpty
 	}
 
 	/// Wrapper around decodable initializer to add field that's wrapped weird.

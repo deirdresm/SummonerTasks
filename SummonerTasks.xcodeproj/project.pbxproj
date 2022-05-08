@@ -193,8 +193,6 @@
 		38CFB7222578462700F0C398 /* RuneInstance+extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB7202578462700F0C398 /* RuneInstance+extras.swift */; };
 		38CFB728257848C900F0C398 /* ArtifactInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB727257848C900F0C398 /* ArtifactInstance.swift */; };
 		38CFB729257848C900F0C398 /* ArtifactInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB727257848C900F0C398 /* ArtifactInstance.swift */; };
-		38CFB72F2578494400F0C398 /* MonsterSkill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB72E2578494400F0C398 /* MonsterSkill.swift */; };
-		38CFB7302578494400F0C398 /* MonsterSkill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB72E2578494400F0C398 /* MonsterSkill.swift */; };
 		38CFB75F2579B84300F0C398 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB75E2579B84300F0C398 /* Task.swift */; };
 		38CFB7602579B84300F0C398 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB75E2579B84300F0C398 /* Task.swift */; };
 		38CFB7662579DE4D00F0C398 /* Skill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFB7652579DE4D00F0C398 /* Skill.swift */; };
@@ -368,7 +366,6 @@
 		38CFB7152578388E00F0C398 /* MonsterInstance+extras.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MonsterInstance+extras.swift"; sourceTree = "<group>"; };
 		38CFB7202578462700F0C398 /* RuneInstance+extras.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RuneInstance+extras.swift"; sourceTree = "<group>"; };
 		38CFB727257848C900F0C398 /* ArtifactInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtifactInstance.swift; sourceTree = "<group>"; };
-		38CFB72E2578494400F0C398 /* MonsterSkill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterSkill.swift; sourceTree = "<group>"; };
 		38CFB75E2579B84300F0C398 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		38CFB7652579DE4D00F0C398 /* Skill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skill.swift; sourceTree = "<group>"; };
 		38CFB76C2579DE8700F0C398 /* SkillScalingStat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillScalingStat.swift; sourceTree = "<group>"; };
@@ -584,7 +581,6 @@
 				38CFB6FF25782F9B00F0C398 /* LeaderSkill.swift */,
 				38CFB6B82576EFC600F0C398 /* Monster+Extension.swift */,
 				386010362599C4B500118951 /* MonsterCraftCost.swift */,
-				38CFB72E2578494400F0C398 /* MonsterSkill.swift */,
 				38CCFA83276FD56D007BD37B /* SecretDungeon.swift */,
 				38CFB7652579DE4D00F0C398 /* Skill.swift */,
 				38CFB7732579DEC000F0C398 /* SkillEffect.swift */,
@@ -992,7 +988,6 @@
 				38535E2C25832E95009411A1 /* BJr5.swift in Sources */,
 				386010122599B32900118951 /* HomunculusSkill.swift in Sources */,
 				38922C91259999FB00CCF63B /* LeaderSkill+Previews.swift in Sources */,
-				38CFB72F2578494400F0C398 /* MonsterSkill.swift in Sources */,
 				38CCFA88276FD582007BD37B /* Wave.swift in Sources */,
 				38CCFA7F276FD4E8007BD37B /* DungeonLevel.swift in Sources */,
 				38CFB77B2579DEE800F0C398 /* SkillEffectDetail.swift in Sources */,
@@ -1110,7 +1105,6 @@
 				3835306026E3FA650018E908 /* Image+Extension.swift in Sources */,
 				38CFB729257848C900F0C398 /* ArtifactInstance.swift in Sources */,
 				38E1101D25903C6100D4BBB0 /* RuneIconBase.swift in Sources */,
-				38CFB7302578494400F0C398 /* MonsterSkill.swift in Sources */,
 				38CCFA84276FD56D007BD37B /* SecretDungeon.swift in Sources */,
 				38CFB77C2579DEE800F0C398 /* SkillEffectDetail.swift in Sources */,
 				38CCFA7B276FC793007BD37B /* NSManagedCodableObject.swift in Sources */,

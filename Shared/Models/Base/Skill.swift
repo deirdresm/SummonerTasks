@@ -57,6 +57,7 @@ public class Skill: NSManagedObject, Decodable {
 		case levelProgressDescription
 		case skillEffect
 		case scalingStats
+		case fields
 	}
 
 	public required convenience init(from decoder: Decoder) throws {
@@ -72,21 +73,21 @@ public class Skill: NSManagedObject, Decodable {
 
 		// create container
 		let container = try decoder.container(keyedBy: CodingKeys.self)
+		let fields: [String: Any] = try container.decode([String: Any].self, forKey: .fields)
+
 		// and start decoding
-		self.id = try container.decode(Int64.self, forKey: .id)
-		self.com2usId = try container.decode(Int64.self, forKey: .com2usId)
-		self.name = try container.decode(String.self, forKey: .name)
-		self.c2uDescription = try container.decode(String.self, forKey: .c2uDescription)
-		self.slot = try container.decode(Int64.self, forKey: .slot)
-		self.cooltime = try container.decode(Int64.self, forKey: .cooltime)
-		self.hits = try container.decode(Int64.self, forKey: .hits)
-		self.aoe = try container.decode(Bool.self, forKey: .aoe)
-		self.passive = try container.decode(Bool.self, forKey: .passive)
-
-		self.maxLevel = try container.decode(Int64.self, forKey: .maxLevel)
-		self.imageFilename = try container.decode(String.self, forKey: .imageFilename)
-		self.multiplierFormula = try container.decode(String.self, forKey: .multiplierFormula)
-
+//		self.id = try container.decode(Int64.self, forKey: .id)
+		self.com2usId = (fields["com2us_id"]).orInt
+		self.name = (fields["name"]).orEmpty
+		self.c2uDescription = (fields["description"]).orEmpty
+		self.slot = (fields["slot"]).orInt
+		self.cooltime = (fields["cooltime"]).orInt
+		self.hits = (fields["hits"]).orInt
+		self.aoe = (fields["aoe"]).orFalse
+		self.passive = (fields["passive"]).orFalse
+		self.maxLevel = (fields["max_level"]).orInt
+		self.imageFilename = (fields["icon_filename"]).orEmpty
+		self.multiplierFormula = (fields["multiplier_formula"]).orEmpty
 	}
 
 	/// Wrapper around decodable initializer to add field that's wrapped weird.

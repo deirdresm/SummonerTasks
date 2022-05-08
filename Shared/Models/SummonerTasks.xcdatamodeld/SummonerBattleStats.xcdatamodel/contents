@@ -512,6 +512,7 @@
         <attribute name="scalingStatsIds" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[Int64]"/>
         <attribute name="skillEffect" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[Int64]"/>
         <attribute name="slot" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="effectDetail" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SkillEffectDetail" inverseName="skill" inverseEntity="SkillEffectDetail"/>
         <relationship name="homuSkills" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HomunculusSkill" inverseName="skill" inverseEntity="HomunculusSkill"/>
         <relationship name="monsters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Monster" inverseName="skills" inverseEntity="Monster"/>
         <relationship name="scalingStats" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ScalingStat" inverseName="skills" inverseEntity="ScalingStat"/>
@@ -553,9 +554,10 @@
         <attribute name="selfEffect" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="selfHp" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="singleTarget" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="skill" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="skillId" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="targetHp" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <relationship name="effect" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SkillEffect" inverseName="effectDetails" inverseEntity="SkillEffect"/>
+        <relationship name="skill" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Skill" inverseName="effectDetail" inverseEntity="Skill"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
@@ -700,9 +702,9 @@
         <element name="RunePriority" positionX="-437.1119384765625" positionY="86.45263671875" width="128" height="89"/>
         <element name="ScalingStat" positionX="-1058.519134521484" positionY="84.66734313964844" width="128" height="104"/>
         <element name="SecretDungeon" positionX="-65.25390625" positionY="1381.7578125" width="128" height="74"/>
-        <element name="Skill" positionX="-906.3999938964844" positionY="39.27764892578125" width="128" height="329"/>
+        <element name="Skill" positionX="-906.3999938964844" positionY="39.27764892578125" width="128" height="344"/>
         <element name="SkillEffect" positionX="-1053.367736816406" positionY="605.3933715820312" width="128" height="149"/>
-        <element name="SkillEffectDetail" positionX="-1071.157348632812" positionY="242.3610534667969" width="128" height="284"/>
+        <element name="SkillEffectDetail" positionX="-1071.157348632812" positionY="242.3610534667969" width="128" height="299"/>
         <element name="SkillUpgrade" positionX="-865.9093322753906" positionY="465.0048675537109" width="128" height="134"/>
         <element name="Source" positionX="-41.85833740234375" positionY="581.4371948242188" width="128" height="134"/>
         <element name="Summoner" positionX="-714.7305603027344" positionY="1127.808395385742" width="128" height="524"/>

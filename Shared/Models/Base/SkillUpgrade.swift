@@ -17,6 +17,7 @@ public class SkillUpgrade: NSManagedObject, Decodable {
 	private enum CodingKeys: String, CodingKey {
 		case id = "pk"
 		case skill, level, effect, amount
+		case fields
 	}
 
 	public required convenience init(from decoder: Decoder) throws {
@@ -32,19 +33,22 @@ public class SkillUpgrade: NSManagedObject, Decodable {
 
 		// create container
 		let container = try decoder.container(keyedBy: CodingKeys.self)
+		let fields: [String: Any] = try container.decode([String: Any].self, forKey: .fields)
+
 		// and start decoding
-		self.id = try container.decode(Int64.self, forKey: .id)
-		self.skillId = try container.decode(Int64.self, forKey: .skill)
+		self.id = (fields["id"]).orInt
+		self.skillId = (fields["skill"]).orInt
+		// and start decoding
 		if let skill = Skill.findById(self.skillId, context: context) {
 			self.skill = skill
 		}
-		self.level = try container.decode(Int64.self, forKey: .level)
+		self.level = (fields["level"]).orInt
 
-		let effect = try container.decode(Int64.self, forKey: .effect)
-		if let skilleffect = SkillEffect.findById(effect, context: context) {
+		self.effectId = (fields["effect"]).orInt
+		if let skilleffect = SkillEffect.findById(self.effectId, context: context) {
 			self.effect = skilleffect
 		}
-		self.amount = try container.decode(Int64.self, forKey: .amount)
+		self.amount = (fields["amount"]).orInt
 	}
 
 	/// Wrapper around decodable initializer to add field that's wrapped weird.

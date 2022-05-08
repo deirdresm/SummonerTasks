@@ -25,6 +25,7 @@ public class SkillEffectDetail: NSManagedObject, Decodable {
 		case selfHp = "self_hp"
 		case targetHp = "target_hp"
 		case damage, note
+		case fields
 	}
 
 	public required convenience init(from decoder: Decoder) throws {
@@ -40,34 +41,41 @@ public class SkillEffectDetail: NSManagedObject, Decodable {
 
 		// create container
 		let container = try decoder.container(keyedBy: CodingKeys.self)
-		// and start decoding
-		self.id = try container.decode(Int64.self, forKey: .id)
-		self.skill = try container.decode(Int64.self, forKey: .skill)
+		let fields: [String: Any] = try container.decode([String: Any].self, forKey: .fields)
 
-		let effect = try container.decode(Int64.self, forKey: .effect)
+		// and start decoding
+		self.id = (fields["id"]).orInt
+		self.skillId = (fields["skill"]).orInt
+
+		if let skill = Skill.findById(skillId, context: context) {
+			self.skill = skill
+		}
+		let effect = (fields["effect"]).orInt
+
 		if let skilleffect = SkillEffect.findById(effect, context: context) {
 			self.effect = skilleffect
 		}
 
-		self.aoe = try container.decode(Bool.self, forKey: .aoe)
-		self.singleTarget = try container.decode(Bool.self, forKey: .singleTarget)
-		self.selfEffect = try container.decode(Bool.self, forKey: .selfEffect)
-		self.chance = try container.decode(Int64.self, forKey: .chance)
-		self.onCrit = try container.decode(Bool.self, forKey: .onCrit)
-		self.onDeath = try container.decode(Bool.self, forKey: .onDeath)
-		self.random = try container.decode(Bool.self, forKey: .random)
-		self.quantity = try container.decode(Int64.self, forKey: .quantity)
-		self.all = try container.decode(Bool.self, forKey: .all)
-		self.selfHp = try container.decode(Bool.self, forKey: .selfHp)
-		self.targetHp = try container.decode(Bool.self, forKey: .targetHp)
-		self.damage = try container.decode(Bool.self, forKey: .damage)
-		self.note = try container.decode(String.self, forKey: .note)
+		self.aoe = (fields["aoe"]).orFalse
+		self.singleTarget = (fields["single_target"]).orFalse
+		self.selfEffect = (fields["self_effect"]).orFalse
+		self.chance = (fields["chance"]).orInt
+		self.onCrit = (fields["on_crit"]).orFalse
+
+		self.onDeath = (fields["onDeath"]).orFalse
+		self.random = (fields["random"]).orFalse
+		self.quantity = (fields["quantity"]).orInt
+		self.all = (fields["all"]).orFalse
+		self.selfHp = (fields["self_hp"]).orFalse
+		self.targetHp = (fields["target_hp"]).orFalse
+		self.damage = (fields["damage"]).orFalse
+		self.note = (fields["note"]).orEmpty
 	}
 
 	/// Wrapper around decodable initializer to add field that's wrapped weird.
 	public convenience init(from decoder: Decoder, pk: Int64) throws {
 		try self.init(from: decoder)
-		self.id = pk
+//		self.id = pk
 	}
 
     

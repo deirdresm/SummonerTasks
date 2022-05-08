@@ -79,6 +79,7 @@ public class LeaderSkill: NSManagedObject, Decodable {
 		case area
 		case attribute
 		case element
+		case fields
 	}
 
 	public required convenience init(from decoder: Decoder) throws {
@@ -94,11 +95,14 @@ public class LeaderSkill: NSManagedObject, Decodable {
 		// create container
 		let container = try decoder.container(keyedBy: CodingKeys.self)
 		// and start decoding
-		self.id = try container.decode(Int64.self, forKey: .id)
-		self.amount = try container.decode(Int64.self, forKey: .amount)
-		self.area = try container.decode(Int64.self, forKey: .area)
-		self.attribute = try container.decode(Int64.self, forKey: .attribute)
-		let element = try container.decode(String.self, forKey: .element)
+
+		let fields: [String: Any] = try container.decode([String: Any].self, forKey: .fields)
+
+		self.id = (fields["id"]).orInt
+		self.amount = (fields["amount"]).orInt
+		self.area = (fields["area"]).orInt
+		self.attribute = (fields["attribute"]).orInt
+		self.element = (fields["element"]).orEmpty
 	}
 
 
