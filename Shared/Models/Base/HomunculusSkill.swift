@@ -19,6 +19,7 @@ public class HomunculusSkill: NSManagedObject, Decodable {
 		case skillId = "skill"
 		case monsterIds = "monsters"
 		case prerequisites
+		case fields
 	}
 
 	public required convenience init(from decoder: Decoder) throws {
@@ -33,11 +34,19 @@ public class HomunculusSkill: NSManagedObject, Decodable {
 
 		// create container
 		let container = try decoder.container(keyedBy: CodingKeys.self)
-		// and start decoding
-		self.id = try container.decode(Int64.self, forKey: .id)
-		self.skillId = try container.decode(Int64.self, forKey: .skillId)
-		self.monsterIds = try container.decodeArray(Int64.self, forKey: .monsterIds)
-		self.prerequisites = try container.decodeArray(Int64.self, forKey: .prerequisites)
+		let fields: [String: Any] = try container.decode([String: Any].self, forKey: .fields)
+
+		self.id = (fields["id"]).orInt
+		self.skillId = (fields["skill"]).orInt
+
+		if let skill = Skill.findById(self.skillId, context: context) {
+			self.skill = skill
+		}
+
+		self.monsterIds = (fields["monsters"]).orIntArray
+		// TODO: relationship population
+		
+		self.prerequisites = (fields["prerequisites"]).orIntArray
 	}
 
 	/// Wrapper around decodable initializer to add field that's wrapped weird.
