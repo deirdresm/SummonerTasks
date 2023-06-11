@@ -36,15 +36,17 @@ public class BestiaryItem: Decodable {
 
 	var pk: Int
 	var modelName: String
-	var managedObject: NSManagedObject
 	var lastModelName: String
+
+	let logger: Logger
+
 
 	init() {
 		modelName = ""
 		lastModelName = ""
 		pk = 0
 
-		managedObject = Building()
+		logger = Logger(subsystem: "net.deirdre.SummonerTasks", category: "bestiaryprovider")
 	}
 
 	required convenience public init(from decoder: Decoder) throws {
@@ -59,50 +61,51 @@ public class BestiaryItem: Decodable {
 
 		// create the object
 
-		switch self.modelName {
-		case "bestiary.gameitem":
-			managedObject = try decodeModel(of: GameItem.self, pk: self.pk, decoder: decoder)
-		case "bestiary.building":
-			managedObject = try decodeModel(of: Building.self, pk: self.pk, decoder: decoder)
-		case "bestiary.source":
-			managedObject =  try decodeModel(of: Source.self, pk: self.pk, decoder: decoder)
-		case "bestiary.monster":
-			managedObject = try decodeModel(of: Monster.self, pk: self.pk, decoder: decoder)
-		case "bestiary.awakencost":
-			managedObject = try decodeModel(of: AwakenCost.self, pk: self.pk, decoder: decoder)
-		case "bestiary.monstercraftcost":
-			managedObject = try decodeModel(of: MonsterCraftCost.self, pk: self.pk, decoder: decoder)
-		case "bestiary.fusion":
-			managedObject = try decodeModel(of: Fusion.self, pk: self.pk, decoder: decoder)
-		case "bestiary.dungeon":
-			managedObject = try decodeModel(of: Dungeon.self, pk: self.pk, decoder: decoder)
-		case "bestiary.secretdungeon":
-			managedObject = try decodeModel(of: SecretDungeon.self, pk: self.pk, decoder: decoder)
-		case "bestiary.level":
-			managedObject = try decodeModel(of: DungeonLevel.self, pk: self.pk, decoder: decoder)
-		case "bestiary.wave":
-			managedObject = try decodeModel(of: Wave.self, pk: self.pk, decoder: decoder)
-		case "bestiary.enemy":
-			managedObject = try decodeModel(of: Enemy.self, pk: self.pk, decoder: decoder)
-		case "bestiary.skill":
-			managedObject = try decodeModel(of: Skill.self, pk: self.pk, decoder: decoder)
-		case "bestiary.skillupgrade":
-			managedObject = try decodeModel(of: SkillUpgrade.self, pk: self.pk, decoder: decoder)
-		case "bestiary.leaderskill":
-			managedObject = try decodeModel(of: LeaderSkill.self, pk: self.pk, decoder: decoder)
-		case "bestiary.skilleffect":
-			managedObject = try decodeModel(of: SkillEffect.self, pk: self.pk, decoder: decoder)
-		case "bestiary.skilleffectdetail":
-			managedObject = try decodeModel(of: SkillEffectDetail.self, pk: self.pk, decoder: decoder)
-		case "bestiary.scalingstat":
-			managedObject = try decodeModel(of: ScalingStat.self, pk: self.pk, decoder: decoder)
-		case "bestiary.homunculusskill":
-			managedObject = try decodeModel(of: HomunculusSkill.self, pk: self.pk, decoder: decoder)
-		case "bestiary.homunculusskillcraftcost":
-			managedObject = try decodeModel(of: HomunculusSkillcraftCost.self, pk: self.pk, decoder: decoder)
-		default:
-			break
-		}
+				//switch self.modelName {
+//		case "bestiary.gameitem":
+//			managedObject = try decodeModel(of: GameItem.self, pk: self.pk, decoder: decoder)
+//		case "bestiary.building":
+//
+//			managedObject = try decodeModel(of: Building.self, pk: self.pk, decoder: decoder)
+//		case "bestiary.source":
+//			managedObject =  try decodeModel(of: Source.self, pk: self.pk, decoder: decoder)
+//		case "bestiary.monster":
+//			managedObject = try decodeModel(of: Monster.self, pk: self.pk, decoder: decoder)
+//		case "bestiary.awakencost":
+//			managedObject = try decodeModel(of: AwakenCost.self, pk: self.pk, decoder: decoder)
+//		case "bestiary.monstercraftcost":
+//			managedObject = try decodeModel(of: MonsterCraftCost.self, pk: self.pk, decoder: decoder)
+//		case "bestiary.fusion":
+//			managedObject = try decodeModel(of: Fusion.self, pk: self.pk, decoder: decoder)
+//		case "bestiary.dungeon":
+//			managedObject = try decodeModel(of: Dungeon.self, pk: self.pk, decoder: decoder)
+//		case "bestiary.secretdungeon":
+//			managedObject = try decodeModel(of: SecretDungeon.self, pk: self.pk, decoder: decoder)
+//		case "bestiary.level":
+//			managedObject = try decodeModel(of: DungeonLevel.self, pk: self.pk, decoder: decoder)
+//		case "bestiary.wave":
+//			managedObject = try decodeModel(of: Wave.self, pk: self.pk, decoder: decoder)
+//		case "bestiary.enemy":
+//			managedObject = try decodeModel(of: Enemy.self, pk: self.pk, decoder: decoder)
+//		case "bestiary.skill":
+//			managedObject = try decodeModel(of: Skill.self, pk: self.pk, decoder: decoder)
+//		case "bestiary.skillupgrade":
+//			managedObject = try decodeModel(of: SkillUpgrade.self, pk: self.pk, decoder: decoder)
+//		case "bestiary.leaderskill":
+//			managedObject = try decodeModel(of: LeaderSkill.self, pk: self.pk, decoder: decoder)
+//		case "bestiary.skilleffect":
+//			managedObject = try decodeModel(of: SkillEffect.self, pk: self.pk, decoder: decoder)
+//		case "bestiary.skilleffectdetail":
+//			managedObject = try decodeModel(of: SkillEffectDetail.self, pk: self.pk, decoder: decoder)
+//		case "bestiary.scalingstat":
+//			managedObject = try decodeModel(of: ScalingStat.self, pk: self.pk, decoder: decoder)
+//		case "bestiary.homunculusskill":
+//			managedObject = try decodeModel(of: HomunculusSkill.self, pk: self.pk, decoder: decoder)
+//		case "bestiary.homunculusskillcraftcost":
+//			managedObject = try decodeModel(of: HomunculusSkillcraftCost.self, pk: self.pk, decoder: decoder)
+//		default:
+//			break
+//		}
 
 	}
 

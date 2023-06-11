@@ -41,6 +41,14 @@ public struct JSON: RandomAccessCollection {
         value as? Double
     }
 
+	var number: NSNumber {
+		optionalNumber ?? 0
+	}
+
+	var optionalNumber: NSNumber? {
+		value as? NSNumber
+	}
+
     var optionalInt: Int64? {
         value as? Int64
     }

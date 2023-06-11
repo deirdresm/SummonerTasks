@@ -448,7 +448,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "43"
                   endingLineNumber = "43"
-                  offsetFromSymbolStart = "832">
+                  offsetFromSymbolStart = "836">
                </Location>
                <Location
                   uuid = "1D854D8B-19FE-4D52-860B-DFC7B2CA28F8 - 2aab14b0662d4634"
@@ -463,7 +463,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "43"
                   endingLineNumber = "43"
-                  offsetFromSymbolStart = "864">
+                  offsetFromSymbolStart = "868">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -498,6 +498,38 @@
             endingLineNumber = "77"
             landmarkName = "ContentView_Previews"
             landmarkType = "14">
+            <Locations>
+               <Location
+                  uuid = "FDB8DF14-7D6A-46FE-A682-190802979911 - d63c1c3d5f42d838"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "one-time initialization function for text"
+                  moduleName = "SummonerTasks"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/deirdre/Development/SummonerTasks/Shared/Sections/ContentView/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "77"
+                  endingLineNumber = "77"
+                  offsetFromSymbolStart = "40">
+               </Location>
+               <Location
+                  uuid = "FDB8DF14-7D6A-46FE-A682-190802979911 - 4b01f4c5185a4958"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SummonerTasks.ContentView_Previews.text.unsafeMutableAddressor : Swift.String"
+                  moduleName = "SummonerTasks"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/deirdre/Development/SummonerTasks/Shared/Sections/ContentView/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "77"
+                  endingLineNumber = "77"
+                  offsetFromSymbolStart = "16">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -622,8 +654,8 @@
             filePath = "Shared/Documents/BestiaryImport.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
             landmarkName = "init(from:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -638,8 +670,8 @@
             filePath = "Shared/Documents/BestiaryImport.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
             landmarkName = "init(from:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -702,8 +734,8 @@
             filePath = "Shared/Documents/BestiaryImport.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "58"
-            endingLineNumber = "58"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
             landmarkName = "init(from:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -721,6 +753,22 @@
             startingLineNumber = "56"
             endingLineNumber = "56"
             landmarkName = "init(from:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "08D58F82-DD1F-44C1-9902-AA59E1A77B7B"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Shared/Documents/BestiaryImport.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
+            landmarkName = "decodeModel(of:pk:decoder:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

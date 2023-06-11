@@ -324,7 +324,6 @@
 		389F89BC259805B300006C09 /* SummonerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummonerData.swift; sourceTree = "<group>"; };
 		389F89CF25982B5F00006C09 /* Summoner+Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Summoner+Previews.swift"; sourceTree = "<group>"; };
 		389F89DF25982BB100006C09 /* Decoration+Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Decoration+Previews.swift"; sourceTree = "<group>"; };
-		38A0AD59258DCC05005C01D0 /* BuildingInstanceData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingInstanceData.swift; sourceTree = "<group>"; };
 		38A0AD60258DD08C005C01D0 /* BuildingInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingInstance.swift; sourceTree = "<group>"; };
 		38A0ADAD258EC067005C01D0 /* RuneGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuneGrid.swift; sourceTree = "<group>"; };
 		38A0ADB8258EE9A5005C01D0 /* RuneInstance+Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RuneInstance+Previews.swift"; sourceTree = "<group>"; };
@@ -635,7 +634,6 @@
 		38A0AD58258DCBE7005C01D0 /* JSON Instance */ = {
 			isa = PBXGroup;
 			children = (
-				38A0AD59258DCC05005C01D0 /* BuildingInstanceData.swift */,
 				389F89BC259805B300006C09 /* SummonerData.swift */,
 			);
 			path = "JSON Instance";

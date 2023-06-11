@@ -27,7 +27,7 @@ public struct JSON: RandomAccessCollection {
 	public init(string: String) throws {
 		let data = Data(string.utf8)
 		value = try JSONSerialization.jsonObject(with: data, options: [.allowFragments])
-		print(value)
+//		print(value)
 	}
 
 	public init(value: Any?) {
@@ -74,9 +74,52 @@ public struct JSON: RandomAccessCollection {
 		optionalString ?? ""
 	}
 
+//	private func unwrap(_ object: Any) -> Any {
+//		switch object {
+//		case let json as JSON:
+//			return unwrap(json.object)
+//		case let array as [Any]:
+//			return array.map(unwrap)
+//		case let dictionary as [String: Any]:
+//			var d = dictionary
+//			dictionary.forEach { pair in
+//				d[pair.key] = unwrap(pair.value)
+//			}
+//			return d
+//		default:
+//			return object
+//		}
+//	}
+
+//	public var doubleArray: [Double] {
+//		let converted = value as? [Double]
+//		return converted.map { [$0.double] }
+//	}
+
+	public var optionalDoubleArray: [Double]? {
+		var array = [Double]()
+
+		let converted = value as? [AnyObject]
+		let mapped: [Double]? = converted?.map {
+			print($0)
+			array.append(
+				$0 as! Double
+			)
+			return $0 as! Double
+//			return JSON(value: $0)
+		}
+		print("Mapped: \(mapped)")
+
+		return array
+	}
+
 	public var optionalArray: [JSON]? {
 		let converted = value as? [Any]
-		return converted?.map { JSON(value: $0) }
+		let mapped: [JSON]? = converted?.map {
+			print($0)
+			return JSON(value: $0)
+		}
+		return mapped
 	}
 
 	public var optionalDictionary: [String: JSON]? {

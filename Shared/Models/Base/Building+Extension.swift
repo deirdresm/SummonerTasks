@@ -29,6 +29,32 @@ public class Building: NSManagedObject, Decodable {
 		case imageFilename
 	}
 
+	public convenience init(json: JSON, pk: Int64, context: NSManagedObjectContext) {
+		// get the context and the entity in the context
+		guard let entity = NSEntityDescription.entity(forEntityName: "Building", in: context) else { fatalError("Could not get entity [for Building]") }
+
+		// init self
+		self.init(entity: entity, insertInto: context)
+
+		id = json.pk.int
+		name = json.fields.name.string
+		com2usId = json.fields.com2us_id.int
+		maxLevel = json.fields.max_level.int
+		area = json.fields.area.optionalNumber
+		affectedStat = json.fields.affected_stat.optionalNumber
+		element = json.fields.element.optionalString
+		c2uDescription = json.fields.description.string
+		imageFilename = json.fields.icon_filename.string
+
+		var jsonArr = json.fields.stat_bonus.value
+		var converted = try! JSON(string: jsonArr as! String).array
+		statBonus = converted.map {try! JSON(string: $0.value as! String).int}
+
+		jsonArr = json.fields.upgrade_cost.value
+		converted = try! JSON(string: jsonArr as! String).array
+		upgradeCost =  converted.map {try! JSON(string: $0.value as! String).int}
+	}
+
 	public required convenience init(from decoder: Decoder) throws {
 		// get the context and the entity in the context
 		guard let context = decoder.userInfo[CodingUserInfoKey.managedObjectContext] as? NSManagedObjectContext else { fatalError("Could not get context [for GameItem]") }
@@ -39,17 +65,21 @@ public class Building: NSManagedObject, Decodable {
 
 		// create container
 		let container = try decoder.container(keyedBy: CodingKeys.self)
-		let fields: [String: Any] = try container.decode([String: Any].self, forKey: .fields)
-
-		self.id = (fields["com2us_id"]).orInt
-		self.name = (fields["name"]).orEmpty
-		self.c2uDescription = (fields["description"]).orEmpty
-		self.maxLevel = (fields["max_level"]).orInt
-		self.area = (fields["area"]).orInt
-		self.affectedStat = (fields["affected_stat"]).orInt
-		self.imageFilename = (fields["icon_filename"]).orEmpty
-		self.statBonus = (fields["stat_bonus"]).orIntArray
-		self.upgradeCost = (fields["upgradeCost"]).orIntArray
+//		let fields: [String: AnyObject] = try container.decode([String: AnyObject].self, forKey: .fields)
+//
+//		if let field = fields["com2us_id"] {
+//			self.id = field
+//		}
+//
+//		self.id = (fields["com2us_id"]) as? Int64
+//		self.name = (fields["name"]).orEmpty
+//		self.c2uDescription = (fields["description"]).orEmpty
+//		self.maxLevel = (fields["max_level"]) as! Int64
+//		self.area = (fields["area"]) as! Int64
+//		self.affectedStat = (fields["affected_stat"]) as! Int64
+//		self.imageFilename = (fields["icon_filename"]).orEmpty
+//		self.statBonus = (fields["stat_bonus"]).orIntArray
+//		self.upgradeCost = (fields["upgradeCost"]).orIntArray
 	}
 
 	public convenience init(from decoder: Decoder, pk: Int64) throws {

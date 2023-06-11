@@ -62,6 +62,7 @@ public class BestiaryProvider {
 		decoder.userInfo[CodingUserInfoKey.managedObjectContext] = persistence.container.viewContext
 
 		items = try! decoder.decode([BestiaryItem].self, from: data)
+		try! persistence.container.viewContext.save()
 	}
 
 	enum Error: Swift.Error {

@@ -1,0 +1,23 @@
+{
+  "pins" : [
+    {
+      "identity" : "codextended",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/JohnSundell/Codextended",
+      "state" : {
+        "revision" : "8d7c46dfc9c55240870cf5561d6cefa41e3d7105",
+        "version" : "0.3.0"
+      }
+    },
+    {
+      "identity" : "swiftuiformvalidator",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/deirdresm/SwiftUIFormValidator",
+      "state" : {
+        "branch" : "master",
+        "revision" : "dec0fda6969540e9ce0d7bb98eedd70fcbd4116a"
+      }
+    }
+  ],
+  "version" : 2
+}
